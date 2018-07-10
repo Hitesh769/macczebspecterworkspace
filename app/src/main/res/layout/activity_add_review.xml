@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:rb="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <com.spectre.customView.CustomTextView
+            android:id="@+id/txt_shop_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:singleLine="true"
+            android:text="@string/rate_review"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+
+            android:textStyle="bold"
+            app:edittextfont="Poppins-Medium.ttf"
+            app:edittextfontHint="Poppins-Medium.ttf" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:orientation="horizontal">
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                style="@style/Base.Widget.AppCompat.RatingBar.Indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:isIndicator="false"
+                android:numStars="5"
+                android:stepSize="1"
+                rb:rating="0" />
+
+            <!-- <com.mateapp.customviews.CustomTextView
+                 android:id="@+id/txt_shop_rating"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_gravity="center"
+                 android:gravity="center"
+                 android:singleLine="true"
+                 android:text="5.0"
+                 android:textColor="@color/black_"
+                 android:textSize="18sp"
+                 android:textStyle="bold"
+                 app:edittextfont="GOTHICB_0.TTF"
+                 app:edittextfontHint="GOTHICB_0.TTF" />-->
+        </LinearLayout>
+
+        <com.spectre.customView.CustomRayMaterialEditText
+            android:id="@+id/et_review_post"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:background="#00000000"
+            android:inputType="textCapSentences|textMultiLine"
+            android:hint="@string/review_hint"
+            android:padding="10dp"
+            android:textColor="@color/gray"
+            android:textColorHint="@color/text_color_gray"
+            android:textSize="14sp"
+            app:edittextfont="Poppins-Regular.ttf"
+            app:edittextfontHint="Poppins-Regular.ttf"
+            app:et_supportMaxChars="0"
+            app:et_supportMode="charCounter" />
+    </LinearLayout>
+
+</LinearLayout>

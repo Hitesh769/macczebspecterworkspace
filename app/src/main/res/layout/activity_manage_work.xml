@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.spectre.activity.ManageWorkActivity">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackground">
+
+        <include
+            android:id="@+id/toolbar_actionbar"
+            layout="@layout/toolbar" />
+
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/progress_pv_linear_colors"
+            android:layout_below="@+id/toolbar_actionbar">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <com.spectre.customView.CustomTextView
+            android:layout_marginTop="?attr/actionBarSize"
+            android:id="@+id/no_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:drawablePadding="18dp"
+            android:gravity="center"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:text="No data available"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="15sp"
+            android:textColor="@color/colorPrimary"
+            android:visibility="gone"
+            app:edittextfont="Poppins-Medium.ttf"
+            app:edittextfontHint="Poppins-Medium.ttf" />
+
+        <com.rey.material.widget.ProgressView
+            android:id="@+id/progress_pv_linear_colors"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center"
+            app:pv_autostart="false"
+            app:pv_circular="false"
+            app:pv_progressMode="indeterminate"
+            app:pv_progressStyle="@style/ColorsLinearProgressDrawableStyle" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/colorWhite"
+            android:clickable="true"
+            android:elevation="5dp"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            app:cardBackgroundColor="@android:color/white"
+            app:cardCornerRadius="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:src="@mipmap/ic_launcher"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/ll_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical">
+
+                    <com.spectre.customView.CustomTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:text="@string/from"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        app:edittextfont="Poppins-Regular.ttf"
+                        app:edittextfontHint="Poppins-Regular.ttf" />
+
+                    <com.spectre.customView.CustomTextView
+                        android:id="@+id/et_car_from"
+                        style="@style/Material.Widget.EditText.Light"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/semi_transparent_box"
+                        android:hint="@string/select_from"
+                        android:inputType="textCapSentences"
+                        android:longClickable="false"
+                        android:padding="5dp"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/light_gray"
+                        android:textSize="12sp"
+                        app:edittextfont="Poppins-Regular.ttf"
+                        app:edittextfontHint="Poppins-Regular.ttf" />
+
+
+                    <com.spectre.customView.CustomTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:text="@string/to"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        app:edittextfont="Poppins-Regular.ttf"
+                        app:edittextfontHint="Poppins-Regular.ttf" />
+
+                    <com.spectre.customView.CustomTextView
+                        android:id="@+id/et_car_to"
+                        style="@style/Material.Widget.EditText.Light"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/semi_transparent_box"
+                        android:hint="@string/select_to"
+                        android:inputType="textCapSentences"
+                        android:longClickable="false"
+                        android:padding="5dp"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/light_gray"
+                        android:textSize="12sp"
+                        app:edittextfont="Poppins-Regular.ttf"
+                        app:edittextfontHint="Poppins-Regular.ttf" />
+
+                </LinearLayout>
+
+
+                <com.spectre.customView.CustomTextView
+                    android:id="@+id/view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:gravity="left"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp"
+                    app:edittextfont="Poppins-Medium.ttf"
+                    app:edittextfontHint="Poppins-Medium.ttf" />
+
+
+
+                <com.spectre.customView.CustomEditText
+                    android:id="@+id/et_problem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/semi_transparent_box"
+                    android:drawablePadding="10dp"
+                    android:gravity="top"
+                    android:hint="@string/write_msg_hint"
+                    android:inputType="textCapSentences|textMultiLine"
+                    android:lines="4"
+                    android:maxLines="4"
+                    android:padding="5dp"
+                    android:textColorHint="@color/light_gray"
+                    android:textSize="13sp"
+                    app:edittextfont="Poppins-Regular.ttf"
+                    app:edittextfontHint="Poppins-Regular.ttf" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </RelativeLayout>
+
+
+                <com.spectre.customView.CustomRayMaterialTextView
+                    android:id="@+id/btn_save_changes"
+                    style="@style/splashRipple"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginTop="35dp"
+                    android:background="@drawable/pink_round_solid_rectangle"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="@string/request_service"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="16sp"
+                    app:edittextfont="Poppins-Regular.ttf" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp" />
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+    </ScrollView>
+</LinearLayout>

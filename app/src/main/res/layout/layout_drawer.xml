@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_drawer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="left"
+    android:background="@color/colorWhite"
+    android:clickable="true"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/btn_cross"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:padding="10dp"
+                    android:src="@mipmap/cross"
+                    android:visibility="invisible" />
+
+                <LinearLayout
+                    android:id="@+id/profile_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="15dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_margin="10dp"
+                            android:scaleType="centerCrop"
+                            android:src="@mipmap/gestuser" />
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/iv_profile"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_margin="10dp"
+                            android:scaleType="centerCrop"
+                            android:src="@mipmap/gestuser" />
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <com.spectre.customView.CustomTextView
+                            android:id="@+id/tv_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:singleLine="true"
+                            android:text="Guest User"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="16sp"
+                            app:edittextfont="Poppin-Medium.ttf" />
+
+                        <com.spectre.customView.CustomTextView
+                            android:id="@+id/tv_location"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="London"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="12sp"
+                            android:visibility="visible"
+                            app:edittextfont="Poppin-Regular.ttf" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.spectre.customView.CustomTextView
+                    android:id="@+id/tv_home"
+                    style="@style/txtPadding"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:drawableLeft="@mipmap/home"
+                    android:drawablePadding="15dp"
+                    android:text="Home"
+                    android:textColor="@color/colorDrawerText"
+                    android:textSize="16sp"
+                    android:visibility="gone"
+                    app:edittextfont="Poppin-Regular.ttf" />
+
+                <com.spectre.customView.CustomTextView
+                    android:id="@+id/tv_login"
+                    style="@style/txtPadding"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:drawableLeft="@mipmap/login"
+                    android:drawablePadding="15dp"
+                    android:text="@string/login"
+                    android:textColor="@color/colorDrawerText"
+                    android:textSize="16sp"
+                    app:edittextfont="Poppin-Regular.ttf" />
+
+                <com.spectre.customView.CustomTextView
+                    android:id="@+id/tv_user_regi"
+                    style="@style/txtPadding"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:drawableLeft="@mipmap/userreg"
+                    android:drawablePadding="15dp"
+                    android:text="@string/user_registration"
+                    android:textColor="@color/colorDrawerText"
+                    android:textSize="16sp"
+                    app:edittextfont="Poppin-Regular.ttf" />
+
+                <com.spectre.customView.CustomTextView
+                    android:id="@+id/tv_garage_regi"
+                    style="@style/txtPadding"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:drawableLeft="@mipmap/userreg"
+                    android:drawablePadding="15dp"
+                    android:text="@string/garage_registration"
+                    android:textColor="@color/colorDrawerText"
+                    android:textSize="16sp"
+                    android:visibility="gone"
+                    app:edittextfont="Poppin-Regular.ttf" />
+
+                <com.spectre.customView.CustomTextView
+                    android:id="@+id/tv_profile"
+                    style="@style/txtPadding"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:drawableLeft="@mipmap/profile"
+                    android:drawablePadding="15dp"
+                    android:text="@string/my_profile"
+                    android:textColor="@color/colorDrawerText"
+                    android:textSize="16sp"
+                    app:edittextfont="Poppin-Regular.ttf" />
+
+                <com.spectre.customView.CustomTextView
+                    android:id="@+id/tv_post_ad"
+                    style="@style/txtPadding"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:drawableLeft="@mipmap/postadd"
+                    android:drawablePadding="15dp"
+                    android:text="@string/post_ad_buyer"
+                    android:textColor="@color/colorDrawerText"
+                    android:textSize="16sp"
+                    app:edittextfont="Poppin-Regular.ttf" />
+
+                <com.spectre.customView.CustomTextView
+                    android:id="@+id/tv_manage_ad"
+                    style="@style/txtPadding"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:drawableLeft="@mipmap/managead"
+                    android:drawablePadding="15dp"
+                    android:text="@string/mange_ad_seller"
+                    android:textColor="@color/colorDrawerText"
+                    android:textSize="16sp"
+                    app:edittextfont="Poppin-Regular.ttf" />
+
+                <LinearLayout
+                    android:id="@+id/ll_garage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+
+                <com.spectre.customView.CustomTextView
+                    android:id="@+id/tv_setting"
+                    style="@style/txtPadding"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:drawableLeft="@mipmap/settings"
+                    android:drawablePadding="15dp"
+                    android:text="@string/settings"
+                    android:textColor="@color/colorDrawerText"
+                    android:textSize="16sp"
+                    app:edittextfont="Poppin-Regular.ttf" />
+
+
+                <RelativeLayout
+                    android:id="@+id/layout_logout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/pink_round_solid_rectangle"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:selectableItemBackground"
+                    android:theme="@style/Ripple"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <com.spectre.customView.CustomTextView
+                            android:id="@+id/btn_logout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@mipmap/logout"
+                            android:drawablePadding="10dp"
+                            android:gravity="center"
+                            android:padding="8dp"
+                            android:text="@string/logout"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="14sp"
+                            app:edittextfont="Poppin-Regular.ttf" />
+                    </LinearLayout>
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+</RelativeLayout>

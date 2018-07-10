@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/colorProgressBackground">
+
+        <com.rey.material.widget.ProgressView
+            android:id="@+id/progress_pv_linear_colors"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_gravity="center"
+            app:pv_autostart="true"
+            app:pv_circular="false"
+            app:pv_progressMode="determinate"
+            app:pv_progressStyle="@style/ColorsLinearProgressBar" />
+
+
+        <!-- <RelativeLayout
+             android:id="@+id/rl_progress_bar"
+             android:layout_width="match_parent"
+             android:layout_height="5dp"
+             android:background="@drawable/level" />-->
+    </RelativeLayout>
+
+    <com.spectre.utility.NonSwipeableViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite" />
+</LinearLayout>

@@ -1,0 +1,166 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
+    tools:context="com.spectre.fragment.WorkBasicFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:orientation="vertical">
+
+            <com.spectre.customView.CustomTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="@string/car_name"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:edittextfont="Poppins-Regular.ttf"
+                app:edittextfontHint="Poppins-Regular.ttf" />
+
+            <com.rey.material.widget.Spinner
+                android:id="@+id/spinner_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/semi_transparent_box"
+                android:spinnerMode="dialog" />
+
+            <com.spectre.customView.CustomTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:padding="5dp"
+                android:text="@string/model"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:edittextfont="Poppins-Regular.ttf"
+                app:edittextfontHint="Poppins-Regular.ttf" />
+
+            <com.rey.material.widget.Spinner
+                android:id="@+id/spinner_model"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/semi_transparent_box"
+                android:spinnerMode="dialog" />
+
+            <com.spectre.customView.CustomTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="@string/version"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:edittextfont="Poppins-Regular.ttf"
+                app:edittextfontHint="Poppins-Regular.ttf" />
+
+            <com.rey.material.widget.Spinner
+                android:id="@+id/spinner_version"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/semi_transparent_box"
+                android:spinnerMode="dialog" />
+
+            <com.spectre.customView.CustomTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="@string/year"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:edittextfont="Poppins-Regular.ttf"
+                app:edittextfontHint="Poppins-Regular.ttf" />
+
+            <com.rey.material.widget.Spinner
+                android:id="@+id/spinner_year"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/semi_transparent_box"
+                android:spinnerMode="dialog" />
+
+            <com.spectre.customView.CustomTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="@string/car_type"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:edittextfont="Poppins-Regular.ttf"
+                app:edittextfontHint="Poppins-Regular.ttf" />
+
+            <com.rey.material.widget.Spinner
+                android:id="@+id/spinner_car_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/semi_transparent_box"
+                android:spinnerMode="dialog" />
+
+            <com.spectre.customView.CustomTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="@string/color"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:edittextfont="Poppins-Regular.ttf"
+                app:edittextfontHint="Poppins-Regular.ttf" />
+
+            <com.rey.material.widget.Spinner
+                android:id="@+id/spinner_color"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/semi_transparent_box"
+                android:spinnerMode="dialog" />
+
+            <com.spectre.customView.CustomRayMaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:background="@drawable/yellow_bg"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/next"
+                android:textColor="@color/colorWhite"
+                android:textSize="16sp"
+                app:edittextfont="Poppins-Medium.ttf" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+    <com.spectre.customView.CustomRayMaterialTextView
+        android:id="@+id/btn_basic_next"
+        style="@style/workRipple"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/yellow_bg"
+        android:gravity="center"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp"
+        android:padding="8dp"
+        android:text="@string/next"
+        android:textColor="@color/colorWhite"
+        android:textSize="16sp"
+        app:edittextfont="Poppins-Medium.ttf" />
+</LinearLayout>

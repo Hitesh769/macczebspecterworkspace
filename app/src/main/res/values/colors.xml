@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#8700C9</color>
+    <color name="colorPrimaryDark">#7400bc</color>
+    <color name="colorAccent">#FFB600</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="transprent_white">#90ffffff</color>
+    <color name="colorTabText">#BEBEBE</color>
+    <color name="colorDrawerText">#252525</color>
+    <color name="colorRipple">#99FFA600</color>
+    <color name="colorProgressBackground">#46ffa600</color>
+    <color name="colorPurpleRipple">#998700C9</color>
+    <color name="colorHighlight">#20ED3A71</color>
+    <color name="light_gray">#FFB6B4B5</color>
+    <color name="colorRed">#F20404</color>
+    <color name="black">#000000</color>
+    <color name="setting_pink">#f6708b</color>
+    <color name="setting_yellow">#F4BE2B</color>
+    <color name="blue_term">#26BBFD</color>
+    <color name="green_logout">#80BE43</color>
+    <color name="purple">#A689CD</color>
+    <color name="purpleBackground">#7D00BC</color>
+    <color name="transparent">#20000000</color>
+    <color name="colorBackground">#F5f5f5</color>
+    <color name="colorBlue">#1565C0</color>
+    <color name="colorBlueReview">#3767B2</color>
+    <color name="colorSubText">#AEAEAE</color>
+    <color name="colorRating">#888</color>
+    <color name="colorBox">#EBEBEB</color>
+    <array name="progress_colors">
+        <item>@color/colorRed</item>
+        <!-- <item>@color/colorAccent</item>-->
+    </array>
+    <array name="progress_color">
+        <item>@color/colorAccent</item>
+        <!-- <item>@color/colorAccent</item>-->
+    </array>
+
+    <color name="text_color_gray">#777777</color>
+    <color name="text_color_light_black">#191919</color>
+    <color name="gray">#3f3f3f</color>
+    <color name="colorGray">#A5A5A5</color>
+</resources>

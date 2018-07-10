@@ -1,0 +1,144 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nested_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <com.spectre.customView.CustomTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:text="@string/before_image"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:visibility="visible"
+                app:edittextfont="Poppins-Medium.ttf"
+                app:edittextfontHint="Poppins-Medium.ttf" />
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler"
+                android:layout_width="match_parent"
+                android:layout_height="105dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="2dp"
+                android:background="@color/colorWhite"
+                android:nestedScrollingEnabled="false">
+
+            </android.support.v7.widget.RecyclerView>
+
+            <com.rey.material.widget.ProgressView
+                android:id="@+id/progress_pv_linear_colors"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_gravity="center"
+                app:pv_autostart="false"
+                app:pv_circular="false"
+                app:pv_progressMode="indeterminate"
+                app:pv_progressStyle="@style/ColorsLinearProgressDrawableStyle" />
+
+            <com.spectre.customView.CustomTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/min_image"
+                android:textColor="@color/light_gray"
+                android:textSize="12sp"
+                app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <com.spectre.customView.CustomTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:text="@string/after_image"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    app:edittextfont="Poppins-Medium.ttf"
+                    app:edittextfontHint="Poppins-Medium.ttf" />
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_after"
+                    android:layout_width="match_parent"
+                    android:layout_height="105dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="2dp"
+                    android:background="@color/colorWhite"
+                    android:nestedScrollingEnabled="false">
+
+                </android.support.v7.widget.RecyclerView>
+
+                <com.rey.material.widget.ProgressView
+                    android:id="@+id/progress_pv_linear_colors_after"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="center"
+                    app:pv_autostart="false"
+                    app:pv_circular="false"
+                    app:pv_progressMode="indeterminate"
+                    app:pv_progressStyle="@style/ColorsLinearProgressDrawableStyle" />
+
+                <com.spectre.customView.CustomTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/min_image"
+                    android:textColor="@color/light_gray"
+                    android:textSize="12sp"
+                    app:edittextfont="ROBOTO-REGULAR.TTF" />
+            </LinearLayout>
+
+            <com.spectre.customView.CustomRayMaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/yellow_bg"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/next"
+                android:textColor="@color/colorWhite"
+                android:textSize="16sp"
+                android:visibility="invisible"
+                app:edittextfont="Poppins-Medium.ttf" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    <com.spectre.customView.CustomRayMaterialTextView
+        android:id="@+id/btn_work_submit"
+        style="@style/workRipple"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/yellow_bg"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="@string/submit"
+        android:textColor="@color/colorWhite"
+        android:textSize="16sp"
+        app:edittextfont="Poppins-Medium.ttf" />
+</LinearLayout>

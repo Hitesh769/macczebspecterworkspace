@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="235dp">
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    android:background="@color/purpleBackground"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imv_banner"
+                        android:layout_width="match_parent"
+                        android:layout_height="220dp"
+                        android:scaleType="centerCrop" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="220dp"
+                        android:background="#bb8700C9" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="65dp"
+                        android:gravity="center">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:gravity="center">
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:layout_gravity="center"
+                                android:scaleType="centerCrop"
+                                android:src="@mipmap/gestuser"
+                                app:civ_border_color="#30f4f4f4"
+                                app:civ_border_width="8dp" />
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/iv_profile"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:layout_gravity="center"
+                                android:scaleType="centerCrop"
+                                android:src="@mipmap/gestuser"
+                                app:civ_border_color="#30f4f4f4"
+                                app:civ_border_width="8dp" />
+
+                            <ImageView
+                                android:id="@+id/btn_camera"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="65dp"
+                                android:layout_marginTop="60dp"
+                                android:gravity="right"
+                                android:padding="6dp"
+                                android:src="@mipmap/camera" />
+                        </RelativeLayout>
+
+                    </FrameLayout>
+
+                    <com.spectre.customView.CustomTextView
+                        android:id="@+id/edit_banner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:background="@color/transprent_white"
+                        android:drawableLeft="@mipmap/black_camera"
+                        android:drawablePadding="5dp"
+                        android:minHeight="0dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:text="@string/add_banner"
+                        android:textColor="@color/black"
+                        app:edittextfont="Poppins-Medium.ttf"
+                        app:edittextfontHint="Poppins-Medium.ttf" />
+
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                android:orientation="vertical"
+                android:paddingBottom="20dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="40dp"
+                android:paddingTop="20dp">
+
+                <com.spectre.customView.CustomTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:text="@string/name"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:edittextfont="Poppins-Regular.ttf"
+                    app:edittextfontHint="Poppins-Regular.ttf" />
+
+                <com.spectre.customView.CustomEditText
+                    android:id="@+id/et_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/gray_bg_line"
+                    android:digits="@string/alphabets_only"
+                    android:hint="@string/enter_name"
+                    android:inputType="textCapWords"
+                    android:padding="5dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/light_gray"
+                    android:textSize="12sp"
+                    app:edittextfont="Poppins-Regular.ttf"
+                    app:edittextfontHint="Poppins-Regular.ttf" />
+
+                <com.spectre.customView.CustomTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:text="@string/email"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:edittextfont="Poppins-Regular.ttf"
+                    app:edittextfontHint="Poppins-Regular.ttf" />
+
+                <com.spectre.customView.CustomEditText
+                    android:id="@+id/et_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/gray_bg_line"
+                    android:hint="Enter Email"
+                    android:inputType="textEmailAddress"
+                    android:padding="5dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/light_gray"
+                    android:textSize="12sp"
+                    app:edittextfont="Poppins-Regular.ttf"
+                    app:edittextfontHint="Poppins-Regular.ttf" />
+
+                <com.spectre.customView.CustomTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:text="@string/mobile_number"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:edittextfont="Poppins-Regular.ttf"
+                    app:edittextfontHint="Poppins-Regular.ttf" />
+
+
+                <com.spectre.customView.CustomTextView
+                    android:id="@+id/et_mob"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/gray_bg_line"
+                    android:digits="@string/numeric0123456789"
+                    android:enabled="false"
+                    android:focusable="false"
+                    android:hint="@string/enter_mobile"
+                    android:inputType="number"
+                    android:longClickable="false"
+                    android:maxLength="10"
+                    android:padding="5dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/light_gray"
+                    android:textSize="12sp"
+                    app:edittextfont="Poppins-Regular.ttf"
+                    app:edittextfontHint="Poppins-Regular.ttf" />
+
+
+                <com.spectre.customView.CustomTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:text="@string/address"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:edittextfont="Poppins-Regular.ttf"
+                    app:edittextfontHint="Poppins-Regular.ttf" />
+
+
+                <com.spectre.customView.CustomEditText
+                    android:id="@+id/et_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/gray_bg_line"
+                    android:hint="@string/enter_address"
+                    android:inputType="textCapSentences"
+                    android:padding="5dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/light_gray"
+                    android:textSize="12sp"
+                    app:edittextfont="Poppins-Regular.ttf"
+                    app:edittextfontHint="Poppins-Regular.ttf" />
+
+                <LinearLayout
+                    android:id="@+id/ll_is_garage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <com.spectre.customView.CustomTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:text="@string/expertise"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        app:edittextfont="Poppins-Regular.ttf"
+                        app:edittextfontHint="Poppins-Regular.ttf" />
+
+
+                    <com.spectre.customView.CustomEditText
+                        android:id="@+id/et_expertise"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/gray_bg_line"
+                        android:hint="@string/enter_expertise"
+                        android:inputType="textCapSentences"
+                        android:padding="5dp"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/light_gray"
+                        android:textSize="12sp"
+                        app:edittextfont="Poppins-Regular.ttf"
+                        app:edittextfontHint="Poppins-Regular.ttf" />
+
+                    <com.spectre.customView.CustomTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:text="@string/car_repair"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        app:edittextfont="Poppins-Regular.ttf"
+                        app:edittextfontHint="Poppins-Regular.ttf" />
+
+
+                    <com.spectre.customView.CustomEditText
+                        android:id="@+id/et_repair"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/gray_bg_line"
+                        android:hint="@string/enter_car_repair"
+                        android:inputType="textCapSentences"
+                        android:padding="5dp"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/light_gray"
+                        android:textSize="12sp"
+                        app:edittextfont="Poppins-Regular.ttf"
+                        app:edittextfontHint="Poppins-Regular.ttf" />
+
+                    <com.spectre.customView.CustomTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:text="@string/service_type"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        app:edittextfont="Poppins-Regular.ttf"
+                        app:edittextfontHint="Poppins-Regular.ttf" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="vertical">
+
+                        <android.support.v7.widget.AppCompatRadioButton
+                            android:id="@+id/radio_main"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:buttonTint="@color/colorAccent"
+                            android:padding="5dp"
+                            android:text="@string/service_repair" />
+
+                        <android.support.v7.widget.AppCompatRadioButton
+                            android:id="@+id/radio_repair"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:buttonTint="@color/colorAccent"
+                            android:padding="5dp"
+                            android:text="@string/service_modify" />
+
+                        <android.support.v7.widget.AppCompatRadioButton
+                            android:id="@+id/radio_repair_service"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:buttonTint="@color/colorAccent"
+                            android:singleLine="true"
+                            android:text="@string/repair_services"
+                            android:padding="5dp" />
+
+                        <android.support.v7.widget.AppCompatRadioButton
+                            android:id="@+id/radio_both"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:buttonTint="@color/colorAccent"
+                            android:checked="true"
+                            android:padding="5dp"
+                            android:text="@string/both" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <com.spectre.customView.CustomRayMaterialTextView
+                    android:id="@+id/btn_save_changes"
+                    style="@style/splashRipple"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/pink_round_solid_rectangle"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="Save Changes"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="16sp"
+                    app:edittextfont="Poppins-Regular.ttf" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <include layout="@layout/toolbar" />
+</RelativeLayout>
+

@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "261315598939",
+    "firebase_url": "https://spectre-f7fc3.firebaseio.com",
+    "project_id": "spectre-f7fc3",
+    "storage_bucket": "spectre-f7fc3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:261315598939:android:05be4cd98cb8fe70",
+        "android_client_info": {
+          "package_name": "com.spectre"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "261315598939-mhghtmpebd28gja29osok3o3epp64toe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.spectre",
+            "certificate_hash": "a396b8831f484e4174d176832c66bde149dbc7ee"
+          }
+        },
+        {
+          "client_id": "261315598939-3es6qc4cpki91lbmffcd9c83r79e8u2c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.spectre",
+            "certificate_hash": "cccd51e53015ebb40c9d47145b9d38d5df3bfa6a"
+          }
+        },
+        {
+          "client_id": "261315598939-9ggiunnqlnvtvj5ktradngu0nlvunl0l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArWuM2KO59e1mh_IXJwy_ftkOWxZO-qYw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "261315598939-9ggiunnqlnvtvj5ktradngu0nlvunl0l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

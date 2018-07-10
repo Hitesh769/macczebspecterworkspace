@@ -1,0 +1,589 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nested_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <com.spectre.customView.CustomTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:text="@string/before_image"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:visibility="visible"
+                app:edittextfont="Poppins-Medium.ttf"
+                app:edittextfontHint="Poppins-Medium.ttf" />
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler"
+                android:layout_width="match_parent"
+                android:layout_height="105dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="2dp"
+                android:background="@color/colorWhite"
+                android:nestedScrollingEnabled="false">
+
+            </android.support.v7.widget.RecyclerView>
+
+            <com.rey.material.widget.ProgressView
+                android:id="@+id/progress_pv_linear_colors"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_gravity="center"
+                app:pv_autostart="false"
+                app:pv_circular="false"
+                app:pv_progressMode="indeterminate"
+                app:pv_progressStyle="@style/ColorsLinearProgressDrawableStyle" />
+
+            <com.spectre.customView.CustomTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/min_image"
+                android:textColor="@color/light_gray"
+                android:textSize="12sp"
+                app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="5dp"
+                android:visibility="visible">
+
+                <com.spectre.customView.CustomTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:text="@string/after_image"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    app:edittextfont="Poppins-Medium.ttf"
+                    app:edittextfontHint="Poppins-Medium.ttf" />
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_after"
+                    android:layout_width="match_parent"
+                    android:layout_height="105dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="2dp"
+                    android:background="@color/colorWhite"
+                    android:nestedScrollingEnabled="false">
+
+                </android.support.v7.widget.RecyclerView>
+
+                <com.rey.material.widget.ProgressView
+                    android:id="@+id/progress_pv_linear_colors_after"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="center"
+                    app:pv_autostart="false"
+                    app:pv_circular="false"
+                    app:pv_progressMode="indeterminate"
+                    app:pv_progressStyle="@style/ColorsLinearProgressDrawableStyle" />
+
+                <com.spectre.customView.CustomTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/min_image"
+                    android:textColor="@color/light_gray"
+                    android:textSize="12sp"
+                    app:edittextfont="ROBOTO-REGULAR.TTF" />
+            </LinearLayout>
+
+
+            <!-- car_name
+             model
+             version
+             year
+             mileage
+             problem
+             colour
+             car_type
+             car_condition
+             image[]-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@color/colorWhite"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <com.spectre.customView.CustomTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="@string/car_name"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:edittextfont="Poppins-Regular.ttf"
+                    app:edittextfontHint="Poppins-Regular.ttf" />
+
+                <!-- <com.spectre.customView.CustomEditText
+                     android:id="@+id/et_name"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:background="@drawable/semi_transparent_box"
+                     android:hint="@string/enter_car_name"
+                     android:inputType="textCapWords"
+                     android:padding="5dp"
+                     android:singleLine="true"
+                     android:textColor="@color/black"
+                     android:textColorHint="@color/light_gray"
+                     android:textSize="12sp"
+                     app:edittextfont="Poppins-Regular.ttf"
+                     app:edittextfontHint="Poppins-Regular.ttf" />
+ -->
+
+                <com.rey.material.widget.Spinner
+                    android:id="@+id/spinner_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/semi_transparent_box"
+                    android:spinnerMode="dialog" />
+
+                <com.spectre.customView.CustomTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:padding="5dp"
+                    android:text="@string/model"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:edittextfont="Poppins-Regular.ttf"
+                    app:edittextfontHint="Poppins-Regular.ttf" />
+
+                <!--  <com.spectre.customView.CustomEditText
+                      android:id="@+id/et_email"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="5dp"
+                      android:background="@drawable/gray_bg_line"
+                      android:hint="@string/enter_model"
+                      android:inputType="textEmailAddress"
+                      android:padding="5dp"
+                      android:singleLine="true"
+                      android:textColor="@color/black"
+                      android:textColorHint="@color/light_gray"
+                      android:textSize="12sp"
+                      app:edittextfont="Poppins-Regular.ttf"
+                      app:edittextfontHint="Poppins-Regular.ttf" />
+  -->
+
+                <com.rey.material.widget.Spinner
+                    android:id="@+id/spinner_model"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/semi_transparent_box"
+                    android:spinnerMode="dialog" />
+
+
+                <com.spectre.customView.CustomTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:text="@string/version"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:edittextfont="Poppins-Regular.ttf"
+                    app:edittextfontHint="Poppins-Regular.ttf" />
+
+
+                <!-- <com.spectre.customView.CustomTextView
+                     android:id="@+id/et_mob"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginTop="5dp"
+                     android:background="@drawable/gray_bg_line"
+                     android:digits="@string/numeric0123456789"
+                     android:enabled="false"
+                     android:focusable="false"
+                     android:hint="@string/enter_version"
+                     android:inputType="number"
+                     android:longClickable="false"
+                     android:maxLength="10"
+                     android:padding="5dp"
+                     android:singleLine="true"
+                     android:textColor="@color/black"
+                     android:textColorHint="@color/light_gray"
+                     android:textSize="12sp"
+                     app:edittextfont="Poppins-Regular.ttf"
+                     app:edittextfontHint="Poppins-Regular.ttf" />
+ -->
+                <com.rey.material.widget.Spinner
+                    android:id="@+id/spinner_version"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/semi_transparent_box"
+                    android:spinnerMode="dialog" />
+
+
+                <com.spectre.customView.CustomTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:text="@string/year"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:edittextfont="Poppins-Regular.ttf"
+                    app:edittextfontHint="Poppins-Regular.ttf" />
+
+
+                <!--  <com.spectre.customView.CustomEditText
+                      android:id="@+id/et_address"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="5dp"
+                      android:background="@drawable/gray_bg_line"
+                      android:hint="Enter Address"
+                      android:inputType="textCapSentences"
+                      android:padding="5dp"
+                      android:singleLine="true"
+                      android:textColor="@color/black"
+                      android:textColorHint="@color/light_gray"
+                      android:textSize="12sp"
+                      app:edittextfont="Poppins-Regular.ttf"
+                      app:edittextfontHint="Poppins-Regular.ttf" />
+  -->
+
+                <com.rey.material.widget.Spinner
+                    android:id="@+id/spinner_year"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/semi_transparent_box"
+                    android:spinnerMode="dialog" />
+
+                <com.spectre.customView.CustomTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:text="@string/car_type"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:edittextfont="Poppins-Regular.ttf"
+                    app:edittextfontHint="Poppins-Regular.ttf" />
+
+                <com.rey.material.widget.Spinner
+                    android:id="@+id/spinner_car_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/semi_transparent_box"
+                    android:spinnerMode="dialog" />
+
+
+                <com.spectre.customView.CustomTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:text="@string/color"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:edittextfont="Poppins-Regular.ttf"
+                    app:edittextfontHint="Poppins-Regular.ttf" />
+
+
+                <com.rey.material.widget.Spinner
+                    android:id="@+id/spinner_color"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/semi_transparent_box"
+                    android:spinnerMode="dialog" />
+
+                <com.spectre.customView.CustomTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:text="@string/car_modified"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:edittextfont="Poppins-Regular.ttf"
+                    app:edittextfontHint="Poppins-Regular.ttf" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <android.support.v7.widget.AppCompatRadioButton
+                        android:id="@+id/radio_yes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:gravity="center"
+                        android:text="@string/yes"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"
+                        app:buttonTint="@color/colorAccent" />
+
+                    <android.support.v7.widget.AppCompatRadioButton
+                        android:id="@+id/radio_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:checked="true"
+                        android:gravity="center"
+                        android:text="@string/no"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"
+                        app:buttonTint="@color/colorAccent" />
+                </LinearLayout>
+
+                <com.spectre.customView.CustomTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:text="@string/mileage"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:edittextfont="Poppins-Regular.ttf"
+                    app:edittextfontHint="Poppins-Regular.ttf" />
+
+
+                <com.spectre.customView.CustomEditText
+                    android:id="@+id/et_mileage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/semi_transparent_box"
+                    android:hint="@string/enter_mileage"
+                    android:inputType="number"
+                    android:padding="8dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/light_gray"
+                    android:textSize="12sp"
+                    app:edittextfont="Poppins-Regular.ttf"
+                    app:edittextfontHint="Poppins-Regular.ttf" />
+
+                <com.spectre.customView.CustomTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:text="@string/price"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:edittextfont="Poppins-Regular.ttf"
+                    app:edittextfontHint="Poppins-Regular.ttf" />
+
+
+                <com.spectre.customView.CustomEditText
+                    android:id="@+id/et_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/semi_transparent_box"
+                    android:hint="@string/enter_price"
+                    android:inputType="number"
+                    android:padding="8dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/light_gray"
+                    android:textSize="12sp"
+                    app:edittextfont="Poppins-Regular.ttf"
+                    app:edittextfontHint="Poppins-Regular.ttf" />
+
+
+                <com.spectre.customView.CustomTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:text="@string/car_condition"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:edittextfont="Poppins-Regular.ttf"
+                    app:edittextfontHint="Poppins-Regular.ttf" />
+
+                <com.spectre.customView.CustomEditText
+                    android:id="@+id/et_car_condition"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/semi_transparent_box"
+                    android:hint="@string/enter_car_condition"
+                    android:inputType="textCapSentences"
+                    android:padding="8dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/light_gray"
+                    android:textSize="12sp"
+                    app:edittextfont="Poppins-Regular.ttf"
+                    app:edittextfontHint="Poppins-Regular.ttf" />
+
+                <com.spectre.customView.CustomTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:text="@string/problem"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:edittextfont="Poppins-Regular.ttf"
+                    app:edittextfontHint="Poppins-Regular.ttf" />
+
+
+                <com.spectre.customView.CustomEditText
+                    android:id="@+id/et_problem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/semi_transparent_box"
+                    android:gravity="top"
+                    android:hint="@string/enter_problem"
+                    android:inputType="textCapSentences|textMultiLine"
+                    android:lines="3"
+                    android:maxLines="3"
+                    android:padding="8dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/light_gray"
+                    android:textSize="12sp"
+                    app:edittextfont="Poppins-Regular.ttf"
+                    app:edittextfontHint="Poppins-Regular.ttf" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                 <!--   <com.spectre.customView.CustomRayMaterialTextView
+                        android:id="@+id/btn_delete"
+                        style="@style/splashRipple"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/purple_round_solid_rectangle"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:text="@string/active"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="16sp"
+                        android:visibility="gone"
+                        app:edittextfont="Poppins-Medium.ttf" />
+
+                    <com.spectre.customView.CustomRayMaterialTextView
+                        android:id="@+id/btn_save_changes"
+                        style="@style/splashRipple"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/pink_round_solid_rectangle"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:text="Submit"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="16sp"
+                        app:edittextfont="Poppins-Medium.ttf" />
+-->
+                    <com.spectre.customView.CustomRayMaterialTextView
+                        android:id="@+id/btn_delete"
+                        style="@style/splashRipple"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/purple_round_solid_rectangle"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:text="@string/active"
+                        android:singleLine="true"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="12sp"
+                        android:visibility="gone"
+                        app:edittextfont="Poppins-Medium.ttf" />
+
+                    <com.spectre.customView.CustomRayMaterialTextView
+                        android:id="@+id/btn_delete_"
+                        style="@style/splashRipple"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/red_round_solid_rectangle"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:text="@string/delete"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="12sp"
+                        android:visibility="gone"
+                        app:edittextfont="Poppins-Medium.ttf" />
+
+                    <com.spectre.customView.CustomRayMaterialTextView
+                        android:id="@+id/btn_save_changes"
+                        style="@style/splashRipple"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/pink_round_solid_rectangle"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:text="Submit"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="12sp"
+                        app:edittextfont="Poppins-Medium.ttf" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="12dp"
+    android:orientation="vertical"
+    app:cardBackgroundColor="@color/colorWhite"
+    app:cardCornerRadius="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:orientation="vertical">
+
+        <com.spectre.customView.CustomTextView
+            android:id="@+id/txt_manage_ad_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:drawableRight="@mipmap/grey_cross"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/mange_ad_seller"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:edittextfont="Poppins-Medium.ttf" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <com.spectre.customView.CustomRayMaterialTextView
+                android:id="@+id/btn_manage_buy"
+                style="@style/splashPurpleRipple"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_weight="1"
+                android:background="@drawable/purple_round_solid_rectangle"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/buy"
+                android:textColor="@color/colorWhite"
+                android:textSize="14sp"
+                android:visibility="visible"
+                app:edittextfont="Poppins-Medium.ttf" />
+
+            <com.spectre.customView.CustomRayMaterialTextView
+                android:id="@+id/btn_manage_rent"
+                style="@style/splashRipple"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_weight="1"
+                android:background="@drawable/pink_round_solid_rectangle"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/rent"
+                android:textColor="@color/colorWhite"
+                android:textSize="14sp"
+                android:visibility="visible"
+                app:edittextfont="Poppins-Medium.ttf" />
+
+            <com.spectre.customView.CustomRayMaterialTextView
+                android:id="@+id/btn_manage_garage"
+                style="@style/splashRipple"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_weight="1"
+                android:background="@drawable/pink_round_solid_rectangle"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/manage_ad_garage"
+                android:textColor="@color/colorWhite"
+                android:textSize="14sp"
+                android:visibility="gone"
+                app:edittextfont="Poppins-Medium.ttf" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
