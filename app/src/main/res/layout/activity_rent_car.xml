@@ -137,6 +137,22 @@
                     android:background="@drawable/semi_transparent_box"
                     android:spinnerMode="dialog" />
 
+                <!--<com.spectre.customView.CustomEditText-->
+                    <!--android:id="@+id/et_model"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginTop="5dp"-->
+                    <!--android:background="@drawable/semi_transparent_box"-->
+                    <!--android:hint="@string/enter_model"-->
+                    <!--android:inputType="text"-->
+                    <!--android:padding="8dp"-->
+                    <!--android:singleLine="true"-->
+                    <!--android:textColor="@color/black"-->
+                    <!--android:textColorHint="@color/light_gray"-->
+                    <!--android:textSize="12sp"-->
+                    <!--app:edittextfont="Poppins-Regular.ttf"-->
+                    <!--app:edittextfontHint="Poppins-Regular.ttf" />-->
+
 
                 <com.spectre.customView.CustomTextView
                     android:layout_width="match_parent"
@@ -442,17 +458,24 @@
                     app:edittextfont="Poppins-Regular.ttf"
                     app:edittextfontHint="Poppins-Regular.ttf" />
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@drawable/semi_transparent_box">
+
                 <com.spectre.customView.CustomTextView
                     android:id="@+id/tv_post_ad_location"
                     style="@style/Material.Widget.EditText.Light"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:background="@drawable/semi_transparent_box"
                     android:hint="@string/enter_location"
                     android:inputType="textCapSentences"
                     android:longClickable="false"
                     android:padding="8dp"
+                    android:layout_weight="1"
+                    android:layout_marginRight="20dp"
                     android:singleLine="true"
                     android:textColor="@color/black"
                     android:textColorHint="@color/light_gray"
@@ -460,6 +483,15 @@
                     app:edittextfont="Poppins-Regular.ttf"
                     app:edittextfontHint="Poppins-Regular.ttf" />
 
+                    <ImageView
+                        android:id="@+id/img_post_ad_current_location"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="20dp"
+                        android:src="@drawable/ic_location"/>
+
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -478,8 +510,8 @@
                         android:background="@drawable/purple_round_solid_rectangle"
                         android:gravity="center"
                         android:padding="8dp"
+                        android:text="@string/inactive"
                         android:singleLine="true"
-                        android:text="@string/active"
                         android:textColor="@color/colorWhite"
                         android:textSize="12sp"
                         android:visibility="gone"
@@ -517,7 +549,7 @@
                         android:background="@drawable/pink_round_solid_rectangle"
                         android:gravity="center"
                         android:padding="8dp"
-                        android:text="Submit"
+                        android:text="@string/save"
                         android:textColor="@color/colorWhite"
                         android:textSize="12sp"
                         app:edittextfont="Poppins-Medium.ttf" />

@@ -11,23 +11,26 @@ import java.util.ArrayList;
 
 
 public class FilterResponse implements Parcelable {
-    private String car_name_id="0";
-    private String version_id="0";
-    private String car_type="";
-    private String colour="";
-    private String model_id="0";
-    private String price_min_range="0";
-    private String price_max_range="0";
-    private String show_price_max_range="";
-    private String year_from="";
-    private String year_to="";
-    private String type="";
-    private String create_at="0";
-    private String list_type="0";
-    private String carName="";
-    private String carModel="";
-    private String carVersion="";
-    private String service_type="0";
+    private String car_name_id = "0";
+    private String version_id = "0";
+    private String car_type = "";
+    private String colour = "";
+    private String model_id = "0";
+    private String price_min_range = "0";
+    private String price_max_range = "0";
+    private String show_price_max_range = "";
+    private String year_from = "";
+    private String year_to = "";
+    private String type = "";
+    private String create_at = "0";
+    private String list_type = "0";
+    private String carName = "";
+    private String carModel = "";
+    private String carVersion = "";
+    private String service_type = "0";
+    private String location = "location";
+    private String latitude = "lot";
+    private String longitude = "lon";
 
     /*{
         "car_name_id": "0",
@@ -44,7 +47,8 @@ public class FilterResponse implements Parcelable {
             "list_type":"0"
     }*/
 
-    public FilterResponse(){}
+    public FilterResponse() {
+    }
 
     protected FilterResponse(Parcel in) {
         car_name_id = in.readString();
@@ -59,11 +63,14 @@ public class FilterResponse implements Parcelable {
         type = in.readString();
         create_at = in.readString();
         list_type = in.readString();
-        show_price_max_range=in.readString();
-        carName=in.readString();
-        carModel=in.readString();
-        carVersion=in.readString();
-        service_type=in.readString();
+        show_price_max_range = in.readString();
+        carName = in.readString();
+        carModel = in.readString();
+        carVersion = in.readString();
+        service_type = in.readString();
+        location = in.readString();
+        latitude = in.readString();
+        longitude = in.readString();
     }
 
     public static final Creator<FilterResponse> CREATOR = new Creator<FilterResponse>() {
@@ -102,6 +109,10 @@ public class FilterResponse implements Parcelable {
         dest.writeString(carModel);
         dest.writeString(carVersion);
         dest.writeString(service_type);
+        dest.writeString(location);
+        dest.writeString(longitude);
+        dest.writeString(latitude);
+
     }
 
     public String getCar_name_id() {
@@ -237,11 +248,35 @@ public class FilterResponse implements Parcelable {
     }
 
     public String getService_type() {
-        return service_type==null?"0":service_type;
+        return service_type == null ? "0" : service_type;
     }
 
     public void setService_type(String service_type) {
         this.service_type = service_type;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
     }
 }
 

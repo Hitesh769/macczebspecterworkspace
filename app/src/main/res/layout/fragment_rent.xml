@@ -3,16 +3,65 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/colorBackground">
 
+    <com.spectre.customView.CustomTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/select_location"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:edittextfont="Poppins-Regular.ttf"
+        app:edittextfontHint="Poppins-Regular.ttf" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:background="@drawable/semi_transparent_box"
+        android:orientation="horizontal">
+
+        <com.spectre.customView.CustomTextView
+            android:id="@+id/tv_rent_fragment_location"
+            style="@style/Material.Widget.EditText.Light"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginRight="15dp"
+            android:layout_weight="1"
+            android:hint="@string/enter_location"
+            android:inputType="textCapSentences"
+            android:longClickable="false"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textColorHint="@color/light_gray"
+            android:textSize="10sp"
+            app:edittextfont="Poppins-Regular.ttf"
+            app:edittextfontHint="Poppins-Regular.ttf" />
+
+        <ImageView
+            android:id="@+id/img_rent_fragment_location"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="20dp"
+            android:padding="3dp"
+            android:src="@drawable/ic_location" />
+
+    </LinearLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/progress_pv_linear_colors"
-        android:layout_below="@+id/toolbar_actionbar">
+        android:layout_below="@+id/toolbar_actionbar"
+        android:layout_marginTop="70dp">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view2"
@@ -25,14 +74,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:drawablePadding="18dp"
-        android:gravity="center"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
+        android:drawablePadding="18dp"
+        android:gravity="center"
         android:text="No data available"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textSize="15sp"
         android:textColor="@color/colorPrimary"
+        android:textSize="15sp"
         android:visibility="gone"
         app:edittextfont="Poppins-Medium.ttf"
         app:edittextfontHint="Poppins-Medium.ttf" />

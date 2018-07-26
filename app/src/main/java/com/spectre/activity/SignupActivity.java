@@ -325,7 +325,6 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             e.printStackTrace();
         }
 
-
         AqueryCall request = new AqueryCall(this);
         request.postWithoutToken(Urls.SIGNUP, jsonObject, new RequestCallback() {
             @Override

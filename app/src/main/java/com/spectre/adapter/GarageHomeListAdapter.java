@@ -53,7 +53,6 @@ public class GarageHomeListAdapter extends RecyclerView.Adapter<GarageHomeListAd
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final Garage adPost = arraylist.get(position);
 
-
         if (adPost.getFull_name() != null && !adPost.getFull_name().isEmpty()) {
             holder.txt_name.setText(adPost.getFull_name());
         } else {

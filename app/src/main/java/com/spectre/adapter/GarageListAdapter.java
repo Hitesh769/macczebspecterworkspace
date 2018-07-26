@@ -119,7 +119,6 @@ public class GarageListAdapter extends RecyclerView.Adapter<GarageListAdapter.Vi
                     ((ManageWorkActivity) appContext).startActivityForResult(intent, 404);
                 }
 
-
                 if (appContext instanceof HomeActivity && status == 1) {
                     Intent intent = new Intent(appContext, GarageDetailActivity.class);
                     intent.putExtra(Constant.DATA, adPost);

@@ -277,7 +277,6 @@ public class GarageHomeActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
-
     private void setUpRecycler() {
         /*for (int i = 0; i <= 9; i++) {
             EventDetail eventDetail = new EventDetail();
@@ -332,7 +331,6 @@ public class GarageHomeActivity extends AppCompatActivity implements View.OnClic
             e.printStackTrace();
         }
     }
-
 
     private void callMethodEventList(final int i) {
         JSONObject params = new JSONObject();

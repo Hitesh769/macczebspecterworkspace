@@ -121,6 +121,9 @@ public class Constant {
     public final static String INTERESTED_ID = "interested_id";
     public final static String TYPE = "type";
     public final static String LANGUAGE = "language";
+    public final static String LOCATION = "location";
+    public static final String LATITUDE = "lat";
+    public static final String LONGITUDE = "lon";
 
     /*{
         "second_user_id":"337",

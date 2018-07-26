@@ -47,7 +47,7 @@ public class AdPost implements Parcelable {
     private ArrayList<String> after_image;
     private String from_date;
     private String to_date;
-
+    private String location;
 
     public AdPost() {
     }
@@ -89,6 +89,7 @@ public class AdPost implements Parcelable {
         after_image = in.createStringArrayList();
         from_date = in.readString();
         to_date = in.readString();
+        location = in.readString();
     }
 
     @Override
@@ -129,6 +130,7 @@ public class AdPost implements Parcelable {
         dest.writeStringList(after_image);
         dest.writeString(from_date);
         dest.writeString(to_date);
+        dest.writeString(location);
     }
 
     @Override
@@ -151,10 +153,17 @@ public class AdPost implements Parcelable {
     public String getModel() {
         return model != null ? model : "";
     }
-
     public void setModel(String model) {
         this.model = model;
     }
+    public String getLocation() {
+        return location != null ? location : "";
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
 
     public String getMileage() {
         return mileage != null ? mileage : "";

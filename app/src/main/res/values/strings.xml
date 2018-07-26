@@ -51,6 +51,7 @@
     <string name="previous_current">Add at least one photo of your car</string>
     <string name="pls_select_cname">Please Select Brand/Car Name</string>
     <string name="loading">Please wait while loading images</string>
+    <string name="pls_select_location">Please select location</string>
     <string name="loading_work">Please wait while loading %1$s</string>
     <string name="image_should_be_same">Number of images in previous car pictures &amp; current car pictures should be same</string>
 
@@ -287,7 +288,7 @@
     <string name="edit_rented_car">Edit your Ad (Rent)</string>
     <string name="rent_duration">Rental Duration</string>
     <string name="next">Next</string>
-    <string name="garage">Seller</string>
+    <string name="garage">Garage</string>
     <string name="customer">Buyer</string>
     <string name="as_buyer">As Buyer</string>
     <string name="as_seller">As Seller</string>
@@ -298,5 +299,16 @@
     <string name="location">Location :</string>
     <string name="enter_location">Enter loction</string>
     <string name="title_activity_maps">Map</string>
+    <string name="save">Save</string>
+    <string name="privacy_policy">Privacy policy</string>
+    <string name="social">Social</string>
+    <string name="feedback">Feedback</string>
+    <string name="toast_need_location_permission">You need to allow location to better result.</string>
+    <string name="cancel">Cancel</string>
+    <string name="select_location">Select location</string>
+    <string name="pls_enter_model">Please enter model</string>
+    <string name="delete_question">Are you sure you want to delete</string>
+    <string name="pls_enter_version">Please enter version</string>
+
     <!--<string name="add_work">Add Work</string>-->
 </resources>

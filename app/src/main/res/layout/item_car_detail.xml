@@ -32,7 +32,7 @@
                 android:layout_height="70dp"
                 android:layout_centerInParent="true"
                 android:layout_gravity="top"
-                android:scaleType="centerCrop"
+                android:scaleType="center"
                 android:src="@drawable/ic_launcher_web" />
 
         </RelativeLayout>
@@ -80,7 +80,6 @@
 
             </LinearLayout>
 
-
             <com.spectre.customView.CustomTextView
                 android:id="@+id/txt_owner_name"
                 android:layout_width="match_parent"
@@ -120,7 +119,6 @@
                 app:edittextfont="Poppins-Regular.ttf"
                 app:edittextfontHint="Poppins-Regular.ttf" />
 
-
             <com.spectre.customView.CustomRayMaterialTextView
                 android:id="@+id/btn_view_detail"
                 style="@style/splashRipple"
@@ -139,6 +137,5 @@
         </LinearLayout>
 
     </LinearLayout>
-
 
 </android.support.v7.widget.CardView>

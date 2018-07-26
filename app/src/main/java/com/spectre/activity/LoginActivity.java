@@ -106,7 +106,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-
     /*Open reset Password dialog and call reset Password API*/
 
     private void resetPassword(String number) {
@@ -294,7 +293,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
 
         AqueryCall request = new AqueryCall(this);
         request.postWithoutToken(Urls.LOGIN, jsonObject, new RequestCallback() {

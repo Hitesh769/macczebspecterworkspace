@@ -62,7 +62,6 @@ public class GarageFragment extends Fragment {
     String type = "0";
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -200,6 +199,8 @@ public class GarageFragment extends Fragment {
                 public void onSuccess(JSONObject js, String success) {
                     txtConnection.setVisibility(View.GONE);
                     saveAndForward(js, i);
+                    Utility.setLog("Garage fragment");
+
                 }
 
                 @Override
@@ -310,7 +311,6 @@ public class GarageFragment extends Fragment {
         type = filterType;
         callMethodEventList(0);
     }
-
 
 
 }

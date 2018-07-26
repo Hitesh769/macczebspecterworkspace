@@ -46,7 +46,6 @@ public class ManageRentedActivity extends AppCompatActivity {
     private SwipeRefreshLayout swipeRefreshLayout;
     private String TAG = ManageAdActivity.class.getName();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,7 +90,6 @@ public class ManageRentedActivity extends AppCompatActivity {
             onItemsLoadComplete();
         }
     }
-
 
     private void setUpRecycler() {
         /*for (int i = 0; i <= 9; i++) {
@@ -255,7 +253,6 @@ public class ManageRentedActivity extends AppCompatActivity {
 
             mAdapter.notifyDataSetChanged();
 
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -268,7 +265,6 @@ public class ManageRentedActivity extends AppCompatActivity {
         super.finish();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

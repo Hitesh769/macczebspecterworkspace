@@ -19,6 +19,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.androidquery.AQuery;
+import com.androidquery.callback.AjaxCallback;
+import com.androidquery.callback.AjaxStatus;
 import com.spectre.R;
 import com.spectre.adapter.ReviewListAdapter;
 import com.spectre.adapter.WorkListAdapter;
@@ -139,7 +141,6 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
             position = getIntent().getExtras().getInt(Constant.POSITION);
             type = getIntent().getExtras().getInt(Constant.TYPE);
 
-
             display = getWindowManager().getDefaultDisplay();
             Point size = new Point();
             display.getSize(size);
@@ -148,7 +149,6 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
             layoutParams.width = display.getWidth();
             layoutParams.height = Utility.dpToPx(context, 250);
             imv_banner.setLayoutParams(layoutParams);
-
 
             if (adPost.getEmail() != null && !adPost.getEmail().isEmpty()) {
                 txt_email_id.setText(adPost.getEmail().trim());
@@ -162,7 +162,6 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
                 txt_email_id.setText(context.getString(R.string.na));
             }
 */
-
             if (adPost.getFull_name() != null && !adPost.getFull_name().isEmpty()) {
                 txt_vendor_name.setText(adPost.getFull_name().trim());
             } else {
@@ -196,7 +195,6 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
             } else {
                 txt_adress.setText(context.getString(R.string.na));
             }
-
 
             if (adPost.getUser_image() != null && !adPost.getUser_image().isEmpty()) {
                 new AQuery(context).id(iv_profile).image(adPost.getUser_image(), true, true, 0, R.mipmap.gestuser);
@@ -246,9 +244,6 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
 
             setReviewData();
 
-
-
-
         } else {
             new AlertBox(context).openMessageWithFinish(getResources().getString(R.string.something_wrong), "Okay", "", false);
         }
@@ -274,7 +269,6 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
             no_review_found.setVisibility(View.VISIBLE);
         }
     }
-
 
     @Override
     public void finish() {
@@ -324,7 +318,6 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -334,7 +327,6 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
             e.printStackTrace();
         }
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -418,7 +410,6 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
-
     private void callResetAPI(final Dialog dd, final String trim) {
 
         try {
@@ -429,7 +420,7 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
             jsonInput.put(Constant.INTERESTED_ID, adPost.getAdd_id());
             jsonInput.put(Constant.TYPE, type == 0 ? 1 : 2);
 
-          /*  new AQuery(context).post(Urls.FORGOT_PASSWORD, jsonInput, JSONObject.class, new AjaxCallback<JSONObject>() {
+            new AQuery(context).post(Urls.FORGOT_PASSWORD, jsonInput, JSONObject.class, new AjaxCallback<JSONObject>() {
 
                 @Override
                 public void callback(String url, JSONObject json, AjaxStatus status) {
@@ -456,10 +447,10 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
                         }
                     } else {
                         MyDialogProgress.close(context);
-                        nullCase(status, AjaxStatus.NETWORK_ERROR);
+                        //nullCase(status, AjaxStatus.NETWORK_ERROR);
                     }
                 }
-            });*/
+            });
 
             new AqueryCall(this).postWithJsonToken(Urls.INTEREST_GARAGE, Utility.getSharedPreferences(context, Constant.USER_TOKEN), jsonInput, new RequestCallback() {
                 @Override

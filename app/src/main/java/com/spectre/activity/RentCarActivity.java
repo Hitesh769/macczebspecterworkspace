@@ -1,10 +1,19 @@
 package com.spectre.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -21,6 +30,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -58,6 +68,7 @@ import com.spectre.interfaces.RequestCallback;
 import com.spectre.other.Constant;
 import com.spectre.other.Urls;
 import com.spectre.utility.ConvetBitmap;
+import com.spectre.utility.PermissionUtility;
 import com.spectre.utility.PermissionsUtils;
 import com.spectre.utility.Utility;
 import com.zhihu.matisse.Matisse;
@@ -71,28 +82,33 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import static com.zhihu.matisse.MimeType.JPEG;
 import static com.zhihu.matisse.MimeType.PNG;
 
-public class RentCarActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
+public class RentCarActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     private Context context;
     private ArrayList<String> carType = new ArrayList<>();
     private Spinner spinner_name, spinner_model, spinner_version, spinner_year, spinner_car_type, spinner_color;
 
     private CustomRayMaterialTextView btn_save_changes, btn_delete, btn_delete_;
-    private CustomEditText et_mileage, et_price, et_car_condition, et_car_desc;
-    private CustomTextView et_car_to, et_car_from, tv_post_ad_location;
-
-    private String latitude = "", longitude = "";
+    private CustomEditText et_mileage, et_price, et_car_condition, et_car_desc, et_model;
+    private CustomTextView et_car_to, et_car_from, tv_post_ad_location, txt_post_ad_header;
+    private ImageView img_post_ad_current_location;
+    private String latitude = "";
+    private String longitude = "";
+    private String currentLatitude = "0";
+    private String currentLongitude = "0";
 
     //Declaration of Google API Client
     private GoogleApiClient mGoogleApiClient;
@@ -122,6 +138,11 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
     private boolean canEdit, refresh;
 
     private static final int PLACE_PICKER_REQUEST = 999;
+    //Define a request code to send to Google Play services
+    private static final int LOCATION_PERMISSION_CONSTANT = 101;
+
+    private Dialog ddPostAd = null;
+    private CustomRayMaterialTextView btn_delete_yes, btn_delete_no;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,6 +152,118 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
         Utility.setContentView(context, R.layout.activity_rent_car);
         actionBar = Utility.setUpToolbar_(context, "<font color='#ffffff'>" + getString(R.string.add_car_for_rent) + "</font>", true);
         initView();
+        getLocation();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case LOCATION_PERMISSION_CONSTANT:
+                if (grantResults.length > 0) {
+                    boolean locationAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                    if (locationAccepted) {
+                        // get location
+                        Utility.setLog("PERMISSION grant");
+                        getLocation();
+                    } else {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            if (shouldShowRequestPermissionRationale(PermissionUtility.ACCESS_FINE_LOCATION)
+                                    || shouldShowRequestPermissionRationale(PermissionUtility.ACCESS_COARSE_LOCATION)) {
+                                showMessageOKCancel(new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        PermissionUtility.requestPermission(RentCarActivity.this,
+                                                new String[]{PermissionUtility.ACCESS_FINE_LOCATION,
+                                                        PermissionUtility.ACCESS_COARSE_LOCATION},
+                                                LOCATION_PERMISSION_CONSTANT);
+                                    }
+                                });
+                                return;
+                            }
+                        }
+
+                    }
+                }
+                break;
+        }
+    }
+
+    private void getLocation() {
+        // get location
+        if (!PermissionUtility.checkPermission(context, PermissionUtility.ACCESS_FINE_LOCATION) ||
+                !PermissionUtility.checkPermission(context, PermissionUtility.ACCESS_COARSE_LOCATION)) {
+            PermissionUtility.requestPermission(RentCarActivity.this, new String[]{PermissionUtility.ACCESS_FINE_LOCATION,
+                    PermissionUtility.ACCESS_COARSE_LOCATION}, LOCATION_PERMISSION_CONSTANT);
+        } else {
+            Utility.setLog("PERMISSION grant");
+            LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+            List<String> providers = locationManager.getProviders(true);
+            Location bestLocation = null;
+            for (String provider : providers) {
+                Location l = locationManager.getLastKnownLocation(provider);
+                if (l == null) {
+                    continue;
+                }
+                if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+                    bestLocation = l; // Found best last known location;
+                }
+            }
+            if (bestLocation != null) {
+                Utility.setLog("Lat : " + bestLocation.getLatitude() + " - Long : " + bestLocation.getLongitude());
+                latitude = String.valueOf(bestLocation.getLatitude());
+                longitude = String.valueOf(bestLocation.getLongitude());
+                Utility.setLog("Lat : " + getFullAddress(Double.valueOf(latitude), Double.valueOf(longitude)));
+                tv_post_ad_location.setText(getFullAddress(Double.valueOf(latitude), Double.valueOf(longitude)));
+
+            } else {
+                Utility.setLog("Location is null");
+            }
+        }
+    }
+
+    private Address getAddress(Context context, double lat, double lng) {
+        Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+
+        if (!geocoder.isPresent()) {
+            // showToast(context, R.string.e_service_not_available);
+            return null;
+        }
+
+        Address obj = null;
+        try {
+            List<Address> addresses = geocoder.getFromLocation(lat, lng, 1);
+            if (addresses.size() > 0)
+                obj = addresses.get(0);
+            return obj;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private String getFullAddress(double lat, double lng) {
+        Address address = getAddress(context, lat, lng);
+        if (address == null) {
+            return "";
+        }
+        StringBuffer buffer = new StringBuffer();
+        buffer.append(address.getAddressLine(0));
+        buffer.append((address.getAdminArea() == null) ? "" : " ," + address.getLocality());
+        buffer.append((address.getAdminArea() == null) ? "" : " ," + address.getAdminArea());
+        buffer.append((address.getSubLocality() == null) ? "" : " ," + address.getSubLocality());
+        buffer.append((address.getCountryName() == null) ? "" : " ," + address.getCountryName());
+        buffer.append((address.getPostalCode() == null) ? "" : " ," + address.getPostalCode());
+        return String.valueOf(buffer);
+    }
+
+    private void showMessageOKCancel(DialogInterface.OnClickListener okListener) {
+        new AlertDialog.Builder(context)
+                .setMessage(getString(R.string.yes))
+                .setPositiveButton(getString(R.string.ok), okListener)
+                .setNegativeButton(getString(R.string.no), null)
+                .create()
+                .show();
     }
 
     private void initView() {
@@ -146,7 +279,6 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
 
         String arraycarColor[] = getResources().getStringArray(R.array.car_color);
         List<String> carColor = Arrays.asList(arraycarColor);
-
 
         names.add(Utility.getCarName(context));
         model.add(Utility.getModelName(context));
@@ -193,15 +325,16 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
         et_car_desc = (CustomEditText) findViewById(R.id.et_car_desc);
         et_mileage = (CustomEditText) findViewById(R.id.et_mileage);
         et_price = (CustomEditText) findViewById(R.id.et_price);
+        //et_model = (CustomEditText) findViewById(R.id.et_model);
 
         et_car_to = (CustomTextView) findViewById(R.id.et_car_to);
         et_car_from = (CustomTextView) findViewById(R.id.et_car_from);
         tv_post_ad_location = (CustomTextView) findViewById(R.id.tv_post_ad_location);
+        img_post_ad_current_location = (ImageView) findViewById(R.id.img_post_ad_current_location);
 
         btn_save_changes = (CustomRayMaterialTextView) findViewById(R.id.btn_save_changes);
         btn_delete = (CustomRayMaterialTextView) findViewById(R.id.btn_delete);
         btn_delete_ = (CustomRayMaterialTextView) findViewById(R.id.btn_delete_);
-
 
         btn_save_changes.setOnClickListener(this);
         btn_delete.setOnClickListener(this);
@@ -211,6 +344,7 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
         et_car_from.setOnClickListener(this);
 
         tv_post_ad_location.setOnClickListener(this);
+        img_post_ad_current_location.setOnClickListener(this);
 
         alertBox = new AlertBox(context);
         if (getIntent().getExtras() != null && getIntent().getExtras().get(Constant.DATA) != null) {
@@ -219,20 +353,23 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
             position = getIntent().getExtras().getInt(Constant.POSITION);
             //       et_mileage.setText(adPost.getMileage());
             et_price.setText(adPost.getPrice());
+            //et_model.setText(adPost.getModel());
             //        et_car_desc.setText(adPost.getDescription());
             et_car_to.setText(adPost.getYear_to());
             et_car_from.setText(adPost.getYear_from());
+            tv_post_ad_location.setText(adPost.getLocation());
             //        et_car_condition.setText(adPost.getCar_condition());
             //         spinner_color.setSelection(arrayAdapterCarColor.getPosition(adPost.getColor()));
             //         spinner_year.setSelection(arrayAdapterYear.getPosition(adPost.getYear()));
             //        spinner_car_type.setSelection(arrayAdapterCarType.getPosition(adPost.getCar_type()));
+
             btn_delete.setVisibility(View.VISIBLE);
             btn_delete_.setVisibility(View.VISIBLE);
-
             if (adPost.getDelete_status() != null && adPost.getDelete_status().equalsIgnoreCase("0")) {
                 btn_delete.setText(getString(R.string.inactive));
             } else {
                 btn_delete.setText(getString(R.string.active));
+                btn_delete.setVisibility(View.VISIBLE);
             }
 
             if (adPost.getImage().size() > 0) {
@@ -327,10 +464,11 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
                 checkCondition();
                 break;
             case R.id.btn_delete:
-                callDeleteApi(adPost.getDelete_status().equalsIgnoreCase("0") ? 1 : 0);
+                callDeleteApi(2);
                 break;
             case R.id.btn_delete_:
-                callDeleteApi(2);
+                // callDeleteApi(adPost.getDelete_status().equalsIgnoreCase("0") ? 1 : 0);
+                chooseDeleteAd();
                 break;
             case R.id.et_car_to:
                 Utility.openCalendarDialog(context, et_car_to);
@@ -339,22 +477,71 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
                 Utility.openCalendarDialog(context, et_car_from);
                 break;
             case R.id.tv_post_ad_location:
-//               startActivity(new Intent(context, MapsActivity.class));
                 try {
-                    Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY).build(this);
+                    Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).build(this);
                     startActivityForResult(intent, PLACE_PICKER_REQUEST);
                 } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
                     e.printStackTrace();
                 }
                 break;
+            case R.id.img_post_ad_current_location:
+                getLocation();
+                break;
         }
+    }
+
+    //start of delete dialog
+    public void chooseDeleteAd() {
+
+        ddPostAd = new Dialog(context);
+
+        ddPostAd.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        ddPostAd.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        ddPostAd.setContentView(R.layout.dialog_delete);
+
+        btn_delete_yes = ddPostAd.findViewById(R.id.btn_delete_yes);
+        btn_delete_no = ddPostAd.findViewById(R.id.btn_delete_no);
+        txt_post_ad_header = ddPostAd.findViewById(R.id.txt_post_ad_header);
+
+//        if (!Utility.getSharedPreferences(context, Constant.USER_TYPE).isEmpty() && Utility.getSharedPreferences(context, Constant.USER_TYPE).equalsIgnoreCase("1")) {
+//            btn_post_garage.setVisibility(View.GONE);
+//        } else
+//            btn_post_garage.setVisibility(View.VISIBLE);
+        ddPostAd.setCancelable(false);
+        ddPostAd.getWindow().setLayout(-1, -2);
+        ddPostAd.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+
+        ddPostAd.show();
+
+        btn_delete_yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callDeleteApi(2);
+                ddPostAd.dismiss();
+            }
+        });
+
+        btn_delete_no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(context, RentCarActivity.class));
+                ddPostAd.dismiss();
+            }
+        });
+        txt_post_ad_header.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ddPostAd.dismiss();
+            }
+        });
     }
 
     private void checkCondition() {
         et_mileage.setError(null);
         et_car_condition.setError(null);
         et_price.setError(null);
-        et_car_desc.setError(null);
+//        et_car_desc.setError(null);
+        tv_post_ad_location.setError(null);
 
         if (!canEdit && adPost != null) {
             Utility.showToast(context, getString(R.string.loading));
@@ -373,6 +560,11 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
 
         if (spinner_model.getSelectedItemPosition() == 0) {
             Utility.showToast(context, getString(R.string.pls_select_cmodel));
+            return;
+        }
+
+        if (tv_post_ad_location.getText().toString().trim().isEmpty()) {
+            Utility.showToast(context, getString(R.string.pls_select_location));
             return;
         }
 
@@ -396,7 +588,6 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
             return;
         }
 
-
         if (et_mileage.getText().toString().trim().isEmpty()) {
             et_mileage.setError(getString(R.string.pls_select_cMileage));
             return;
@@ -406,6 +597,11 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
             et_price.setError(getString(R.string.pls_select_cPrice));
             return;
         }
+//        if (et_model.getText().toString().trim().isEmpty()) {
+//            et_model.setError(getString(R.string.pls_enter_model));
+//            return;
+//        }
+
 
        /* if (et_car_condition.getText().toString().trim().isEmpty()) {
             et_car_condition.setError(getString(R.string.pls_select_cCondition));
@@ -433,7 +629,6 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
             Utility.showToast(context, getString(R.string.date_validation));
             return;
         }
-
 
         callApi();
 
@@ -500,10 +695,14 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
             jsonObject.put(Constant.COLOUR, ((String) spinner_color.getSelectedItem()));
             jsonObject.put(Constant.MILEAGE, et_mileage.getText().toString().trim());
             jsonObject.put(Constant.PRICE, et_price.getText().toString().trim());
+            //  jsonObject.put(Constant.MODEL, et_model.getText().toString().trim());
             jsonObject.put(Constant.CAR_CONDITION, et_car_condition.getText().toString().trim());
             jsonObject.put(Constant.YEAR_TO, et_car_to.getText().toString().trim());
             jsonObject.put(Constant.YEAR_FROM, et_car_from.getText().toString().trim());
             jsonObject.put(Constant.DESCRIPTION, et_car_desc.getText().toString().trim());
+            jsonObject.put(Constant.LOCATION, tv_post_ad_location.getText().toString().trim());
+            jsonObject.put(Constant.LATITUDE, latitude);
+            jsonObject.put(Constant.LONGITUDE, longitude);
             int i = 0;
           /*  for (ImageData imageData : bitMapList) {
                 if (imageData.getBytes() != null) {
@@ -578,6 +777,31 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        // Called when a new location is found by the network location provider.
+        if (location != null) {
+            Utility.setLog("Lat : " + location.getLatitude() + " - Long : " + location.getLongitude());
+        } else
+            Utility.setLog("Location is null");
+
+    }
+
+    @Override
+    public void onStatusChanged(String s, int i, Bundle bundle) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String s) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String s) {
 
     }
 
@@ -725,30 +949,30 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == REQUEST_CODE_CHOOSE && resultCode == RESULT_OK) {
-//            int size = bitMapList.size() - 1;
-//            // mAdapter.setData(Matisse.obtainResult(data), Matisse.obtainPathResult(data));
-//            List<Uri> list = Matisse.obtainResult(data);
-//            if (list != null && list.size() > 0) {
-//
-//                for (Uri uri : list) {
-//                    ImageData imageData = setImage(uri);
-//                    if (imageData.getBitmap() != null && imageData.getBitmap().getByteCount() > 0) {
-//                        if (bitMapList.get(size).getBitmap() == null)
-//                            bitMapList.set(size, imageData);
-//                        else
-//                            bitMapList.add(imageData);
-//                    }
-//                }
-//            }
-//
-//            if ((bitMapList.size() > 1 || bitMapList.get(0).getBitmap() != null) && bitMapList.size() < 5) {
-//                ImageData imageData = new ImageData();
-//                bitMapList.add(bitMapList.size(), imageData);
-//            }
-//
-//            mAdapter.notifyDataSetChanged();
-//        }
+        if (requestCode == REQUEST_CODE_CHOOSE && resultCode == RESULT_OK) {
+            int size = bitMapList.size() - 1;
+            // mAdapter.setData(Matisse.obtainResult(data), Matisse.obtainPathResult(data));
+            List<Uri> list = Matisse.obtainResult(data);
+            if (list != null && list.size() > 0) {
+
+                for (Uri uri : list) {
+                    ImageData imageData = setImage(uri);
+                    if (imageData.getBitmap() != null && imageData.getBitmap().getByteCount() > 0) {
+                        if (bitMapList.get(size).getBitmap() == null)
+                            bitMapList.set(size, imageData);
+                        else
+                            bitMapList.add(imageData);
+                    }
+                }
+            }
+
+            if ((bitMapList.size() > 1 || bitMapList.get(0).getBitmap() != null) && bitMapList.size() < 5) {
+                ImageData imageData = new ImageData();
+                bitMapList.add(bitMapList.size(), imageData);
+            }
+
+            mAdapter.notifyDataSetChanged();
+        }
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(data, this);
@@ -806,7 +1030,6 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
             Utility.showToast(context, getString(R.string.connection));
             return;
         }
-
 
         JSONObject jsonObject = new JSONObject();
         String Url = "";

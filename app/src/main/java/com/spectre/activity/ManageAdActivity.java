@@ -48,7 +48,6 @@ public class ManageAdActivity extends AppCompatActivity {
     private SwipeRefreshLayout swipeRefreshLayout;
     private String TAG = ManageAdActivity.class.getName();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,7 +92,6 @@ public class ManageAdActivity extends AppCompatActivity {
             onItemsLoadComplete();
         }
     }
-
 
     private void setUpRecycler() {
         /*for (int i = 0; i <= 9; i++) {

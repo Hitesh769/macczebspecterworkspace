@@ -213,6 +213,53 @@
                     android:textSize="16sp"
                     app:edittextfont="Poppin-Regular.ttf" />
 
+                <com.spectre.customView.CustomTextView
+                    android:id="@+id/tv_about_us"
+                    style="@style/txtPadding"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/settings"
+                    android:drawablePadding="15dp"
+                    android:text="@string/about_us"
+                    android:textColor="@color/colorDrawerText"
+                    android:textSize="16sp"
+                    app:edittextfont="Poppin-Regular.ttf" />
+
+                <com.spectre.customView.CustomTextView
+                    android:id="@+id/tv_privacy_policy"
+                    style="@style/txtPadding"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/settings"
+                    android:drawablePadding="15dp"
+                    android:text="@string/privacy_policy"
+                    android:textColor="@color/colorDrawerText"
+                    android:textSize="16sp"
+                    app:edittextfont="Poppin-Regular.ttf" />
+
+                <com.spectre.customView.CustomTextView
+                    android:id="@+id/tv_social"
+                    style="@style/txtPadding"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/settings"
+                    android:drawablePadding="15dp"
+                    android:text="@string/social"
+                    android:textColor="@color/colorDrawerText"
+                    android:textSize="16sp"
+                    app:edittextfont="Poppin-Regular.ttf" />
+
+                <com.spectre.customView.CustomTextView
+                    android:id="@+id/tv_feedback"
+                    style="@style/txtPadding"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/settings"
+                    android:drawablePadding="15dp"
+                    android:text="@string/feedback"
+                    android:textColor="@color/colorDrawerText"
+                    android:textSize="16sp"
+                    app:edittextfont="Poppin-Regular.ttf" />
 
                 <RelativeLayout
                     android:id="@+id/layout_logout"

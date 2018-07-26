@@ -1,20 +1,33 @@
 package com.spectre.activity;
 
+import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.location.Address;
+import android.location.Criteria;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -31,13 +44,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.spectre.R;
+import com.spectre.beans.AdPost;
 import com.spectre.beans.CarName;
 import com.spectre.beans.FilterResponse;
 import com.spectre.beans.Garage;
@@ -45,8 +58,6 @@ import com.spectre.beans.ModelName;
 import com.spectre.beans.VersionName;
 import com.spectre.customView.CustomRayMaterialTextView;
 import com.spectre.customView.CustomTextView;
-import com.spectre.customView.MyDialogProgress;
-import com.spectre.customView.SessionExpireDialog;
 import com.spectre.fragment.BuyFragment;
 import com.spectre.fragment.GarageFragment;
 import com.spectre.fragment.RentFragment;
@@ -54,22 +65,24 @@ import com.spectre.helper.AqueryCall;
 import com.spectre.interfaces.RequestCallback;
 import com.spectre.other.Constant;
 import com.spectre.other.Urls;
+import com.spectre.utility.PermissionUtility;
 import com.spectre.utility.Utility;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
+public class HomeActivity extends AppCompatActivity implements View.OnClickListener, LocationListener {
 /*Drawer Option Garage ----> My Profile,Add Your Work,Manage Your Work,Post Your Work,
 Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
 
@@ -138,17 +151,169 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
     private CustomTextView txt_header, txt_post_ad_header, txt_manage_ad_header;
     private CustomTextView tvManageWork;
 
+    //Define a request code to send to Google Play services
+    private static final int LOCATION_PERMISSION_CONSTANT = 101;
+    //    private String currentLatitude = "0";
+//    private String currentLongitude = "0";
+    private String latitude = "";
+    private String longitude = "";
+    private int status;
+    private ArrayList<AdPost> arraylist;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
         Utility.setContentView(context, R.layout.activity_home);
+
+        getLocation();
+
         initView();
-        setUpToolbar(context, "Home");
-        //  Utility.setUpToolbar_(context, "<font color='#ffffff'>Home</font>", true);
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case LOCATION_PERMISSION_CONSTANT:
+                if (grantResults.length > 0) {
+                    boolean locationAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                    if (locationAccepted) {
+                        // get location
+                        Utility.setLog("PERMISSION grant");
+                        getLocation();
+                    } else {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            if (shouldShowRequestPermissionRationale(PermissionUtility.ACCESS_FINE_LOCATION)
+                                    || shouldShowRequestPermissionRationale(PermissionUtility.ACCESS_COARSE_LOCATION)) {
+                                showMessageOKCancel(new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        PermissionUtility.requestPermission(HomeActivity.this,
+                                                new String[]{PermissionUtility.ACCESS_FINE_LOCATION,
+                                                        PermissionUtility.ACCESS_COARSE_LOCATION},
+                                                LOCATION_PERMISSION_CONSTANT);
+                                    }
+                                });
+                                return;
+                            }
+                        }
+
+                    }
+                }
+                break;
+        }
+    }
+
+    private void getLocation() {
+        // get location
+        if (!PermissionUtility.checkPermission(context, PermissionUtility.ACCESS_FINE_LOCATION) ||
+                !PermissionUtility.checkPermission(context, PermissionUtility.ACCESS_COARSE_LOCATION)) {
+            PermissionUtility.requestPermission(this, new String[]{PermissionUtility.ACCESS_FINE_LOCATION,
+                    PermissionUtility.ACCESS_COARSE_LOCATION}, LOCATION_PERMISSION_CONSTANT);
+        } else {
+            Utility.setLog("PERMISSION grant");
+            LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+            List<String> providers = locationManager.getProviders(true);
+            Location bestLocation = null;
+            for (String provider : providers) {
+                Location l = locationManager.getLastKnownLocation(provider);
+                if (l == null) {
+                    continue;
+                }
+                if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+                    bestLocation = l; // Found best last known location;
+                }
+            }
+            if (bestLocation != null) {
+                Utility.setLog("Lat : " + bestLocation.getLatitude() + " - Long : " + bestLocation.getLongitude());
+                latitude = String.valueOf(bestLocation.getLatitude());
+                Utility.setLog("LAT 1 : " + latitude);
+                longitude = String.valueOf(bestLocation.getLongitude());
+                Utility.setLog("Lat : " + getFullAddress(Double.valueOf(latitude), Double.valueOf(longitude)));
+//                tv_rent_fragment_location.setText(getFullAddress(Double.valueOf(latitude), Double.valueOf(longitude)));
+
+            } else {
+                Utility.setLog("Location is null");
+            }
+        }
+    }
+
+    private String getFullAddress(double lat, double lng) {
+        Address address = getAddress(context, lat, lng);
+        if (address == null) {
+            return "";
+        }
+        StringBuffer buffer = new StringBuffer();
+        buffer.append(address.getAddressLine(0));
+        buffer.append((address.getAdminArea() == null) ? "" : " ," + address.getLocality());
+        buffer.append((address.getAdminArea() == null) ? "" : " ," + address.getAdminArea());
+        buffer.append((address.getSubLocality() == null) ? "" : " ," + address.getSubLocality());
+        buffer.append((address.getCountryName() == null) ? "" : " ," + address.getCountryName());
+        buffer.append((address.getPostalCode() == null) ? "" : " ," + address.getPostalCode());
+        return String.valueOf(buffer);
+    }
+
+    private Address getAddress(Context context, double lat, double lng) {
+        Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+
+        if (!geocoder.isPresent()) {
+            // showToast(context, R.string.e_service_not_available);
+            return null;
+        }
+
+        Address obj = null;
+        try {
+            List<Address> addresses = geocoder.getFromLocation(lat, lng, 1);
+            if (addresses.size() > 0)
+                obj = addresses.get(0);
+            return obj;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private void showMessageOKCancel(DialogInterface.OnClickListener okListener) {
+        new AlertDialog.Builder(context)
+                .setMessage(getString(R.string.yes))
+                .setPositiveButton(getString(R.string.ok), okListener)
+                .setNegativeButton(getString(R.string.no), null)
+                .create()
+                .show();
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+        // Called when a new location is found by the network location provider.
+        if (location != null) {
+            Utility.setLog("Lat : " + location.getLatitude() + " - Long : " + location.getLongitude());
+        } else
+            Utility.setLog("Location is null");
+
+    }
+
+
+    @Override
+    public void onStatusChanged(String s, int i, Bundle bundle) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String s) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String s) {
+
     }
 
     private void initView() {
+        setUpToolbar(context, "Home");
+
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout);
         if (getIntent() != null && getIntent().hasExtra(Constant.TYPE)) {
             type = getIntent().getStringExtra(Constant.TYPE);
@@ -163,17 +328,14 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
         List<String> carType = Arrays.asList(arrayCarType);
         //  Spinner spinner=((Spinner) findViewById(R.id.spinner));
 
-
         tvName = (CustomTextView) findViewById(R.id.tv_name);
         tvLocation = (CustomTextView) findViewById(R.id.tv_location);
-
 
         CustomTextView tvUserRegi = (CustomTextView) findViewById(R.id.tv_user_regi);
         tvUserRegi.setOnClickListener(this);
 
         CustomTextView tvGarageRegi = (CustomTextView) findViewById(R.id.tv_garage_regi);
         tvGarageRegi.setOnClickListener(this);
-
 
         ((CustomTextView) findViewById(R.id.tv_profile)).setOnClickListener(this);
         ((CustomTextView) findViewById(R.id.tv_post_ad)).setOnClickListener(this);
@@ -190,7 +352,6 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
         ((ImageView) findViewById(R.id.btn_cross)).setOnClickListener(this);
         ivProfile = (CircleImageView) findViewById(R.id.iv_profile);
 
-
         if (!type.equalsIgnoreCase("0")) {
             tvGarageRegi.setVisibility(View.GONE);
             tvUserRegi.setVisibility(View.GONE);
@@ -198,7 +359,6 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
            /* tvLocation.setVisibility(View.VISIBLE);
             tvLocation.setText(getString(R.string.as_buyer));*/
         }
-
 
         if (type.equalsIgnoreCase("1")) {
             tvLocation.setVisibility(View.VISIBLE);
@@ -221,6 +381,7 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
         }
 
         viewPager = (ViewPager) findViewById(R.id.viewPager);
+        // viewPager.setOffscreenPageLimit(1);
         setupViewPager(viewPager);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
@@ -235,10 +396,12 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
         drawable.setSize(1, 1);
         linearLayout.setDividerPadding(10);
         linearLayout.setDividerDrawable(drawable);
+
         setCarNames();
         setCarNamesRent();
         filterResponse = new FilterResponse();
         filterResponseRent = new FilterResponse();
+
     }
 
     private void setCarNames() {
@@ -283,6 +446,7 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
     private void setCarNamesRent() {
         listBrandNameRent.clear();
         listBrandNameRent.add(new CarName("0", getString(R.string.car_name)));
+
         getListRent(1, "");
     }
 
@@ -374,7 +538,6 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
         // menu.getItem(2).setVisible(setVisibility);
         return super.onCreateOptionsMenu(menu);
     }
-
 
     private void openLeft() {
         if (!drawerLayout.isDrawerOpen(Gravity.LEFT)) {
@@ -679,7 +842,6 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
             filterResponseRent.setPrice_max_range("0");
         }
 
-
         if (spinnerCarNameRent.getSelectedItemPosition() != 0) {
             if (listBrandNameRent.size() > 0) {
                 filterResponseRent.setCar_name_id(listBrandNameRent.get(spinnerCarNameRent.getSelectedItemPosition()).getId());
@@ -692,7 +854,6 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
             filterResponseRent.setCar_name_id("0");
             filterResponseRent.setCarName("");
         }
-
 
         if (spinnerCarModelRent.getSelectedItemPosition() != 0) {
             if (listModelNameRent.size() > 0) {
@@ -726,7 +887,6 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
             filterResponseRent.setYear_to("");
         }
 
-
         if (spinner_from_rent.getText().toString() != null && !spinner_from_rent.getText().toString().isEmpty()) {
             filterResponseRent.setYear_from(spinner_from_rent.getText().toString());
         } else {
@@ -737,7 +897,6 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
         listVersionName1Rent = listVersionNameRent;
 
         ddFilterRent.dismiss();
-
 
         if (rentFragment != null) {
             rentFragment.resetData(filterResponseRent);
@@ -833,6 +992,7 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     public void openDialogToLogin() {
@@ -870,9 +1030,7 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
                 updateDialog();
             }
 
-
             ddFilter.show();
-
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -884,7 +1042,6 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
             spinnerColor.setSelection(arrayAdapterCarColor.getPosition(filterResponse.getColour()));
             spinnerCarType.setSelection(arrayAdapterCarType.getPosition(filterResponse.getCar_type()));
             spinnerPrice.setSelection(arrayAdapterPrice.getPosition(filterResponse.getShow_price_max_range()));
-
 
             if (!filterResponse.getYear_from().isEmpty())
                 spinnerYearFrom.setSelection(arrayAdapterYearFrom.getPosition(filterResponse.getYear_from()));
@@ -973,7 +1130,6 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
         List<String> carColor = Arrays.asList(arraycarColor);
         // carColor.remove(0);
 
-
         String arraycarPrice[] = getResources().getStringArray(R.array.car_price);
         List<String> carPrice = Arrays.asList(arraycarPrice);
         //carColor.add(0,getString(R.string.any_color));
@@ -1007,11 +1163,9 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
         linearLayout.addView(spinnerYearTo);
         linearLayout.addView(spinnerPrice);
 
-
         arrayAdapterCarType = new ArrayAdapter<String>(context, android.R.layout.select_dialog_singlechoice, carType);
         // arrayAdapterCarType.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         spinnerCarType.setAdapter(arrayAdapterCarType);
-
 
         arrayAdapterCarColor = new ArrayAdapter<String>(context, android.R.layout.select_dialog_singlechoice, carColor);
         // arrayAdapterCarColor.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
@@ -1068,7 +1222,6 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
             }
         });
 
-
         spinnerCarModel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -1089,7 +1242,6 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
             }
         });
 
-
         spinnerCarVersion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -1103,7 +1255,6 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
             }
         });
 
-
         spinnerCarType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -1115,7 +1266,6 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
 
             }
         });
-
 
         spinnerColor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -1153,7 +1303,6 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
             }
         });
 
-
         spinnerPrice.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -1167,7 +1316,6 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
         });
 
     }
-
 
     /*Rent*/
 
@@ -1186,9 +1334,7 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
                 updateDialogRent();
             }
 
-
             ddFilterRent.show();
-
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -1239,7 +1385,6 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
                 spinnerCarVersionRent.setSelection(0);
             }
 
-
             if (filterResponseRent.getYear_from() != null && !filterResponseRent.getYear_from().isEmpty())
                 spinner_from_rent.setText(filterResponseRent.getYear_from());
             else
@@ -1251,7 +1396,6 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
             else
                 spinner_to_rent.setText(getString(R.string.to));
         }
-
     }
 
     private void setDialogRent(Dialog dd) {
@@ -1278,7 +1422,6 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
         List<String> carPrice = Arrays.asList(arraycarPrice);
         //carColor.add(0,getString(R.string.any_color));
 
-
         spinnerCarNameRent = new Spinner(context, Spinner.MODE_DIALOG);
         spinnerCarModelRent = new Spinner(context, Spinner.MODE_DIALOG);
         spinnerCarVersionRent = new Spinner(context, Spinner.MODE_DIALOG);
@@ -1289,12 +1432,9 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
         linearLayout.addView(spinnerCarVersionRent);
         linearLayout.addView(spinnerPriceRent);
 
-
         arrayAdapterPriceRent = new ArrayAdapter<String>(context, android.R.layout.select_dialog_singlechoice, carPrice);
         // arrayAdapterYearFrom.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         spinnerPriceRent.setAdapter(arrayAdapterPriceRent);
-
-
 
        /* spinnerCarType.setSelection(0,false);
         spinnerColor.setSelection(0,false);
@@ -1318,7 +1458,6 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
 
         setCarModelRent("", false);
 
-
         spinnerCarNameRent.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -1341,7 +1480,6 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
             }
         });
 
-
         spinnerCarModelRent.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -1362,7 +1500,6 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
             }
         });
 
-
         spinnerCarVersionRent.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -1374,7 +1511,6 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
 
             }
         });
-
 
         spinnerPriceRent.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -1390,7 +1526,6 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
 
     }
 
-
     private boolean isLogin() {
         // String type = Utility.getSharedPreferences(context, Constant.TYPE);
         if (type.equalsIgnoreCase("") || type.equalsIgnoreCase("0"))
@@ -1398,7 +1533,6 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
 
         return true;
     }
-
 
     //Type 1 = Brand list,2 = Model,3=Version
     private void getList(final int type, String id) {
@@ -1408,20 +1542,24 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
             return;
         }
 
-
         JSONObject jsonObject = new JSONObject();
         String Url = "";
 
         try {
             if (type == 1) {
                 Url = Urls.CAR_NAME_LIST;
+//                jsonObject.put("location", id);
             } else if (type == 2) {
                 Url = Urls.MODEL_NAME_LIST;
                 jsonObject.put("car_name_id", id);
+
             } else if (type == 3) {
                 Url = Urls.VERSION_NAME_LIST;
                 jsonObject.put("model_id", id);
             }
+
+            jsonObject.put(Constant.LATITUDE, longitude);
+            jsonObject.put(Constant.LONGITUDE, latitude);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -1481,7 +1619,6 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
     }
 
     private void setBrand(JSONArray jsonArray) {
@@ -1494,10 +1631,8 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
             arrayAdapterCarName = new ArrayAdapter<CarName>(context, android.R.layout.select_dialog_singlechoice, listBrandName);
             if (spinnerCarName != null)
                 spinnerCarName.setAdapter(arrayAdapterCarName);
-
         }
     }
-
 
     private void setModel(JSONArray jsonArray) {
         Type type = new TypeToken<List<ModelName>>() {
@@ -1508,7 +1643,6 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
             listModelName.addAll(tempListNewsFeeds);
             arrayAdapterCarModel.notifyDataSetChanged();
         }
-
     }
 
     private void setVersion(JSONArray jsonArray) {
@@ -1523,19 +1657,21 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
 
     /*RENT*/
     private void getListRent(final int type, String id) {
+        getLocation();
 
         if (!Utility.isConnectingToInternet(context)) {
             Utility.showToast(context, getString(R.string.connection));
             return;
         }
 
-
         JSONObject jsonObject = new JSONObject();
         String Url = "";
+
 
         try {
             if (type == 1) {
                 Url = Urls.CAR_NAME_LIST;
+
             } else if (type == 2) {
                 Url = Urls.MODEL_NAME_LIST;
                 jsonObject.put("car_name_id", id);
@@ -1543,6 +1679,8 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
                 Url = Urls.VERSION_NAME_LIST;
                 jsonObject.put("model_id", id);
             }
+            jsonObject.put(Constant.LATITUDE, latitude);
+            jsonObject.put(Constant.LONGITUDE, longitude);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -1619,7 +1757,6 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
         }
     }
 
-
     private void setModelRent(JSONArray jsonArray) {
         Type type = new TypeToken<List<ModelName>>() {
         }.getType();
@@ -1629,7 +1766,6 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
             listModelNameRent.addAll(tempListNewsFeeds);
             arrayAdapterCarModelRent.notifyDataSetChanged();
         }
-
     }
 
     private void setVersionRent(JSONArray jsonArray) {
@@ -1688,11 +1824,11 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
         btn_post_garage = ddPostAd.findViewById(R.id.btn_post_garage);
         btn_post_rent = ddPostAd.findViewById(R.id.btn_post_rent);
         txt_post_ad_header = ddPostAd.findViewById(R.id.txt_post_ad_header);
-        btn_post_garage.setVisibility(View.VISIBLE);
+
         if (!Utility.getSharedPreferences(context, Constant.USER_TYPE).isEmpty() && Utility.getSharedPreferences(context, Constant.USER_TYPE).equalsIgnoreCase("1")) {
             btn_post_garage.setVisibility(View.GONE);
-        }
-
+        } else
+            btn_post_garage.setVisibility(View.VISIBLE);
         ddPostAd.setCancelable(false);
         ddPostAd.getWindow().setLayout(-1, -2);
         ddPostAd.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -1718,7 +1854,18 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
         btn_post_garage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(context, GarageDetailActivity.class));
+                startActivity(new Intent(context, AddWorkActivity.class));
+//                Garage adPost = new Garage();
+//                if (context instanceof HomeActivity && status == 1) {
+//                    Intent intent = new Intent(context, GarageDetailActivity.class);
+//                    intent.putExtra(Constant.DATA, adPost);
+//                    intent.putExtra(Constant.POSITION, arraylist.get(0));
+//                    ((HomeActivity) context).startActivityForResult(intent, 404);
+//                }
+
+//                Intent intent = new Intent(context, GarageDetailActivity.class);
+//                intent.putExtra(Constant.DATA, adPost);
+//                startActivity(intent);
                 ddPostAd.dismiss();
             }
         });
@@ -1830,7 +1977,6 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
         btn_garage_done = ddFilter.findViewById(R.id.btn_garage_done);
         btn_garage_reset = ddFilter.findViewById(R.id.btn_garage_reset);
 
-
         if (garageType.equalsIgnoreCase("0")) {
             radio_both.setChecked(true);
         } else if (garageType.equalsIgnoreCase("1")) {
@@ -1901,5 +2047,4 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
         radio_both.setOnCheckedChangeListener(listener);
         radio_repair_service.setOnCheckedChangeListener(listener);
     }
-
 }

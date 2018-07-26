@@ -37,7 +37,9 @@ import android.text.Html;
 import android.text.Spanned;
 import android.util.Base64;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -99,6 +101,10 @@ public class Utility {
     //2018-02-24
     public static final SimpleDateFormat displayDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
+    public static void setLog(String message) {
+        Log.e("-TAG-", message);
+    }
+
     // for username string preferences
     public static void setSharedPreference(Context context, String name, String value) {
         appContext = context;
@@ -125,6 +131,34 @@ public class Utility {
         }
     }
 
+    /*device id*/
+    public static String getDeviceId(Context context) {
+        try {
+            return String.valueOf(Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+    public static void setSnackBar(Activity activity, String message) {
+//        Snackbar snackbar = Snackbar.make(((ViewGroup) activity.findViewById(android.R.id.content)).getChildAt(0),
+//                message, Snackbar.LENGTH_LONG);
+//        View view = snackbar.getView();
+//        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) view.getLayoutParams();
+//        view.setBackgroundColor(ContextCompat.getColor(activity, R.color.colorPrimary));
+//        view.setLayoutParams(params);
+//        if (!snackbar.isShown())
+//            snackbar.show();
+        makeToast(activity, message);
+    }
+
+    private static void makeToast(Context context, String msg) {
+        // Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+        Toast toast = Toast.makeText(context, msg, Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
+    }
 
     public static boolean isMyServiceRunning(Context context, Class<?> serviceClass) {
 

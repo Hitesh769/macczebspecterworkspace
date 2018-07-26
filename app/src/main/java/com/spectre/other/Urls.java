@@ -37,7 +37,6 @@ public class Urls {
     public static String REVIEW_N_RATING = BASE_URL + "review_n_rating";
    // public static String NOTIFICATION_LIST = BASE_URL + "notification_list";
 
-
     public static String CONTACT_LIST = BASE_URL + "contact_list";
     public static String GET_CONTACT_LIST = BASE_URL + "Get_contact_list";
     public static String LIKE_UNLIKE_USER = BASE_URL + "Like_unlike_user";

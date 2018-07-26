@@ -66,12 +66,15 @@ public class ManageAdsListAdapter extends RecyclerView.Adapter<ManageAdsListAdap
             nameModel = nameModel + " \u2022 " + adPost.getModel().trim();
         }
 
-
         if (!nameModel.isEmpty()) {
             holder.txtCarName.setText(nameModel);
         } else {
             holder.txtCarName.setText(appContext.getString(R.string.na));
         }
+
+//        if(!adPost.getLocation().isEmpty()){
+//                   holder.txtRentLocation.setText(adPost.getLocation());
+//        }
 
         if (appContext instanceof ManageAdActivity) {
             if (!adPost.getYear().isEmpty()) {
@@ -81,7 +84,6 @@ public class ManageAdsListAdapter extends RecyclerView.Adapter<ManageAdsListAdap
             if (!adPost.getMileage().isEmpty()) {
                 yearMileage = yearMileage + " \u2022 " + adPost.getMileage().trim() + " " + appContext.getString(R.string.miles);
             }
-
 
             if (!yearMileage.isEmpty()) {
                 holder.txtCarModel.setText(yearMileage);
@@ -95,13 +97,11 @@ public class ManageAdsListAdapter extends RecyclerView.Adapter<ManageAdsListAdap
             holder.txtCarModel.setVisibility(View.GONE);
         }
 
-
         if (!adPost.getPrice().isEmpty()) {
             holder.txtCarPrice.setText(appContext.getString(R.string.dollar) + " " + adPost.getPrice().trim());
         } else {
             holder.txtCarPrice.setText(appContext.getString(R.string.na));
         }
-
 
         if (arraylist.get(position).getImage() != null && arraylist.get(position).getImage().size() > 0) {
             new AQuery(appContext).id(holder.ivProduct).image(arraylist.get(position).getImage().get(0));
@@ -152,14 +152,13 @@ public class ManageAdsListAdapter extends RecyclerView.Adapter<ManageAdsListAdap
         });
     }
 
-
     @Override
     public int getItemCount() {
         return arraylist.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        CustomTextView txtCarName, txtCarPrice, txtCarModel, txtOwnerName, txtCarDate;
+        CustomTextView txtCarName, txtCarPrice, txtCarModel, txtOwnerName, txtCarDate, txtRentLocation;
         ImageView ivProduct;
         CustomRayMaterialTextView btnViewDetail;
 
@@ -173,6 +172,7 @@ public class ManageAdsListAdapter extends RecyclerView.Adapter<ManageAdsListAdap
             txtOwnerName = (CustomTextView) itemView.findViewById(R.id.txt_owner_name);
             txtCarDate = (CustomTextView) itemView.findViewById(R.id.txt_car_date);
             txtCarDate.setVisibility(View.GONE);
+            //txtRentLocation = (CustomTextView) itemView.findViewById(R.id.tv_post_ad_location);
         }
     }
 }
