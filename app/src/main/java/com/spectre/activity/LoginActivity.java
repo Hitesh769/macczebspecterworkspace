@@ -20,7 +20,10 @@ import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.spectre.BuildConfig;
+import com.spectre.LoginModel;
 import com.spectre.R;
+import com.spectre.api.ApiClient;
+import com.spectre.api.ApiInterface;
 import com.spectre.customView.AlertBox;
 import com.spectre.customView.CustomEditText;
 import com.spectre.customView.CustomRayMaterialTextView;
@@ -34,6 +37,10 @@ import com.spectre.utility.Utility;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -106,6 +113,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+
     /*Open reset Password dialog and call reset Password API*/
 
     private void resetPassword(String number) {
@@ -175,7 +183,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 }
             });
-
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -266,6 +273,42 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         return true;
     }
 
+    private void callLoginApi() {
+
+        ApiInterface service = ApiClient.getClient().create(ApiInterface.class);
+
+        try {
+
+            JSONObject paramObject = new JSONObject();
+            paramObject.put(Constant.USER_EMAIL, et_mail.getText().toString().trim());
+            paramObject.put(Constant.USER_PASSWORD, et_pin.getText().toString().trim());
+            paramObject.put(Constant.USER_DEVICE_TYPE, Constant.ANDROID);
+            paramObject.put(Constant.USER_DEVICE_ID, Build.SERIAL);
+            paramObject.put(Constant.USER_DEVICE_TOKEN, gcmId);
+            paramObject.put(Constant.LANGUAGE, Utility.getLanguagePreference(context));
+
+            Utility.setLog("PARAM :" + paramObject);
+
+            Call<LoginModel> call = service.loginUser(paramObject.toString());
+            call.enqueue(new Callback<LoginModel>() {
+                @Override
+                public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
+                    Utility.setLog("Response :" + "success");
+                    Intent intent = new Intent(context, HomeActivity.class).putExtra(Constant.TYPE, type);
+                    startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                }
+
+                @Override
+                public void onFailure(Call<LoginModel> call, Throwable t) {
+
+                    Utility.setLog("Response :" + "failure");
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /*login API*/
     private void callAPI() {
@@ -293,6 +336,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
 
         AqueryCall request = new AqueryCall(this);
         request.postWithoutToken(Urls.LOGIN, jsonObject, new RequestCallback() {
@@ -362,12 +406,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             return null;
         }
 
-
         @Override
         protected void onPostExecute(Void aVoid) {
             try {
                 if (!gcmId.equals("")) {
                     callAPI();
+                    //callLoginApi();
                     indicator = 0;
                 } else {
                     if (indicator <= 2) {
@@ -382,6 +426,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
 
             } catch (Exception e) {
+                e.printStackTrace();
                 MyDialogProgress.close(context);
                 alertBox.openMessage(getString(R.string.connection), "Ok", "", false);
                 //   MyDialog_Progress.close(appContext);

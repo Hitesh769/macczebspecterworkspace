@@ -30,7 +30,7 @@ public interface ApiInterface {
 //
 //    Call<LoginModel> loginUser(@FieldMap HashMap<String, String> registrationData);
 
-    @FormUrlEncoded
+//    @FormUrlEncoded
     @POST(Api.LOGIN_API)
 
     Call<LoginModel> loginUser(@Body String body);

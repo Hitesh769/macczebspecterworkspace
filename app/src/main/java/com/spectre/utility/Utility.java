@@ -153,7 +153,7 @@ public class Utility {
         makeToast(activity, message);
     }
 
-    private static void makeToast(Context context, String msg) {
+    public static void makeToast(Context context, String msg) {
         // Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
         Toast toast = Toast.makeText(context, msg, Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER, 0, 0);
