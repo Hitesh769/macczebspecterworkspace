@@ -327,7 +327,7 @@ public class HomeAct extends MasterAppCompactActivity implements LocationListene
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             if (bundle.getString(KEY_TYPE) != null)
-                type = bundle.getString(KEY_TYPE, "");
+                type = bundle.getString(KEY_TYPE, ""); // type data
         }
     }
 
