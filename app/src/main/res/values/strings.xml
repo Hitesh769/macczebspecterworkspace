@@ -5,7 +5,6 @@
     <string name="permission_for_storage">This app needs access to your storage so you can take pictures.</string>
     <string name="permission">It seems that some permission of %1$s has not granted. Please give the required permission to enjoy %1$s features.</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="not_registered_please">Not Registered? Please</string>
     <string name="forget_pin">Forget Password?</string>
@@ -17,6 +16,10 @@
     <string name="address">Address</string>
     <string name="address_">Address:</string>
     <string name="name">Name</string>
+    <string name="nameempty">Please Enter First Name</string>
+    <string name="emailempty">Please Enter Email</string>
+    <string name="phoneempty">Please Enter Phone</string>
+
     <string name="user_type">User Type</string>
     <string name="name_">Name:</string>
     <string name="mobile_no">Contact</string>
@@ -72,7 +75,8 @@
     <string name="na">NA</string>
     <string name="dollar">AED</string>
     <string name="model_">Model:</string>
-    <string name="car_series">Car Series:</string>
+    <string name="car_series">Car Series : </string>
+    <string name="car_version">Car Vestion : </string>
     <string name="car_type_">Car Type:</string>
     <string name="Mileage">Mileage:</string>
     <string name="post_date">Posted On:</string>
@@ -124,6 +128,9 @@
     <string name="enter_price">Enter Price</string>
     <string name="enter_car_condition">Enter Car\'s Condition</string>
     <string name="price">Price (AED)</string>
+    <string name="car_price">Price : </string>
+    <string name="price_">Price</string>
+    <string name="price_perday">Price per day</string>
     <string name="price_rent">Price (AED/Day)</string>
     <string name="price_upto">Price Upto</string>
     <string name="to">To</string>
@@ -159,6 +166,8 @@
     <string name="miles">miles</string>
     <string name="problem">Problem</string>
     <string name="car_condition">Car Condition</string>
+    <string name="car_brand">Car Brand : </string>
+    <string name="car_model">Model : </string>
     <string name="car_problem">Car Problem</string>
     <string name="car_desc">Car\'s Description</string>
     <string name="min_image">(Min 1 and max 5 photos can be added)</string>
@@ -259,7 +268,7 @@
     <string name="add_review_">Add Review</string>
     <string name="edit_review_">Edit Review</string>
 
-    <string name="per_day">/Day</string>
+    <string name="per_day">/ Day</string>
     <string name="blank_field">This field cannot be blank</string>
     <string name="buy_car">I want to Buy</string>
     <string name="book_car">Book a Car</string>
@@ -275,6 +284,7 @@
     <string name="add_work">Post your Ad (Garage)</string>
     <string name="edit_work">Edit your Ad (Garage)</string>
     <string name="post_ad">Post your Ad (Buy)</string>
+    <string name="posted_on">Posted On : </string>
     <string name="post_ad_buyer">Post Ad</string>
     <string name="edit_ad">Edit Your Ad (Buy)</string>
     <string name="manage_ad">Manage your Ad (Buy)</string>
@@ -289,6 +299,7 @@
     <string name="rent_duration">Rental Duration</string>
     <string name="next">Next</string>
     <string name="garage">Garage</string>
+    <string name="searchresult">Search Result</string>
     <string name="customer">Buyer</string>
     <string name="as_buyer">As Buyer</string>
     <string name="as_seller">As Seller</string>
@@ -297,6 +308,13 @@
     <string name="mange_ad_seller">Manage Ad</string>
     <string name="manage_ad_garage">Garage</string>
     <string name="location">Location :</string>
+    <string name="location_">Location</string>
+    <string name="pickup_and_dropup">PICK-UP &amp; DROP-OFF</string>
+    <string name="pickup_and_dropup_location">Pickup &amp; Drop Off Location : </string>
+    <string name="car_rental_location_">Car Rental Location</string>
+    <string name="driver_details">Driver Details</string>
+    <string name="booking_done">Your Booking is Done!</string>
+    <string name="summary">Summary</string>
     <string name="enter_location">Enter loction</string>
     <string name="title_activity_maps">Map</string>
     <string name="save">Save</string>
@@ -309,6 +327,34 @@
     <string name="pls_enter_model">Please enter model</string>
     <string name="delete_question">Are you sure you want to delete</string>
     <string name="pls_enter_version">Please enter version</string>
+    <string name="more">More</string>
 
     <!--<string name="add_work">Add Work</string>-->
+
+    <!--String related to toast messages-->
+    <string name="toast_something_went_wrong">Something went wrong!!!</string>
+    <string name="toast_cant_connect_to_internet">Can\'t connect to internet!!!</string>
+    <string name="toast_again_to_exit">Please click BACK again to exit</string>
+
+    <!--More screen-->
+    <string name="guest_user">Guest user</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="my_account">My Account</string>
+    <string name="sign_in">Sign in</string>
+    <string name="forgot_your_password">Forgot your password?</string>
+    <string name="_91">+91</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="continue_booking">Continue Booking</string>
+    <string name="confirmandbook">Confirm &amp; Book</string>
+    <string name="finish">Finish</string>
+    <string name="buyer">Buyer</string>
+    <string name="already_have_account">Already have account? Sign in</string>
+    <string name="welcome_back">Welcome back!</string>
+    <string name="resend_otp">Resend OTP</string>
+
+
+    <string name="verification">Verification</string>
+    <string name="price_range">Price Range</string>
+    <string name="search">Search</string>
+    <string name="search_rent">Search Rental Car</string>
 </resources>

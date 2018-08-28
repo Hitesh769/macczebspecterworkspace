@@ -34,6 +34,7 @@ import com.spectre.helper.AqueryCall;
 import com.spectre.interfaces.RequestCallback;
 import com.spectre.other.Constant;
 import com.spectre.other.Urls;
+import com.spectre.utility.SharedPrefUtils;
 import com.spectre.utility.Utility;
 
 import org.json.JSONException;
@@ -366,7 +367,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
     private void saveData(JSONObject js) {
         MyDialogProgress.close(context);
-        Utility.setSharedPreference(context, Constant.USER_MOBILE, number);
+        SharedPrefUtils.setPreference(context, Constant.USER_MOBILE, number);
         startActivity(new Intent(context, OTPActivity.class).putExtra(Constant.TYPE, 1));
     }
 

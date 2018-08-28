@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:card="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="25dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardBackgroundColor="@color/colorWhite"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="3dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.spectre.customView.CustomTextView
+                        android:id="@+id/driver_detail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="2dp"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:singleLine="true"
+                        android:text="@string/driver_details"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        app:edittextfont="Poppins-Medium.ttf"
+                        app:edittextfontHint="Poppins-Medium.ttf" />
+
+                    <View
+                        android:id="@+id/view1"
+                        style="@style/line_register"
+                        android:layout_below="@+id/vendor_detail"
+                        android:layout_marginTop="@dimen/_5sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/view1"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/_5sdp"
+                            android:orientation="vertical">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:layout_marginBottom="@dimen/_10sdp">
+                                <com.spectre.customView.CustomTextView
+                                    android:id="@+id/nametitle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="5dp"
+                                    android:paddingBottom="2dp"
+                                    android:paddingLeft="5dp"
+                                    android:paddingRight="5dp"
+                                    android:paddingTop="2dp"
+                                    android:singleLine="true"
+                                    android:text="Name : "
+                                    android:textColor="@color/black"
+                                    android:textColorLink="@color/black"
+                                    android:textSize="15sp"
+                                    app:edittextfont="Poppins-Regular.ttf"
+                                    app:edittextfontHint="Poppins-Regular.ttf" />
+
+                                <com.spectre.customView.CustomTextView
+                                    android:id="@+id/txtName"
+                                    android:layout_toRightOf="@+id/nametitle"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="5dp"
+                                    android:paddingBottom="2dp"
+                                    android:paddingTop="2dp"
+                                    android:singleLine="true"
+                                    android:text="@string/na"
+                                    android:textColor="@color/black"
+                                    android:textColorLink="@color/black"
+                                    android:textSize="15sp"
+                                    app:edittextfont="Poppins-Regular.ttf"
+                                    app:edittextfontHint="Poppins-Regular.ttf" />
+                                <com.spectre.customView.CustomTextView
+                                    android:id="@+id/emailtitle"
+                                    android:layout_below="@+id/nametitle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="5dp"
+                                    android:paddingBottom="2dp"
+                                    android:paddingLeft="5dp"
+                                    android:paddingRight="5dp"
+                                    android:paddingTop="2dp"
+                                    android:singleLine="true"
+                                    android:text="Email :  "
+                                    android:textColor="@color/black"
+                                    android:textColorLink="@color/black"
+                                    android:textSize="15sp"
+                                    app:edittextfont="Poppins-Regular.ttf"
+                                    app:edittextfontHint="Poppins-Regular.ttf" />
+                                <com.spectre.customView.CustomTextView
+                                    android:id="@+id/txtEmail"
+                                    android:layout_below="@+id/nametitle"
+                                    android:layout_width="match_parent"
+                                    android:layout_toRightOf="@+id/emailtitle"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="5dp"
+                                    android:paddingBottom="2dp"
+                                    android:paddingTop="2dp"
+                                    android:singleLine="true"
+                                    android:text="@string/na"
+                                    android:textColor="@color/black"
+                                    android:textColorLink="@color/black"
+                                    android:textSize="15sp"
+                                    app:edittextfont="Poppins-Regular.ttf"
+                                    app:edittextfontHint="Poppins-Regular.ttf" />
+                                <com.spectre.customView.CustomTextView
+                                    android:id="@+id/phonetitle"
+                                    android:layout_below="@+id/emailtitle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="5dp"
+                                    android:paddingBottom="2dp"
+                                    android:paddingLeft="5dp"
+                                    android:paddingRight="5dp"
+                                    android:paddingTop="2dp"
+                                    android:singleLine="true"
+                                    android:text="Phone : "
+                                    android:textColor="@color/black"
+                                    android:textColorLink="@color/black"
+                                    android:textSize="15sp"
+                                    app:edittextfont="Poppins-Regular.ttf"
+                                    app:edittextfontHint="Poppins-Regular.ttf" />
+                                <com.spectre.customView.CustomTextView
+                                    android:id="@+id/txtPhone"
+                                    android:layout_below="@+id/emailtitle"
+                                    android:layout_width="match_parent"
+                                    android:layout_toRightOf="@+id/phonetitle"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="5dp"
+                                    android:paddingBottom="2dp"
+                                    android:paddingTop="2dp"
+                                    android:singleLine="true"
+                                    android:text="@string/na"
+                                    android:textColor="@color/black"
+                                    android:textColorLink="@color/black"
+                                    android:textSize="15sp"
+                                    app:edittextfont="Poppins-Regular.ttf"
+                                    app:edittextfontHint="Poppins-Regular.ttf" />
+                            </RelativeLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+
+            <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:card="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="25dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardBackgroundColor="@color/colorWhite"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="3dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.spectre.customView.CustomTextView
+                        android:id="@+id/summary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="5dp"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:singleLine="true"
+                        android:text="@string/summary"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        app:edittextfont="Poppins-Medium.ttf"
+                        app:edittextfontHint="Poppins-Medium.ttf" />
+
+                    <View
+                        android:id="@+id/view3"
+                        style="@style/line_register"
+                        android:layout_below="@+id/vendor_detail"
+                        android:layout_marginTop="@dimen/_5sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/view1"
+                        android:padding="@dimen/_5sdp"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:weightSum="10"
+                            android:orientation="horizontal"
+                            android:layout_height="wrap_content">
+                            <com.spectre.customView.CustomTextView
+                                android:id="@+id/txt_car_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="5dp"
+                                android:paddingBottom="2dp"
+                                android:paddingLeft="5dp"
+                                android:paddingRight="5dp"
+                                android:paddingTop="2dp"
+                                android:singleLine="true"
+                                android:text="AC"
+                                android:textColor="@color/black"
+                                android:textColorLink="@color/black"
+                                android:textSize="20sp"
+                                app:edittextfont="Poppins-Regular.ttf"
+                                app:edittextfontHint="Poppins-Regular.ttf" />
+                            <com.spectre.customView.CustomTextView
+                                android:id="@+id/txt_car_model"
+                                android:layout_width="0dp"
+                                android:layout_weight="6"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="2dp"
+                                android:paddingTop="2dp"
+                                android:singleLine="true"
+                                android:text="AC1"
+                                android:textColor="@color/black"
+                                android:textColorLink="@color/black"
+                                android:textSize="20sp"
+                                app:edittextfont="Poppins-Regular.ttf"
+                                app:edittextfontHint="Poppins-Regular.ttf" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:weightSum="10"
+                            android:id="@+id/lin1"
+                            android:orientation="horizontal"
+                            android:layout_height="wrap_content">
+                            <com.spectre.customView.CustomTextView
+                                android:id="@+id/totalDays"
+                                android:layout_width="0dp"
+                                android:layout_weight="4"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="5dp"
+                                android:paddingBottom="2dp"
+                                android:paddingLeft="5dp"
+                                android:paddingRight="5dp"
+                                android:paddingTop="2dp"
+                                android:singleLine="true"
+                                android:text="Total Days : "
+                                android:textColor="@color/black"
+                                android:textColorLink="@color/black"
+                                android:textSize="15sp"
+                                app:edittextfont="Poppins-Regular.ttf"
+                                app:edittextfontHint="Poppins-Regular.ttf" />
+                            <com.spectre.customView.CustomTextView
+                                android:id="@+id/txtTotalDays"
+                                android:layout_width="0dp"
+                                android:layout_weight="6"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="2dp"
+                                android:paddingTop="2dp"
+                                android:singleLine="true"
+                                android:text="@string/na"
+                                android:textColor="@color/black"
+                                android:textColorLink="@color/black"
+                                android:textSize="15sp"
+                                app:edittextfont="Poppins-Regular.ttf"
+                                app:edittextfontHint="Poppins-Regular.ttf" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:weightSum="10"
+                            android:id="@+id/lin2"
+                            android:layout_below="@+id/lin1"
+                            android:orientation="horizontal"
+                            android:layout_height="wrap_content">
+                            <com.spectre.customView.CustomTextView
+                                android:id="@+id/pickupdatatitle"
+                                android:layout_width="0dp"
+                                android:layout_weight="4"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="5dp"
+                                android:paddingBottom="2dp"
+                                android:paddingLeft="5dp"
+                                android:paddingRight="5dp"
+                                android:paddingTop="2dp"
+                                android:singleLine="true"
+                                android:text="Pickup Date : "
+                                android:textColor="@color/black"
+                                android:textColorLink="@color/black"
+                                android:textSize="15sp"
+                                app:edittextfont="Poppins-Regular.ttf"
+                                app:edittextfontHint="Poppins-Regular.ttf" />
+                            <com.spectre.customView.CustomTextView
+                                android:id="@+id/txt_pick_up"
+                                android:layout_width="0dp"
+                                android:layout_weight="6"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="2dp"
+                                android:paddingTop="2dp"
+                                android:singleLine="true"
+                                android:text="@string/na"
+                                android:textColor="@color/black"
+                                android:textColorLink="@color/black"
+                                android:textSize="15sp"
+                                app:edittextfont="Poppins-Regular.ttf"
+                                app:edittextfontHint="Poppins-Regular.ttf" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:weightSum="10"
+                            android:id="@+id/lin3"
+                            android:layout_below="@+id/lin2"
+                            android:orientation="horizontal"
+                            android:layout_height="wrap_content">
+                            <com.spectre.customView.CustomTextView
+                                android:id="@+id/dropuptitle"
+                                android:layout_width="0dp"
+                                android:layout_weight="4"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="5dp"
+                                android:paddingBottom="2dp"
+                                android:paddingLeft="5dp"
+                                android:paddingRight="5dp"
+                                android:paddingTop="2dp"
+                                android:singleLine="true"
+                                android:text="Drop Off Date:"
+                                android:textColor="@color/black"
+                                android:textColorLink="@color/black"
+                                android:textSize="15sp"
+                                app:edittextfont="Poppins-Regular.ttf"
+                                app:edittextfontHint="Poppins-Regular.ttf" />
+                            <com.spectre.customView.CustomTextView
+                                android:id="@+id/txt_drop_off"
+                                android:layout_width="0dp"
+                                android:layout_weight="6"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="2dp"
+                                android:paddingTop="2dp"
+                                android:singleLine="true"
+                                android:text="@string/na"
+                                android:textColor="@color/black"
+                                android:textColorLink="@color/black"
+                                android:textSize="15sp"
+                                app:edittextfont="Poppins-Regular.ttf"
+                                app:edittextfontHint="Poppins-Regular.ttf" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:weightSum="10"
+                            android:id="@+id/lin4"
+                            android:layout_below="@+id/lin3"
+                            android:orientation="horizontal"
+                            android:layout_height="wrap_content">
+                            <com.spectre.customView.CustomTextView
+                                android:id="@+id/locationtitle"
+                                android:layout_width="0dp"
+                                android:layout_weight="4"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="5dp"
+                                android:paddingBottom="2dp"
+                                android:paddingLeft="5dp"
+                                android:paddingRight="5dp"
+                                android:paddingTop="2dp"
+                                android:text="@string/pickup_and_dropup_location"
+                                android:textColor="@color/black"
+                                android:textColorLink="@color/black"
+                                android:textSize="15sp"
+                                app:edittextfont="Poppins-Regular.ttf"
+                                app:edittextfontHint="Poppins-Regular.ttf" />
+                            <com.spectre.customView.CustomTextView
+                                android:id="@+id/txt_location"
+                                android:layout_width="0dp"
+                                android:layout_weight="6"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="2dp"
+                                android:paddingTop="2dp"
+                                android:singleLine="true"
+                                android:text="@string/na"
+                                android:textColor="@color/black"
+                                android:textColorLink="@color/black"
+                                android:textSize="15sp"
+                                app:edittextfont="Poppins-Regular.ttf"
+                                app:edittextfontHint="Poppins-Regular.ttf" />
+                        </LinearLayout>
+                    </LinearLayout>
+                    <View
+                        android:id="@+id/view4"
+                        style="@style/line_register"
+                        android:layout_marginTop="@dimen/_5sdp" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:weightSum="10"
+                        android:id="@+id/lin5"
+                        android:padding="@dimen/_10sdp"
+                        android:layout_below="@+id/lin3"
+                        android:orientation="horizontal"
+                        android:layout_height="wrap_content">
+                        <com.spectre.customView.CustomTextView
+                            android:id="@+id/totaltitle"
+                            android:layout_width="0dp"
+                            android:layout_weight="3"
+                            android:layout_height="wrap_content"
+                            android:text="Total : "
+                            android:textColor="@color/black"
+                            android:textColorLink="@color/black"
+                            android:textSize="15sp"
+                            app:edittextfont="Poppins-Regular.ttf"
+                            app:edittextfontHint="Poppins-Regular.ttf" />
+                        <com.spectre.customView.CustomTextView
+                            android:id="@+id/txt_total"
+                            android:layout_width="0dp"
+                            android:layout_weight="7"
+                            android:layout_height="wrap_content"
+                            android:singleLine="true"
+                            android:text="@string/na"
+                            android:textColor="@color/setting_yellow"
+                            android:textColorLink="@color/setting_yellow"
+                            android:textSize="30sp"
+                            app:edittextfont="Poppins-Regular.ttf"
+                            app:edittextfontHint="Poppins-Regular.ttf" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <Button
+                android:id="@+id/btnConfirm"
+                style="@style/Button"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:minHeight="@dimen/_20sdp"
+                android:padding="@dimen/_10sdp"
+                android:text="@string/confirmandbook" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

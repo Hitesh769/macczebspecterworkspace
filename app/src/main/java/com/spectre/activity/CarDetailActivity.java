@@ -24,6 +24,8 @@ import android.widget.RelativeLayout;
 import com.androidquery.AQuery;
 import com.daimajia.slider.library.SliderLayout;
 import com.spectre.R;
+import com.spectre.activity_new.BookCarInfoActivity;
+import com.spectre.activity_new.HomeAct;
 import com.spectre.beans.AdPost;
 import com.spectre.customView.AlertBox;
 import com.spectre.customView.CustomEditText;
@@ -35,6 +37,7 @@ import com.spectre.helper.AqueryCall;
 import com.spectre.interfaces.RequestCallback;
 import com.spectre.other.Constant;
 import com.spectre.other.Urls;
+import com.spectre.utility.SharedPrefUtils;
 import com.spectre.utility.Utility;
 
 import org.json.JSONException;
@@ -67,7 +70,7 @@ public class CarDetailActivity extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         //  setContentView(R.layout.activity_car_detail);
         context = this;
-        Utility.setContentView(context, R.layout.activity_car_detail);
+        Utility.setContentView(context, R.layout.activity_car_detail_new);
         actionBar = Utility.setUpToolbar_(context, "<font color='#ffffff'>Car's Detail</font>", true);
         initView();
     }
@@ -75,7 +78,7 @@ public class CarDetailActivity extends AppCompatActivity implements View.OnClick
     private void initView() {
 
         imageSlider = (SliderLayout) findViewById(R.id.slider);
-        txt_car_name = (CustomTextView) findViewById(R.id.txt_car_name);
+        //txt_car_name = (CustomTextView) findViewById(R.id.txt_car_name);
         txt_car_price = (CustomTextView) findViewById(R.id.txt_car_price);
         txt_car_model = (CustomTextView) findViewById(R.id.txt_car_model);
         txt_car_version = (CustomTextView) findViewById(R.id.txt_car_version);
@@ -114,10 +117,10 @@ public class CarDetailActivity extends AppCompatActivity implements View.OnClick
             layoutParams.height = Utility.dpToPx(context, 250);
             imageSlider.setLayoutParams(layoutParams);
 
-            if (adPost.getCar_name() != null && !adPost.getCar_name().isEmpty())
+           /* if (adPost.getCar_name() != null && !adPost.getCar_name().isEmpty())
                 txt_car_name.setText(adPost.getCar_name());
             else
-                txt_car_name.setText(getString(R.string.na));
+                txt_car_name.setText(getString(R.string.na));*/
 
 
             if (adPost.getPrice() != null && !adPost.getPrice().isEmpty()) {
@@ -214,7 +217,9 @@ public class CarDetailActivity extends AppCompatActivity implements View.OnClick
             }
 
             if (type == 1) {
-                ((RelativeLayout) findViewById(R.id.rl_rent)).setVisibility(View.VISIBLE);
+                //((RelativeLayout) findViewById(R.id.rl_rent)).setVisibility(View.VISIBLE);
+                ((LinearLayout) findViewById(R.id.ll_from)).setVisibility(View.VISIBLE);
+                ((LinearLayout) findViewById(R.id.ll_to)).setVisibility(View.VISIBLE);
                 ((LinearLayout) findViewById(R.id.ll_car_type)).setVisibility(View.GONE);
                 ((LinearLayout) findViewById(R.id.ll_car_milleage)).setVisibility(View.GONE);
 
@@ -228,7 +233,9 @@ public class CarDetailActivity extends AppCompatActivity implements View.OnClick
                 else
                     txt_from.setText(context.getString(R.string.na));
             } else {
-                ((RelativeLayout) findViewById(R.id.rl_rent)).setVisibility(View.GONE);
+                //((RelativeLayout) findViewById(R.id.rl_rent)).setVisibility(View.GONE);
+                ((LinearLayout) findViewById(R.id.ll_from)).setVisibility(View.GONE);
+                ((LinearLayout) findViewById(R.id.ll_to)).setVisibility(View.GONE);
                 ((LinearLayout) findViewById(R.id.ll_car_type)).setVisibility(View.VISIBLE);
                 ((LinearLayout) findViewById(R.id.ll_car_milleage)).setVisibility(View.VISIBLE);
             }
@@ -265,10 +272,10 @@ public class CarDetailActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
-        String s = Utility.getSharedPreferences(context, Constant.USER_TYPE);
+        String s = SharedPrefUtils.getPreference(context, Constant.USER_TYPE, "");
         switch (v.getId()) {
             case R.id.btn_show_interest:
-                if (s.isEmpty() || s.equalsIgnoreCase("0")) {
+               /* if (s.isEmpty() || s.equalsIgnoreCase("0")) {
                     Utility.openDialogToLogin(context);
                 } else {
                     if (btn_show_interest.getText().toString().equalsIgnoreCase(getResources().getString(R.string.book_car)))
@@ -276,6 +283,15 @@ public class CarDetailActivity extends AppCompatActivity implements View.OnClick
 
                     if (btn_show_interest.getText().toString().equalsIgnoreCase(getResources().getString(R.string.buy_car)))
                         showProblem(2);
+                }*/
+                //display information activity
+                if (btn_show_interest.getText().toString().equalsIgnoreCase(getResources().getString(R.string.book_car))) {
+                // startActivity(new Intent(this, BookCarInfoActivity.class));
+                    Intent intent = new Intent(this, BookCarInfoActivity.class);
+                    intent.putExtra(Constant.DATA, adPost);
+                    intent.putExtra(Constant.POSITION, position);
+                    intent.putExtra(Constant.TYPE, getIntent().getStringExtra(Constant.TYPE));
+                    startActivity(intent);
                 }
                 break;
         }
@@ -301,7 +317,7 @@ public class CarDetailActivity extends AppCompatActivity implements View.OnClick
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        new AqueryCall(this).postWithJsonToken(Urls.INTEREST, Utility.getSharedPreferences(context, Constant.USER_TOKEN), js, new RequestCallback() {
+        new AqueryCall(this).postWithJsonToken(Urls.INTEREST, SharedPrefUtils.getPreference(context, Constant.USER_TOKEN, ""), js, new RequestCallback() {
             @Override
             public void onSuccess(JSONObject js, String success) {
                 // showToast(success);

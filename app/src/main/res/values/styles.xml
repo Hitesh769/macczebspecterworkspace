@@ -1,16 +1,19 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <!--<style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        &lt;!&ndash; Customize your theme here. &ndash;&gt;
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="colorControlHighlight">#20ED3A71</item>
+    </style>-->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">@android:color/black</item>
-        <item name="android:windowBackground">@color/colorPrimary</item>
-        <item name="android:windowContentTransitions">true</item>
-        <item name="colorControlHighlight">#20ED3A71</item>
     </style>
 
     <style name="TabLayoutTextStyle">
@@ -34,7 +37,6 @@
         <item name="rd_rippleColor">@color/colorHighlight</item>
         <item name="rd_rippleAnimDuration">100</item>
         <item name="rd_cornerRadius">10dp</item>
-        <item name="android:elevation">8dp</item>
     </style>
 
     <style name="workRipple" parent="Material.Drawable.Ripple.Wave.Light">
@@ -48,7 +50,6 @@
         <item name="rd_rippleColor">@color/colorHighlight</item>
         <item name="rd_rippleAnimDuration">100</item>
         <item name="rd_cornerRadius">10dp</item>
-        <item name="android:elevation">8dp</item>
     </style>
 
 
@@ -57,7 +58,6 @@
         <item name="rd_rippleColor">@color/colorPrimaryDark</item>
         <item name="rd_rippleAnimDuration">100</item>
         <item name="rd_cornerRadius">10dp</item>
-        <item name="android:elevation">8dp</item>
     </style>
 
     <style name="InOutColorsCircularProgressDrawableStyle" parent="Material.Drawable.CircularProgress">
@@ -114,7 +114,6 @@
     <style name="Dracula" parent="Matisse.Zhihu">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="android:statusBarColor">@android:color/black</item>
     </style>
 
 
@@ -157,4 +156,155 @@
         <item name="android:textColor">@color/light_gray</item>
     </style>
 
+    <!--New design theme-->
+    <style name="TextInputLayout">
+        <item name="android:textColorHint">@color/hint_color</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/_10sdp</item>
+    </style>
+
+    <!--<style name="EditText">
+        <item name="android:textSize">@dimen/_11sdp</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:textColorHint">@color/hint_color</item>
+        <item name="android:background">@drawable/edt_bg</item>
+        <item name="android:paddingTop">@dimen/_6sdp</item>
+        <item name="android:paddingBottom">@dimen/_6sdp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+    </style>-->
+
+    <style name="TextView">
+        <item name="android:textSize">@dimen/_12sdp</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+    </style>
+
+    <!--<style name="Button">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">@dimen/_12sdp</item>
+        <item name="android:textColor">@color/button_text_color</item>
+        <item name="android:background">@drawable/btn_bg</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>-->
+
+    <!--All new style-->
+    <!--All edit text-->
+    <style name="EditText">
+        <item name="android:textSize">@dimen/_11sdp</item>
+        <item name="android:textColor">@color/black_material</item>
+        <item name="android:textColorHint">@color/hint_color</item>
+        <item name="android:background">@drawable/edt_bg_round</item>
+        <item name="android:paddingTop">@dimen/_10sdp</item>
+        <item name="android:paddingBottom">@dimen/_10sdp</item>
+        <item name="android:paddingStart">@dimen/_10sdp</item>
+        <item name="android:paddingEnd">@dimen/_10sdp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <!--all linear layout-->
+    <style name="linearLayout_home">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:animateLayoutChanges">true</item>
+        <item name="android:background">@drawable/ripple</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="linear_register">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginEnd">@dimen/_8sdp</item>
+        <item name="android:layout_marginStart">@dimen/_8sdp</item>
+        <item name="android:layout_marginTop">@dimen/_8sdp</item>
+        <item name="android:layout_marginBottom">@dimen/_8sdp</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <!--all button-->
+    <style name="Button">
+        <item name="android:textSize">@dimen/_12sdp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/btn_bg</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <!--all text view-->
+    <style name="textView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/_12sdp</item>
+        <item name="android:textColor">@color/hint_color</item>
+    </style>
+
+    <style name="textView_white">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/_12sdp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="textView_single_line" parent="textView">
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="textView_home" parent="textView_single_line">
+        <item name="android:textSize">@dimen/_10sdp</item>
+    </style>
+
+    <!--all image view-->
+    <style name="imageView_home">
+        <item name="android:layout_width">@dimen/_20sdp</item>
+        <item name="android:layout_height">@dimen/_20sdp</item>
+    </style>
+
+    <style name="image_register">
+        <item name="android:layout_height">@dimen/_23sdp</item>
+        <item name="android:layout_width">@dimen/_23sdp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_marginEnd">@dimen/_5sdp</item>
+        <item name="android:layout_marginStart">@dimen/_5sdp</item>
+    </style>
+
+    <!--all card view-->
+    <style name="cardView">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <!--all lines-->
+    <style name="line_register">
+        <item name="android:layout_height">@dimen/_1sdp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@color/hint_color</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <!-- Animation for dialog box -->
+    <!--<style name="DialogSlideAnim" parent="@android:style/Theme.Dialog">-->
+    <style name="DialogSlideAnim" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowAnimationStyle">@style/DialogAnimation</item>
+    </style>
+
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_up_dialog</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_down</item>
+    </style>
 </resources>

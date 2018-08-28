@@ -20,6 +20,7 @@ import com.spectre.beans.Garage;
 import com.spectre.customView.CustomRayMaterialTextView;
 import com.spectre.customView.CustomTextView;
 import com.spectre.other.Constant;
+import com.spectre.utility.SharedPrefUtils;
 import com.spectre.utility.Utility;
 
 import java.util.ArrayList;
@@ -96,7 +97,7 @@ public class GarageHomeListAdapter extends RecyclerView.Adapter<GarageHomeListAd
                 }
 */
 
-                String s = Utility.getSharedPreferences(appContext, Constant.USER_TYPE);
+                String s = SharedPrefUtils.getPreference(appContext, Constant.USER_TYPE, "");
                 if (appContext instanceof HomeActivity && status == 1) {
                     Intent intent = new Intent(appContext, GarageDetailActivity.class);
                     intent.putExtra(Constant.DATA, adPost);
@@ -121,7 +122,7 @@ public class GarageHomeListAdapter extends RecyclerView.Adapter<GarageHomeListAd
                 }*/
 
 
-                String s = Utility.getSharedPreferences(appContext, Constant.USER_TYPE);
+                String s = SharedPrefUtils.getPreference(appContext, Constant.USER_TYPE, "");
                 if (appContext instanceof HomeActivity && status == 1) {
                     Intent intent = new Intent(appContext, GarageDetailActivity.class);
                     intent.putExtra(Constant.DATA, adPost);

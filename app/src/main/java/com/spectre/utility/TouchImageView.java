@@ -11,6 +11,8 @@ import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.ImageView;
 
+import static com.spectre.utility.Utility.setLog;
+
 /**
  * Created by mukesh on 12/9/15.
  */
@@ -220,7 +222,6 @@ public class TouchImageView extends ImageView {
     }
 
 
-
     float getFixTrans(float trans, float viewSize, float contentSize) {
 
         float minTrans, maxTrans;
@@ -301,7 +302,7 @@ public class TouchImageView extends ImageView {
 
             int bmHeight = drawable.getIntrinsicHeight();
 
-            Log.d("bmSize", "bmWidth: " + bmWidth + " bmHeight : " + bmHeight);
+            setLog("bmSize : " + "bmWidth: " + bmWidth + " bmHeight : " + bmHeight);
 
             float scaleX = (float) viewWidth / (float) bmWidth;
 

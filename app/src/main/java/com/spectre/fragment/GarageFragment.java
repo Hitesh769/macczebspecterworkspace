@@ -1,11 +1,8 @@
 package com.spectre.fragment;
 
-
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,24 +10,21 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.RelativeLayout;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.rey.material.widget.ProgressView;
 import com.spectre.R;
+import com.spectre.activity_new.HomeAct;
 import com.spectre.adapter.GarageHomeListAdapter;
-import com.spectre.adapter.GarageListAdapter;
-import com.spectre.beans.AdPost;
 import com.spectre.beans.FilterResponse;
 import com.spectre.beans.Garage;
 import com.spectre.customView.CustomTextView;
-import com.spectre.customView.SessionExpireDialog;
 import com.spectre.helper.AqueryCall;
 import com.spectre.interfaces.RequestCallback;
 import com.spectre.other.Constant;
 import com.spectre.other.Urls;
+import com.spectre.utility.SharedPrefUtils;
 import com.spectre.utility.Utility;
 
 import org.json.JSONArray;
@@ -41,11 +35,15 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.spectre.utility.Utility.setLog;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class GarageFragment extends Fragment {
 
+    // set tag name for manage fragment
+    public static final String TAG = GarageFragment.class.getSimpleName();
 
     private View view;
     private Context context;
@@ -61,6 +59,10 @@ public class GarageFragment extends Fragment {
     CustomTextView txtConnection;
     String type = "0";
 
+    // Get main activity to access public variables and methods
+    private HomeAct mainActivity() {
+        return ((HomeAct) getActivity());
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,6 +76,19 @@ public class GarageFragment extends Fragment {
     }
 
     private void initView() {
+
+        // set visibility for menu and back icon
+        mainActivity().changeBottomMenuColor(HomeAct.MENU_GARAGE);
+
+        // set screen title
+        mainActivity().txtAppBarTitle.setText(getString(R.string.garage));
+
+        // hide back arrow
+        mainActivity().imgBack.setVisibility(View.VISIBLE);
+
+        // hide or show app bar
+        mainActivity().rlAppBarMain.setVisibility(View.VISIBLE);
+
         setUpRecycler();
         setSwipeLayout();
         setUpRecyclerListener();
@@ -193,7 +208,7 @@ public class GarageFragment extends Fragment {
             JSONObject params = new JSONObject(new Gson().toJson(filterResponse));
 
             AqueryCall request = new AqueryCall(getActivity());
-            request.postWithJsonToken(Urls.GARAGE_WORK_LIST_DETAIL, Utility.getSharedPreferences(context, Constant.USER_TOKEN), params, new RequestCallback() {
+            request.postWithJsonToken(Urls.GARAGE_WORK_LIST_DETAIL, SharedPrefUtils.getPreference(context, Constant.USER_TOKEN, ""), params, new RequestCallback() {
 
                 @Override
                 public void onSuccess(JSONObject js, String success) {
@@ -219,6 +234,7 @@ public class GarageFragment extends Fragment {
                 @Override
                 public void onAuthFailed(JSONObject js, String failed) {
 
+                    setLog("Garage Fragment FAIL");
                     closeProgressDialog(i);
                     //    SessionExpireDialog.openDialog(context);
 

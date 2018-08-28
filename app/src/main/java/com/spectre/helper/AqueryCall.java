@@ -13,6 +13,7 @@ import com.spectre.customView.SessionExpireDialog;
 import com.spectre.interfaces.RequestCallback;
 import com.spectre.interfaces.RequestCallbackVersion;
 import com.spectre.other.Constant;
+import com.spectre.utility.SharedPrefUtils;
 import com.spectre.utility.Utility;
 
 import org.json.JSONObject;
@@ -88,7 +89,7 @@ public class AqueryCall {
     public void postWithoutToken(String url, JSONObject jsonInput, final RequestCallback request) {
         aq = new AQuery(context.getApplicationContext());
         try {
-            jsonInput.put(Constant.LANGUAGE,Utility.getLanguagePreference(context));
+            jsonInput.put(Constant.LANGUAGE, SharedPrefUtils.getPreference(context, Constant.LANGUAGE, "en"));
             //Log.e("url.....", "" + url + " " + jsonInput);
             printLog("url....." + url + " " + jsonInput);
             aq.post(url, jsonInput, JSONObject.class, new AjaxCallback<JSONObject>() {
@@ -131,8 +132,9 @@ public class AqueryCall {
     public void postWithJsonToken(String url, String token, JSONObject jsonInput, final RequestCallback request) {
         aq = new AQuery(context.getApplicationContext());
         try {
-            jsonInput.put(Constant.LANGUAGE,Utility.getLanguagePreference(context));
+            jsonInput.put(Constant.LANGUAGE, SharedPrefUtils.getPreference(context, Constant.LANGUAGE, "en"));
             //  Log.e("url.....", "" + url + " " + jsonInput);
+            printLog("Token = " + Constant.SECRETKEY + " " + token);
             printLog("url....." + url + " " + jsonInput);
             aq.post(url, jsonInput, JSONObject.class, new AjaxCallback<JSONObject>() {
 
@@ -176,8 +178,8 @@ public class AqueryCall {
     public void postWithParamToken(String url, String token, Map<String, Object> params, final RequestCallbackVersion request) {
         aq = new AQuery(context.getApplicationContext());
         try {
-            // Log.e("url.....", "" + url + " " + params + " auth " + Utility.getSharedPreferences(context.getApplicationContext(), Constant.USER_TOKEN));
-            printLog("url....." + url + " " + params + " auth " + Utility.getSharedPreferences(context.getApplicationContext(), Constant.USER_TOKEN));
+            // Log.e("url.....", "" + url + " " + params + " auth " + SharedPrefUtils.getPreference(context.getApplicationContext(), Constant.USER_TOKEN));
+            printLog("url....." + url + " " + params + " auth " + SharedPrefUtils.getPreference(context, Constant.USER_TOKEN, ""));
             aq.ajax(url, params, JSONObject.class, new AjaxCallback<JSONObject>() {
 
                 @Override
@@ -221,8 +223,8 @@ public class AqueryCall {
     public void postWithParamToken(String url, String token, Map<String, Object> params, final RequestCallback request) {
         aq = new AQuery(context.getApplicationContext());
         try {
-            //   Log.e("url.....", "" + url + " " + params + " auth " + Utility.getSharedPreferences(context.getApplicationContext(), Constant.USER_TOKEN));
-            printLog("url....." + url + " " + params + " auth " + Utility.getSharedPreferences(context.getApplicationContext(), Constant.USER_TOKEN));
+            //   Log.e("url.....", "" + url + " " + params + " auth " + SharedPrefUtils.getPreference(context.getApplicationContext(), Constant.USER_TOKEN));
+            printLog("url....." + url + " " + params + " auth " + SharedPrefUtils.getPreference(context, Constant.USER_TOKEN, ""));
             aq.ajax(url, params, JSONObject.class, new AjaxCallback<JSONObject>() {
 
                 @Override

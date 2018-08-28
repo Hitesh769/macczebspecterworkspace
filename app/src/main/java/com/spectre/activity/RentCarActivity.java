@@ -70,6 +70,7 @@ import com.spectre.other.Urls;
 import com.spectre.utility.ConvetBitmap;
 import com.spectre.utility.PermissionUtility;
 import com.spectre.utility.PermissionsUtils;
+import com.spectre.utility.SharedPrefUtils;
 import com.spectre.utility.Utility;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
@@ -503,7 +504,7 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
         btn_delete_no = ddPostAd.findViewById(R.id.btn_delete_no);
         txt_post_ad_header = ddPostAd.findViewById(R.id.txt_post_ad_header);
 
-//        if (!Utility.getSharedPreferences(context, Constant.USER_TYPE).isEmpty() && Utility.getSharedPreferences(context, Constant.USER_TYPE).equalsIgnoreCase("1")) {
+//        if (!SharedPrefUtils.getPreference(context, Constant.USER_TYPE).isEmpty() && SharedPrefUtils.getPreference(context, Constant.USER_TYPE).equalsIgnoreCase("1")) {
 //            btn_post_garage.setVisibility(View.GONE);
 //        } else
 //            btn_post_garage.setVisibility(View.VISIBLE);
@@ -723,7 +724,7 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
         }
 
 
-        new AqueryCall(this).postWithJsonToken(Url, Utility.getSharedPreferences(context, Constant.USER_TOKEN), jsonObject, new RequestCallback() {
+        new AqueryCall(this).postWithJsonToken(Url, SharedPrefUtils.getPreference(context, Constant.USER_TOKEN, ""), jsonObject, new RequestCallback() {
             @Override
             public void onSuccess(JSONObject js, String msg) {
                /* refresh = true;
@@ -1049,7 +1050,7 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
             e.printStackTrace();
         }
 
-        new AqueryCall(this).postWithJsonToken(Url, Utility.getSharedPreferences(context, Constant.USER_TOKEN), jsonObject, new RequestCallback() {
+        new AqueryCall(this).postWithJsonToken(Url, SharedPrefUtils.getPreference(context, Constant.USER_TOKEN, ""), jsonObject, new RequestCallback() {
             @Override
             public void onSuccess(JSONObject js, String msg) {
 
@@ -1298,7 +1299,7 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
         }
         //"delete_status":"1"
 
-        new AqueryCall(this).postWithJsonToken(Urls.DELETE_RENT_CAR, Utility.getSharedPreferences(context, Constant.USER_TOKEN), jsonObject, new RequestCallback() {
+        new AqueryCall(this).postWithJsonToken(Urls.DELETE_RENT_CAR, SharedPrefUtils.getPreference(context, Constant.USER_TOKEN, ""), jsonObject, new RequestCallback() {
             @Override
             public void onSuccess(JSONObject js, String msg) {
                 refresh = true;

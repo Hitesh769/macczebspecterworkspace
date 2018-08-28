@@ -37,6 +37,7 @@ import com.spectre.helper.AqueryCall;
 import com.spectre.interfaces.RequestCallback;
 import com.spectre.other.Constant;
 import com.spectre.other.Urls;
+import com.spectre.utility.SharedPrefUtils;
 import com.spectre.utility.Utility;
 
 import org.json.JSONArray;
@@ -237,13 +238,13 @@ public class GarageHomeActivity extends AppCompatActivity implements View.OnClic
     protected void onResume() {
         super.onResume();
 
-        if (!Utility.getSharedPreferences(context, Constant.USER_NAME).isEmpty())
-            tvName.setText(Utility.getSharedPreferences(context, Constant.USER_NAME));
+        if (!SharedPrefUtils.getPreference(context, Constant.USER_NAME, "").isEmpty())
+            tvName.setText(SharedPrefUtils.getPreference(context, Constant.USER_NAME, ""));
         else
             tvName.setText("");
 
-        if (!Utility.getSharedPreferences(context, Constant.USER_IMAGE).isEmpty())
-            new AQuery(context).id(ivProfile).image(Utility.getSharedPreferences(context, Constant.USER_IMAGE), true, true, 0, R.mipmap.gestuser);
+        if (!SharedPrefUtils.getPreference(context, Constant.USER_IMAGE, "").isEmpty())
+            new AQuery(context).id(ivProfile).image(SharedPrefUtils.getPreference(context, Constant.USER_IMAGE, ""), true, true, 0, R.mipmap.gestuser);
         else
             ivProfile.setImageResource(R.mipmap.gestuser);
 
@@ -352,7 +353,7 @@ public class GarageHomeActivity extends AppCompatActivity implements View.OnClic
             }
 
             AqueryCall request = new AqueryCall(this);
-            request.postWithJsonToken(Urls.GARAGE_WORK_LIST, Utility.getSharedPreferences(context, Constant.USER_TOKEN), params, new RequestCallback() {
+            request.postWithJsonToken(Urls.GARAGE_WORK_LIST, SharedPrefUtils.getPreference(context, Constant.USER_TOKEN, ""), params, new RequestCallback() {
 
                 @Override
                 public void onSuccess(JSONObject js, String success) {

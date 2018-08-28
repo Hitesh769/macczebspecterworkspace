@@ -5,14 +5,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
@@ -22,6 +24,8 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.spectre.BuildConfig;
 import com.spectre.LoginModel;
 import com.spectre.R;
+import com.spectre.activity_new.HomeAct;
+import com.spectre.activity_new.MasterAppCompactActivity;
 import com.spectre.api.ApiClient;
 import com.spectre.api.ApiInterface;
 import com.spectre.customView.AlertBox;
@@ -33,21 +37,28 @@ import com.spectre.helper.AqueryCall;
 import com.spectre.interfaces.RequestCallback;
 import com.spectre.other.Constant;
 import com.spectre.other.Urls;
+import com.spectre.utility.SharedPrefUtils;
 import com.spectre.utility.Utility;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends MasterAppCompactActivity implements View.OnClickListener {
+
+    @BindView(R.id.txtAppBarTitle)
+    TextView txtAppBarTitle;
 
     private Context context;
-    private CustomEditText et_mail, et_pin;
-    private CustomRayMaterialTextView btnLogIn;
-    private CustomTextView tv_forget_pin, tv_signup;
+    private EditText et_mail, et_pin;
+    private Button btnLogIn;
+    private TextView tv_forget_pin, tv_signup;
     private String email, password;
     private AlertBox alertBox;
     private String gcmId;
@@ -58,26 +69,41 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private String mobile, newPass, otp;
     private String number;
 
+    // Get start intent for Activity
+    public static Intent getStartIntent(Context context) {
+        Intent intent = new Intent(context, LoginActivity.class);
+        return intent;
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //  setContentView(R.layout.activity_login);
         context = this;
-        Utility.setContentView(context, R.layout.activity_login);
+        // Utility.setContentView(context, R.layout.activity_login);
+        Utility.setContentView(context, R.layout.act_login);
+
+        // bind view using butter knife
+        ButterKnife.bind(this);
+
         initView();
     }
 
     /* To initialize view & apply click Listener */
     private void initView() {
-        et_mail = (CustomEditText) findViewById(R.id.et_email);
-        et_pin = (CustomEditText) findViewById(R.id.et_password);
-        btnLogIn = (CustomRayMaterialTextView) findViewById(R.id.btn_login);
-        tv_forget_pin = (CustomTextView) findViewById(R.id.tv_forget_pin);
+        et_mail = findViewById(R.id.et_email);
+        et_pin = findViewById(R.id.et_password);
+        btnLogIn = findViewById(R.id.btn_login);
+        tv_forget_pin = findViewById(R.id.tv_forget_pin);
+        tv_signup = findViewById(R.id.tv_signup);
         tv_forget_pin.setOnClickListener(this);
-        tv_signup = (CustomTextView) findViewById(R.id.tv_signup);
         tv_signup.setOnClickListener(this);
         btnLogIn.setOnClickListener(this);
         alertBox = new AlertBox(context);
+
+        // set title
+        txtAppBarTitle.setText(getString(R.string.login));
     }
 
     @Override
@@ -92,8 +118,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.btn_login:
                 if (areFieldsValid()) {
                     //  login();
-                    //  startActivity(new Intent(context, HomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
-
                     if (Utility.isConnectingToInternet(context)) {
                         new RegisterGCMId().execute();
                     } else {
@@ -132,7 +156,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             dd.show();
 
 
-            final CustomEditText etMobileNumber = (CustomEditText) dd.findViewById(R.id.et_mob);
+            final EditText etMobileNumber = (EditText) dd.findViewById(R.id.et_mob);
             etMobileNumber.setText(number);
             etMobileNumber.setSelection(number != null ? number.length() : 0);
 
@@ -144,7 +168,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
             });
 
-            ((CustomRayMaterialTextView) dd.findViewById(R.id.btn_save_changes)).setOnClickListener(new View.OnClickListener() {
+            ((Button) dd.findViewById(R.id.btn_save_changes)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     etMobileNumber.setError(null);
@@ -199,7 +223,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             JSONObject jsonInput = new JSONObject();
             jsonInput.put(Constant.USER_MOBILE, trim);
             jsonInput.put(Constant.TYPE, forgetType);
-            jsonInput.put(Constant.LANGUAGE, Utility.getLanguagePreference(context));
+            jsonInput.put(Constant.LANGUAGE, SharedPrefUtils.getPreference(context, Constant.LANGUAGE, "en"));
             new AQuery(context).post(Urls.FORGOT_PASSWORD, jsonInput, JSONObject.class, new AjaxCallback<JSONObject>() {
 
                 @Override
@@ -285,7 +309,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             paramObject.put(Constant.USER_DEVICE_TYPE, Constant.ANDROID);
             paramObject.put(Constant.USER_DEVICE_ID, Build.SERIAL);
             paramObject.put(Constant.USER_DEVICE_TOKEN, gcmId);
-            paramObject.put(Constant.LANGUAGE, Utility.getLanguagePreference(context));
+            paramObject.put(Constant.LANGUAGE, SharedPrefUtils.getPreference(context, Constant.LANGUAGE, "en"));
 
             Utility.setLog("PARAM :" + paramObject);
 
@@ -294,8 +318,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 @Override
                 public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
                     Utility.setLog("Response :" + "success");
-                    Intent intent = new Intent(context, HomeActivity.class).putExtra(Constant.TYPE, type);
-                    startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+//                    Intent intent = new Intent(context, HomeActivity.class).putExtra(Constant.TYPE, type);
+//                    startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                    // startActFinish(HomeFormatActivity.getStartIntent(context, type));
+                    startActFinish(HomeAct.getStartIntent(context, type));
                 }
 
                 @Override
@@ -349,7 +375,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onFailed(JSONObject js, String msg) {
                 MyDialogProgress.close(context);
                 if (msg.equalsIgnoreCase("Otp send Successfully.") || msg.equalsIgnoreCase("OTP sent.")) {
-                    Utility.setSharedPreference(context, Constant.USER_MOBILE, et_mail.getText().toString().trim());
+                    SharedPrefUtils.setPreference(context, Constant.USER_MOBILE, et_mail.getText().toString().trim());
                     startActivity(new Intent(context, OTPActivity.class).putExtra(Constant.TYPE, 1));
                 } else
                     alertBox.openMessage(msg, "Ok", "", false);
@@ -389,6 +415,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             //  request.onNull(new JSONObject(), context.getApplicationContext().getString(R.string.something_wrong));
             showToast(getString(R.string.something_wrong));
         }
+    }
+
+    @OnClick(R.id.imgBack)
+    public void onViewClicked() {
+        onBackPressed();
     }
 
     /*Get Device Token Class*/
@@ -456,51 +487,47 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         try {
             JSONObject jsonObject = js.getJSONObject(Constant.DATA);
-            Utility.setSharedPreference(context, Constant.USER_ID, jsonObject.getString(Constant.USER_ID));
-            Utility.setSharedPreference(context, Constant.USER_NAME, jsonObject.getString(Constant.USER_NAME));
-            Utility.setSharedPreference(context, Constant.USER_IMAGE, jsonObject.getString(Constant.USER_IMAGE));
-            Utility.setSharedPreference(context, Constant.USER_MOBILE, jsonObject.getString(Constant.USER_MOBILE));
-            Utility.setSharedPreference(context, Constant.USER_TOKEN, jsonObject.getString(Constant.USER_TOKEN));
+            SharedPrefUtils.setPreference(context, Constant.USER_ID, jsonObject.getString(Constant.USER_ID));
+            SharedPrefUtils.setPreference(context, Constant.USER_NAME, jsonObject.getString(Constant.USER_NAME));
+            SharedPrefUtils.setPreference(context, Constant.USER_IMAGE, jsonObject.getString(Constant.USER_IMAGE));
+            SharedPrefUtils.setPreference(context, Constant.USER_MOBILE, jsonObject.getString(Constant.USER_MOBILE));
+            SharedPrefUtils.setPreference(context, Constant.USER_TOKEN, jsonObject.getString(Constant.USER_TOKEN));
 
             if (jsonObject.has(Constant.USER_EMAIL))
-                Utility.setSharedPreference(context, Constant.USER_EMAIL, jsonObject.getString(Constant.USER_EMAIL));
+                SharedPrefUtils.setPreference(context, Constant.USER_EMAIL, jsonObject.getString(Constant.USER_EMAIL));
 
             if (jsonObject.has(Constant.USER_ADDRESS_))
-                Utility.setSharedPreference(context, Constant.USER_ADDRESS_, jsonObject.getString(Constant.USER_ADDRESS_));
+                SharedPrefUtils.setPreference(context, Constant.USER_ADDRESS_, jsonObject.getString(Constant.USER_ADDRESS_));
 
             if (jsonObject.has(Constant.CAR_REPAIRE))
-                Utility.setSharedPreference(context, Constant.CAR_REPAIRE, jsonObject.getString(Constant.CAR_REPAIRE));
+                SharedPrefUtils.setPreference(context, Constant.CAR_REPAIRE, jsonObject.getString(Constant.CAR_REPAIRE));
 
             if (jsonObject.has(Constant.EXPERTISE))
-                Utility.setSharedPreference(context, Constant.EXPERTISE, jsonObject.getString(Constant.EXPERTISE));
+                SharedPrefUtils.setPreference(context, Constant.EXPERTISE, jsonObject.getString(Constant.EXPERTISE));
 
             if (jsonObject.has(Constant.GARAGE_IMAGE))
-                Utility.setSharedPreference(context, Constant.GARAGE_IMAGE, jsonObject.getString(Constant.GARAGE_IMAGE));
+                SharedPrefUtils.setPreference(context, Constant.GARAGE_IMAGE, jsonObject.getString(Constant.GARAGE_IMAGE));
 
             if (jsonObject.has(Constant.MOBILE_CODE))
-                Utility.setSharedPreference(context, Constant.MOBILE_CODE, jsonObject.getString(Constant.MOBILE_CODE));
+                SharedPrefUtils.setPreference(context, Constant.MOBILE_CODE, jsonObject.getString(Constant.MOBILE_CODE));
 
             if (jsonObject.has(Constant.SERVICE_TYPE)) {
-                Utility.setSharedPreference(context, Constant.SERVICE_TYPE, jsonObject.getString(Constant.SERVICE_TYPE));
+                SharedPrefUtils.setPreference(context, Constant.SERVICE_TYPE, jsonObject.getString(Constant.SERVICE_TYPE));
             }
 
             MyDialogProgress.close(context);
 
             if (jsonObject.has(Constant.USER_TYPE)) {
                 type = jsonObject.getString(Constant.USER_TYPE);
-                Utility.setSharedPreference(context, Constant.USER_TYPE, type);
-
+                SharedPrefUtils.setPreference(context, Constant.USER_TYPE, type);
                 if (type.equalsIgnoreCase("2")) {
-                    //  Intent intent = new Intent(context, GarageHomeActivity.class);
-                    Intent intent = new Intent(context, HomeActivity.class).putExtra(Constant.TYPE, type);
-                    startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                    // startActFinish(HomeFormatActivity.getStartIntent(context, type));
+                    startActFinish(HomeAct.getStartIntent(context, type));
                     return;
                 }
             }
-
-            Intent intent = new Intent(context, HomeActivity.class).putExtra(Constant.TYPE, type);
-            startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
-
+            // startActFinish(HomeFormatActivity.getStartIntent(context, type));
+            startActFinish(HomeAct.getStartIntent(context, type));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -533,10 +560,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             dd1.show();
 
 
-            final CustomEditText etPin = (CustomEditText) dd1.findViewById(R.id.et_new_pin);
-            final CustomEditText etCpin = (CustomEditText) dd1.findViewById(R.id.et_c_new_pin);
-            final CustomEditText etOtp = (CustomEditText) dd1.findViewById(R.id.et_otp);
-            final CustomTextView txtMsg = (CustomTextView) dd1.findViewById(R.id.txt_msg);
+            final EditText etPin = dd1.findViewById(R.id.et_new_pin);
+            final EditText etCpin = dd1.findViewById(R.id.et_c_new_pin);
+            final EditText etOtp = dd1.findViewById(R.id.et_otp);
+            final TextView txtMsg = dd1.findViewById(R.id.txt_msg);
             String s = getResources().getString(R.string.msg, "<font color='#000000'> <b>" + mobile + "</b></font>");
             txtMsg.setText(Html.fromHtml(s));
 
@@ -550,7 +577,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             });
 
 
-            ((CustomRayMaterialTextView) dd1.findViewById(R.id.btn_resend)).setOnClickListener(new View.OnClickListener() {
+            ((Button) dd1.findViewById(R.id.btn_resend)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     callResetAPI(dd, mobile, 2);
@@ -558,7 +585,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             });
 
 
-            ((CustomRayMaterialTextView) dd1.findViewById(R.id.btn_change_pass)).setOnClickListener(new View.OnClickListener() {
+            ((Button) dd1.findViewById(R.id.btn_change_pass)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     etPin.setError(null);
@@ -679,7 +706,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             jsonInput.put(Constant.USER_DEVICE_ID, Build.SERIAL);
             jsonInput.put(Constant.USER_DEVICE_TOKEN, gcmId);
             jsonInput.put(Constant.TYPE, forgetType);
-            jsonInput.put(Constant.LANGUAGE, Utility.getLanguagePreference(context));
+            jsonInput.put(Constant.LANGUAGE, SharedPrefUtils.getPreference(context, Constant.LANGUAGE, "en"));
             //    jsonInput.put(Constant.TYPE, gcmId);
 
 

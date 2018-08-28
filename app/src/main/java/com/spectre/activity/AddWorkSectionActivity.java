@@ -36,6 +36,7 @@ import com.spectre.other.Constant;
 import com.spectre.other.Urls;
 import com.spectre.utility.DepthPageTransformer;
 import com.spectre.utility.NonSwipeableViewPager;
+import com.spectre.utility.SharedPrefUtils;
 import com.spectre.utility.Utility;
 
 import org.json.JSONArray;
@@ -295,7 +296,7 @@ public class AddWorkSectionActivity extends AppCompatActivity {
 
         MyDialogProgress.open(context);
 
-        new AqueryCall(this).postWithJsonToken(Urls.GARAGE_WORK, Utility.getSharedPreferences(context, Constant.USER_TOKEN), jsonObject, new RequestCallback() {
+        new AqueryCall(this).postWithJsonToken(Urls.GARAGE_WORK, SharedPrefUtils.getPreference(context, Constant.USER_TOKEN, ""), jsonObject, new RequestCallback() {
             @Override
             public void onSuccess(JSONObject js, String msg) {
                 setNewData(js, msg);

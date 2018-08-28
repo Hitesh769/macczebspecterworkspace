@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#8700C9</color>
-    <color name="colorPrimaryDark">#7400bc</color>
+    <!--<color name="colorPrimaryDark">#7400bc</color>-->
+    <color name="colorPrimaryDark">#341747</color>
     <color name="colorAccent">#FFB600</color>
     <color name="colorWhite">#ffffff</color>
     <color name="transprent_white">#90ffffff</color>
@@ -17,6 +18,7 @@
     <color name="setting_pink">#f6708b</color>
     <color name="setting_yellow">#F4BE2B</color>
     <color name="blue_term">#26BBFD</color>
+    <color name="light_green">#6bce9b</color>
     <color name="green_logout">#80BE43</color>
     <color name="purple">#A689CD</color>
     <color name="purpleBackground">#7D00BC</color>
@@ -40,4 +42,15 @@
     <color name="text_color_light_black">#191919</color>
     <color name="gray">#3f3f3f</color>
     <color name="colorGray">#A5A5A5</color>
+
+    <!--New theme colors-->
+    <color name="hint_color">#FFB6B4B5</color>
+    <color name="text_color">#000000</color>
+    <color name="button_text_color">#ffffff</color>
+    <color name="shadow">#d0d8dc</color>
+    <color name="white">#ffffff</color>
+    <color name="black_material">#363739</color>
+    <color name="edittext_color">@color/hint_color</color>
+    <color name="signup_back">#A050D1</color>
+    <color name="back_new">#341747</color>
 </resources>

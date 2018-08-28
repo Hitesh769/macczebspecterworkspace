@@ -124,6 +124,13 @@ public class Constant {
     public final static String LOCATION = "location";
     public static final String LATITUDE = "lat";
     public static final String LONGITUDE = "lon";
+    public static final String MINPRICE="price_min_range";
+    public static final String MAXPRICE="price_max_range";
+    public static final String MAXRANGE="maxrange";
+    public static final String MINRANGE="minrange";
+    public static final String DRIVER_EMAIL="driver_email";
+    public static final String DRIVER_NAME="driver_name";
+    public static final String DRIVER_PHONE="driver_phone";
 
     /*{
         "second_user_id":"337",

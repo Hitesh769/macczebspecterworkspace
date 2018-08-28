@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.HomeActivity">
+
+    <include
+        layout="@layout/app_bar_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/_50sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_50sdp"
+        android:background="?android:attr/windowBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="4">
+
+            <LinearLayout
+                android:id="@+id/llBuy"
+                style="@style/linearLayout_home">
+
+                <ImageView
+                    android:id="@+id/imgBuy"
+                    style="@style/imageView_home"
+                    android:src="@drawable/ic_buy" />
+
+                <TextView
+                    android:id="@+id/txtBuy"
+                    style="@style/textView_home"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="@string/buy" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llRent"
+                style="@style/linearLayout_home">
+
+                <ImageView
+                    android:id="@+id/imgRent"
+                    style="@style/imageView_home"
+                    android:src="@drawable/ic_rent" />
+
+                <TextView
+                    android:id="@+id/txtRent"
+                    style="@style/textView_home"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="@string/rent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llGarage"
+                style="@style/linearLayout_home">
+
+                <ImageView
+                    android:id="@+id/imgGarage"
+                    style="@style/imageView_home"
+                    android:src="@drawable/ic_garage" />
+
+                <TextView
+                    android:id="@+id/txtGarage"
+                    style="@style/textView_home"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="@string/garage" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llMore"
+                style="@style/linearLayout_home">
+
+                <ImageView
+                    android:id="@+id/imgMore"
+                    style="@style/imageView_home"
+                    android:src="@drawable/ic_more_horiz" />
+
+                <TextView
+                    android:id="@+id/txtMore"
+                    style="@style/textView_home"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="@string/more" />
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.design.widget.BottomNavigationView>
+
+</android.support.constraint.ConstraintLayout>

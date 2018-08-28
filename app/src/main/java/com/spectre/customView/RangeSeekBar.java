@@ -47,7 +47,7 @@ import java.math.BigDecimal;
  * @author Alex Florescu (florescu@yahoo-inc.com)
  * @author Michael Keppler (bananeweizen@gmx.de)
  */
-public class RangeSeekBar<T extends Number> extends ImageView {
+public class RangeSeekBar<T extends Number> extends android.support.v7.widget.AppCompatImageView {
 
     public static final Integer DEFAULT_MINIMUM = 0;
     public static final Integer DEFAULT_MAXIMUM = 100;
@@ -58,9 +58,9 @@ public class RangeSeekBar<T extends Number> extends ImageView {
     private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Bitmap thumbImage = BitmapFactory.decodeResource(getResources(), R.mipmap.seek_thumb_normal);
     private final Bitmap thumbPressedImage = BitmapFactory.decodeResource(getResources(),
-                                                                          R.mipmap.seek_thumb_pressed);
+            R.mipmap.seek_thumb_pressed);
     private final Bitmap thumbDisabledImage = BitmapFactory.decodeResource(getResources(),
-                                                                           R.mipmap.seek_thumb_disabled);
+            R.mipmap.seek_thumb_disabled);
     private final float thumbWidth = thumbImage.getWidth();
     private final float thumbHalfWidth = 0.5f * thumbWidth;
     private final float thumbHalfHeight = 0.5f * thumbImage.getHeight();
@@ -77,7 +77,10 @@ public class RangeSeekBar<T extends Number> extends ImageView {
     /**
      * Default color of a {@link RangeSeekBar}, #FF33B5E5. This is also known as "Ice Cream Sandwich" blue.
      */
-    public static final int DEFAULT_COLOR = Color.argb(0xFF, 0x33, 0xB5, 0xE5);
+    /* [START] - 2018_08_20 - Change by Punit */
+    // public static final int DEFAULT_COLOR = Color.argb(0xFF, 0x33, 0xB5, 0xE5);
+    public static final int DEFAULT_COLOR = Color.argb(0xFF, 0xFF, 0xB6, 0x00);
+    /* [END] - 2018_08_20 - Change by Punit */
     /**
      * An invalid pointer id.
      */
@@ -100,9 +103,15 @@ public class RangeSeekBar<T extends Number> extends ImageView {
     private int mDistanceToTop;
     private RectF mRect;
 
-    private static final int DEFAULT_TEXT_SIZE_IN_DP = 14;
-    private static final int DEFAULT_TEXT_DISTANCE_TO_BUTTON_IN_DP = 8;
-    private static final int DEFAULT_TEXT_DISTANCE_TO_TOP_IN_DP = 8;
+    /* [START] - 2018_08_20 - Change by Punit */
+    //    private static final int DEFAULT_TEXT_SIZE_IN_DP = 14;
+//    private static final int DEFAULT_TEXT_DISTANCE_TO_BUTTON_IN_DP = 8;
+//    private static final int DEFAULT_TEXT_DISTANCE_TO_TOP_IN_DP = 8;
+    private static final int DEFAULT_TEXT_SIZE_IN_DP = 0;
+    private static final int DEFAULT_TEXT_DISTANCE_TO_BUTTON_IN_DP = 0;
+    private static final int DEFAULT_TEXT_DISTANCE_TO_TOP_IN_DP = 0;
+    /* [END] - 2018_08_20 - Change by Punit */
+
     private boolean mSingleThumb;
 
     public RangeSeekBar(Context context) {
@@ -151,15 +160,15 @@ public class RangeSeekBar<T extends Number> extends ImageView {
         INITIAL_PADDING = dpToPx(context, INITIAL_PADDING_IN_DP);
 
         mTextSize = dpToPx(context, DEFAULT_TEXT_SIZE_IN_DP);
-        mDistanceToTop =dpToPx(context, DEFAULT_TEXT_DISTANCE_TO_TOP_IN_DP);
+        mDistanceToTop = dpToPx(context, DEFAULT_TEXT_DISTANCE_TO_TOP_IN_DP);
         mTextOffset = this.mTextSize + dpToPx(context,
-                                                        DEFAULT_TEXT_DISTANCE_TO_BUTTON_IN_DP) + this.mDistanceToTop;
+                DEFAULT_TEXT_DISTANCE_TO_BUTTON_IN_DP) + this.mDistanceToTop;
 
         float lineHeight = dpToPx(context, LINE_HEIGHT_IN_DP);
         mRect = new RectF(padding,
-                          mTextOffset + thumbHalfHeight - lineHeight / 2,
-                          getWidth() - padding,
-                          mTextOffset + thumbHalfHeight + lineHeight / 2);
+                mTextOffset + thumbHalfHeight - lineHeight / 2,
+                getWidth() - padding,
+                mTextOffset + thumbHalfHeight + lineHeight / 2);
 
         // make RangeSeekBar focusable. This solves focus handling issues in case EditText widgets are being used along with the RangeSeekBar within ScollViews.
         setFocusable(true);
@@ -457,8 +466,12 @@ public class RangeSeekBar<T extends Number> extends ImageView {
         paint.setAntiAlias(true);
 
         // draw min and max labels
-        String minLabel = getContext().getString(R.string.demo_min_label);
-        String maxLabel = getContext().getString(R.string.demo_max_label);
+        /* [START] - 2018_08_20 - Change by Punit */
+//        String minLabel = getContext().getString(R.string.demo_min_label);
+//        String maxLabel = getContext().getString(R.string.demo_max_label);
+        String minLabel = "";
+        String maxLabel = "";
+        /* [END] - 2018_08_20 - Change by Punit */
         float minMaxLabelSize = Math.max(paint.measureText(minLabel), paint.measureText(maxLabel));
         float minMaxHeight = mTextOffset + thumbHalfHeight + mTextSize / 3;
         canvas.drawText(minLabel, 0, minMaxHeight, paint);
@@ -487,12 +500,12 @@ public class RangeSeekBar<T extends Number> extends ImageView {
         // draw minimum thumb if not a single thumb control
         if (!mSingleThumb) {
             drawThumb(normalizedToScreen(normalizedMinValue), Thumb.MIN.equals(pressedThumb), canvas,
-                      selectedValuesAreDefault);
+                    selectedValuesAreDefault);
         }
 
         // draw maximum thumb
         drawThumb(normalizedToScreen(normalizedMaxValue), Thumb.MAX.equals(pressedThumb), canvas,
-                  selectedValuesAreDefault);
+                selectedValuesAreDefault);
 
         // draw the text if sliders have moved from default edges
         if (!selectedValuesAreDefault) {
@@ -501,23 +514,27 @@ public class RangeSeekBar<T extends Number> extends ImageView {
             // give text a bit more space here so it doesn't get cut off
             int offset = dpToPx(getContext(), TEXT_LATERAL_PADDING_IN_DP);
 
-            String minText = String.valueOf(getSelectedMinValue());
-            String maxText = String.valueOf(getSelectedMaxValue());
+            /* [START] - 2018_08_20 - Change by Punit */
+//            String minText = String.valueOf(getSelectedMinValue());
+//            String maxText = String.valueOf(getSelectedMaxValue());
+            String minText = "";
+            String maxText = "";
+            /* [END] - 2018_08_20 - Change by Punit */
             float minTextWidth = paint.measureText(minText) + offset;
             float maxTextWidth = paint.measureText(maxText) + offset;
 
             if (!mSingleThumb) {
                 canvas.drawText(minText,
-                                normalizedToScreen(normalizedMinValue) - minTextWidth * 0.5f,
-                                mDistanceToTop + mTextSize,
-                                paint);
+                        normalizedToScreen(normalizedMinValue) - minTextWidth * 0.5f,
+                        mDistanceToTop + mTextSize,
+                        paint);
 
             }
 
             canvas.drawText(maxText,
-                            normalizedToScreen(normalizedMaxValue) - maxTextWidth * 0.5f,
-                            mDistanceToTop + mTextSize,
-                            paint);
+                    normalizedToScreen(normalizedMaxValue) - maxTextWidth * 0.5f,
+                    mDistanceToTop + mTextSize,
+                    paint);
         }
 
     }
@@ -561,8 +578,8 @@ public class RangeSeekBar<T extends Number> extends ImageView {
         }
 
         canvas.drawBitmap(buttonToDraw, screenCoord - thumbHalfWidth,
-                          mTextOffset,
-                          paint);
+                mTextOffset,
+                paint);
     }
 
     /**
@@ -733,7 +750,7 @@ public class RangeSeekBar<T extends Number> extends ImageView {
                 case INTEGER:
                     return Integer.valueOf((int) value);
                 case FLOAT:
-                    return Float.valueOf((float)value);
+                    return Float.valueOf((float) value);
                 case SHORT:
                     return Short.valueOf((short) value);
                 case BYTE:
@@ -746,21 +763,19 @@ public class RangeSeekBar<T extends Number> extends ImageView {
     }
 
 
+    public static int dpToPx(Context context, int dp) {
+        int px = Math.round(dp * getPixelScaleFactor(context));
+        return px;
+    }
 
+    public static int pxToDp(Context context, int px) {
+        int dp = Math.round(px / getPixelScaleFactor(context));
+        return dp;
+    }
 
-        public static int dpToPx(Context context, int dp) {
-            int px = Math.round(dp * getPixelScaleFactor(context));
-            return px;
-        }
-
-        public static int pxToDp(Context context, int px) {
-            int dp = Math.round(px / getPixelScaleFactor(context));
-            return dp;
-        }
-
-        private static float getPixelScaleFactor(Context context) {
-            DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-            return (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT);
-        }
+    private static float getPixelScaleFactor(Context context) {
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        return (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT);
+    }
 
 }

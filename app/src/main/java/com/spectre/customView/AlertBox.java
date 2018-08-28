@@ -112,8 +112,8 @@ public class AlertBox {
                     //  Utility.resetPreferences(context);
                     /*if (context instanceof MessageDetailActivity) {
                         ((MessageDetailActivity) context).finish();
-                    }else if(context instanceof HomeActivity){
-                        ((HomeActivity) context).finish();
+                    }else if(context instanceof HomeFormatActivity){
+                        ((HomeFormatActivity) context).finish();
                     }else*/
                     if (context instanceof LoginActivity) {
                         ((LoginActivity) context).finish();
@@ -183,8 +183,8 @@ public class AlertBox {
                 public void onClick(DialogInterface dialog, int which) {
                     if (context instanceof EditProfileActivity) {
                         ((EditProfileActivity) context).pickFromGallery();
-                    }/* else if (context instanceof HomeActivity) {
-                        ((HomeActivity) context).pickFromGallery();
+                    }/* else if (context instanceof HomeFormatActivity) {
+                        ((HomeFormatActivity) context).pickFromGallery();
                     }*/
                 }
             });

@@ -35,18 +35,18 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.rey.material.widget.ProgressView;
 import com.spectre.R;
-import com.spectre.activity.RentCarActivity;
+import com.spectre.activity_new.HomeAct;
 import com.spectre.adapter.CarListAdapter;
+import com.spectre.adapter.SearchRentListAdapter;
 import com.spectre.beans.AdPost;
 import com.spectre.beans.FilterResponse;
 import com.spectre.customView.CustomTextView;
-import com.spectre.customView.MyDialogProgress;
-import com.spectre.customView.SessionExpireDialog;
 import com.spectre.helper.AqueryCall;
 import com.spectre.interfaces.RequestCallback;
 import com.spectre.other.Constant;
 import com.spectre.other.Urls;
 import com.spectre.utility.PermissionUtility;
+import com.spectre.utility.SharedPrefUtils;
 import com.spectre.utility.Utility;
 
 import org.json.JSONArray;
@@ -60,18 +60,22 @@ import java.util.List;
 import java.util.Locale;
 
 import static android.app.Activity.RESULT_OK;
+import static com.spectre.utility.Utility.setLog;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class RentFragment extends Fragment implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
+    // set tag name for manage fragment
+    public static final String TAG = RentFragment.class.getSimpleName();
+
     private View view;
     private Context context;
     private CustomTextView tv_rent_fragment_location;
     private ImageView img_post_ad_current_location;
     private String latitude = "";
-    private String longitude = "";
+    private String longitude = "",maxrange="",minrang="";
     RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private RecyclerView.Adapter mAdapter;
@@ -90,6 +94,11 @@ public class RentFragment extends Fragment implements View.OnClickListener, Goog
     //Declaration of Google API Client
     private GoogleApiClient mGoogleApiClient;
 
+    // Get main activity to access public variables and methods
+    private HomeAct mainActivity() {
+        return ((HomeAct) getActivity());
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -104,11 +113,31 @@ public class RentFragment extends Fragment implements View.OnClickListener, Goog
 
     private void initView() {
 
+        // set visibility for menu and back icon
+        mainActivity().changeBottomMenuColor(HomeAct.MENU_RENT);
+
+        // set screen title
+        mainActivity().txtAppBarTitle.setText(getString(R.string.rent));
+
+        // hide back arrow
+        mainActivity().imgBack.setVisibility(View.VISIBLE);
+
+        // hide or show app bar
+        mainActivity().rlAppBarMain.setVisibility(View.VISIBLE);
+
         tv_rent_fragment_location = (CustomTextView) view.findViewById(R.id.tv_rent_fragment_location);
         img_post_ad_current_location = (ImageView) view.findViewById(R.id.img_rent_fragment_location);
 
         tv_rent_fragment_location.setOnClickListener(this);
         img_post_ad_current_location.setOnClickListener(this);
+
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            latitude = bundle.getString(Constant.LATITUDE);
+            longitude=bundle.getString(Constant.LONGITUDE);
+            maxrange = bundle.getString(Constant.MAXRANGE);
+            minrang=bundle.getString(Constant.MINRANGE);
+        }
 
         getLocation();
 
@@ -125,6 +154,13 @@ public class RentFragment extends Fragment implements View.OnClickListener, Goog
                 .build();
 
         // tv_rent_fragment_location.setText(filterResponse.getLocation());
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mGoogleApiClient.stopAutoManage(getActivity());
+        mGoogleApiClient.disconnect();
     }
 
     @Override
@@ -317,7 +353,7 @@ public class RentFragment extends Fragment implements View.OnClickListener, Goog
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(context);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new CarListAdapter(context, Arraylist, 1);
+        mAdapter = new SearchRentListAdapter(context, Arraylist, 1);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -394,9 +430,13 @@ public class RentFragment extends Fragment implements View.OnClickListener, Goog
             params.put(Constant.LOCATION, tv_rent_fragment_location.getText().toString().trim());
             params.put(Constant.LATITUDE, latitude);
             params.put(Constant.LONGITUDE, longitude);
+            params.put(Constant.MAXPRICE,maxrange);
+            params.put(Constant.MINPRICE,minrang);
+           /* params.put(Constant.YEAR_FROM,);
+            params.put(Constant.YEAR_TO,minrang);*/
 
             AqueryCall request = new AqueryCall(getActivity());
-            request.postWithJsonToken(Urls.FILTER, Utility.getSharedPreferences(context, Constant.USER_TOKEN), params, new RequestCallback() {
+            request.postWithJsonToken(Urls.FILTER, SharedPrefUtils.getPreference(context, Constant.USER_TOKEN, ""), params, new RequestCallback() {
 
                 @Override
                 public void onSuccess(JSONObject js, String success) {
@@ -424,7 +464,7 @@ public class RentFragment extends Fragment implements View.OnClickListener, Goog
 
                 @Override
                 public void onAuthFailed(JSONObject js, String failed) {
-
+                    setLog("Rent Fragment FAIL");
                     closeProgressDialog(i);
                     //     SessionExpireDialog.openDialog(context);
 

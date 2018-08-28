@@ -18,6 +18,7 @@ import com.spectre.activity.NotificationActivity;
 import com.spectre.activity.SplashActivity;
 import com.spectre.other.Constant;
 import com.spectre.utility.NotificationHelper;
+import com.spectre.utility.SharedPrefUtils;
 import com.spectre.utility.Utility;
 
 
@@ -55,7 +56,8 @@ public class PushNotificationMessagingService extends FirebaseMessagingService {
         Log.d("PUSH_NOTIFICATION", String.valueOf(remoteMessage));
         try {
 
-            if (!Utility.getSharedPreferencesBoolean_(getApplicationContext(), Constant.APP_NOTIFICATION)) {
+            // if (!Utility.getSharedPreferencesBoolean_(getApplicationContext(), Constant.APP_NOTIFICATION)) {
+            if (!SharedPrefUtils.getPreference(getApplicationContext(), Constant.APP_NOTIFICATION, true)) {
                 return;
             }
 
@@ -223,7 +225,7 @@ public class PushNotificationMessagingService extends FirebaseMessagingService {
        /* count = Utility.getIngerSharedPreferences(getApplicationContext(), Constant.NOTI_COUNT);
         Utility.setIntegerSharedPreference(getApplicationContext(), Constant.NOTI_COUNT, ++count);*/
         // SharedPreferencesMethod.setInt(getApplicationContext(), SharedPreferencesMethod.NO_OF_NOTIFICATION, SharedPreferencesMethod.getInt(getApplicationContext(), SharedPreferencesMethod.NO_OF_NOTIFICATION) + 1);
-        String s = Utility.getSharedPreferences(getApplicationContext(), Constant.USER_TYPE);
+        String s = SharedPrefUtils.getPreference(getApplicationContext(), Constant.USER_TYPE, "");
         if (!s.equalsIgnoreCase("") || !s.equalsIgnoreCase("0")) {
             notificationBuilder.setDefaults(android.app.Notification.DEFAULT_SOUND);
             notificationBuilder.setDefaults(android.app.Notification.DEFAULT_LIGHTS);

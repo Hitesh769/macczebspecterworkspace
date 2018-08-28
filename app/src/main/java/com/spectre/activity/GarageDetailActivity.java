@@ -38,6 +38,7 @@ import com.spectre.helper.DividerItemDecoration;
 import com.spectre.interfaces.RequestCallback;
 import com.spectre.other.Constant;
 import com.spectre.other.Urls;
+import com.spectre.utility.SharedPrefUtils;
 import com.spectre.utility.Utility;
 
 import org.json.JSONObject;
@@ -128,7 +129,7 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
         reviewRecyclerView.setAdapter(rAdapter);
         reviewRecyclerView.setNestedScrollingEnabled(false);
 
-        String loginType = Utility.getSharedPreferences(context, Constant.USER_TYPE);
+        String loginType = SharedPrefUtils.getPreference(context, Constant.USER_TYPE, "");
         if(loginType.equalsIgnoreCase("2")){
             btn_show_interest.setVisibility(View.GONE);
             btn_review.setVisibility(View.GONE);
@@ -260,7 +261,7 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
             txt_review_load.setVisibility(View.VISIBLE);
             no_review_found.setVisibility(View.GONE);
                 /*for (int i = 0; i <= ReviewList.size() - 1; i++) {
-                    if (ReviewList.get(i).getUser_id().equalsIgnoreCase(Utility.getSharedPreferences(context, Constant.USER_ID))) {
+                    if (ReviewList.get(i).getUser_id().equalsIgnoreCase(SharedPrefUtils.getPreference(context, Constant.USER_ID))) {
                         reviewIsThere = i;
                     }
                 }*/
@@ -287,7 +288,7 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onClick(View v) {
-        String s = Utility.getSharedPreferences(context, Constant.USER_TYPE);
+        String s = SharedPrefUtils.getPreference(context, Constant.USER_TYPE, "");
         switch (v.getId()) {
             case R.id.head_gallery:
                 if (WorkList.size() > 0)
@@ -452,7 +453,7 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
                 }
             });
 
-            new AqueryCall(this).postWithJsonToken(Urls.INTEREST_GARAGE, Utility.getSharedPreferences(context, Constant.USER_TOKEN), jsonInput, new RequestCallback() {
+            new AqueryCall(this).postWithJsonToken(Urls.INTEREST_GARAGE, SharedPrefUtils.getPreference(context, Constant.USER_TOKEN, ""), jsonInput, new RequestCallback() {
                 @Override
                 public void onSuccess(JSONObject js, String msg) {
                     MyDialogProgress.close(context);

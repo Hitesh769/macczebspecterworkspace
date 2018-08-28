@@ -12,6 +12,7 @@
         android:gravity="center"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
+        android:visibility="gone"
         android:layout_marginTop="10dp"
         android:text="@string/select_location"
         android:textColor="@color/black"
@@ -23,6 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
+        android:visibility="gone"
         android:background="@drawable/semi_transparent_box"
         android:orientation="horizontal">
 
@@ -61,7 +63,7 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/progress_pv_linear_colors"
         android:layout_below="@+id/toolbar_actionbar"
-        android:layout_marginTop="70dp">
+        android:layout_marginTop="5dp">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view2"

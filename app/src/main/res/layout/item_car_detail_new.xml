@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    style="@style/cardView"
+    android:layout_margin="@dimen/_5sdp"
+    card_view:cardBackgroundColor="@color/white"
+    card_view:cardCornerRadius="@dimen/_5sdp"
+    card_view:cardElevation="@dimen/_3sdp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txt_car_name"
+            style="@style/textView"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:fontFamily="@font/poppins_regular"
+            android:padding="@dimen/_2sdp"
+            android:singleLine="true"
+            android:text="Honda City"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_10sdp" />
+
+        <TextView
+            android:id="@+id/txt_Model"
+            style="@style/textView"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:fontFamily="@font/poppins_regular"
+            android:padding="@dimen/_2sdp"
+            android:singleLine="true"
+            android:text="Honda City"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_10sdp" />
+
+        <View
+            style="@style/line_register"
+            android:layout_marginTop="@dimen/_5sdp" />
+
+        <ImageView
+
+            android:id="@+id/iv_product"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_140sdp"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/_5sdp"
+            android:src="@drawable/ic_launcher_web" />
+
+        <View
+            style="@style/line_register" />
+        <TextView
+            android:id="@+id/txt_car_price"
+            style="@style/textView"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:fontFamily="@font/poppins_regular"
+            android:padding="@dimen/_2sdp"
+            android:singleLine="true"
+            android:text="AED 20000"
+            android:textColor="@color/colorRed"
+            android:textSize="@dimen/_10sdp" />
+
+        <TextView
+            android:id="@+id/txt_owner_name"
+            style="@style/textView"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:fontFamily="@font/poppins_regular"
+            android:padding="@dimen/_2sdp"
+            android:singleLine="true"
+            android:text="Text"
+            android:textColor="@color/colorBlue"
+            android:textSize="@dimen/_10sdp" />
+
+        <TextView
+            android:id="@+id/txt_car_model"
+            style="@style/textView"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:fontFamily="@font/poppins_regular"
+            android:padding="@dimen/_2sdp"
+            android:singleLine="true"
+            android:text="Model: i- DTEC SV"
+            android:textColor="@color/colorSubText"
+            android:textSize="@dimen/_10sdp" />
+
+        <com.spectre.customView.CustomTextView
+            android:id="@+id/txt_car_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:singleLine="true"
+            android:text="12 Jan 2018"
+            android:textColor="@color/colorSubText"
+            android:textSize="8sp"
+            android:visibility="gone"
+            app:edittextfont="Poppins-Regular.ttf"
+            app:edittextfontHint="Poppins-Regular.ttf" />
+
+        <com.spectre.customView.CustomRayMaterialTextView
+            android:id="@+id/btn_view_detail"
+            style="@style/splashRipple"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/yellow_rounded_2dp"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="Details"
+            android:textColor="@color/colorWhite"
+            android:textSize="10sp"
+            android:visibility="gone"
+            app:edittextfont="Poppins-Regular.ttf" />
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

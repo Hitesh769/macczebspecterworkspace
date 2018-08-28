@@ -66,6 +66,7 @@ import com.spectre.interfaces.RequestCallback;
 import com.spectre.other.Constant;
 import com.spectre.other.Urls;
 import com.spectre.utility.PermissionUtility;
+import com.spectre.utility.SharedPrefUtils;
 import com.spectre.utility.Utility;
 
 import org.json.JSONArray;
@@ -739,7 +740,7 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
                 spinner_year_from.setText(getString(R.string.year_from));
                 filterResponse = new FilterResponse();
                 if (buyFragment != null) {
-                    buyFragment.resetData(filterResponse);
+                    // buyFragment.resetData(filterResponse);
                 }
                 break;
         }
@@ -824,7 +825,7 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
         ddFilter.dismiss();
 
         if (buyFragment != null) {
-            buyFragment.resetData(filterResponse);
+            // buyFragment.resetData(filterResponse);
         }
     }
 
@@ -977,13 +978,13 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
     public void onResume() {
         super.onResume();
 
-        if (!type.equalsIgnoreCase("0") || !Utility.getSharedPreferences(context, Constant.USER_NAME).isEmpty())
-            tvName.setText(Utility.getSharedPreferences(context, Constant.USER_NAME));
+        if (!type.equalsIgnoreCase("0") || !SharedPrefUtils.getPreference(context, Constant.USER_NAME, "").isEmpty())
+            tvName.setText(SharedPrefUtils.getPreference(context, Constant.USER_NAME, ""));
         else
             tvName.setText("Guest User");
 
-        if (!type.equalsIgnoreCase("0") || !Utility.getSharedPreferences(context, Constant.USER_IMAGE).isEmpty())
-            new AQuery(context).id(ivProfile).image(Utility.getSharedPreferences(context, Constant.USER_IMAGE), true, true, 0, R.mipmap.gestuser);
+        if (!type.equalsIgnoreCase("0") || !SharedPrefUtils.getPreference(context, Constant.USER_IMAGE, "").isEmpty())
+            new AQuery(context).id(ivProfile).image(SharedPrefUtils.getPreference(context, Constant.USER_IMAGE, ""), true, true, 0, R.mipmap.gestuser);
         else
             ivProfile.setImageResource(R.mipmap.gestuser);
 
@@ -1527,7 +1528,7 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
     }
 
     private boolean isLogin() {
-        // String type = Utility.getSharedPreferences(context, Constant.TYPE);
+        // String type = SharedPrefUtils.getPreference(context, Constant.TYPE);
         if (type.equalsIgnoreCase("") || type.equalsIgnoreCase("0"))
             return false;
 
@@ -1564,7 +1565,7 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
             e.printStackTrace();
         }
 
-        new AqueryCall(this).postWithJsonToken(Url, Utility.getSharedPreferences(context, Constant.USER_TOKEN), jsonObject, new RequestCallback() {
+        new AqueryCall(this).postWithJsonToken(Url, SharedPrefUtils.getPreference(context, Constant.USER_TOKEN, ""), jsonObject, new RequestCallback() {
             @Override
             public void onSuccess(JSONObject js, String msg) {
 
@@ -1685,7 +1686,7 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
             e.printStackTrace();
         }
 
-        new AqueryCall(this).postWithJsonToken(Url, Utility.getSharedPreferences(context, Constant.USER_TOKEN), jsonObject, new RequestCallback() {
+        new AqueryCall(this).postWithJsonToken(Url, SharedPrefUtils.getPreference(context, Constant.USER_TOKEN, ""), jsonObject, new RequestCallback() {
             @Override
             public void onSuccess(JSONObject js, String msg) {
 
@@ -1825,7 +1826,7 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
         btn_post_rent = ddPostAd.findViewById(R.id.btn_post_rent);
         txt_post_ad_header = ddPostAd.findViewById(R.id.txt_post_ad_header);
 
-        if (!Utility.getSharedPreferences(context, Constant.USER_TYPE).isEmpty() && Utility.getSharedPreferences(context, Constant.USER_TYPE).equalsIgnoreCase("1")) {
+        if (!SharedPrefUtils.getPreference(context, Constant.USER_TYPE, "").isEmpty() && SharedPrefUtils.getPreference(context, Constant.USER_TYPE, "").equalsIgnoreCase("1")) {
             btn_post_garage.setVisibility(View.GONE);
         } else
             btn_post_garage.setVisibility(View.VISIBLE);
@@ -1856,11 +1857,11 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
             public void onClick(View view) {
                 startActivity(new Intent(context, AddWorkActivity.class));
 //                Garage adPost = new Garage();
-//                if (context instanceof HomeActivity && status == 1) {
+//                if (context instanceof HomeFormatActivity && status == 1) {
 //                    Intent intent = new Intent(context, GarageDetailActivity.class);
 //                    intent.putExtra(Constant.DATA, adPost);
 //                    intent.putExtra(Constant.POSITION, arraylist.get(0));
-//                    ((HomeActivity) context).startActivityForResult(intent, 404);
+//                    ((HomeFormatActivity) context).startActivityForResult(intent, 404);
 //                }
 
 //                Intent intent = new Intent(context, GarageDetailActivity.class);
@@ -1892,7 +1893,7 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
         btn_manage_garage = ddManageAd.findViewById(R.id.btn_manage_garage);
         txt_manage_ad_header = ddManageAd.findViewById(R.id.txt_manage_ad_header);
         btn_manage_garage.setVisibility(View.VISIBLE);
-        if (!Utility.getSharedPreferences(context, Constant.USER_TYPE).isEmpty() && Utility.getSharedPreferences(context, Constant.USER_TYPE).equalsIgnoreCase("1")) {
+        if (!SharedPrefUtils.getPreference(context, Constant.USER_TYPE, "").isEmpty() && SharedPrefUtils.getPreference(context, Constant.USER_TYPE, "").equalsIgnoreCase("1")) {
             btn_manage_garage.setVisibility(View.GONE);
         }
         ddManageAd.setCancelable(false);

@@ -22,6 +22,7 @@ import com.spectre.helper.AqueryCall;
 import com.spectre.interfaces.RequestCallback;
 import com.spectre.other.Constant;
 import com.spectre.other.Urls;
+import com.spectre.utility.SharedPrefUtils;
 import com.spectre.utility.Utility;
 
 import org.json.JSONArray;
@@ -174,7 +175,7 @@ public class WorkListUserActivity extends AppCompatActivity {
 
             params.put(Constant.SECOND_USER_ID,userId);
             AqueryCall request = new AqueryCall(this);
-            request.postWithJsonToken(Urls.GARAGE_WORK_LIST_BYID, Utility.getSharedPreferences(context, Constant.USER_TOKEN), params, new RequestCallback() {
+            request.postWithJsonToken(Urls.GARAGE_WORK_LIST_BYID, SharedPrefUtils.getPreference(context, Constant.USER_TOKEN, ""), params, new RequestCallback() {
 
                 @Override
                 public void onSuccess(JSONObject js, String success) {

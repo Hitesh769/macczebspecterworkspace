@@ -27,6 +27,7 @@ import com.spectre.helper.AqueryCall;
 import com.spectre.interfaces.RequestCallback;
 import com.spectre.other.Constant;
 import com.spectre.other.Urls;
+import com.spectre.utility.SharedPrefUtils;
 import com.spectre.utility.Utility;
 
 import org.json.JSONException;
@@ -112,7 +113,7 @@ public class NotificationDetailActivity extends AppCompatActivity {
         }
 
 
-        new AqueryCall(this).postWithJsonToken(Urls.NOTIFICATION_DETAIL_BY_ID, Utility.getSharedPreferences(context, Constant.USER_TOKEN), jsonObject, new RequestCallback() {
+        new AqueryCall(this).postWithJsonToken(Urls.NOTIFICATION_DETAIL_BY_ID, SharedPrefUtils.getPreference(context, Constant.USER_TOKEN, ""), jsonObject, new RequestCallback() {
             @Override
             public void onSuccess(JSONObject js, String msg) {
                 //  setData(js, msg);

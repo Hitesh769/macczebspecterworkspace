@@ -15,6 +15,7 @@ import com.spectre.helper.AqueryCall;
 import com.spectre.interfaces.RequestCallback;
 import com.spectre.other.Constant;
 import com.spectre.other.Urls;
+import com.spectre.utility.SharedPrefUtils;
 import com.spectre.utility.Utility;
 
 import org.json.JSONException;
@@ -123,7 +124,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        new AqueryCall(this).postWithJsonToken(Urls.CHANGE_PASSWORD, Utility.getSharedPreferences(context, Constant.USER_TOKEN), js, new RequestCallback() {
+        new AqueryCall(this).postWithJsonToken(Urls.CHANGE_PASSWORD, SharedPrefUtils.getPreference(context, Constant.USER_TOKEN, ""), js, new RequestCallback() {
             @Override
             public void onSuccess(JSONObject js, String success) {
                 // showToast(success);

@@ -1,21 +1,23 @@
 package com.spectre.activity;
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.MotionEvent;
 
 import com.spectre.R;
+import com.spectre.activity_new.HomeAct;
+import com.spectre.activity_new.MasterAppCompactActivity;
 import com.spectre.other.Constant;
 import com.spectre.utility.NotificationHelper;
-import com.spectre.utility.Utility;
+import com.spectre.utility.SharedPrefUtils;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class SplashActivity extends AppCompatActivity {
+import static com.spectre.utility.Utility.setLog;
+
+public class SplashActivity extends MasterAppCompactActivity {
 
     private Context context;
     private int i = 0;
@@ -25,7 +27,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         context = this;
-        if (!Utility.getSharedPreferencesBoolean(context, Constant.is_channel_prepared) && android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O)
+        if (!SharedPrefUtils.getPreference(context, Constant.is_channel_prepared, false) && android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O)
             new NotificationHelper(context);
 
         initView();
@@ -42,21 +44,19 @@ public class SplashActivity extends AppCompatActivity {
 
 
     private void startNextActivity() {
-        Log.d("Token", Utility.getSharedPreferences(context.getApplicationContext(), Constant.USER_TOKEN) + "");
+        String token = SharedPrefUtils.getPreference(context, Constant.USER_TOKEN, "");
+        if (TextUtils.isEmpty(token))
+            SharedPrefUtils.setPreference(context, Constant.USER_TOKEN, "ef73781effc5774100f87fe2f437a435");
+        token = SharedPrefUtils.getPreference(context, Constant.USER_TOKEN, "");
+        setLog("Token : " + token);
         if (i == 0) {
             i++;
-            String s = Utility.getSharedPreferences(context, Constant.USER_TYPE);
+            String s = SharedPrefUtils.getPreference(context, Constant.USER_TYPE, "");
             if (s != null && !s.isEmpty()) {
-                if (s.equalsIgnoreCase("1")) {
-                    startActivity(new Intent(context, HomeActivity.class).putExtra(Constant.TYPE, "1"));
-                } else {
-                    //startActivity(new Intent(context, GarageHomeActivity.class));
-                    Intent intent = new Intent(context, HomeActivity.class).putExtra(Constant.TYPE, "2");
-                    startActivity(intent);
-                }
-                //   startActivity(new Intent(context, HomeActivity.class).putExtra(Constant.TYPE, "1"));
+                startActFinish(HomeAct.getStartIntent(context, s));
             } else {
-                startActivity(new Intent(context, HomeActivity.class).putExtra(Constant.TYPE, "0"));
+                // startActFinish(HomeFormatActivity.getStartIntent(context, "0"));
+                startActFinish(HomeAct.getStartIntent(context, "0"));
             }
             finish();
         }

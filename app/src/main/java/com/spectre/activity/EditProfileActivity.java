@@ -37,6 +37,7 @@ import com.spectre.other.Constant;
 import com.spectre.other.Urls;
 import com.spectre.utility.ConvetBitmap;
 import com.spectre.utility.PermissionsUtils;
+import com.spectre.utility.SharedPrefUtils;
 import com.spectre.utility.Utility;
 
 import org.json.JSONException;
@@ -106,10 +107,10 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         btnCamera = (ImageView) findViewById(R.id.btn_camera);
         imv_banner = (ImageView) findViewById(R.id.imv_banner);
 
-        etName.setText(Utility.getSharedPreferences(context, Constant.USER_NAME));
-        etEmail.setText(Utility.getSharedPreferences(context, Constant.USER_EMAIL));
-        etMob.setText(Utility.getSharedPreferences(context, Constant.USER_MOBILE));
-        etAddress.setText(Utility.getSharedPreferences(context, Constant.USER_ADDRESS_));
+        etName.setText(SharedPrefUtils.getPreference(context, Constant.USER_NAME, ""));
+        etEmail.setText(SharedPrefUtils.getPreference(context, Constant.USER_EMAIL, ""));
+        etMob.setText(SharedPrefUtils.getPreference(context, Constant.USER_MOBILE, ""));
+        etAddress.setText(SharedPrefUtils.getPreference(context, Constant.USER_ADDRESS_, ""));
 
         ivProfile.setOnClickListener(this);
         btnCamera.setOnClickListener(this);
@@ -143,49 +144,50 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
 
 
         alertBox = new AlertBox(context);
-        //  ((CustomEditText)findViewById(R.id.et_address)).setText(Utility.getSharedPreferences(context, Constant.USER_MOBILE));
+        //  ((CustomEditText)findViewById(R.id.et_address)).setText(SharedPrefUtils.getPreference(context, Constant.USER_MOBILE));
         ((CustomRayMaterialTextView) findViewById(R.id.btn_save_changes)).setOnClickListener(this);
 
 
         // Remove Comments to Make things like earlier
 
-        if (!Utility.getSharedPreferences(context, Constant.USER_TYPE).isEmpty() && Utility.getSharedPreferences(context, Constant.USER_TYPE).equalsIgnoreCase("1")) {
+        if (!SharedPrefUtils.getPreference(context, Constant.USER_TYPE, "").isEmpty()
+                && SharedPrefUtils.getPreference(context, Constant.USER_TYPE, "").equalsIgnoreCase("1")) {
             ll_is_garage.setVisibility(View.GONE);
             imv_banner.setVisibility(View.GONE);
             edit_banner.setVisibility(View.GONE);
         } else {
             ll_is_garage.setVisibility(View.VISIBLE);
-            etCarRepaired.setText(Utility.getSharedPreferences(context, Constant.CAR_REPAIRE));
-            etExpertise.setText(Utility.getSharedPreferences(context, Constant.EXPERTISE));
+            etCarRepaired.setText(SharedPrefUtils.getPreference(context, Constant.CAR_REPAIRE, ""));
+            etExpertise.setText(SharedPrefUtils.getPreference(context, Constant.EXPERTISE, ""));
             imv_banner.setVisibility(View.VISIBLE);
             edit_banner.setVisibility(View.VISIBLE);
 
-            if (Utility.getSharedPreferences(context, Constant.SERVICE_TYPE).equalsIgnoreCase("1")) {
+            if (SharedPrefUtils.getPreference(context, Constant.SERVICE_TYPE, "").equalsIgnoreCase("1")) {
                 radio_main.setChecked(true);
                 radio_repair.setChecked(false);
                 radio_both.setChecked(false);
                 radioInput = "1";
-            } else if (Utility.getSharedPreferences(context, Constant.SERVICE_TYPE).equalsIgnoreCase("2")) {
+            } else if (SharedPrefUtils.getPreference(context, Constant.SERVICE_TYPE, "").equalsIgnoreCase("2")) {
                 radio_main.setChecked(false);
                 radio_repair.setChecked(true);
                 radio_both.setChecked(false);
                 radioInput = "2";
-            } else if (Utility.getSharedPreferences(context, Constant.SERVICE_TYPE).equalsIgnoreCase("0")) {
+            } else if (SharedPrefUtils.getPreference(context, Constant.SERVICE_TYPE, "").equalsIgnoreCase("0")) {
                 radio_main.setChecked(false);
                 radio_repair.setChecked(true);
                 radio_both.setChecked(true);
                 radioInput = "0";
             }
 
-            if (!Utility.getSharedPreferences(context, Constant.GARAGE_IMAGE).isEmpty())
-                new AQuery(context).id(imv_banner).image(Utility.getSharedPreferences(context, Constant.GARAGE_IMAGE), true, true, 0, 0);
+            if (!SharedPrefUtils.getPreference(context, Constant.GARAGE_IMAGE, "").isEmpty())
+                new AQuery(context).id(imv_banner).image(SharedPrefUtils.getPreference(context, Constant.GARAGE_IMAGE, ""), true, true, 0, 0);
             else
                 ivProfile.setImageResource(R.mipmap.gestuser);
         }
 
 
-        if (!Utility.getSharedPreferences(context, Constant.USER_IMAGE).isEmpty())
-            new AQuery(context).id(ivProfile).image(Utility.getSharedPreferences(context, Constant.USER_IMAGE), true, true, 0, R.mipmap.gestuser);
+        if (!SharedPrefUtils.getPreference(context, Constant.USER_IMAGE, "").isEmpty())
+            new AQuery(context).id(ivProfile).image(SharedPrefUtils.getPreference(context, Constant.USER_IMAGE, ""), true, true, 0, R.mipmap.gestuser);
         else
             ivProfile.setImageResource(R.mipmap.gestuser);
     }
@@ -284,7 +286,8 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             jsonObject.put(Constant.USER_MOBILE, etMob.getText().toString().trim());
             jsonObject.put(Constant.EXPERTISE, etExpertise.getText().toString().trim());
             jsonObject.put(Constant.CAR_REPAIRE, etCarRepaired.getText().toString().trim());
-            if (!Utility.getSharedPreferences(context, Constant.USER_TYPE).isEmpty() && Utility.getSharedPreferences(context, Constant.USER_TYPE).equalsIgnoreCase("1")) {
+            if (!SharedPrefUtils.getPreference(context, Constant.USER_TYPE, "").isEmpty()
+                    && SharedPrefUtils.getPreference(context, Constant.USER_TYPE, "").equalsIgnoreCase("1")) {
                 jsonObject.put(Constant.SERVICE_TYPE, radioInput + "");
             } else {
                 jsonObject.put(Constant.SERVICE_TYPE, radioInput + "");
@@ -310,7 +313,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             e.printStackTrace();
         }
 
-        new AqueryCall(this).postWithJsonToken(Urls.UPDATE_PROFILE, Utility.getSharedPreferences(context, Constant.USER_TOKEN), jsonObject, new RequestCallback() {
+        new AqueryCall(this).postWithJsonToken(Urls.UPDATE_PROFILE, SharedPrefUtils.getPreference(context, Constant.USER_TOKEN, ""), jsonObject, new RequestCallback() {
             @Override
             public void onSuccess(JSONObject js, String msg) {
                 saveResponse(js);
@@ -368,28 +371,28 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
 
         try {
             JSONObject jsonObject = js.getJSONObject(Constant.DATA);
-            Utility.setSharedPreference(context, Constant.USER_ID, jsonObject.getString(Constant.USER_ID));
-            Utility.setSharedPreference(context, Constant.USER_NAME, jsonObject.getString(Constant.USER_NAME));
-            Utility.setSharedPreference(context, Constant.USER_IMAGE, jsonObject.getString(Constant.USER_IMAGE));
-            Utility.setSharedPreference(context, Constant.USER_MOBILE, jsonObject.getString(Constant.USER_MOBILE));
-            Utility.setSharedPreference(context, Constant.USER_TOKEN, jsonObject.getString(Constant.USER_TOKEN));
+            SharedPrefUtils.setPreference(context, Constant.USER_ID, jsonObject.getString(Constant.USER_ID));
+            SharedPrefUtils.setPreference(context, Constant.USER_NAME, jsonObject.getString(Constant.USER_NAME));
+            SharedPrefUtils.setPreference(context, Constant.USER_IMAGE, jsonObject.getString(Constant.USER_IMAGE));
+            SharedPrefUtils.setPreference(context, Constant.USER_MOBILE, jsonObject.getString(Constant.USER_MOBILE));
+            SharedPrefUtils.setPreference(context, Constant.USER_TOKEN, jsonObject.getString(Constant.USER_TOKEN));
 
             if (jsonObject.has(Constant.USER_ADDRESS_))
-                Utility.setSharedPreference(context, Constant.USER_ADDRESS_, jsonObject.getString(Constant.USER_ADDRESS_));
+                SharedPrefUtils.setPreference(context, Constant.USER_ADDRESS_, jsonObject.getString(Constant.USER_ADDRESS_));
             if (jsonObject.has(Constant.CAR_REPAIRE))
-                Utility.setSharedPreference(context, Constant.CAR_REPAIRE, jsonObject.getString(Constant.CAR_REPAIRE));
+                SharedPrefUtils.setPreference(context, Constant.CAR_REPAIRE, jsonObject.getString(Constant.CAR_REPAIRE));
             if (jsonObject.has(Constant.EXPERTISE))
-                Utility.setSharedPreference(context, Constant.EXPERTISE, jsonObject.getString(Constant.EXPERTISE));
+                SharedPrefUtils.setPreference(context, Constant.EXPERTISE, jsonObject.getString(Constant.EXPERTISE));
 
             if (jsonObject.has(Constant.USER_EMAIL))
-                Utility.setSharedPreference(context, Constant.USER_EMAIL, jsonObject.getString(Constant.USER_EMAIL));
+                SharedPrefUtils.setPreference(context, Constant.USER_EMAIL, jsonObject.getString(Constant.USER_EMAIL));
 
             if (jsonObject.has(Constant.GARAGE_IMAGE))
-                Utility.setSharedPreference(context, Constant.GARAGE_IMAGE, jsonObject.getString(Constant.GARAGE_IMAGE));
+                SharedPrefUtils.setPreference(context, Constant.GARAGE_IMAGE, jsonObject.getString(Constant.GARAGE_IMAGE));
 
 
             if (jsonObject.has(Constant.SERVICE_TYPE)) {
-                Utility.setSharedPreference(context, Constant.SERVICE_TYPE, jsonObject.getString(Constant.SERVICE_TYPE));
+                SharedPrefUtils.setPreference(context, Constant.SERVICE_TYPE, jsonObject.getString(Constant.SERVICE_TYPE));
             }
         } catch (JSONException e) {
             e.printStackTrace();

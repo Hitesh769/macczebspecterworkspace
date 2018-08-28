@@ -15,6 +15,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.spectre.utility.Utility.setLog;
 
 
 /**
@@ -43,8 +44,8 @@ public class VerificationCall {
             params.put("type", "android");
            // params.put("user_type", "1");
 
-            Log.d("value of url is: ", url);
-            Log.d("value of parmeter is :", "" + params);
+            setLog("value of url is : " + url);
+            setLog("value of parmeter is : " + params);
             aq.ajax(url, params, JSONObject.class, new AjaxCallback<JSONObject>() {
 
                 @Override

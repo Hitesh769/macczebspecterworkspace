@@ -24,6 +24,7 @@ import android.media.ExifInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.Settings;
@@ -43,6 +44,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -93,27 +95,64 @@ import java.util.regex.Pattern;
 
 
 public class Utility {
+    private final static String VERSION = "V-2.1";
 
     public static Context appContext;
     private static String LIRA_TAXI_PREFERENCE = "SPECTRE_PREFERENCE";
-    private static int MAX_IMAGE_DIMENSION = 720;
+    // private static int MAX_IMAGE_DIMENSION = 720;
     static List<String> listImage = new ArrayList<>();
-    //2018-02-24
+    // 2018-02-24
     public static final SimpleDateFormat displayDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-    public static void setLog(String message) {
-        Log.e("-TAG-", message);
+    public static void setLog(String logMessage) {
+        if (logMessage != null) {
+            if (AppConstants.IS_DEVELOPER_PREVIEW) {
+                Log.e("**TAG**" + VERSION + "**", logMessage);
+                Log.d("**TAG**", "----------------------------------------");
+            }
+        }
+    }
+
+    public static String getEditTextString(EditText editText) {
+        if (editText != null) {
+            return editText.getText().toString().trim();
+        } else {
+            return "";
+        }
+    }
+
+    public static String getTextViewString(TextView textView) {
+        if (textView != null) {
+            return textView.getText().toString().trim();
+        } else {
+            return "";
+        }
+    }
+
+    /**
+     * Function is to check internet availability
+     *
+     * @return
+     */
+    public static boolean isInternetAvailable(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager == null)
+            return false;
+        else {
+            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+            return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        }
     }
 
     // for username string preferences
-    public static void setSharedPreference(Context context, String name, String value) {
+    /*public static void setSharedPreference(Context context, String name, String value) {
         appContext = context;
         SharedPreferences settings = context.getSharedPreferences(LIRA_TAXI_PREFERENCE, 0);
         SharedPreferences.Editor editor = settings.edit();
         // editor.clear();
         editor.putString(name, value);
         editor.commit();
-    }
+    }*/
 
     public static byte[] convertBitmapToByteArray(Bitmap bitmap) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -180,76 +219,74 @@ public class Utility {
         Configuration conf = res.getConfiguration();
         conf.locale = myLocale;
         res.updateConfiguration(conf, dm);
-        //Utility.setSharedPreference (appContext, Constant.SET_LANGUAGE, lang);
+        //SharedPrefUtils.setPreference (appContext, Constant.SET_LANGUAGE, lang);
         return true;
     }
 
 
     // for username string preferences
-    public static void setIntegerSharedPreference(Context context, String name, int value) {
+    /*public static void setIntegerSharedPreference(Context context, String name, int value) {
         appContext = context;
         SharedPreferences settings = context.getSharedPreferences(LIRA_TAXI_PREFERENCE, 0);
         SharedPreferences.Editor editor = settings.edit();
         // editor.clear();
         editor.putInt(name, value);
         editor.commit();
-    }
+    }*/
 
     //Drawable
-    public static void setDrawableSharedPreference(Context context, String name, int value) {
+    /*public static void setDrawableSharedPreference(Context context, String name, int value) {
         appContext = context;
         SharedPreferences settings = context.getSharedPreferences(LIRA_TAXI_PREFERENCE, 0);
         SharedPreferences.Editor editor = settings.edit();
         // editor.clear();
         editor.putInt(name, value);
         editor.commit();
-    }
+    }*/
 
-    public static String getSharedPreferences(Context context, String name) {
+    /*public static String getSharedPreferences(Context context, String name) {
         SharedPreferences settings = context.getSharedPreferences(LIRA_TAXI_PREFERENCE, 0);
         if (name.equalsIgnoreCase(Constant.USER_TOKEN))
             return settings.getString(name, "ef73781effc5774100f87fe2f437a435");
         else
             return settings.getString(name, "");
-    }
+    }*/
 
-    public static int getIngerSharedPreferences(Context context, String name) {
+    /*public static int getIngerSharedPreferences(Context context, String name) {
         SharedPreferences settings = context.getSharedPreferences(LIRA_TAXI_PREFERENCE, 0);
         return settings.getInt(name, 0);
-    }
+    }*/
 
-    public static void setSharedPreferenceBoolean(Context context, String name, boolean value) {
+    /*public static void setSharedPreferenceBoolean(Context context, String name, boolean value) {
         appContext = context;
         SharedPreferences settings = context.getSharedPreferences(LIRA_TAXI_PREFERENCE, 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean(name, value);
         editor.commit();
-    }
+    }*/
 
-    public static String getLanguagePreference(Context context) {
+    /*public static String getLanguagePreference(Context context) {
         SharedPreferences settings = context.getSharedPreferences(LIRA_TAXI_PREFERENCE, 0);
         return settings.getString(Constant.LANGUAGE, "en");
-    }
+    }*/
 
-
-    public static void setLanguagePreference(Context context, String value) {
+    /*public static void setLanguagePreference(Context context, String value) {
         appContext = context;
         SharedPreferences settings = context.getSharedPreferences(LIRA_TAXI_PREFERENCE, 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(Constant.LANGUAGE, value);
         editor.commit();
-    }
+    }*/
 
-    public static boolean getSharedPreferencesBoolean(Context context, String name) {
+    /*public static boolean getSharedPreferencesBoolean(Context context, String name) {
         SharedPreferences settings = context.getSharedPreferences(LIRA_TAXI_PREFERENCE, 0);
         return settings.getBoolean(name, false);
-    }
+    }*/
 
-
-    public static boolean getSharedPreferencesBoolean_(Context context, String name) {
+    /*public static boolean getSharedPreferencesBoolean_(Context context, String name) {
         SharedPreferences settings = context.getSharedPreferences(LIRA_TAXI_PREFERENCE, 0);
         return settings.getBoolean(name, true);
-    }
+    }*/
 
     public static Bitmap decodeSampledBitmapFromResource(String path, int reqWidth, int reqHeight) {
 
@@ -362,7 +399,7 @@ public class Utility {
 	}*/
 
 
-    public static Bitmap DownloadImageDirect(String imageUrl) {
+    /*public static Bitmap DownloadImageDirect(String imageUrl) {
         try {
             URL url = new URL(imageUrl);
             HttpURLConnection connection = (HttpURLConnection) url
@@ -442,7 +479,7 @@ public class Utility {
             public void onClick(DialogInterface dialog, int which) {
                 // Cancel the dialog
                 dialog.cancel();
-                //((HomeActivity) context).moveToNextActivity("GET STARTED");
+                //((HomeFormatActivity) context).moveToNextActivity("GET STARTED");
                 //Intent intent=new Intent(context,GetStartedActivity.class);
             }
         });
@@ -452,7 +489,7 @@ public class Utility {
             public void onClick(DialogInterface dialog, int which) {
                 // Cancel the dialog
                 dialog.cancel();
-                //((HomeActivity) context).moveToNextActivity("FAQ");
+                //((HomeFormatActivity) context).moveToNextActivity("FAQ");
             }
         });
 
@@ -468,7 +505,7 @@ public class Utility {
         pattern = Pattern.compile(MOBILE_PATTERN);
         matcher = pattern.matcher(mobile);
         return matcher.matches();
-    }
+    }*/
 
 	/*public static String findJSONFromUrl(String url) {
         String result = "";
@@ -504,7 +541,7 @@ public class Utility {
 		return result;
 	}*/
 
-    public static Bitmap getBitmap(String url) {
+    /*public static Bitmap getBitmap(String url) {
         Bitmap imageBitmap = null;
         try {
             URL aURL = new URL(url);
@@ -560,7 +597,7 @@ public class Utility {
             e.printStackTrace();
         }
         return imageBitmap;
-    }
+    }*/
 
    /* public static void sendError(Context context,String stackTrace) {
         Intent intent=new Intent(context,CrashActivity.class);
@@ -574,7 +611,7 @@ public class Utility {
         }
     }
 
-    public static byte[] scaleImage(Context context, Uri photoUri)
+    /*public static byte[] scaleImage(Context context, Uri photoUri)
             throws IOException {
         InputStream is = context.getContentResolver().openInputStream(photoUri);
         BitmapFactory.Options dbo = new BitmapFactory.Options();
@@ -612,10 +649,10 @@ public class Utility {
         }
         is.close();
 
-		/*
-         * if the orientation is not 0 (or -1, which means we don't know), we
-		 * have to do a rotation.
-		 */
+		*//*
+     * if the orientation is not 0 (or -1, which means we don't know), we
+     * have to do a rotation.
+     *//*
         if (orientation > 0) {
             Matrix matrix = new Matrix();
             matrix.postRotate(orientation);
@@ -626,21 +663,21 @@ public class Utility {
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         srcBitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-        /*
-         * if (type.equals("image/png")) {
-		 * srcBitmap.compress(Bitmap.CompressFormat.PNG, 100, baos); } else if
-		 * (type.equals("image/jpg") || type.equals("image/jpeg")) {
-		 * srcBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos); }
-		 */
+        *//*
+     * if (type.equals("image/png")) {
+     * srcBitmap.compress(Bitmap.CompressFormat.PNG, 100, baos); } else if
+     * (type.equals("image/jpg") || type.equals("image/jpeg")) {
+     * srcBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos); }
+     *//*
         byte[] bMapArray = baos.toByteArray();
         baos.close();
         return bMapArray;
-    }
+    }*/
 
     static int mMaxWidth, mMaxHeight;
 
     @SuppressWarnings("deprecation")
-    public static Bitmap loadResizedImage(Context mContext, final File imageFile) {
+    /*public static Bitmap loadResizedImage(Context mContext, final File imageFile) {
         WindowManager windowManager = (WindowManager) mContext
                 .getSystemService(Context.WINDOW_SERVICE);
         Display display = windowManager.getDefaultDisplay();
@@ -699,7 +736,7 @@ public class Utility {
         }
 
         return rotateImage(bitmap, imageFile);
-    }
+    }*/
 
     public static Bitmap rotateImage(final Bitmap bitmap,
                                      final File fileWithExifInfo) {
@@ -767,7 +804,7 @@ public class Utility {
         return rotatedBitmap;
     }
 
-    public static int getImageOrientation(final String file) throws IOException {
+    /*public static int getImageOrientation(final String file) throws IOException {
         ExifInterface exif = new ExifInterface(file);
         int orientation = exif
                 .getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
@@ -783,11 +820,11 @@ public class Utility {
             default:
                 return 0;
         }
-    }
+    }*/
 
-    public static Typeface Appttf(Context context) {
+    /*public static Typeface Appttf(Context context) {
         return Typeface.createFromAsset(context.getAssets(), "AE100132.TTF");
-    }
+    }*/
 
     public static boolean isConnectingToInternet(Context context) {
         ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -806,10 +843,10 @@ public class Utility {
 
     // remove for preferences
 
-    public static void removepreference(Context context, String name) {
+    /*public static void removepreference(Context context, String name) {
         SharedPreferences settings = context.getSharedPreferences(LIRA_TAXI_PREFERENCE, 0);
         settings.edit().remove(name).commit();
-    }
+    }*/
 
     public static boolean emailValidator(String email) {
         Pattern pattern;
@@ -821,9 +858,9 @@ public class Utility {
     }
 
 
-    public static boolean validateLastName(String lastName) {
+    /*public static boolean validateLastName(String lastName) {
         return lastName.matches("[a-zA-z]+([ '-][a-zA-Z]+)*");
-    }
+    }*/
 
     /* public static void ShowAlertDialog(String msg)
         {
@@ -842,14 +879,14 @@ public class Utility {
 
         }
     */
-    public static boolean validateFirstName(String firstName) {
+    /*public static boolean validateFirstName(String firstName) {
         return firstName.matches("[A-Z][a-zA-Z]*");
-    } // end
+    } */// end
 
     /**
      * Function to show settings alert dialog
      */
-    public static void showSettingsAlert(final Context context) {
+    /*public static void showSettingsAlert(final Context context) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
 
         // Setting Dialog Title
@@ -878,9 +915,9 @@ public class Utility {
 
         // Showing Alert Message
         alertDialog.show();
-    }
+    }*/
 
-    public static String getMonth(String month) {
+    /*public static String getMonth(String month) {
 
         switch (month) {
             case "1":
@@ -910,14 +947,14 @@ public class Utility {
             default:
                 return "January";
         }
-    }
+    }*/
 
-    public static boolean isNetworkAvailable(Context context) {
+    /*public static boolean isNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
+    }*/
 
 
   /*  public static void resetPreferences(Context appcontext) {
@@ -933,7 +970,7 @@ public class Utility {
         appcontext.startActivity(logout);
     }*/
 
-    public static String getRealPathFromURI(Context context, Uri contentUri) {
+    /*public static String getRealPathFromURI(Context context, Uri contentUri) {
         Cursor cursor = null;
         try {
             String[] proj = {MediaStore.Images.Media.DATA};
@@ -946,7 +983,7 @@ public class Utility {
                 cursor.close();
             }
         }
-    }
+    }*/
 
   /*  public static Drawable buildCounterDrawable(Context appContext, int count, int bgResourceId) {
         LayoutInflater inflater = LayoutInflater.from(appContext);
@@ -974,8 +1011,6 @@ public class Utility {
 
         return new BitmapDrawable(((Activity) appContext).getResources(), bitmap);
     }*/
-
-
     public static void checkIfPermissionsGranted(final Context appContext) {
         android.support.v7.app.AlertDialog alertDialog;
         android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(appContext);
@@ -1036,7 +1071,7 @@ public class Utility {
     }
 
 
-    public static void setUpToolbar(Context appContext, String title, Spanned title2) {
+    /*public static void setUpToolbar(Context appContext, String title, Spanned title2) {
         final AppCompatActivity activity = (AppCompatActivity) appContext;
         Toolbar toolbar = (Toolbar) activity.findViewById(R.id.toolbar_actionbar);
         activity.setSupportActionBar(toolbar);
@@ -1058,7 +1093,7 @@ public class Utility {
                 activity.finish();
             }
         });
-    }
+    }*/
 
 
     public static Toolbar setUpToolbarWithColor(final Context context, String title, int backgroundResource) {
@@ -1116,7 +1151,7 @@ public class Utility {
         });
     }*/
 
-    public static void setUpToolbarHome(Context appContext, String title) {
+    /*public static void setUpToolbarHome(Context appContext, String title) {
         final AppCompatActivity activity = (AppCompatActivity) appContext;
         Toolbar toolbar = (Toolbar) activity.findViewById(R.id.toolbar_actionbar);
         activity.setSupportActionBar(toolbar);
@@ -1129,7 +1164,7 @@ public class Utility {
 
         //  actionBar.setTitle(title);
         // actionBar.setHomeAsUpIndicator(R.mipmap.menu);
-    }
+    }*/
 
 
     public static void resetPreferences(Context appcontext) {
@@ -1143,7 +1178,7 @@ public class Utility {
     }
 
 
-    public static String convertNumber(String numberString, String string) {
+    /*public static String convertNumber(String numberString, String string) {
         if (numberString == null) {
             return "0";
         }
@@ -1158,7 +1193,7 @@ public class Utility {
         BigInteger number = new BigInteger(numberString);
         //  System.out.println(number+" is "+createString(number)+" should be "+string);
         return createString(number);
-    }
+    }*/
 
 
     private static final String NAMES[] = new String[]{
@@ -1170,19 +1205,19 @@ public class Utility {
             "E",
             "Z",
             "Y",
-           /* "Octillion",
-            "Nonillion",
-            "Decillion",
-            "Undecillion",
-            "Duodecillion",
-            "Tredecillion",
-            "Quattuordecillion",
-            "Quindecillion",
-            "Sexdecillion",
-            "Septendecillion",
-            "Octodecillion",
-            "Novemdecillion",
-            "Vigintillion",*/
+            /* "Octillion",
+             "Nonillion",
+             "Decillion",
+             "Undecillion",
+             "Duodecillion",
+             "Tredecillion",
+             "Quattuordecillion",
+             "Quindecillion",
+             "Sexdecillion",
+             "Septendecillion",
+             "Octodecillion",
+             "Novemdecillion",
+             "Vigintillion",*/
     };
     private static final BigInteger THOUSAND = BigInteger.valueOf(1000);
     private static final NavigableMap<BigInteger, String> MAP;
@@ -1194,7 +1229,7 @@ public class Utility {
         }
     }
 
-    public static String createString(BigInteger number) {
+    /*public static String createString(BigInteger number) {
         Map.Entry<BigInteger, String> entry = MAP.floorEntry(number);
         if (entry == null) {
             return "Nearly nothing";
@@ -1208,14 +1243,14 @@ public class Utility {
             return ((int) rounded) + " " + entry.getValue();
         }
         return rounded + " " + entry.getValue();
-    }
+    }*/
 
-    public static Uri getImageUri(Context inContext, Bitmap inImage) {
+    /*public static Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Kartavya", null);
         return Uri.parse(path);
-    }
+    }*/
 
 
     public static Bitmap getBitmapFromUrl(Context context, String myUrl) {
@@ -1243,8 +1278,8 @@ public class Utility {
         return image;
     }
 
-    public static void ShareImage(Bitmap bm, Context context, String description) {
-        //  String newString = description + "\n\n\nDownload Now:\nhttp://base3.engineerbabu.com:8282/BR_App/index/share.php/" + Utility.getSharedPreferences(appContext, Constant.REFERRAL_CODE);
+    /*public static void ShareImage(Bitmap bm, Context context, String description) {
+        //  String newString = description + "\n\n\nDownload Now:\nhttp://base3.engineerbabu.com:8282/BR_App/index/share.php/" + SharedPrefUtils.getPreference(appContext, Constant.REFERRAL_CODE);
         String newString = description + "\n\nFor the All latest update related to ATMC download our App \n\nFor the android App: " + "https://play.google.com/store/apps/details?id=com.ebabu.atmc";//\n\nFor the iOS App: https://itunes.apple.com/in/app/atmc/id1204240498?ls=1&mt=8";
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
@@ -1252,13 +1287,11 @@ public class Utility {
         shareIntent.putExtra(Intent.EXTRA_TEXT, newString);
         // shareIntent.putExtra(Intent.EXTRA_STREAM, getImageUri(context, bm));
         ((Activity) context).startActivityForResult(Intent.createChooser(shareIntent, "Share with friends"), 123);
-    }
-
-
+    }*/
 
     /*public static void ShareImage(Bitmap bm, Context context, String description) {
-        //  String newString = description + "\n\n\nDownload Now:\nhttp://base3.engineerbabu.com:8282/BR_App/index/share.php/" + Utility.getSharedPreferences(appContext, Constant.REFERRAL_CODE);
-        String newString = description + "\n\n\nDownload Now:\n" + Urls.BASE_URL1 + "/index/share.php/" + Utility.getSharedPreferences(context, Constant.REFERRAL_CODE);
+        //  String newString = description + "\n\n\nDownload Now:\nhttp://base3.engineerbabu.com:8282/BR_App/index/share.php/" + SharedPrefUtils.getPreference(appContext, Constant.REFERRAL_CODE);
+        String newString = description + "\n\n\nDownload Now:\n" + Urls.BASE_URL1 + "/index/share.php/" + SharedPrefUtils.getPreference(context, Constant.REFERRAL_CODE);
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("image*//*");
         shareIntent.putExtra(Intent.EXTRA_SUBJECT, "kartavya");
@@ -1431,7 +1464,7 @@ public class Utility {
         return new BitmapDrawable(((Activity) appContext).getResources(), bitmap);
     }*/
 
-    public static int initcolor(Context context) {
+    /*public static int initcolor(Context context) {
         // Context context = null;
         List<Integer> colors = new ArrayList<Integer>();
         // int[] colorsTxt = {Color.BLACK,Color.BLUE,Color.GREEN,Color.MAGENTA,Color.GREEN,Color.LTGRAY};
@@ -1445,12 +1478,12 @@ public class Utility {
         }
         int rand = new Random().nextInt(colors.size());
         Integer color = colors.get(rand);
-        if (color == Utility.getIngerSharedPreferences(context, "color")) {
+        if (color == SharedPrefUtils.getPreference(context, "color", 0)) {
             color = colors.get(rand);
         }
-        Utility.setIntegerSharedPreference(context, "color", color);
+        SharedPrefUtils.setPreference(context, "color", color);
         return color;
-    }
+    }*/
 
     public static void openDialogToLogin(final Context context) {
         android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(context);
@@ -1857,5 +1890,58 @@ public class Utility {
         System.out.println("in milliseconds: " + date.getTime());
         return String.valueOf(date.getTime());
     }
+
+    /* [START] - toast message */
+    private static int time;
+
+    /**
+     * display toast message in center
+     *
+     * @param message
+     */
+    public static void setToast(Context context, String message) {
+        /*if (message.toString().trim().length() > 0) {
+            Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
+        }*/
+        if (time == 0) {
+            time = 10;
+            Log.d("Tag", "time " + time);
+        }
+        if (time == 10) {
+            Utility x = new Utility();
+            x.new toastTime().execute();
+            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private class toastTime extends AsyncTask<Void, Void, Void> {
+        protected void onPreExecute() {
+            time = 0;
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            while (true) {
+                if (time >= 5)
+                    return null;
+                try {
+                    Thread.sleep(500L);
+                    time++;
+                } catch (InterruptedException localInterruptedException) {
+                    while (true)
+                        localInterruptedException.printStackTrace();
+                }
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            time = 10;
+        }
+    }
+    /* [END] - toast message */
 }
 

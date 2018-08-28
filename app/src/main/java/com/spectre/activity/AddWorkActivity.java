@@ -50,6 +50,7 @@ import com.spectre.other.Constant;
 import com.spectre.other.Urls;
 import com.spectre.utility.ConvetBitmap;
 import com.spectre.utility.PermissionsUtils;
+import com.spectre.utility.SharedPrefUtils;
 import com.spectre.utility.Utility;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
@@ -556,7 +557,7 @@ public class AddWorkActivity extends AppCompatActivity implements View.OnClickLi
         }
 
 
-        new AqueryCall(this).postWithJsonToken(Url, Utility.getSharedPreferences(context, Constant.USER_TOKEN), jsonObject, new RequestCallback() {
+        new AqueryCall(this).postWithJsonToken(Url, SharedPrefUtils.getPreference(context, Constant.USER_TOKEN, ""), jsonObject, new RequestCallback() {
             @Override
             public void onSuccess(JSONObject js, String msg) {
                 /*refresh = true;
@@ -895,7 +896,7 @@ public class AddWorkActivity extends AppCompatActivity implements View.OnClickLi
             e.printStackTrace();
         }
 
-        new AqueryCall(this).postWithJsonToken(Url, Utility.getSharedPreferences(context, Constant.USER_TOKEN), jsonObject, new RequestCallback() {
+        new AqueryCall(this).postWithJsonToken(Url, SharedPrefUtils.getPreference(context, Constant.USER_TOKEN, ""), jsonObject, new RequestCallback() {
             @Override
             public void onSuccess(JSONObject js, String msg) {
 
@@ -1171,7 +1172,7 @@ public class AddWorkActivity extends AppCompatActivity implements View.OnClickLi
         }
         //"delete_status":"1"
 
-        new AqueryCall(this).postWithJsonToken(Urls.DELETE_GARAGE_WORK, Utility.getSharedPreferences(context, Constant.USER_TOKEN), jsonObject, new RequestCallback() {
+        new AqueryCall(this).postWithJsonToken(Urls.DELETE_GARAGE_WORK, SharedPrefUtils.getPreference(context, Constant.USER_TOKEN, ""), jsonObject, new RequestCallback() {
             @Override
             public void onSuccess(JSONObject js, String msg) {
                 refresh = true;

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.androidquery.AQuery;
 import com.spectre.R;
@@ -19,11 +20,13 @@ import com.spectre.activity.ManageRentedActivity;
 import com.spectre.activity.PostAdActivity;
 import com.spectre.activity.RentCarActivity;
 import com.spectre.activity.ZoomActivity;
+import com.spectre.activity_new.HomeAct;
 import com.spectre.beans.AdPost;
 import com.spectre.customView.CropSquareTransformation;
 import com.spectre.customView.CustomRayMaterialTextView;
 import com.spectre.customView.CustomTextView;
 import com.spectre.other.Constant;
+import com.spectre.utility.SharedPrefUtils;
 import com.spectre.utility.Utility;
 import com.squareup.picasso.Picasso;
 
@@ -56,7 +59,8 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.ViewHold
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_car_detail, parent, false);
+        // View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_car_detail, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_car_detail_2, parent, false);
         ViewHolder viewHolder = new ViewHolder(v);
         return viewHolder;
     }
@@ -64,7 +68,7 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.ViewHold
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final AdPost adPost = arraylist.get(position);
-        String nameModel = "";
+        String nameModel = "", model = "";
         String yearMileage = "";
 
         if (!adPost.getCar_name().isEmpty()) {
@@ -73,16 +77,42 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.ViewHold
         }
 
         if (!adPost.getModel().isEmpty()) {
-            nameModel = nameModel + " \u2022 " + adPost.getModel().trim();
+            // nameModel = nameModel + " \u2022 " + adPost.getModel().trim();
+            model = adPost.getModel().trim();
             //  holder.txtCarModel.setText(appContext.getString(R.string.model_) + " " + adPost.getModel().trim());
         }
-
 
         if (!nameModel.trim().isEmpty()) {
             holder.txtCarName.setText(nameModel);
         } else {
             holder.txtCarName.setText(appContext.getString(R.string.na));
         }
+
+        if (!model.trim().isEmpty()) {
+            holder.txtModel.setText(model);
+        } else {
+            holder.txtModel.setText(appContext.getString(R.string.na));
+        }
+
+        if (!adPost.getCar_type().trim().isEmpty())
+            holder.txtType.setText(adPost.getCar_type());
+        else
+            holder.txtType.setText("");
+
+        if (!adPost.getColor().trim().isEmpty())
+            holder.txtColor.setText(adPost.getColor());
+        else
+            holder.txtColor.setText("");
+
+        if (!adPost.getMileage().trim().isEmpty())
+            holder.txtMiles.setText(adPost.getMileage() + " " + appContext.getString(R.string.miles));
+        else
+            holder.txtMiles.setText("");
+
+        if (!adPost.getYear().trim().isEmpty())
+            holder.txtYear.setText(adPost.getYear());
+        else
+            holder.txtYear.setText("");
 
         if (status != 1) {
             if (!adPost.getYear().isEmpty()) {
@@ -101,14 +131,13 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.ViewHold
                 holder.txtCarModel.setText(appContext.getString(R.string.na));
             }
 
-            holder.txtCarModel.setVisibility(View.VISIBLE);
+            // holder.txtCarModel.setVisibility(View.VISIBLE);
         } else {
             holder.txtCarModel.setVisibility(View.GONE);
         }
 
-
         if (!adPost.getPrice().isEmpty()) {
-            holder.txtCarPrice.setText(appContext.getString(R.string.dollar) + " " + adPost.getPrice().trim() + "" + perDay);
+            holder.txtCarPrice.setText(appContext.getString(R.string.dollar) + " " + adPost.getPrice().trim() + " " + perDay);
         } else {
             holder.txtCarPrice.setText(appContext.getString(R.string.na));
         }
@@ -120,7 +149,7 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.ViewHold
             holder.txtCarDate.setText(appContext.getString(R.string.na));
         }
 
-        if (appContext instanceof HomeActivity) {
+        if (appContext instanceof HomeAct) {
             if (!adPost.getFull_name().isEmpty()) {
                 holder.txtOwnerName.setText(adPost.getFull_name());
                 //    holder.txtOwnerName.setCompoundDrawablesWithIntrinsicBounds(Utility.getDrawable(appContext, 1), null, null, null);
@@ -143,30 +172,31 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.ViewHold
         holder.btnViewDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (appContext instanceof HomeActivity) {
+                if (appContext instanceof HomeAct) {
                     Intent intent = new Intent(appContext, CarDetailActivity.class);
                     intent.putExtra(Constant.DATA, adPost);
                     intent.putExtra(Constant.POSITION, position);
                     intent.putExtra(Constant.TYPE, status);
-                    ((HomeActivity) appContext).startActivityForResult(intent, 404);
+                    appContext.startActivity(intent);
+                    //((HomeActivity) appContext).startActivityForResult(intent, 404);
                 }
-                String s = Utility.getSharedPreferences(appContext, Constant.USER_TYPE);
+                String s = SharedPrefUtils.getPreference(appContext, Constant.USER_TYPE, "");
                /* if (s.equalsIgnoreCase("1") || s.equalsIgnoreCase("2")) {
-                    if (appContext instanceof HomeActivity) {
+                    if (appContext instanceof HomeFormatActivity) {
                         Intent intent = new Intent(appContext, CarDetailActivity.class);
                         intent.putExtra(Constant.DATA, adPost);
                         intent.putExtra(Constant.POSITION, position);
                         intent.putExtra(Constant.TYPE, status);
-                        ((HomeActivity) appContext).startActivityForResult(intent, 404);
+                        ((HomeFormatActivity) appContext).startActivityForResult(intent, 404);
                     }
                 } else {
-                    ((HomeActivity) appContext).openDialogToLogin();
-                   *//* if (appContext instanceof HomeActivity) {
+                    ((HomeFormatActivity) appContext).openDialogToLogin();
+                   *//* if (appContext instanceof HomeFormatActivity) {
                         Intent intent = new Intent(appContext, CarDetailActivity.class);
                         intent.putExtra(Constant.DATA, adPost);
                         intent.putExtra(Constant.POSITION, position);
                         intent.putExtra(Constant.TYPE, status);
-                        ((HomeActivity) appContext).startActivityForResult(intent, 404);
+                        ((HomeFormatActivity) appContext).startActivityForResult(intent, 404);
                     }*//*
 
                 }*/
@@ -176,30 +206,31 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.ViewHold
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (appContext instanceof HomeActivity) {
+                if (appContext instanceof HomeAct) {
                     Intent intent = new Intent(appContext, CarDetailActivity.class);
                     intent.putExtra(Constant.DATA, adPost);
                     intent.putExtra(Constant.POSITION, position);
                     intent.putExtra(Constant.TYPE, status);
-                    ((HomeActivity) appContext).startActivityForResult(intent, 404);
+                    appContext.startActivity(intent);
+                    //  ((HomeActivity) appContext).startActivityForResult(intent, 404);
                 }
-                String s = Utility.getSharedPreferences(appContext, Constant.USER_TYPE);
+                String s = SharedPrefUtils.getPreference(appContext, Constant.USER_TYPE, "");
                /* if (s.equalsIgnoreCase("1") || s.equalsIgnoreCase("2")) {
-                    if (appContext instanceof HomeActivity) {
+                    if (appContext instanceof HomeFormatActivity) {
                         Intent intent = new Intent(appContext, CarDetailActivity.class);
                         intent.putExtra(Constant.DATA, adPost);
                         intent.putExtra(Constant.POSITION, position);
                         intent.putExtra(Constant.TYPE, status);
-                        ((HomeActivity) appContext).startActivityForResult(intent, 404);
+                        ((HomeFormatActivity) appContext).startActivityForResult(intent, 404);
                     }
                 } else {
-                    ((HomeActivity) appContext).openDialogToLogin();
-                   *//* if (appContext instanceof HomeActivity) {
+                    ((HomeFormatActivity) appContext).openDialogToLogin();
+                   *//* if (appContext instanceof HomeFormatActivity) {
                         Intent intent = new Intent(appContext, CarDetailActivity.class);
                         intent.putExtra(Constant.DATA, adPost);
                         intent.putExtra(Constant.POSITION, position);
                         intent.putExtra(Constant.TYPE, status);
-                        ((HomeActivity) appContext).startActivityForResult(intent, 404);
+                        ((HomeFormatActivity) appContext).startActivityForResult(intent, 404);
                     }*//*
 
                 }*/
@@ -227,19 +258,24 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        CustomTextView txtCarName, txtCarModel, txtCarPrice, txtOwnerName,txtCarDate;
+        TextView txtCarName, txtCarModel, txtCarPrice, txtOwnerName, txtCarDate, txtModel, txtType, txtColor, txtMiles, txtYear;
         ImageView ivProduct;
         CustomRayMaterialTextView btnViewDetail;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            btnViewDetail = (CustomRayMaterialTextView) itemView.findViewById(R.id.btn_view_detail);
-            ivProduct = (ImageView) itemView.findViewById(R.id.iv_product);
-            txtCarName = (CustomTextView) itemView.findViewById(R.id.txt_car_name);
-            txtCarPrice = (CustomTextView) itemView.findViewById(R.id.txt_car_price);
-            txtCarModel = (CustomTextView) itemView.findViewById(R.id.txt_car_model);
-            txtOwnerName = (CustomTextView) itemView.findViewById(R.id.txt_owner_name);
-            txtCarDate = (CustomTextView) itemView.findViewById(R.id.txt_car_date);
+            btnViewDetail = itemView.findViewById(R.id.btn_view_detail);
+            ivProduct = itemView.findViewById(R.id.iv_product);
+            txtCarName = itemView.findViewById(R.id.txt_car_name);
+            txtModel = itemView.findViewById(R.id.txt_Model);
+            txtCarPrice = itemView.findViewById(R.id.txt_car_price);
+            txtCarModel = itemView.findViewById(R.id.txt_car_model);
+            txtOwnerName = itemView.findViewById(R.id.txt_owner_name);
+            txtCarDate = itemView.findViewById(R.id.txt_car_date);
+            txtType = itemView.findViewById(R.id.txtType);
+            txtColor = itemView.findViewById(R.id.txtColor);
+            txtMiles = itemView.findViewById(R.id.txtMiles);
+            txtYear = itemView.findViewById(R.id.txtYear);
         }
     }
 }

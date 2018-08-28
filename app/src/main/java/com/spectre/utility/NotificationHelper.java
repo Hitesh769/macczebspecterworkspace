@@ -60,7 +60,7 @@ public class NotificationHelper extends ContextWrapper {
            /* NotificationChannel chan4 = new NotificationChannel(QUATERNARY_CHANNEL,
                 getString(R.string.QUATERNARY_CHANNEL), NotificationManager.IMPORTANCE_HIGH);
             getManager().createNotificationChannel(chan4);*/
-            Utility.setSharedPreferenceBoolean(ctx, Constant.is_channel_prepared,true);
+            SharedPrefUtils.setPreference(ctx, Constant.is_channel_prepared,true);
         }
     }
 

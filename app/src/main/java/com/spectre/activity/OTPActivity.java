@@ -1,11 +1,8 @@
 package com.spectre.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
@@ -14,6 +11,8 @@ import android.view.View;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.spectre.R;
+import com.spectre.activity_new.HomeAct;
+import com.spectre.activity_new.MasterAppCompactActivity;
 import com.spectre.customView.AlertBox;
 import com.spectre.customView.CustomRayMaterialTextView;
 import com.spectre.customView.CustomTextView;
@@ -23,12 +22,13 @@ import com.spectre.hintText.MaskedEditText;
 import com.spectre.interfaces.RequestCallback;
 import com.spectre.other.Constant;
 import com.spectre.other.Urls;
+import com.spectre.utility.SharedPrefUtils;
 import com.spectre.utility.Utility;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class OTPActivity extends AppCompatActivity implements View.OnClickListener {
+public class OTPActivity extends MasterAppCompactActivity implements View.OnClickListener {
 
     private Context context;
     private static MaskedEditText mask_text_verify;
@@ -54,7 +54,7 @@ public class OTPActivity extends AppCompatActivity implements View.OnClickListen
         btn_resend = (CustomRayMaterialTextView) findViewById(R.id.btn_resend);
         btn_resend.setOnClickListener(this);
         txtMsg = (CustomTextView) findViewById(R.id.txt_msg);
-        String s = getResources().getString(R.string.verify_number, "<font color='#000000'> <b>" + Utility.getSharedPreferences(context, Constant.USER_MOBILE) + "</b></font>");
+        String s = getResources().getString(R.string.verify_number, "<font color='#000000'> <b>" + SharedPrefUtils.getPreference(context, Constant.USER_MOBILE, "") + "</b></font>");
         txtMsg.setText(Html.fromHtml(s));
         alertBox = new AlertBox(context);
         mask_text_verify.addTextChangedListener(new TextWatcher() {
@@ -178,7 +178,7 @@ public class OTPActivity extends AppCompatActivity implements View.OnClickListen
                 "user_device_token":"sdf4asd6f4s6fs6f4sd6f4sad6fsd6f4sdf6sdf65s4fs65fs46fs654f654sdf465dsf"
         }*/
         try {
-            jsonObject.put(Constant.USER_MOBILE, Utility.getSharedPreferences(context, Constant.USER_MOBILE));
+            jsonObject.put(Constant.USER_MOBILE, SharedPrefUtils.getPreference(context, Constant.USER_MOBILE, ""));
             jsonObject.put(Constant.MOBILE_OTP, otp);
             jsonObject.put(Constant.USER_DEVICE_TYPE, Constant.ANDROID);
             jsonObject.put(Constant.USER_DEVICE_ID, Build.SERIAL);
@@ -240,53 +240,48 @@ public class OTPActivity extends AppCompatActivity implements View.OnClickListen
     }*/
         try {
             JSONObject jsonObject = js.getJSONObject(Constant.DATA);
-            Utility.setSharedPreference(context, Constant.USER_ID, jsonObject.getString(Constant.USER_ID));
-            Utility.setSharedPreference(context, Constant.USER_NAME, jsonObject.getString(Constant.USER_NAME));
-            Utility.setSharedPreference(context, Constant.USER_IMAGE, jsonObject.getString(Constant.USER_IMAGE));
-            Utility.setSharedPreference(context, Constant.USER_MOBILE, jsonObject.getString(Constant.USER_MOBILE));
-            Utility.setSharedPreference(context, Constant.USER_TOKEN, jsonObject.getString(Constant.USER_TOKEN));
+            SharedPrefUtils.setPreference(context, Constant.USER_ID, jsonObject.getString(Constant.USER_ID));
+            SharedPrefUtils.setPreference(context, Constant.USER_NAME, jsonObject.getString(Constant.USER_NAME));
+            SharedPrefUtils.setPreference(context, Constant.USER_IMAGE, jsonObject.getString(Constant.USER_IMAGE));
+            SharedPrefUtils.setPreference(context, Constant.USER_MOBILE, jsonObject.getString(Constant.USER_MOBILE));
+            SharedPrefUtils.setPreference(context, Constant.USER_TOKEN, jsonObject.getString(Constant.USER_TOKEN));
 
             if (jsonObject.has(Constant.USER_EMAIL))
-                Utility.setSharedPreference(context, Constant.USER_EMAIL, jsonObject.getString(Constant.USER_EMAIL));
+                SharedPrefUtils.setPreference(context, Constant.USER_EMAIL, jsonObject.getString(Constant.USER_EMAIL));
 
             if (jsonObject.has(Constant.USER_ADDRESS_))
-                Utility.setSharedPreference(context, Constant.USER_ADDRESS_, jsonObject.getString(Constant.USER_ADDRESS_));
+                SharedPrefUtils.setPreference(context, Constant.USER_ADDRESS_, jsonObject.getString(Constant.USER_ADDRESS_));
 
             if (jsonObject.has(Constant.CAR_REPAIRE))
-                Utility.setSharedPreference(context, Constant.CAR_REPAIRE, jsonObject.getString(Constant.CAR_REPAIRE));
+                SharedPrefUtils.setPreference(context, Constant.CAR_REPAIRE, jsonObject.getString(Constant.CAR_REPAIRE));
 
             if (jsonObject.has(Constant.EXPERTISE))
-                Utility.setSharedPreference(context, Constant.EXPERTISE, jsonObject.getString(Constant.EXPERTISE));
+                SharedPrefUtils.setPreference(context, Constant.EXPERTISE, jsonObject.getString(Constant.EXPERTISE));
 
             if (jsonObject.has(Constant.GARAGE_IMAGE))
-                Utility.setSharedPreference(context, Constant.GARAGE_IMAGE, jsonObject.getString(Constant.GARAGE_IMAGE));
+                SharedPrefUtils.setPreference(context, Constant.GARAGE_IMAGE, jsonObject.getString(Constant.GARAGE_IMAGE));
 
             if (jsonObject.has(Constant.MOBILE_CODE))
-                Utility.setSharedPreference(context, Constant.MOBILE_CODE, jsonObject.getString(Constant.MOBILE_CODE));
+                SharedPrefUtils.setPreference(context, Constant.MOBILE_CODE, jsonObject.getString(Constant.MOBILE_CODE));
 
             if (jsonObject.has(Constant.SERVICE_TYPE)) {
-                Utility.setSharedPreference(context, Constant.SERVICE_TYPE, jsonObject.getString(Constant.SERVICE_TYPE));
+                SharedPrefUtils.setPreference(context, Constant.SERVICE_TYPE, jsonObject.getString(Constant.SERVICE_TYPE));
             }
 
             if (jsonObject.has(Constant.USER_TYPE)) {
                 type = jsonObject.getString(Constant.USER_TYPE);
-                Utility.setSharedPreference(context, Constant.USER_TYPE, type);
+                SharedPrefUtils.setPreference(context, Constant.USER_TYPE, type);
 
                 MyDialogProgress.close(context);
 
                 if (type.equalsIgnoreCase("2")) {
-                    //Intent intent = new Intent(context, GarageHomeActivity.class);
-                    Intent intent = new Intent(context, HomeActivity.class).putExtra(Constant.TYPE, type);
-                    startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                    // startActFinish(HomeFormatActivity.getStartIntent(context, type));
+                    startActFinish(HomeAct.getStartIntent(context, type));
                     return;
                 }
             }
-
-            Intent intent = new Intent(context, HomeActivity.class).putExtra(Constant.TYPE, type);
-
-            // Intent intent = new Intent(context, HomeActivity.class);
-            startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
-
+            // startActFinish(HomeFormatActivity.getStartIntent(context, type));
+            startActFinish(HomeAct.getStartIntent(context, type));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -313,7 +308,7 @@ public class OTPActivity extends AppCompatActivity implements View.OnClickListen
                 "user_device_token":"sdf4asd6f4s6fs6f4sd6f4sad6fsd6f4sdf6sdf65s4fs65fs46fs654f654sdf465dsf"
         }*/
         try {
-            jsonObject.put(Constant.USER_MOBILE, Utility.getSharedPreferences(context, Constant.USER_MOBILE));
+            jsonObject.put(Constant.USER_MOBILE, SharedPrefUtils.getPreference(context, Constant.USER_MOBILE, ""));
 
         } catch (JSONException e) {
             e.printStackTrace();

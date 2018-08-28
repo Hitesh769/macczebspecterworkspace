@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_168sdp"
+            android:background="@color/colorPrimaryDark"
+            android:orientation="vertical"
+            android:padding="@dimen/_5sdp">
+
+            <TextView
+                style="@style/textView_white"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="@string/welcome_back" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp">
+
+                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/imgProfileImage"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="@dimen/_60sdp"
+                    android:padding="@dimen/_3sdp"
+                    android:src="@drawable/ic_gestuser"
+                    app:civ_border_width="0dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_60sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_toEndOf="@+id/imgProfileImage"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txtName"
+                        style="@style/textView_white"
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="@string/guest_user" />
+
+                    <TextView
+                        android:id="@+id/txtEmail"
+                        style="@style/textView_white"
+                        android:fontFamily="@font/poppins_regular"
+                        android:textSize="@dimen/_10sdp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llLogout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_60sdp"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/ripple"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/_25sdp"
+                        android:layout_height="@dimen/_25sdp"
+                        android:src="@drawable/ic_logout" />
+
+                    <TextView
+                        style="@style/textView_white"
+                        android:fontFamily="@font/poppins_regular"
+                        android:gravity="center"
+                        android:text="@string/logout" />
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardView1"
+            style="@style/cardView"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_115sdp"
+            card_view:cardBackgroundColor="@color/white"
+            card_view:cardCornerRadius="@dimen/_5sdp"
+            card_view:cardElevation="@dimen/_10sdp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/llLogin"
+                    style="@style/linear_register"
+                    android:background="@drawable/ripple">
+
+                    <ImageView
+                        style="@style/image_register"
+                        android:src="@drawable/ic_login"
+                        android:tint="@color/hint_color" />
+
+                    <TextView
+                        style="@style/textView"
+                        android:layout_weight="1"
+                        android:padding="@dimen/_10sdp"
+                        android:text="@string/login"
+                        android:textColor="@color/black" />
+
+                    <ImageView
+                        style="@style/image_register"
+                        android:rotation="180"
+                        android:tint="@color/hint_color"
+                        app:srcCompat="@drawable/ic_keyboard_arrow_left" />
+
+                </LinearLayout>
+
+                <View style="@style/line_register" />
+
+                <LinearLayout
+                    android:id="@+id/llSignUp"
+                    style="@style/linear_register"
+                    android:background="@drawable/ripple">
+
+                    <ImageView
+                        style="@style/image_register"
+                        android:src="@drawable/ic_sign_up"
+                        android:tint="@color/hint_color" />
+
+                    <TextView
+                        style="@style/textView"
+                        android:layout_weight="1"
+                        android:padding="@dimen/_10sdp"
+                        android:text="@string/sign_up"
+                        android:textColor="@color/black" />
+
+                    <ImageView
+                        style="@style/image_register"
+                        android:rotation="180"
+                        android:tint="@color/hint_color"
+                        app:srcCompat="@drawable/ic_keyboard_arrow_left" />
+
+                </LinearLayout>
+
+                <View style="@style/line_register" />
+
+                <LinearLayout
+                    android:id="@+id/llMyAccount"
+                    style="@style/linear_register"
+                    android:background="@drawable/ripple">
+
+                    <ImageView
+                        style="@style/image_register"
+                        android:src="@drawable/ic_profile"
+                        android:tint="@color/hint_color" />
+
+                    <TextView
+                        style="@style/textView"
+                        android:layout_weight="1"
+                        android:padding="@dimen/_10sdp"
+                        android:text="@string/my_account"
+                        android:textColor="@color/black" />
+
+                    <ImageView
+                        style="@style/image_register"
+                        android:rotation="180"
+                        android:tint="@color/hint_color"
+                        app:srcCompat="@drawable/ic_keyboard_arrow_left" />
+
+                </LinearLayout>
+
+                <View style="@style/line_register" />
+
+                <LinearLayout
+                    android:id="@+id/llPostAd"
+                    style="@style/linear_register"
+                    android:background="@drawable/ripple">
+
+                    <ImageView
+                        style="@style/image_register"
+                        android:src="@drawable/ic_post_add"
+                        android:tint="@color/hint_color" />
+
+                    <TextView
+                        style="@style/textView"
+                        android:layout_weight="1"
+                        android:padding="@dimen/_10sdp"
+                        android:text="@string/post_ad"
+                        android:textColor="@color/black" />
+
+                    <ImageView
+                        style="@style/image_register"
+                        android:rotation="180"
+                        android:tint="@color/hint_color"
+                        app:srcCompat="@drawable/ic_keyboard_arrow_left" />
+
+                </LinearLayout>
+
+                <View style="@style/line_register" />
+
+                <LinearLayout
+                    android:id="@+id/llManageAd"
+                    style="@style/linear_register"
+                    android:background="@drawable/ripple">
+
+                    <ImageView
+                        style="@style/image_register"
+                        android:src="@drawable/ic_manage_ad"
+                        android:tint="@color/hint_color" />
+
+                    <TextView
+                        style="@style/textView"
+                        android:layout_weight="1"
+                        android:padding="@dimen/_10sdp"
+                        android:text="@string/manage_ad"
+                        android:textColor="@color/black" />
+
+                    <ImageView
+                        style="@style/image_register"
+                        android:rotation="180"
+                        android:tint="@color/hint_color"
+                        app:srcCompat="@drawable/ic_keyboard_arrow_left" />
+
+                </LinearLayout>
+
+                <View style="@style/line_register" />
+
+                <LinearLayout
+                    android:id="@+id/llSettings"
+                    style="@style/linear_register"
+                    android:background="@drawable/ripple">
+
+                    <ImageView
+                        style="@style/image_register"
+                        android:src="@drawable/ic_settings"
+                        android:tint="@color/hint_color" />
+
+                    <TextView
+                        style="@style/textView"
+                        android:layout_weight="1"
+                        android:padding="@dimen/_10sdp"
+                        android:text="@string/settings"
+                        android:textColor="@color/black" />
+
+                    <ImageView
+                        style="@style/image_register"
+                        android:rotation="180"
+                        android:tint="@color/hint_color"
+                        app:srcCompat="@drawable/ic_keyboard_arrow_left" />
+
+                </LinearLayout>
+
+                <View style="@style/line_register" />
+
+                <LinearLayout
+                    android:id="@+id/llAboutUs"
+                    style="@style/linear_register"
+                    android:background="@drawable/ripple">
+
+                    <ImageView
+                        style="@style/image_register"
+                        android:src="@drawable/ic_settings"
+                        android:tint="@color/hint_color" />
+
+                    <TextView
+                        style="@style/textView"
+                        android:layout_weight="1"
+                        android:padding="@dimen/_10sdp"
+                        android:text="@string/about_us"
+                        android:textColor="@color/black" />
+
+                    <ImageView
+                        style="@style/image_register"
+                        android:rotation="180"
+                        android:tint="@color/hint_color"
+                        app:srcCompat="@drawable/ic_keyboard_arrow_left" />
+
+                </LinearLayout>
+
+                <View style="@style/line_register" />
+
+                <LinearLayout
+                    android:id="@+id/llPrivacyPolicy"
+                    style="@style/linear_register"
+                    android:background="@drawable/ripple">
+
+                    <ImageView
+                        style="@style/image_register"
+                        android:src="@drawable/ic_settings"
+                        android:tint="@color/hint_color" />
+
+                    <TextView
+                        style="@style/textView"
+                        android:layout_weight="1"
+                        android:padding="@dimen/_10sdp"
+                        android:text="@string/privacy_policy"
+                        android:textColor="@color/black" />
+
+                    <ImageView
+                        style="@style/image_register"
+                        android:rotation="180"
+                        android:tint="@color/hint_color"
+                        app:srcCompat="@drawable/ic_keyboard_arrow_left" />
+
+                </LinearLayout>
+
+                <View style="@style/line_register" />
+
+                <LinearLayout
+                    android:id="@+id/llSocial"
+                    style="@style/linear_register"
+                    android:background="@drawable/ripple">
+
+                    <ImageView
+                        style="@style/image_register"
+                        android:src="@drawable/ic_settings"
+                        android:tint="@color/hint_color" />
+
+                    <TextView
+                        style="@style/textView"
+                        android:layout_weight="1"
+                        android:padding="@dimen/_10sdp"
+                        android:text="@string/social"
+                        android:textColor="@color/black" />
+
+                    <ImageView
+                        style="@style/image_register"
+                        android:rotation="180"
+                        android:tint="@color/hint_color"
+                        app:srcCompat="@drawable/ic_keyboard_arrow_left" />
+
+                </LinearLayout>
+
+                <View style="@style/line_register" />
+
+                <LinearLayout
+                    android:id="@+id/llFeedback"
+                    style="@style/linear_register"
+                    android:background="@drawable/ripple">
+
+                    <ImageView
+                        style="@style/image_register"
+                        android:src="@drawable/ic_settings"
+                        android:tint="@color/hint_color" />
+
+                    <TextView
+                        style="@style/textView"
+                        android:layout_weight="1"
+                        android:padding="@dimen/_10sdp"
+                        android:text="@string/feedback"
+                        android:textColor="@color/black" />
+
+                    <ImageView
+                        style="@style/image_register"
+                        android:rotation="180"
+                        android:tint="@color/hint_color"
+                        app:srcCompat="@drawable/ic_keyboard_arrow_left" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+    </FrameLayout>
+</android.support.v4.widget.NestedScrollView>

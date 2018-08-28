@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.spectre.R;
 import com.spectre.customView.CustomTextView;
 import com.spectre.other.Constant;
+import com.spectre.utility.SharedPrefUtils;
 import com.spectre.utility.Utility;
 
 public class SettingsActivity extends AppCompatActivity implements View.OnClickListener {
@@ -86,11 +87,12 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
 
     private void UtilityGetValue(SwitchCompat switchType, String name) {
-        switchType.setChecked(Utility.getSharedPreferencesBoolean_(context, name));
+        // switchType.setChecked(Utility.getSharedPreferencesBoolean_(context, name));
+        switchType.setChecked(SharedPrefUtils.getPreference(context, name, true));
     }
 
     private void UtilitySetValue(String name, boolean value) {
-        Utility.setSharedPreferenceBoolean(context, name, value);
+        SharedPrefUtils.setPreference(context, name, value);
     }
 
 }
