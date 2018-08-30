@@ -79,6 +79,7 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
         context = this;
         Utility.setContentView(context, R.layout.activity_garage_detail);
         actionBar = Utility.setUpToolbar_(context, "<font color='#ffffff'>Garage Detail</font>", true);
+       // Utility.setUpToolbar_(context, "<font color='#ffffff'>"+getString(R.string.manage_ad)+"</font>",true);
         initView();
     }
 

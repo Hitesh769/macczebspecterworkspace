@@ -8,6 +8,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="not_registered_please">Not Registered? Please</string>
     <string name="forget_pin">Forget Password?</string>
+    <string name="car_specification">Car Specification</string>
+    <string name="buyer_details">Buyer\'s Details</string>
+    <string name="vendor_detail">Vendor\'s Detail</string>
     <string name="password">Password</string>
     <string name="email">Email</string>
     <string name="email_id">Email Id:</string>
@@ -84,7 +87,7 @@
     <string name="active">Activate</string>
     <string name="delete">Delete</string>
     <string name="price_vendor">Price-</string>
-    <string name="vendor_detail">Vendor\'s Detail</string>
+    <string name="seller_detail">Seller\'s Detail</string>
     <string name="users_detail">User\'s Detail</string>
     <string name="owner_detail">Owner\'s Detail</string>
     <string name="gallery">Gallery</string>

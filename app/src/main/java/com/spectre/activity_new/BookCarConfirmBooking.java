@@ -79,18 +79,7 @@ public class BookCarConfirmBooking extends AppCompatActivity {
         context = this;
         Utility.setContentView(context, R.layout.activity_confirm_booking);
         actionBar = Utility.setUpToolbar_(context, "<font color='#ffffff'>Booking Complete</font>", true);
-        initView();
     }
-
-    public static Intent getStartIntent(Context context) {
-        Intent intent = new Intent(context, BookCarConfirmBooking.class);
-        return intent;
-    }
-
-    private void initView() {
-      //  setData();
-    }
-
     private void setData() {
        /* txtPickUp.setText(Common.strDayPickUp + ", " + Common.strYearPickUp + " " + Common.strMonthPickUp + " " + Common.strDatePickUp);
         txtDropOff.setText(Common.strDayDropoff + ", " + Common.strYearDropoff + " " + Common.strMonthDropoff + " " + Common.strDateDropoff);

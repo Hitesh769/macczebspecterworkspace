@@ -6,11 +6,13 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.spectre.R;
 import com.spectre.beans.AdPost;
@@ -87,12 +89,49 @@ public class BookCarSummaryActivity extends AppCompatActivity {
     LinearLayout lin5;
     @BindView(R.id.btnConfirm)
     Button btnConfirm;
+    @BindView(R.id.booking_done)
+    CustomTextView bookingDone;
+    @BindView(R.id.card1)
+    CardView card1;
+    @BindView(R.id.gendertitle)
+    CustomTextView gendertitle;
+    @BindView(R.id.txtGender)
+    CustomTextView txtGender;
+    @BindView(R.id.rel_gender)
+    RelativeLayout relGender;
+    @BindView(R.id.buyer_locationtitle)
+    CustomTextView buyerLocationtitle;
+    @BindView(R.id.txtBuyer_location)
+    CustomTextView txtBuyerLocation;
+    @BindView(R.id.rel_locataion)
+    RelativeLayout relLocataion;
+    @BindView(R.id.summary_rent)
+    LinearLayout linSummaryRent;
+    @BindView(R.id.carseriestitle)
+    CustomTextView carseriestitle;
+    @BindView(R.id.txtCarSeries)
+    CustomTextView txtCarSeries;
+    @BindView(R.id.cartypetitle)
+    CustomTextView cartypetitle;
+    @BindView(R.id.txt_car_type)
+    CustomTextView txtCarType;
+    @BindView(R.id.colortitle)
+    CustomTextView colortitle;
+    @BindView(R.id.txt_color)
+    CustomTextView txtColor;
+    @BindView(R.id.milegtitle)
+    CustomTextView milegtitle;
+    @BindView(R.id.txt_mileg)
+    CustomTextView txtMileg;
+    @BindView(R.id.summary_buyer)
+    LinearLayout linSummaryBuyer;
     private ActionBar actionBar;
     private Context context;
     private AdPost adPost;
     private int position = -1, type = -1;
     private String perDay = "";
     private Display display;
+    private boolean isSuccess = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,27 +143,45 @@ public class BookCarSummaryActivity extends AppCompatActivity {
         initView();
     }
 
-    public static Intent getStartIntent(Context context) {
-        Intent intent = new Intent(context, BookCarSummaryActivity.class);
-        return intent;
-    }
 
     private void initView() {
-       setData();
+        setData();
     }
 
     @OnClick(R.id.btnConfirm)
     public void onViewClicked() {
-        Intent intent = new Intent(this, BookCarConfirmBooking.class);
+
+        if (isSuccess == false) {
+            isSuccess = true;
+            card1.setVisibility(View.VISIBLE);
+            btnConfirm.setText("Finish");
+        } else {
+            getSuccessIntent();
+        }
+
+       /* Intent intent = new Intent(this, BookCarConfirmBooking.class);
          intent.putExtra(Constant.DATA, adPost);
          intent.putExtra(Constant.POSITION, position);
          intent.putExtra(Constant.TYPE, type);
-        startActivity(intent);
+        startActivity(intent);*/
     }
 
-    private void setData(){
-        txtPickUp.setText(Common.strDayPickUp+", "+Common.strYearPickUp+" "+Common.strMonthPickUp+" "+Common.strDatePickUp);
-        txtDropOff.setText(Common.strDayDropoff+", "+Common.strYearDropoff+" "+Common.strMonthDropoff+" "+Common.strDateDropoff);
+    private void setData() {
+        type = getIntent().getExtras().getInt(Constant.TYPE);
+
+        if (type != 1) {
+        //    perDay = getString(R.string.per_day);
+            linSummaryBuyer.setVisibility(View.VISIBLE);
+            relGender.setVisibility(View.VISIBLE);
+            relLocataion.setVisibility(View.VISIBLE);
+            linSummaryRent.setVisibility(View.GONE);
+            
+        }
+
+
+
+        txtPickUp.setText(Common.strDayPickUp + ", " + Common.strYearPickUp + " " + Common.strMonthPickUp + " " + Common.strDatePickUp);
+        txtDropOff.setText(Common.strDayDropoff + ", " + Common.strYearDropoff + " " + Common.strMonthDropoff + " " + Common.strDateDropoff);
 
         txtName.setText(getIntent().getStringExtra(Constant.DRIVER_NAME));
         txtEmail.setText(getIntent().getStringExtra(Constant.DRIVER_EMAIL));
@@ -170,5 +227,10 @@ public class BookCarSummaryActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    public void getSuccessIntent() {
+        Intent intent = new Intent(context, HomeAct.class);
+        startActivity(intent);
     }
 }

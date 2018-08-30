@@ -360,7 +360,11 @@ public class HomeAct extends MasterAppCompactActivity implements LocationListene
         /* [END] - Old code */
 
         // start Buy fragment at first time
-        startHomeFragment();
+        if (getIntent().getStringExtra("isChange")!=null&&getIntent().getStringExtra("isChange").equals("1")) {
+            startNewFragment(new RentFilterFragment(), RentFilterFragment.TAG);
+        }else {
+            startHomeFragment();
+        }
     }
 
     private void setListener() {
@@ -576,12 +580,16 @@ public class HomeAct extends MasterAppCompactActivity implements LocationListene
                 .replace(R.id.main_view, new BuyFragment(), BuyFragment.TAG)
                 .addToBackStack(BuyFragment.TAG)
                 .commit();*/
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        // transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_left, R.anim.exit_to_left);
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        transaction.replace(R.id.main_view, BuyFragment.newInstance(), BuyFragment.TAG);
-        transaction.addToBackStack(BuyFragment.TAG);
-        transaction.commit();
+
+
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            // transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_left, R.anim.exit_to_left);
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            transaction.replace(R.id.main_view, BuyFragment.newInstance(), BuyFragment.TAG);
+            transaction.addToBackStack(BuyFragment.TAG);
+            transaction.commit();
+
+
     }
 
     public void startNewFragment(Fragment fragment) {
@@ -826,7 +834,7 @@ public class HomeAct extends MasterAppCompactActivity implements LocationListene
                 setLog("LAT 1 : " + latitude);
                 longitude = String.valueOf(bestLocation.getLongitude());
                 setLog("Lat : " + getFullAddress(Double.valueOf(latitude), Double.valueOf(longitude)));
-//                tv_rent_fragment_location.setText(getFullAddress(Double.valueOf(latitude), Double.valueOf(longitude)));
+                //tv_rent_fragment_location.setText(getFullAddress(Double.valueOf(latitude), Double.valueOf(longitude)));
 
             } else {
                 setLog("Location is null");

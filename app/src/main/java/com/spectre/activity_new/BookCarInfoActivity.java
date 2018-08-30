@@ -8,16 +8,12 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
 import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.androidquery.AQuery;
-import com.bumptech.glide.util.Util;
-import com.daimajia.slider.library.SliderLayout;
 import com.spectre.R;
 import com.spectre.beans.AdPost;
 import com.spectre.customView.AlertBox;
@@ -76,6 +72,7 @@ public class BookCarInfoActivity extends AppCompatActivity {
     private int position = -1, type = -1;
     private String perDay = "";
     private Display display;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,57 +83,51 @@ public class BookCarInfoActivity extends AppCompatActivity {
         initView();
     }
 
-    public static Intent getStartIntent(Context context) {
-        Intent intent = new Intent(context, BookCarInfoActivity.class);
-        return intent;
+    public  void getChangeDateLocationIntent() {
+        Intent intent = new Intent(context, HomeAct.class);
+        intent.putExtra("isChange","1");
+        startActivity(intent);
     }
 
     private void initView() {
-             setData();
+        setData();
     }
 
-    @OnClick(R.id.btnConfirm)
-    public void onViewClicked() {
-        nextActivity();
-    }
 
     private void nextActivity() {
-        if (inputFirstName.getText().toString().isEmpty()){
+        if (inputFirstName.getText().toString().isEmpty()) {
             new AlertBox(context).openMessageWithFinish(getResources().getString(R.string.nameempty), "Okay", "", false);
-        }
-        else if (inputEmail.getText().toString().isEmpty()){
+        } else if (inputEmail.getText().toString().isEmpty()) {
             new AlertBox(context).openMessageWithFinish(getResources().getString(R.string.emailempty), "Okay", "", false);
-        }
-        else if (inputPhone.getText().toString().isEmpty()){
+        } else if (inputPhone.getText().toString().isEmpty()) {
             new AlertBox(context).openMessageWithFinish(getResources().getString(R.string.phoneempty), "Okay", "", false);
-        }
-        else{
+        } else {
             Intent intent = new Intent(this, BookCarSummaryActivity.class);
             intent.putExtra(Constant.DATA, adPost);
             intent.putExtra(Constant.POSITION, position);
             intent.putExtra(Constant.TYPE, type);
-            intent.putExtra(Constant.DRIVER_EMAIL,inputEmail.getText().toString());
-            intent.putExtra(Constant.DRIVER_NAME,inputFirstName.getText().toString());
-            intent.putExtra(Constant.DRIVER_PHONE,inputPhone.getText().toString());
+            intent.putExtra(Constant.DRIVER_EMAIL, inputEmail.getText().toString());
+            intent.putExtra(Constant.DRIVER_NAME, inputFirstName.getText().toString());
+            intent.putExtra(Constant.DRIVER_PHONE, inputPhone.getText().toString());
             startActivity(intent);
         }
     }
 
-    private void setData(){
-      txtFrom.setText(Common.strDayPickUp+", "+Common.strYearPickUp+" "+Common.strMonthPickUp+" "+Common.strDatePickUp);
-      txtTo.setText(Common.strDayDropoff+", "+Common.strYearDropoff+" "+Common.strMonthDropoff+" "+Common.strDateDropoff);
-      //location.setText(Common.location);
+    private void setData() {
+        txtFrom.setText(Common.strDayPickUp + ", " + Common.strYearPickUp + " " + Common.strMonthPickUp + " " + Common.strDatePickUp);
+        txtTo.setText(Common.strDayDropoff + ", " + Common.strYearDropoff + " " + Common.strMonthDropoff + " " + Common.strDateDropoff);
+        //location.setText(Common.location);
 
-      if (getIntent().getExtras() != null && getIntent().getExtras().get(Constant.DATA) != null) {
+        if (getIntent().getExtras() != null && getIntent().getExtras().get(Constant.DATA) != null) {
 
-          adPost = (AdPost) getIntent().getExtras().get(Constant.DATA);
-      //    actionBar.setTitle(Html.fromHtml("<font color='#ffffff'>" + adPost.getCar_name() + "</font>"));
-          position = getIntent().getExtras().getInt(Constant.POSITION);
-          type = getIntent().getExtras().getInt(Constant.TYPE);
+            adPost = (AdPost) getIntent().getExtras().get(Constant.DATA);
+            //    actionBar.setTitle(Html.fromHtml("<font color='#ffffff'>" + adPost.getCar_name() + "</font>"));
+            position = getIntent().getExtras().getInt(Constant.POSITION);
+            type = getIntent().getExtras().getInt(Constant.TYPE);
 
-          if (type == 1) {
-              perDay = getString(R.string.per_day);
-          }
+            if (type == 1) {
+                perDay = getString(R.string.per_day);
+            }
          /* if (adPost.getYear_from() != null && !adPost.getYear_from().isEmpty()) {
               txtFrom.setText(adPost.getYear_from().trim());
 
@@ -150,19 +141,32 @@ public class BookCarInfoActivity extends AppCompatActivity {
               txtTo.setText(context.getString(R.string.na));
           }*/
 
-          display = getWindowManager().getDefaultDisplay();
-          Point size = new Point();
-          display.getSize(size);
+            display = getWindowManager().getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
 
 
-      } else {
-          new AlertBox(context).openMessageWithFinish(getResources().getString(R.string.something_wrong), "Okay", "", false);
-      }
+        } else {
+            new AlertBox(context).openMessageWithFinish(getResources().getString(R.string.something_wrong), "Okay", "", false);
+        }
 
 
-  }
+    }
 
 
+    @OnClick({R.id.changedate, R.id.changelocation,R.id.btnConfirm})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.changedate:
+                getChangeDateLocationIntent();
+                break;
+            case R.id.changelocation:
+                getChangeDateLocationIntent();
+                break;
+            case R.id.btnConfirm:
+                nextActivity();
+                break;
 
-
+        }
+    }
 }

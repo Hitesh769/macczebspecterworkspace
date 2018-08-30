@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.androidquery.AQuery;
 import com.spectre.R;
@@ -45,7 +46,7 @@ public class GarageHomeListAdapter extends RecyclerView.Adapter<GarageHomeListAd
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_garage_detail, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_garage_detail_new, parent, false);
         ViewHolder viewHolder = new ViewHolder(v);
         return viewHolder;
     }
@@ -84,18 +85,18 @@ public class GarageHomeListAdapter extends RecyclerView.Adapter<GarageHomeListAd
             }
         }
 
-        holder.btn_save_changes.setOnClickListener(new View.OnClickListener() {
+    /*    holder.btn_save_changes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 
-               /* if (appContext instanceof GarageHomeActivity && status == 2) {
+               *//* if (appContext instanceof GarageHomeActivity && status == 2) {
                     Intent intent = new Intent(appContext, AddWorkActivity.class);
                     intent.putExtra(Constant.DATA, adPost);
                     intent.putExtra(Constant.POSITION, position);
                     ((GarageHomeActivity) appContext).startActivityForResult(intent, 404);
                 }
-*/
+*//*
 
                 String s = SharedPrefUtils.getPreference(appContext, Constant.USER_TYPE, "");
                 if (appContext instanceof HomeActivity && status == 1) {
@@ -106,7 +107,7 @@ public class GarageHomeListAdapter extends RecyclerView.Adapter<GarageHomeListAd
 
                 }
             }
-        });
+        });*/
 
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -123,11 +124,13 @@ public class GarageHomeListAdapter extends RecyclerView.Adapter<GarageHomeListAd
 
 
                 String s = SharedPrefUtils.getPreference(appContext, Constant.USER_TYPE, "");
-                if (appContext instanceof HomeActivity && status == 1) {
+               // if (appContext instanceof HomeActivity && status == 1) {
+                if (status == 1) {
                     Intent intent = new Intent(appContext, GarageDetailActivity.class);
                     intent.putExtra(Constant.DATA, adPost);
                     intent.putExtra(Constant.POSITION, position);
-                    ((HomeActivity) appContext).startActivityForResult(intent, 405);
+                    appContext.startActivity(intent);
+                    //((HomeActivity) appContext).startActivityForResult(intent, 405);
 
                 }
             }
@@ -142,20 +145,22 @@ public class GarageHomeListAdapter extends RecyclerView.Adapter<GarageHomeListAd
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        CustomTextView txt_name, txt_address, txt_number;
+        CustomTextView txt_address, txt_number;
+        TextView txt_name;
         ImageView iv_product;
         CustomRayMaterialTextView btn_save_changes;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            txt_name = (CustomTextView) itemView.findViewById(R.id.txt_name);
+            txt_name = (TextView) itemView.findViewById(R.id.txt_name);
             txt_address = (CustomTextView) itemView.findViewById(R.id.txt_address);
             txt_number = (CustomTextView) itemView.findViewById(R.id.txt_number);
             iv_product = (ImageView) itemView.findViewById(R.id.iv_product);
-            btn_save_changes = (CustomRayMaterialTextView) itemView.findViewById(R.id.btn_save_changes);
+         //   btn_save_changes = (CustomRayMaterialTextView) itemView.findViewById(R.id.btn_save_changes);
 
             if (status == 1) {
-                txt_number.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.garage_call, 0, 0, 0);
+                //txt_number.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.garage_call, 0, 0, 0);
+                txt_number.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                 txt_address.setMaxLines(2);
             } else {
                 txt_number.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);

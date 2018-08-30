@@ -5,9 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
     android:orientation="vertical">
-
     <include layout="@layout/toolbar" />
 
     <ScrollView
@@ -23,7 +21,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
+                android:background="@color/colorPrimaryDark"
                 android:orientation="vertical">
 
                 <com.daimajia.slider.library.SliderLayout
@@ -43,6 +41,7 @@
                     android:layout_marginStart="@dimen/_10sdp"
                     android:background="#50404040"
                     android:padding="@dimen/_5sdp"
+                    android:visibility="gone"
                     android:layout_alignParentTop="true"
                     android:adjustViewBounds="true"
                     android:src="@mipmap/back"
@@ -60,6 +59,7 @@
                     android:background="#50404040"
                     android:padding="@dimen/_5sdp"
                     android:rotation="180"
+                    android:visibility="gone"
                     android:src="@mipmap/back"
                     android:tint="@color/white" />
             </RelativeLayout>
@@ -67,7 +67,9 @@
             <RelativeLayout xmlns:custom="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
+               android:paddingTop="@dimen/_10sdp"
+               android:paddingBottom="@dimen/_10sdp"
+                android:background="@color/colorPrimaryDark"
                 android:orientation="vertical">
 
                 <com.spectre.customView.CustomTextView
@@ -79,7 +81,11 @@
                     android:layout_marginEnd="@dimen/_15sdp"
                     android:background="@drawable/edt_bg_round"
                     android:backgroundTint="#32ffffff"
-                    android:padding="@dimen/_5sdp"
+                    android:textStyle="bold"
+                    android:paddingRight="@dimen/_10sdp"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:paddingTop="@dimen/_5sdp"
                     android:singleLine="true"
                     android:text="$20,000/day"
                     android:textColor="@color/setting_yellow"
@@ -91,7 +97,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimary">
+                android:background="@color/colorPrimaryDark">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -403,59 +409,60 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
+                android:background="@color/white"
                 android:layout_height="wrap_content">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_50sdp"
-                    android:background="@color/colorPrimary"></RelativeLayout>
+                    android:background="@color/colorPrimaryDark"></RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                        xmlns:app="http://schemas.android.com/apk/res-auto"
-                        xmlns:card="http://schemas.android.com/tools"
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/card1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/_10sdp"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginRight="30dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
                         android:layout_marginTop="25dp"
                         android:clickable="true"
                         android:focusable="true"
                         android:foreground="?android:attr/selectableItemBackground"
-                        app:cardBackgroundColor="@color/colorWhite"
-                        app:cardCornerRadius="@dimen/_5sdp"
-                        app:cardElevation="@dimen/_5sdp">
+                        custom:cardBackgroundColor="@color/colorWhite"
+                        custom:cardCornerRadius="@dimen/_5sdp"
+                        custom:cardElevation="@dimen/_5sdp">
 
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
                             <com.spectre.customView.CustomTextView
-                                android:id="@+id/vendor_detail"
+                                android:id="@+id/car_specification"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="left"
                                 android:padding="@dimen/_8sdp"
                                 android:singleLine="true"
-                                android:text="@string/vendor_detail"
+                                android:text="@string/car_specification"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_15sdp"
-                                app:edittextfont="Poppins-Medium.ttf"
-                                app:edittextfontHint="Poppins-Medium.ttf" />
+                                custom:edittextfont="Poppins-Medium.ttf"
+                                custom:edittextfontHint="Poppins-Medium.ttf" />
 
                             <View
-                                android:id="@+id/view1"
+                                android:id="@+id/viewheader"
                                 style="@style/line_register"
-                                android:layout_below="@+id/vendor_detail" />
+                                android:layout_below="@+id/car_specification" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:layout_below="@+id/view1"
+                                android:layout_below="@+id/viewheader"
+                                android:layout_margin="@dimen/_3sdp"
                                 android:orientation="vertical">
 
                                 <LinearLayout
@@ -463,230 +470,123 @@
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical">
 
-                                    <com.spectre.customView.CustomTextView
-                                        android:id="@+id/txt_name_"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="@dimen/_8sdp"
-                                        android:drawableLeft="@mipmap/user"
-                                        android:drawablePadding="@dimen/_10sdp"
-                                        android:padding="@dimen/_5sdp"
-                                        android:singleLine="true"
-                                        android:text="@string/na"
-                                        android:textColor="@color/black"
-                                        android:textColorLink="@color/black"
-                                        android:textSize="@dimen/_12sdp"
-                                        app:edittextfont="Poppins-Regular.ttf"
-                                        app:edittextfontHint="Poppins-Regular.ttf" />
-
-                                    <com.spectre.customView.CustomTextView
-                                        android:id="@+id/txt_address_"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="@dimen/_8sdp"
-                                        android:drawableLeft="@mipmap/pin"
-                                        android:drawablePadding="@dimen/_10sdp"
-                                        android:maxLines="3"
-                                        android:padding="@dimen/_5sdp"
-                                        android:text="@string/na"
-                                        android:textColor="@color/black"
-                                        android:textColorLink="@color/black"
-                                        android:textSize="@dimen/_12sdp"
-                                        app:edittextfont="Poppins-Regular.ttf"
-                                        app:edittextfontHint="Poppins-Regular.ttf" />
-
-                                    <com.spectre.customView.CustomTextView
-                                        android:id="@+id/txt_number_"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="@dimen/_8sdp"
-                                        android:autoLink="phone"
-                                        android:drawableLeft="@mipmap/contact"
-                                        android:drawablePadding="@dimen/_10sdp"
-                                        android:padding="@dimen/_5sdp"
-                                        android:singleLine="true"
-                                        android:text="@string/na"
-                                        android:textColor="@color/black"
-                                        android:textColorLink="@color/black"
-                                        android:textSize="@dimen/_12sdp"
-                                        app:edittextfont="Poppins-Regular.ttf"
-                                        app:edittextfontHint="Poppins-Regular.ttf" />
-
-                                    <com.spectre.customView.CustomTextView
-                                        android:id="@+id/txt_email_"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginBottom="@dimen/_8sdp"
-                                        android:layout_marginTop="@dimen/_8sdp"
-                                        android:autoLink="email"
-                                        android:drawableLeft="@mipmap/email"
-                                        android:drawablePadding="@dimen/_10sdp"
-                                        android:padding="@dimen/_5sdp"
-                                        android:singleLine="true"
-                                        android:text="@string/na"
-                                        android:textColor="@color/black"
-                                        android:textColorLink="@color/black"
-                                        android:textSize="@dimen/_12sdp"
-                                        app:edittextfont="Poppins-Regular.ttf"
-                                        app:edittextfontHint="Poppins-Regular.ttf" />
-
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="vertical"
-                                    android:visibility="gone">
-
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:orientation="horizontal"
-                                        android:weightSum="10">
+                                        android:orientation="horizontal">
+
+                                        <ImageView
+                                            android:id="@+id/iv_brush"
+                                            android:layout_width="@dimen/_25sdp"
+                                            android:layout_height="@dimen/_25sdp"
+                                            android:layout_gravity="center"
+                                            android:padding="@dimen/_5sdp"
+                                            android:src="@drawable/ic_color" />
 
                                         <com.spectre.customView.CustomTextView
-                                            android:layout_width="wrap_content"
+                                            android:id="@+id/txt_color"
+                                            android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:ems="4"
-                                            android:paddingLeft="5dp"
-                                            android:paddingRight="5dp"
-                                            android:singleLine="true"
-                                            android:text="@string/name_"
-                                            android:textColor="@color/colorSubText"
-                                            android:textSize="12sp"
-                                            app:edittextfont="Poppins-Regular.ttf"
-                                            app:edittextfontHint="Poppins-Regular.ttf" />
-
-                                        <com.spectre.customView.CustomTextView
-                                            android:id="@+id/txt_vendor_name"
-                                            android:layout_width="0dp"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginRight="50dp"
-                                            android:layout_weight="10"
-                                            android:maxLines="2"
-                                            android:paddingLeft="5dp"
-                                            android:paddingRight="5dp"
-                                            android:text="@string/na"
-                                            android:textColor="@color/black"
-                                            android:textSize="12sp"
-                                            app:edittextfont="Poppins-Regular.ttf"
-                                            app:edittextfontHint="Poppins-Regular.ttf" />
-
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="horizontal"
-                                        android:weightSum="10">
-
-                                        <com.spectre.customView.CustomTextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:ems="4"
-                                            android:paddingLeft="5dp"
-                                            android:paddingRight="5dp"
-                                            android:singleLine="true"
-                                            android:text="@string/address_"
-                                            android:textColor="@color/colorSubText"
-                                            android:textSize="12sp"
-                                            app:edittextfont="Poppins-Regular.ttf"
-                                            app:edittextfontHint="Poppins-Regular.ttf" />
-
-                                        <com.spectre.customView.CustomTextView
-                                            android:id="@+id/txt_adress"
-                                            android:layout_width="0dp"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginRight="10dp"
-                                            android:layout_weight="10"
-                                            android:paddingLeft="5dp"
-                                            android:paddingRight="5dp"
-                                            android:singleLine="true"
-                                            android:text="@string/na"
-                                            android:textColor="@color/black"
-                                            android:textSize="12sp"
-                                            app:edittextfont="Poppins-Regular.ttf"
-                                            app:edittextfontHint="Poppins-Regular.ttf" />
-
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="horizontal"
-                                        android:weightSum="10">
-
-                                        <com.spectre.customView.CustomTextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:ems="4"
-                                            android:paddingLeft="5dp"
-                                            android:paddingRight="5dp"
-                                            android:singleLine="true"
-                                            android:text="@string/email_id"
-                                            android:textColor="@color/colorSubText"
-                                            android:textSize="12sp"
-                                            app:edittextfont="Poppins-Regular.ttf"
-                                            app:edittextfontHint="Poppins-Regular.ttf" />
-
-                                        <com.spectre.customView.CustomTextView
-                                            android:id="@+id/txt_email_id"
-                                            android:layout_width="0dp"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginRight="10dp"
-                                            android:layout_weight="10"
-                                            android:autoLink="email"
-                                            android:paddingLeft="5dp"
-                                            android:paddingRight="5dp"
+                                            android:layout_marginTop="@dimen/_8sdp"
+                                            android:padding="@dimen/_5sdp"
                                             android:singleLine="true"
                                             android:text="@string/na"
                                             android:textColor="@color/black"
                                             android:textColorLink="@color/black"
-                                            android:textSize="12sp"
-                                            app:edittextfont="Poppins-Regular.ttf"
-                                            app:edittextfontHint="Poppins-Regular.ttf" />
+                                            android:textSize="@dimen/_12sdp"
+                                            custom:edittextfont="Poppins-Regular.ttf"
+                                            custom:edittextfontHint="Poppins-Regular.ttf" />
 
                                     </LinearLayout>
 
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:orientation="horizontal"
-                                        android:weightSum="10">
+                                        android:orientation="horizontal">
+
+                                        <ImageView
+                                            android:id="@+id/iv_distance"
+                                            android:layout_width="@dimen/_25sdp"
+                                            android:layout_height="@dimen/_25sdp"
+                                            android:layout_gravity="center"
+                                            android:padding="@dimen/_5sdp"
+                                            android:src="@drawable/ic_miles" />
 
                                         <com.spectre.customView.CustomTextView
-                                            android:layout_width="wrap_content"
+                                            android:id="@+id/txt_distance"
+                                            android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:ems="4"
-                                            android:paddingLeft="5dp"
-                                            android:paddingRight="5dp"
-                                            android:singleLine="true"
-                                            android:text="@string/contact"
-                                            android:textColor="@color/colorSubText"
-                                            android:textSize="12sp"
-                                            app:edittextfont="Poppins-Regular.ttf"
-                                            app:edittextfontHint="Poppins-Regular.ttf" />
+                                            android:layout_marginTop="@dimen/_8sdp"
+                                            android:maxLines="3"
+                                            android:padding="@dimen/_5sdp"
+                                            android:text="@string/na"
+                                            android:textColor="@color/black"
+                                            android:textColorLink="@color/black"
+                                            android:textSize="@dimen/_12sdp"
+                                            custom:edittextfont="Poppins-Regular.ttf"
+                                            custom:edittextfontHint="Poppins-Regular.ttf" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <ImageView
+                                            android:id="@+id/iv_condition"
+                                            android:layout_width="@dimen/_25sdp"
+                                            android:layout_height="@dimen/_25sdp"
+                                            android:layout_gravity="center"
+                                            android:padding="@dimen/_5sdp"
+                                            android:src="@drawable/ic_car_grey"
+                                            android:tint="@color/light_gray" />
 
                                         <com.spectre.customView.CustomTextView
-                                            android:id="@+id/txt_contact"
-                                            android:layout_width="0dp"
+                                            android:id="@+id/txt_quality"
+                                            android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:layout_marginRight="10dp"
-                                            android:layout_weight="10"
+                                            android:layout_marginTop="@dimen/_8sdp"
                                             android:autoLink="phone"
-                                            android:paddingLeft="5dp"
-                                            android:paddingRight="5dp"
+                                            android:padding="@dimen/_5sdp"
                                             android:singleLine="true"
                                             android:text="@string/na"
                                             android:textColor="@color/black"
                                             android:textColorLink="@color/black"
-                                            android:textSize="12sp"
-                                            app:edittextfont="Poppins-Regular.ttf"
-                                            app:edittextfontHint="Poppins-Regular.ttf" />
-
+                                            android:textSize="@dimen/_12sdp"
+                                            custom:edittextfont="Poppins-Regular.ttf"
+                                            custom:edittextfontHint="Poppins-Regular.ttf" />
                                     </LinearLayout>
 
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <ImageView
+                                            android:id="@+id/iv_year"
+                                            android:layout_width="@dimen/_25sdp"
+                                            android:layout_height="@dimen/_25sdp"
+                                            android:layout_gravity="center"
+                                            android:padding="@dimen/_5sdp"
+                                            android:src="@drawable/ic_event_available_black_24dp"
+                                            android:tint="@color/light_gray" />
+
+                                        <com.spectre.customView.CustomTextView
+                                            android:id="@+id/txt_year"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginBottom="@dimen/_8sdp"
+                                            android:layout_marginTop="@dimen/_8sdp"
+                                            android:autoLink="email"
+                                            android:padding="@dimen/_5sdp"
+                                            android:singleLine="true"
+                                            android:text="@string/na"
+                                            android:textColor="@color/black"
+                                            android:textColorLink="@color/black"
+                                            android:textSize="@dimen/_12sdp"
+                                            custom:edittextfont="Poppins-Regular.ttf"
+                                            custom:edittextfontHint="Poppins-Regular.ttf" />
+                                    </LinearLayout>
 
                                 </LinearLayout>
 
@@ -695,24 +595,488 @@
                         </RelativeLayout>
 
                     </android.support.v7.widget.CardView>
-                </RelativeLayout>
 
-                <RelativeLayout
+                    <android.support.v7.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/card3"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="25dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:layout_below="@+id/card1"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        custom:cardBackgroundColor="@color/colorWhite"
+                        custom:cardCornerRadius="@dimen/_5sdp"
+                        custom:cardElevation="@dimen/_5sdp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <com.spectre.customView.CustomTextView
+                                android:id="@+id/Buyer_details"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="left"
+                                android:padding="@dimen/_8sdp"
+                                android:singleLine="true"
+                                android:text="@string/buyer_details"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_15sdp"
+                                custom:edittextfont="Poppins-Medium.ttf"
+                                custom:edittextfontHint="Poppins-Medium.ttf" />
+
+                            <View
+                                android:id="@+id/viewheader1"
+                                style="@style/line_register"
+                                android:layout_below="@+id/Buyer_details" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_below="@+id/viewheader1"
+                                android:layout_margin="@dimen/_3sdp"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                   <LinearLayout
+                                       android:layout_width="match_parent"
+                                       android:orientation="horizontal"
+                                       android:layout_height="wrap_content">
+                                       <ImageView
+                                           android:layout_width="@dimen/_25sdp"
+                                           android:src="@drawable/ic_color"
+                                           android:id="@+id/iv_product"
+                                           android:layout_gravity="center"
+                                           android:padding="@dimen/_5sdp"
+                                           android:layout_height="@dimen/_25sdp" />
+                                       <android.support.design.widget.TextInputLayout
+                                           android:id="@+id/input_layout_full_name"
+                                           android:layout_width="match_parent"
+                                           android:padding="@dimen/_5sdp"
+                                           android:layout_height="wrap_content">
+
+                                           <EditText
+                                               android:id="@+id/input_first_name"
+                                               android:layout_width="match_parent"
+                                               android:singleLine="true"
+                                               android:layout_height="wrap_content"
+                                               android:hint="Full Name" />
+
+                                       </android.support.design.widget.TextInputLayout>
+
+                                   </LinearLayout>
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:orientation="horizontal"
+                                        android:layout_height="wrap_content">
+                                        <ImageView
+                                            android:layout_width="@dimen/_25sdp"
+                                            android:src="@drawable/ic_location"
+                                            android:id="@+id/location"
+                                            android:layout_gravity="center"
+                                            android:tint="@color/light_gray"
+                                            android:padding="@dimen/_5sdp"
+                                            android:layout_height="@dimen/_25sdp" />
+                                        <android.support.design.widget.TextInputLayout
+                                            android:id="@+id/input_layout_location"
+                                            android:layout_width="match_parent"
+                                            android:padding="@dimen/_5sdp"
+                                            android:layout_height="wrap_content">
+
+                                            <EditText
+                                                android:id="@+id/input_location"
+                                                android:layout_width="match_parent"
+                                                android:singleLine="true"
+                                                android:layout_height="wrap_content"
+                                                android:hint="Location" />
+
+                                        </android.support.design.widget.TextInputLayout>
+
+                                    </LinearLayout>
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:orientation="horizontal"
+                                        android:layout_height="wrap_content">
+                                        <ImageView
+                                            android:layout_width="@dimen/_25sdp"
+                                            android:src="@mipmap/contact"
+                                            android:id="@+id/phone"
+                                            android:layout_gravity="center"
+                                            android:tint="@color/light_gray"
+                                            android:padding="@dimen/_5sdp"
+                                            android:layout_height="@dimen/_25sdp" />
+                                        <android.support.design.widget.TextInputLayout
+                                            android:id="@+id/input_layout_phone"
+                                            android:layout_width="match_parent"
+                                            android:padding="@dimen/_5sdp"
+                                            android:layout_height="wrap_content">
+
+                                            <EditText
+                                                android:id="@+id/input_contect"
+                                                android:layout_width="match_parent"
+                                                android:singleLine="true"
+                                                android:layout_height="wrap_content"
+                                                android:hint="Phone No" />
+
+                                        </android.support.design.widget.TextInputLayout>
+
+                                    </LinearLayout>
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:orientation="horizontal"
+                                        android:layout_height="wrap_content">
+                                        <ImageView
+                                            android:layout_width="@dimen/_25sdp"
+                                            android:src="@mipmap/email"
+                                            android:id="@+id/email"
+                                            android:layout_gravity="center"
+                                            android:tint="@color/light_gray"
+                                            android:padding="@dimen/_5sdp"
+                                            android:layout_height="@dimen/_25sdp" />
+                                        <android.support.design.widget.TextInputLayout
+                                            android:id="@+id/input_layout_email"
+                                            android:layout_width="match_parent"
+                                            android:padding="@dimen/_5sdp"
+                                            android:layout_height="wrap_content">
+
+                                            <EditText
+                                                android:id="@+id/input_email"
+                                                android:layout_width="match_parent"
+                                                android:singleLine="true"
+                                                android:layout_height="wrap_content"
+                                                android:hint="Email" />
+
+                                        </android.support.design.widget.TextInputLayout>
+
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+                    </android.support.v7.widget.CardView>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_below="@+id/card3"
+    android:layout_height="wrap_content">
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:card="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_marginLeft="20dp"
+        android:id="@+id/card2"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="25dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardBackgroundColor="@color/colorWhite"
+        app:cardCornerRadius="@dimen/_5sdp"
+        app:cardElevation="@dimen/_5sdp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.spectre.customView.CustomTextView
+                android:id="@+id/vendor_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:padding="@dimen/_8sdp"
+                android:singleLine="true"
+                android:text="@string/seller_detail"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_15sdp"
+                app:edittextfont="Poppins-Medium.ttf"
+                app:edittextfontHint="Poppins-Medium.ttf" />
+
+            <View
+                android:id="@+id/view1"
+                style="@style/line_register"
+                android:layout_below="@+id/vendor_detail" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/view1"
+                android:layout_margin="@dimen/_3sdp"
+                android:orientation="vertical">
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/iv_profile"
-                        android:layout_width="@dimen/_42sdp"
-                        android:layout_height="@dimen/_42sdp"
-                        android:layout_alignParentRight="true"
-                        android:layout_gravity="center"
-                        android:layout_margin="@dimen/_5sdp"
-                        android:elevation="@dimen/_5sdp"
-                        android:scaleType="centerCrop"
-                        android:src="@mipmap/gestuser"
-                        app:civ_border_color="@color/gray" />
+                    <com.spectre.customView.CustomTextView
+                        android:id="@+id/txt_name_"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:drawableLeft="@mipmap/user"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:padding="@dimen/_5sdp"
+                        android:singleLine="true"
+                        android:text="@string/na"
+                        android:textColor="@color/black"
+                        android:textColorLink="@color/black"
+                        android:textSize="@dimen/_12sdp"
+                        app:edittextfont="Poppins-Regular.ttf"
+                        app:edittextfontHint="Poppins-Regular.ttf" />
+
+                    <com.spectre.customView.CustomTextView
+                        android:id="@+id/txt_address_"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:drawableLeft="@mipmap/pin"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:maxLines="3"
+                        android:padding="@dimen/_5sdp"
+                        android:text="@string/na"
+                        android:textColor="@color/black"
+                        android:textColorLink="@color/black"
+                        android:textSize="@dimen/_12sdp"
+                        app:edittextfont="Poppins-Regular.ttf"
+                        app:edittextfontHint="Poppins-Regular.ttf" />
+
+                    <com.spectre.customView.CustomTextView
+                        android:id="@+id/txt_number_"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:autoLink="phone"
+                        android:drawableLeft="@mipmap/contact"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:padding="@dimen/_5sdp"
+                        android:singleLine="true"
+                        android:text="@string/na"
+                        android:textColor="@color/black"
+                        android:textColorLink="@color/black"
+                        android:textSize="@dimen/_12sdp"
+                        app:edittextfont="Poppins-Regular.ttf"
+                        app:edittextfontHint="Poppins-Regular.ttf" />
+
+                    <com.spectre.customView.CustomTextView
+                        android:id="@+id/txt_email_"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_8sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:autoLink="email"
+                        android:drawableLeft="@mipmap/email"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:padding="@dimen/_5sdp"
+                        android:singleLine="true"
+                        android:text="@string/na"
+                        android:textColor="@color/black"
+                        android:textColorLink="@color/black"
+                        android:textSize="@dimen/_12sdp"
+                        app:edittextfont="Poppins-Regular.ttf"
+                        app:edittextfontHint="Poppins-Regular.ttf" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="10">
+
+                        <com.spectre.customView.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ems="4"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:singleLine="true"
+                            android:text="@string/name_"
+                            android:textColor="@color/colorSubText"
+                            android:textSize="12sp"
+                            app:edittextfont="Poppins-Regular.ttf"
+                            app:edittextfontHint="Poppins-Regular.ttf" />
+
+                        <com.spectre.customView.CustomTextView
+                            android:id="@+id/txt_vendor_name"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="50dp"
+                            android:layout_weight="10"
+                            android:maxLines="2"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:text="@string/na"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            app:edittextfont="Poppins-Regular.ttf"
+                            app:edittextfontHint="Poppins-Regular.ttf" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="10">
+
+                        <com.spectre.customView.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ems="4"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:singleLine="true"
+                            android:text="@string/address_"
+                            android:textColor="@color/colorSubText"
+                            android:textSize="12sp"
+                            app:edittextfont="Poppins-Regular.ttf"
+                            app:edittextfontHint="Poppins-Regular.ttf" />
+
+                        <com.spectre.customView.CustomTextView
+                            android:id="@+id/txt_adress"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="10"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:singleLine="true"
+                            android:text="@string/na"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            app:edittextfont="Poppins-Regular.ttf"
+                            app:edittextfontHint="Poppins-Regular.ttf" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="10">
+
+                        <com.spectre.customView.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ems="4"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:singleLine="true"
+                            android:text="@string/email_id"
+                            android:textColor="@color/colorSubText"
+                            android:textSize="12sp"
+                            app:edittextfont="Poppins-Regular.ttf"
+                            app:edittextfontHint="Poppins-Regular.ttf" />
+
+                        <com.spectre.customView.CustomTextView
+                            android:id="@+id/txt_email_id"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="10"
+                            android:autoLink="email"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:singleLine="true"
+                            android:text="@string/na"
+                            android:textColor="@color/black"
+                            android:textColorLink="@color/black"
+                            android:textSize="12sp"
+                            app:edittextfont="Poppins-Regular.ttf"
+                            app:edittextfontHint="Poppins-Regular.ttf" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="10">
+
+                        <com.spectre.customView.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ems="4"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:singleLine="true"
+                            android:text="@string/contact"
+                            android:textColor="@color/colorSubText"
+                            android:textSize="12sp"
+                            app:edittextfont="Poppins-Regular.ttf"
+                            app:edittextfontHint="Poppins-Regular.ttf" />
+
+                        <com.spectre.customView.CustomTextView
+                            android:id="@+id/txt_contact"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="10"
+                            android:autoLink="phone"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:singleLine="true"
+                            android:text="@string/na"
+                            android:textColor="@color/black"
+                            android:textColorLink="@color/black"
+                            android:textSize="12sp"
+                            app:edittextfont="Poppins-Regular.ttf"
+                            app:edittextfontHint="Poppins-Regular.ttf" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+   </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_profile"
+            android:layout_width="@dimen/_42sdp"
+            android:layout_height="@dimen/_42sdp"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/_5sdp"
+            android:elevation="@dimen/_5sdp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/gestuser"
+            app:civ_border_color="@color/gray" />
+    </RelativeLayout>
+</RelativeLayout>
+
+
+
                 </RelativeLayout>
+
+
 
             </RelativeLayout>
 

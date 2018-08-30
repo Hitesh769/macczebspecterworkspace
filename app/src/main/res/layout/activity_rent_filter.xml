@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <include layout="@layout/toolbar" />
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardView2"
+                style="@style/cardView"
+                android:layout_marginBottom="@dimen/_5sdp"
+                card_view:cardBackgroundColor="@color/colorPrimaryDark"
+                card_view:cardCornerRadius="0dp"
+                card_view:cardElevation="@dimen/_3sdp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:padding="@dimen/_5sdp"
+                        android:src="@mipmap/splashlogo" />
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5sdp"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cardView1"
+                    style="@style/cardView"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    card_view:cardBackgroundColor="@color/white"
+                    card_view:cardCornerRadius="@dimen/_5sdp"
+                    card_view:cardElevation="@dimen/_3sdp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:layout_marginTop="@dimen/_15sdp"
+                                android:text="Search for Rent"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_20sdp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <RelativeLayout
+                                android:id="@+id/llLocation"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/_8sdp"
+                                android:layout_marginEnd="@dimen/_10sdp"
+                                android:layout_marginStart="@dimen/_15sdp"
+                                android:layout_marginTop="@dimen/_8sdp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/txtLocation"
+                                    style="@style/textView"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/dialog_bg"
+                                    android:maxLines="1"
+                                    android:padding="@dimen/_8sdp"
+                                    android:singleLine="true"
+                                    android:text="@string/location_"
+                                    android:textColor="@color/black_material"
+                                    android:textSize="@dimen/_10sdp"
+                                    android:visibility="gone" />
+
+                                <ImageView
+                                    android:id="@+id/imgLocation"
+                                    android:layout_width="@dimen/_20sdp"
+                                    android:layout_height="@dimen/_20sdp"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginStart="@dimen/_5sdp"
+                                    android:padding="@dimen/_3sdp"
+                                    android:src="@drawable/ic_location"
+                                    android:tint="@color/hint_color" />
+
+                                <android.support.design.widget.TextInputLayout
+                                    android:id="@+id/input_layout_search"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_toStartOf="@+id/imgLocation"
+                                    android:background="@android:color/transparent">
+
+                                    <EditText
+                                        android:id="@+id/input_location"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@android:color/transparent"
+                                        android:clickable="true"
+                                        android:maxLines="1"
+                                        android:ellipsize="end"
+                                        android:inputType="text"
+                                        android:focusable="false"
+                                        android:focusableInTouchMode="false"
+                                        android:hint="Location"
+                                        android:singleLine="true" />
+
+                                </android.support.design.widget.TextInputLayout>
+
+
+                            </RelativeLayout>
+
+                            <View
+                                style="@style/line_register"
+                                android:layout_marginEnd="@dimen/_35sdp"
+                                android:layout_marginStart="@dimen/_15sdp"
+                                android:layout_marginTop="@dimen/_minus5sdp"
+                                android:background="@color/colorAccent" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginEnd="@dimen/_5sdp"
+                                android:layout_marginStart="@dimen/_5sdp"
+                                android:layout_marginTop="@dimen/_20sdp"
+                                android:weightSum="2">
+
+                                <RelativeLayout
+                                    android:id="@+id/rel_pickUp"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginBottom="@dimen/_5sdp"
+                                    android:layout_marginEnd="@dimen/_5sdp"
+                                    android:layout_marginStart="@dimen/_5sdp"
+                                    android:layout_marginTop="@dimen/_5sdp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/edt_bg_round"
+                                    android:elevation="@dimen/_3sdp">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            style="@style/textView"
+                                            android:layout_marginStart="@dimen/_5sdp"
+                                            android:fontFamily="@font/poppins_regular"
+                                            android:padding="@dimen/_10sdp"
+                                            android:singleLine="true"
+                                            android:text="PickUp Date"
+                                            android:textColor="@color/black"
+                                            android:textSize="@dimen/_12sdp" />
+
+                                        <View style="@style/line_register" />
+
+                                        <TextView
+                                            android:id="@+id/txt_date_pickUp"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:padding="@dimen/_10sdp"
+                                            android:singleLine="true"
+                                            android:text="22"
+                                            android:textColor="@color/black"
+                                            android:textSize="@dimen/_40sdp"
+                                            android:textStyle="bold" />
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal">
+
+                                            <TextView
+                                                android:id="@+id/txt_month_pickUp"
+                                                style="@style/textView"
+                                                android:layout_width="0dp"
+                                                android:layout_marginEnd="@dimen/_5sdp"
+                                                android:layout_marginStart="@dimen/_5sdp"
+                                                android:layout_weight="1"
+                                                android:fontFamily="@font/poppins_regular"
+                                                android:gravity="end"
+                                                android:singleLine="true"
+                                                android:text="Aug"
+                                                android:textColor="@color/black"
+                                                android:textSize="@dimen/_12sdp"
+                                                android:textStyle="bold" />
+
+                                            <TextView
+                                                android:id="@+id/txt_year_pickUp"
+                                                style="@style/textView"
+                                                android:layout_width="0dp"
+                                                android:layout_marginEnd="@dimen/_5sdp"
+                                                android:layout_marginStart="@dimen/_5sdp"
+                                                android:layout_weight="1"
+                                                android:fontFamily="@font/poppins_regular"
+                                                android:singleLine="true"
+                                                android:text="2018"
+                                                android:textColor="@color/hint_color"
+                                                android:textSize="@dimen/_12sdp" />
+                                        </LinearLayout>
+
+                                        <View
+                                            style="@style/line_register"
+                                            android:layout_marginTop="@dimen/_15sdp" />
+
+                                        <TextView
+                                            android:id="@+id/txt_day_pickUp"
+                                            style="@style/textView"
+                                            android:layout_width="match_parent"
+                                            android:fontFamily="@font/poppins_regular"
+                                            android:gravity="center"
+                                            android:padding="@dimen/_10sdp"
+                                            android:singleLine="true"
+                                            android:text="Wednesday"
+                                            android:textColor="@color/black"
+                                            android:textSize="@dimen/_12sdp"
+                                            android:textStyle="bold" />
+
+                                    </LinearLayout>
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:id="@+id/rel_dropUp"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginBottom="@dimen/_5sdp"
+                                    android:layout_marginEnd="@dimen/_5sdp"
+                                    android:layout_marginStart="@dimen/_5sdp"
+                                    android:layout_marginTop="@dimen/_5sdp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/edt_bg_round"
+                                    android:elevation="@dimen/_3sdp">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            style="@style/textView"
+                                            android:fontFamily="@font/poppins_regular"
+                                            android:padding="@dimen/_10sdp"
+                                            android:singleLine="true"
+                                            android:text="Drop Off Date"
+                                            android:textColor="@color/black"
+                                            android:textSize="@dimen/_12sdp" />
+
+                                        <View style="@style/line_register" />
+
+                                        <TextView
+                                            android:id="@+id/txt_date_dropUp"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:padding="@dimen/_10sdp"
+                                            android:singleLine="true"
+                                            android:text="22"
+                                            android:textColor="@color/black"
+                                            android:textSize="@dimen/_40sdp"
+                                            android:textStyle="bold" />
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal">
+
+                                            <TextView
+                                                android:id="@+id/txt_month_dropUp"
+                                                style="@style/textView"
+                                                android:layout_width="0dp"
+                                                android:layout_marginEnd="@dimen/_5sdp"
+                                                android:layout_marginStart="@dimen/_5sdp"
+                                                android:layout_weight="1"
+                                                android:fontFamily="@font/poppins_regular"
+                                                android:gravity="end"
+                                                android:singleLine="true"
+                                                android:text="Aug"
+                                                android:textColor="@color/black"
+                                                android:textSize="@dimen/_12sdp"
+                                                android:textStyle="bold" />
+
+                                            <TextView
+                                                android:id="@+id/txt_year_dropUp"
+                                                style="@style/textView"
+                                                android:layout_width="0dp"
+                                                android:layout_marginEnd="@dimen/_5sdp"
+                                                android:layout_marginStart="@dimen/_5sdp"
+                                                android:layout_weight="1"
+                                                android:fontFamily="@font/poppins_regular"
+                                                android:singleLine="true"
+                                                android:text="2018"
+                                                android:textColor="@color/hint_color"
+                                                android:textSize="@dimen/_12sdp" />
+                                        </LinearLayout>
+
+                                        <View
+                                            style="@style/line_register"
+                                            android:layout_marginTop="@dimen/_15sdp" />
+
+                                        <TextView
+                                            android:id="@+id/txt_day_dropUp"
+                                            style="@style/textView"
+                                            android:layout_width="match_parent"
+                                            android:fontFamily="@font/poppins_regular"
+                                            android:gravity="center"
+                                            android:padding="@dimen/_10sdp"
+                                            android:singleLine="true"
+                                            android:text="Wednesday"
+                                            android:textColor="@color/black"
+                                            android:textSize="@dimen/_12sdp"
+                                            android:textStyle="bold" />
+
+                                    </LinearLayout>
+                                </RelativeLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/_10sdp"
+                                android:layout_marginEnd="@dimen/_10sdp"
+                                android:layout_marginStart="@dimen/_15sdp"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    style="@style/textView"
+                                    android:padding="@dimen/_5sdp"
+                                    android:text="@string/price_perday"
+                                    android:textColor="@color/black" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                    <com.spectre.customView.RangeSeekBar
+                                        android:id="@+id/rangPrice"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/_30sdp" />
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginEnd="@dimen/_17sdp"
+                                        android:layout_marginStart="@dimen/_17sdp"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:id="@+id/txtMinRange"
+                                            style="@style/textView"
+                                            android:layout_weight="1"
+                                            android:text="100"
+                                            android:textColor="@color/black"
+                                            android:textSize="@dimen/_10sdp" />
+
+                                        <TextView
+                                            android:id="@+id/txtMaxRange"
+                                            style="@style/textView"
+                                            android:layout_weight="1"
+                                            android:gravity="end"
+                                            android:text="10000"
+                                            android:textColor="@color/black"
+                                            android:textSize="@dimen/_10sdp" />
+                                    </LinearLayout>
+                                </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <Button
+                    android:id="@+id/btnSearch"
+                    style="@style/Button"
+                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:minHeight="@dimen/_20sdp"
+                    android:padding="@dimen/_10sdp"
+                    android:text="@string/search_rent" />
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>

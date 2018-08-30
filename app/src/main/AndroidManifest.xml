@@ -165,6 +165,7 @@
         <activity
             android:name=".activity.GarageDetailActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".activity.ReviewListActivity"
@@ -209,24 +210,25 @@
         <activity
             android:name=".activity.MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".activity_new.BookCarInfoActivity"
+        <activity
+            android:name=".activity_new.BookCarInfoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-
-            />
-        <activity android:name=".activity_new.BookCarSummaryActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity_new.BookCarSummaryActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-
-            />
-        <activity android:name=".activity_new.BookCarConfirmBooking"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity_new.BookCarConfirmBooking"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-
-            />
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name=".activity.RentFilterActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
     </application>
 
 </manifest>

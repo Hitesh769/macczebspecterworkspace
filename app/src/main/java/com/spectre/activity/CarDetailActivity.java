@@ -13,6 +13,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.view.Display;
 import android.view.View;
@@ -25,6 +26,7 @@ import com.androidquery.AQuery;
 import com.daimajia.slider.library.SliderLayout;
 import com.spectre.R;
 import com.spectre.activity_new.BookCarInfoActivity;
+import com.spectre.activity_new.BookCarSummaryActivity;
 import com.spectre.activity_new.HomeAct;
 import com.spectre.beans.AdPost;
 import com.spectre.customView.AlertBox;
@@ -52,9 +54,9 @@ public class CarDetailActivity extends AppCompatActivity implements View.OnClick
     private SliderLayout imageSlider;
     private CustomTextView txt_car_name, txt_car_price, txt_car_model, txt_car_version,
             txt_car_type, txt_car_mileage, txt_email_id, txt_vendor_name, txt_adress,
-            txt_contact, txt_from, txt_to, txt_car_posted_date;
+            txt_contact, txt_from, txt_to, txt_car_posted_date,vendor_detail;
     private CircleImageView iv_profile;
-
+    private CardView card1,card2,card3;
     private CustomRayMaterialTextView btn_show_interest;
     private Display display;
     private ActionBar actionBar;
@@ -91,7 +93,14 @@ public class CarDetailActivity extends AppCompatActivity implements View.OnClick
         txt_contact = (CustomTextView) findViewById(R.id.txt_contact);
         txt_to = (CustomTextView) findViewById(R.id.txt_to);
         txt_from = (CustomTextView) findViewById(R.id.txt_from);
+        vendor_detail = (CustomTextView) findViewById(R.id.vendor_detail);
+
+        card1 = (CardView) findViewById(R.id.card1);
+        card2 = (CardView) findViewById(R.id.card2);
+        card3 = (CardView) findViewById(R.id.card3);
+
         iv_profile = (CircleImageView) findViewById(R.id.iv_profile);
+
         btn_show_interest = (CustomRayMaterialTextView) findViewById(R.id.btn_show_interest);
         btn_show_interest.setOnClickListener(this);
 
@@ -222,7 +231,8 @@ public class CarDetailActivity extends AppCompatActivity implements View.OnClick
                 ((LinearLayout) findViewById(R.id.ll_to)).setVisibility(View.VISIBLE);
                 ((LinearLayout) findViewById(R.id.ll_car_type)).setVisibility(View.GONE);
                 ((LinearLayout) findViewById(R.id.ll_car_milleage)).setVisibility(View.GONE);
-
+                card3.setVisibility(View.GONE);
+                card1.setVisibility(View.GONE);
                 if (adPost.getYear_to() != null && !adPost.getYear_to().isEmpty())
                     txt_to.setText(adPost.getYear_to().trim());
                 else
@@ -245,6 +255,8 @@ public class CarDetailActivity extends AppCompatActivity implements View.OnClick
             } else {
                 if (type == 1) {
                     btn_show_interest.setText(R.string.book_car);
+                    vendor_detail.setText(R.string.vendor_detail);
+
                 } else {
                     btn_show_interest.setText(R.string.buy_car);
                 }
@@ -290,7 +302,14 @@ public class CarDetailActivity extends AppCompatActivity implements View.OnClick
                     Intent intent = new Intent(this, BookCarInfoActivity.class);
                     intent.putExtra(Constant.DATA, adPost);
                     intent.putExtra(Constant.POSITION, position);
-                    intent.putExtra(Constant.TYPE, getIntent().getStringExtra(Constant.TYPE));
+                    intent.putExtra(Constant.TYPE, type);
+                    startActivity(intent);
+                }
+                else if (btn_show_interest.getText().toString().equalsIgnoreCase(getResources().getString(R.string.buy_car))) {
+                    Intent intent = new Intent(this, BookCarSummaryActivity.class);
+                    intent.putExtra(Constant.DATA, adPost);
+                    intent.putExtra(Constant.POSITION, position);
+                    intent.putExtra(Constant.TYPE, type);
                     startActivity(intent);
                 }
                 break;
