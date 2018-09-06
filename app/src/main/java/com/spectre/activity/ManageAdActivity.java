@@ -14,7 +14,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.rey.material.widget.ProgressView;
 import com.spectre.R;
+import com.spectre.adapter.CarListAdapter;
 import com.spectre.adapter.ManageAdsListAdapter;
+import com.spectre.adapter.SearchBuyListAdapter;
 import com.spectre.beans.AdPost;
 import com.spectre.customView.CustomTextView;
 import com.spectre.customView.MyDialogProgress;
@@ -105,7 +107,7 @@ public class ManageAdActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(context);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new ManageAdsListAdapter(context, Arraylist, 0);
+        mAdapter = new SearchBuyListAdapter(context, Arraylist, 0);
         mRecyclerView.setAdapter(mAdapter);
     }
 

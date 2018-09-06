@@ -8,8 +8,10 @@ import android.graphics.Point;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.Display;
 import android.view.View;
 import android.view.Window;
@@ -21,9 +23,11 @@ import android.widget.RelativeLayout;
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
+import com.daimajia.slider.library.SliderLayout;
 import com.spectre.R;
 import com.spectre.adapter.ReviewListAdapter;
 import com.spectre.adapter.WorkListAdapter;
+import com.spectre.beans.AdPost;
 import com.spectre.beans.Garage;
 import com.spectre.beans.Review;
 import com.spectre.beans.Work;
@@ -51,15 +55,12 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
 
     private Context context;
     private ActionBar actionBar;
-    private CustomTextView txt_email_id, txt_vendor_name, txt_adress,
-            txt_contact, tv_garage_name, txt_to, txt_expertise, txt_repair;
-    private CircleImageView iv_profile;
     private ImageView imv_banner;
     private Garage adPost;
     private CustomRayMaterialTextView btn_show_interest, btn_review;
     private int position = -1, type = -1;
     private Display display;
-
+    private SliderLayout imageSlider;
     ArrayList<Review> ReviewList = new ArrayList<>();
     ArrayList<Work> WorkList = new ArrayList<>();
     private boolean isChanged;
@@ -71,27 +72,23 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
     private RelativeLayout head_gallery, head_review;
     //  private int reviewIsThere = -1;
     private Dialog dd;
-
+    CircleImageView iv_profile;
+    CustomTextView txt_email_id,txt_adress,txt_contact,txt_expertise,txt_repair;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //  setContentView(R.layout.activity_garage_detail);
         context = this;
-        Utility.setContentView(context, R.layout.activity_garage_detail);
+        Utility.setContentView(context, R.layout.activity_garage_details_new);
         actionBar = Utility.setUpToolbar_(context, "<font color='#ffffff'>Garage Detail</font>", true);
        // Utility.setUpToolbar_(context, "<font color='#ffffff'>"+getString(R.string.manage_ad)+"</font>",true);
         initView();
     }
-
     private void initView() {
-        tv_garage_name = (CustomTextView) findViewById(R.id.tv_garage_name);
-       /* txt_car_price = (CustomTextView) findViewById(R.id.txt_car_price);
-        txt_car_model = (CustomTextView) findViewById(R.id.txt_car_model);
-        txt_car_version = (CustomTextView) findViewById(R.id.txt_car_version);
-        txt_car_type = (CustomTextView) findViewById(R.id.txt_car_type);
-        txt_car_mileage = (CustomTextView) findViewById(R.id.txt_car_mileage);*/
+
+        imageSlider = (SliderLayout) findViewById(R.id.slider);
+        //txt_car_name = (CustomTextView) findViewById(R.id.txt_car_name);
         txt_email_id = (CustomTextView) findViewById(R.id.txt_email_id);
-        txt_vendor_name = (CustomTextView) findViewById(R.id.txt_vendor_name);
         txt_adress = (CustomTextView) findViewById(R.id.txt_adress);
         txt_contact = (CustomTextView) findViewById(R.id.txt_contact);
         txt_expertise = (CustomTextView) findViewById(R.id.txt_expertise);
@@ -99,58 +96,39 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
         no_gallery_found = (CustomTextView) findViewById(R.id.no_gallery_found);
         txt_repair = (CustomTextView) findViewById(R.id.txt_repair);
         iv_profile = (CircleImageView) findViewById(R.id.iv_profile);
-        txt_gallery_load = (CustomTextView) findViewById(R.id.txt_gallery_load);
-        txt_review_load = (CustomTextView) findViewById(R.id.txt_review_load);
         head_gallery = (RelativeLayout) findViewById(R.id.head_gallery);
         head_review = (RelativeLayout) findViewById(R.id.head_review);
         imv_banner = (ImageView) findViewById(R.id.imv_banner);
         btn_show_interest = (CustomRayMaterialTextView) findViewById(R.id.btn_show_interest);
         btn_review = (CustomRayMaterialTextView) findViewById(R.id.btn_review);
+
+
+        iv_profile = (CircleImageView) findViewById(R.id.iv_profile);
+
+        btn_show_interest = (CustomRayMaterialTextView) findViewById(R.id.btn_show_interest);
         btn_show_interest.setOnClickListener(this);
-        btn_review.setOnClickListener(this);
-        head_gallery.setOnClickListener(this);
-        head_review.setOnClickListener(this);
 
-        galleryRecyclerView = (RecyclerView) findViewById(R.id.rv_gallery);
-        galleryRecyclerView.setHasFixedSize(true);
-        gLayoutManager = new LinearLayoutManager(context);
-        galleryRecyclerView.setLayoutManager(gLayoutManager);
-        gAdapter = new WorkListAdapter(context, WorkList, 1);
-        galleryRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        galleryRecyclerView.setAdapter(gAdapter);
-        galleryRecyclerView.setNestedScrollingEnabled(false);
-
-
-        reviewRecyclerView = (RecyclerView) findViewById(R.id.rv_review);
-        reviewRecyclerView.setHasFixedSize(true);
-        rLayoutManager = new LinearLayoutManager(context);
-        reviewRecyclerView.setLayoutManager(rLayoutManager);
-        rAdapter = new ReviewListAdapter(context, ReviewList, 0);
-        reviewRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        reviewRecyclerView.setAdapter(rAdapter);
-        reviewRecyclerView.setNestedScrollingEnabled(false);
-
-        String loginType = SharedPrefUtils.getPreference(context, Constant.USER_TYPE, "");
-        if(loginType.equalsIgnoreCase("2")){
-            btn_show_interest.setVisibility(View.GONE);
-            btn_review.setVisibility(View.GONE);
-        }
 
         if (getIntent().getExtras() != null && getIntent().getExtras().get(Constant.DATA) != null) {
 
             adPost = (Garage) getIntent().getExtras().get(Constant.DATA);
-            //     actionBar.setTitle(Html.fromHtml("<font color='#ffffff'>" + adPost.getCar_name() + "</font>"));
+            actionBar.setTitle(Html.fromHtml("<font color='#ffffff'>" + adPost.getFull_name() + "</font>"));
             position = getIntent().getExtras().getInt(Constant.POSITION);
             type = getIntent().getExtras().getInt(Constant.TYPE);
-
             display = getWindowManager().getDefaultDisplay();
             Point size = new Point();
             display.getSize(size);
+
+         /*   android.view.ViewGroup.LayoutParams layoutParams = imageSlider.getLayoutParams();
+            layoutParams.width = display.getWidth();
+            layoutParams.height = Utility.dpToPx(context, 250);
+            imageSlider.setLayoutParams(layoutParams);*/
 
             android.view.ViewGroup.LayoutParams layoutParams = imv_banner.getLayoutParams();
             layoutParams.width = display.getWidth();
             layoutParams.height = Utility.dpToPx(context, 250);
             imv_banner.setLayoutParams(layoutParams);
+
 
             if (adPost.getEmail() != null && !adPost.getEmail().isEmpty()) {
                 txt_email_id.setText(adPost.getEmail().trim());
@@ -164,13 +142,6 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
                 txt_email_id.setText(context.getString(R.string.na));
             }
 */
-            if (adPost.getFull_name() != null && !adPost.getFull_name().isEmpty()) {
-                txt_vendor_name.setText(adPost.getFull_name().trim());
-            } else {
-                txt_vendor_name.setText(context.getString(R.string.na));
-            }
-
-
             if (adPost.getExpertise() != null && !adPost.getExpertise().isEmpty()) {
                 txt_expertise.setText(adPost.getExpertise().trim());
             } else {
@@ -203,7 +174,14 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
             } else
                 iv_profile.setImageResource(R.mipmap.gestuser);
 
-
+           /* if (adPost.getImage().size() == 0) {
+                Utility.setUpViewPagerNew(imageSlider, context);
+            } else {
+                for (String s : adPost.getImage()) {
+                    url_from_api.put(s, s);
+                }
+                Utility.setUpViewPager(imageSlider, context, url_from_api, "0");
+            }*/
             if (adPost.getGarage_image() != null && !adPost.getGarage_image().isEmpty()) {
                 new AQuery(context).id(imv_banner).image(adPost.getGarage_image(), true, true, 0, R.drawable.ic_launcher_web);
 
@@ -218,38 +196,11 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
             } else
                 imv_banner.setImageResource(R.drawable.ic_launcher_web);
 
-
-            if (adPost.getIs_interest() != null && !adPost.getIs_interest().isEmpty() && adPost.getIs_interest().equalsIgnoreCase("1")) {
-                btn_show_interest.setText(R.string.request_service_);
-            } else {
-                btn_show_interest.setText(R.string.request_service);
-            }
-
-            if (adPost.getReviews() != null || !adPost.getReviews().isEmpty()) {
-                ReviewList.addAll(adPost.getReviews());
-                rAdapter.notifyDataSetChanged();
-            }
-
-            if (adPost.getWork() != null || !adPost.getWork().isEmpty()) {
-                WorkList.addAll(adPost.getWork());
-                gAdapter.notifyDataSetChanged();
-            }
-
-
-            if (WorkList.size() > 0) {
-                txt_gallery_load.setVisibility(View.VISIBLE);
-                no_gallery_found.setVisibility(View.GONE);
-            } else {
-                txt_gallery_load.setVisibility(View.GONE);
-                no_gallery_found.setVisibility(View.VISIBLE);
-            }
-
-            setReviewData();
-
         } else {
             new AlertBox(context).openMessageWithFinish(getResources().getString(R.string.something_wrong), "Okay", "", false);
         }
     }
+
 
     private void setReviewData() {
         if (adPost.getMyreviews() != null && !adPost.getMyreviews().isEmpty()) {
@@ -291,7 +242,7 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View v) {
         String s = SharedPrefUtils.getPreference(context, Constant.USER_TYPE, "");
         switch (v.getId()) {
-            case R.id.head_gallery:
+           /* case R.id.head_gallery:
                 if (WorkList.size() > 0)
                     startActivity(new Intent(context, WorkListUserActivity.class).putExtra(Constant.DATA, adPost.getUser_id()));
                 break;
@@ -316,7 +267,7 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
                         showProblem();
                 }
 
-                break;
+                break;*/
         }
     }
 
@@ -348,7 +299,7 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
                     }
                     isChanged = true;
 
-                    setReviewData();
+                    //setReviewData();
                     //  resetData();
                 } catch (Exception e) {
                     e.printStackTrace();

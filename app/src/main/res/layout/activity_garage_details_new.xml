@@ -27,12 +27,21 @@
 
                 <com.daimajia.slider.library.SliderLayout
                     android:id="@+id/slider"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_140sdp"
                     android:layout_centerInParent="true"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:layout_marginStart="@dimen/_10sdp"
                     custom:pager_animation_span="1100" />
+                <ImageView
+                    android:id="@+id/imv_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:scaleType="center"
+                    android:src="@drawable/ic_launcher_web" />
 
                 <ImageView
                     android:layout_width="@dimen/_25sdp"
@@ -293,7 +302,6 @@
                                                 android:layout_marginTop="@dimen/_8sdp"
                                                 android:autoLink="email"
                                                 android:padding="@dimen/_5sdp"
-                                                android:singleLine="true"
                                                 android:text="@string/na"
                                                 android:textColor="@color/black"
                                                 android:textColorLink="@color/black"
@@ -327,7 +335,6 @@
                                                 android:layout_marginTop="@dimen/_8sdp"
                                                 android:autoLink="email"
                                                 android:padding="@dimen/_5sdp"
-                                                android:singleLine="true"
                                                 android:text="@string/na"
                                                 android:textColor="@color/black"
                                                 android:textColorLink="@color/black"

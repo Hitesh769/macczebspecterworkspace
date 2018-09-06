@@ -14,6 +14,8 @@ import com.google.gson.reflect.TypeToken;
 import com.rey.material.widget.ProgressView;
 import com.spectre.R;
 import com.spectre.adapter.ManageAdsListAdapter;
+import com.spectre.adapter.SearchBuyListAdapter;
+import com.spectre.adapter.SearchRentListAdapter;
 import com.spectre.beans.AdPost;
 import com.spectre.customView.CustomTextView;
 import com.spectre.customView.MyDialogProgress;
@@ -103,7 +105,7 @@ public class ManageRentedActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(context);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new ManageAdsListAdapter(context, Arraylist, 0);
+        mAdapter = new SearchRentListAdapter(context, Arraylist, 1);
         mRecyclerView.setAdapter(mAdapter);
     }
 

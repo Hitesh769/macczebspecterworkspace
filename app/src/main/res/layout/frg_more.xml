@@ -66,7 +66,8 @@
                     android:layout_alignParentEnd="true"
                     android:background="@drawable/ripple"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <ImageView
                         android:layout_width="@dimen/_25sdp"
@@ -99,230 +100,354 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:id="@+id/llLogin"
-                    style="@style/linear_register"
-                    android:background="@drawable/ripple">
+                    android:id="@+id/linlogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                    <ImageView
-                        style="@style/image_register"
-                        android:src="@drawable/ic_login"
-                        android:tint="@color/hint_color" />
+                    <LinearLayout
+                        android:id="@+id/llLogin"
+                        style="@style/linear_register"
+                        android:background="@drawable/ripple">
 
-                    <TextView
-                        style="@style/textView"
-                        android:layout_weight="1"
-                        android:padding="@dimen/_10sdp"
-                        android:text="@string/login"
-                        android:textColor="@color/black" />
+                        <ImageView
+                            style="@style/image_register"
+                            android:src="@drawable/ic_login" />
 
-                    <ImageView
-                        style="@style/image_register"
-                        android:rotation="180"
-                        android:tint="@color/hint_color"
-                        app:srcCompat="@drawable/ic_keyboard_arrow_left" />
+                        <TextView
+                            style="@style/textView"
+                            android:layout_weight="1"
+                            android:padding="@dimen/_10sdp"
+                            android:text="@string/login"
+                            android:textColor="@color/black" />
 
+                        <ImageView
+                            style="@style/image_register"
+                            android:rotation="180"
+                            android:tint="@color/hint_color"
+                            app:srcCompat="@drawable/ic_keyboard_arrow_left" />
+
+                    </LinearLayout>
+
+                    <View style="@style/line_register" />
                 </LinearLayout>
+                <!--myprofile-->
+                <LinearLayout
+                    android:id="@+id/linMyProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
-                <View style="@style/line_register" />
+                    <LinearLayout
+                        android:id="@+id/llMyAccount"
+                        style="@style/linear_register"
+                        android:background="@drawable/ripple">
+
+                        <ImageView
+                            style="@style/image_register"
+                            android:src="@drawable/ic_profile" />
+
+                        <TextView
+                            style="@style/textView"
+                            android:layout_weight="1"
+                            android:padding="@dimen/_10sdp"
+                            android:text="@string/my_account"
+                            android:textColor="@color/black" />
+
+                        <ImageView
+                            style="@style/image_register"
+                            android:rotation="180"
+                            android:tint="@color/hint_color"
+                            app:srcCompat="@drawable/ic_keyboard_arrow_left" />
+
+                    </LinearLayout>
+
+                    <View style="@style/line_register" />
+                </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/llSignUp"
-                    style="@style/linear_register"
-                    android:background="@drawable/ripple">
+                    android:id="@+id/linPostAd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
-                    <ImageView
-                        style="@style/image_register"
-                        android:src="@drawable/ic_sign_up"
-                        android:tint="@color/hint_color" />
+                    <LinearLayout
+                        android:id="@+id/llPostAd"
+                        style="@style/linear_register"
+                        android:background="@drawable/ripple">
 
-                    <TextView
-                        style="@style/textView"
-                        android:layout_weight="1"
-                        android:padding="@dimen/_10sdp"
-                        android:text="@string/sign_up"
-                        android:textColor="@color/black" />
+                        <ImageView
+                            style="@style/image_register"
+                            android:src="@drawable/ic_post_add" />
 
-                    <ImageView
-                        style="@style/image_register"
-                        android:rotation="180"
-                        android:tint="@color/hint_color"
-                        app:srcCompat="@drawable/ic_keyboard_arrow_left" />
+                        <TextView
+                            style="@style/textView"
+                            android:layout_weight="1"
+                            android:padding="@dimen/_10sdp"
+                            android:text="@string/post_ad"
+                            android:textColor="@color/black" />
+
+                        <ImageView
+                            style="@style/image_register"
+                            android:rotation="180"
+                            android:tint="@color/hint_color"
+                            app:srcCompat="@drawable/ic_keyboard_arrow_left" />
+
+                    </LinearLayout>
+
+                    <View style="@style/line_register" />
 
                 </LinearLayout>
-
-                <View style="@style/line_register" />
 
                 <LinearLayout
-                    android:id="@+id/llMyAccount"
-                    style="@style/linear_register"
-                    android:background="@drawable/ripple">
+                    android:id="@+id/linManageAds"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
-                    <ImageView
-                        style="@style/image_register"
-                        android:src="@drawable/ic_profile"
-                        android:tint="@color/hint_color" />
+                    <LinearLayout
+                        android:id="@+id/llManageAd"
+                        style="@style/linear_register"
+                        android:background="@drawable/ripple">
 
-                    <TextView
-                        style="@style/textView"
-                        android:layout_weight="1"
-                        android:padding="@dimen/_10sdp"
-                        android:text="@string/my_account"
-                        android:textColor="@color/black" />
+                        <ImageView
+                            style="@style/image_register"
+                            android:src="@drawable/ic_manage_ad" />
 
-                    <ImageView
-                        style="@style/image_register"
-                        android:rotation="180"
-                        android:tint="@color/hint_color"
-                        app:srcCompat="@drawable/ic_keyboard_arrow_left" />
+                        <TextView
+                            style="@style/textView"
+                            android:layout_weight="1"
+                            android:padding="@dimen/_10sdp"
+                            android:text="@string/manage_ad"
+                            android:textColor="@color/black" />
+
+                        <ImageView
+                            style="@style/image_register"
+                            android:rotation="180"
+                            android:tint="@color/hint_color"
+                            app:srcCompat="@drawable/ic_keyboard_arrow_left" />
+
+                    </LinearLayout>
+
+                    <View style="@style/line_register" />
+
 
                 </LinearLayout>
 
-                <View style="@style/line_register" />
 
                 <LinearLayout
-                    android:id="@+id/llPostAd"
-                    style="@style/linear_register"
-                    android:background="@drawable/ripple">
+                    android:id="@+id/linMessage"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                    <ImageView
-                        style="@style/image_register"
-                        android:src="@drawable/ic_post_add"
-                        android:tint="@color/hint_color" />
+                    <LinearLayout
+                        android:id="@+id/llMessage"
+                        style="@style/linear_register"
+                        android:background="@drawable/ripple">
 
-                    <TextView
-                        style="@style/textView"
-                        android:layout_weight="1"
-                        android:padding="@dimen/_10sdp"
-                        android:text="@string/post_ad"
-                        android:textColor="@color/black" />
+                        <ImageView
+                            style="@style/image_register"
+                            android:src="@drawable/ic_settings" />
 
-                    <ImageView
-                        style="@style/image_register"
-                        android:rotation="180"
-                        android:tint="@color/hint_color"
-                        app:srcCompat="@drawable/ic_keyboard_arrow_left" />
+                        <TextView
+                            style="@style/textView"
+                            android:layout_weight="1"
+                            android:padding="@dimen/_10sdp"
+                            android:text="Messages"
+                            android:textColor="@color/black" />
 
+                        <ImageView
+                            style="@style/image_register"
+                            android:rotation="180"
+                            android:tint="@color/hint_color"
+                            app:srcCompat="@drawable/ic_keyboard_arrow_left" />
+
+                    </LinearLayout>
+
+                    <View style="@style/line_register" />
                 </LinearLayout>
-
-                <View style="@style/line_register" />
 
                 <LinearLayout
-                    android:id="@+id/llManageAd"
-                    style="@style/linear_register"
-                    android:background="@drawable/ripple">
+                    android:id="@+id/linSettings"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
-                    <ImageView
-                        style="@style/image_register"
-                        android:src="@drawable/ic_manage_ad"
-                        android:tint="@color/hint_color" />
+                    <LinearLayout
+                        android:id="@+id/llSettings"
+                        style="@style/linear_register"
+                        android:background="@drawable/ripple">
 
-                    <TextView
-                        style="@style/textView"
-                        android:layout_weight="1"
-                        android:padding="@dimen/_10sdp"
-                        android:text="@string/manage_ad"
-                        android:textColor="@color/black" />
+                        <ImageView
+                            style="@style/image_register"
+                            android:src="@drawable/ic_settings" />
 
-                    <ImageView
-                        style="@style/image_register"
-                        android:rotation="180"
-                        android:tint="@color/hint_color"
-                        app:srcCompat="@drawable/ic_keyboard_arrow_left" />
+                        <TextView
+                            style="@style/textView"
+                            android:layout_weight="1"
+                            android:padding="@dimen/_10sdp"
+                            android:text="@string/settings"
+                            android:textColor="@color/black" />
 
+                        <ImageView
+                            style="@style/image_register"
+                            android:rotation="180"
+                            android:tint="@color/hint_color"
+                            app:srcCompat="@drawable/ic_keyboard_arrow_left" />
+
+                    </LinearLayout>
+
+                    <View style="@style/line_register" />
                 </LinearLayout>
-
-                <View style="@style/line_register" />
 
                 <LinearLayout
-                    android:id="@+id/llSettings"
-                    style="@style/linear_register"
-                    android:background="@drawable/ripple">
+                    android:id="@+id/linRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                    <ImageView
-                        style="@style/image_register"
-                        android:src="@drawable/ic_settings"
-                        android:tint="@color/hint_color" />
+                    <LinearLayout
+                        android:id="@+id/llSignUp"
+                        style="@style/linear_register"
+                        android:background="@drawable/ripple">
 
-                    <TextView
-                        style="@style/textView"
-                        android:layout_weight="1"
-                        android:padding="@dimen/_10sdp"
-                        android:text="@string/settings"
-                        android:textColor="@color/black" />
+                        <ImageView
+                            style="@style/image_register"
+                            android:src="@drawable/ic_sign_up" />
 
-                    <ImageView
-                        style="@style/image_register"
-                        android:rotation="180"
-                        android:tint="@color/hint_color"
-                        app:srcCompat="@drawable/ic_keyboard_arrow_left" />
+                        <TextView
+                            style="@style/textView"
+                            android:layout_weight="1"
+                            android:padding="@dimen/_10sdp"
+                            android:text="@string/sign_up"
+                            android:textColor="@color/black" />
 
+                        <ImageView
+                            style="@style/image_register"
+                            android:rotation="180"
+                            android:tint="@color/hint_color"
+                            app:srcCompat="@drawable/ic_keyboard_arrow_left" />
+
+                    </LinearLayout>
+
+                    <View style="@style/line_register" />
                 </LinearLayout>
-
-                <View style="@style/line_register" />
 
                 <LinearLayout
-                    android:id="@+id/llAboutUs"
-                    style="@style/linear_register"
-                    android:background="@drawable/ripple">
+                    android:id="@+id/linChangeLanguage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                    <ImageView
-                        style="@style/image_register"
-                        android:src="@drawable/ic_settings"
-                        android:tint="@color/hint_color" />
+                    <LinearLayout
+                        android:id="@+id/llChangeLanguage"
+                        style="@style/linear_register"
+                        android:background="@drawable/ripple">
 
-                    <TextView
-                        style="@style/textView"
-                        android:layout_weight="1"
-                        android:padding="@dimen/_10sdp"
-                        android:text="@string/about_us"
-                        android:textColor="@color/black" />
+                        <ImageView
+                            style="@style/image_register"
+                            android:src="@drawable/ic_settings" />
 
-                    <ImageView
-                        style="@style/image_register"
-                        android:rotation="180"
-                        android:tint="@color/hint_color"
-                        app:srcCompat="@drawable/ic_keyboard_arrow_left" />
+                        <TextView
+                            style="@style/textView"
+                            android:layout_weight="1"
+                            android:padding="@dimen/_10sdp"
+                            android:text="Change Language"
+                            android:textColor="@color/black" />
 
+                        <ImageView
+                            style="@style/image_register"
+                            android:rotation="180"
+                            android:tint="@color/hint_color"
+                            app:srcCompat="@drawable/ic_keyboard_arrow_left" />
+
+                    </LinearLayout>
+
+                    <View style="@style/line_register" />
                 </LinearLayout>
-
-                <View style="@style/line_register" />
 
                 <LinearLayout
-                    android:id="@+id/llPrivacyPolicy"
-                    style="@style/linear_register"
-                    android:background="@drawable/ripple">
+                    android:id="@+id/linAboutUs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                    <ImageView
-                        style="@style/image_register"
-                        android:src="@drawable/ic_settings"
-                        android:tint="@color/hint_color" />
+                    <LinearLayout
+                        android:id="@+id/llAboutUs"
+                        style="@style/linear_register"
+                        android:background="@drawable/ripple">
 
-                    <TextView
-                        style="@style/textView"
-                        android:layout_weight="1"
-                        android:padding="@dimen/_10sdp"
-                        android:text="@string/privacy_policy"
-                        android:textColor="@color/black" />
+                        <ImageView
+                            style="@style/image_register"
+                            android:src="@drawable/ic_settings" />
 
-                    <ImageView
-                        style="@style/image_register"
-                        android:rotation="180"
-                        android:tint="@color/hint_color"
-                        app:srcCompat="@drawable/ic_keyboard_arrow_left" />
+                        <TextView
+                            style="@style/textView"
+                            android:layout_weight="1"
+                            android:padding="@dimen/_10sdp"
+                            android:text="@string/about_us"
+                            android:textColor="@color/black" />
 
+                        <ImageView
+                            style="@style/image_register"
+                            android:rotation="180"
+                            android:tint="@color/hint_color"
+                            app:srcCompat="@drawable/ic_keyboard_arrow_left" />
+
+                    </LinearLayout>
+
+                    <View style="@style/line_register" />
                 </LinearLayout>
 
-                <View style="@style/line_register" />
+                <LinearLayout
+                    android:id="@+id/linPrivacyPolicy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/llPrivacyPolicy"
+                        style="@style/linear_register"
+                        android:background="@drawable/ripple">
+
+                        <ImageView
+                            style="@style/image_register"
+                            android:src="@drawable/ic_settings" />
+
+                        <TextView
+                            style="@style/textView"
+                            android:layout_weight="1"
+                            android:padding="@dimen/_10sdp"
+                            android:text="@string/privacy_policy"
+                            android:textColor="@color/black" />
+
+                        <ImageView
+                            style="@style/image_register"
+                            android:rotation="180"
+                            android:tint="@color/hint_color"
+                            app:srcCompat="@drawable/ic_keyboard_arrow_left" />
+
+                    </LinearLayout>
+
+                    <View style="@style/line_register" />
+                </LinearLayout>
+
 
                 <LinearLayout
                     android:id="@+id/llSocial"
                     style="@style/linear_register"
+                    android:visibility="gone"
                     android:background="@drawable/ripple">
 
                     <ImageView
                         style="@style/image_register"
-                        android:src="@drawable/ic_settings"
-                        android:tint="@color/hint_color" />
+                        android:src="@drawable/ic_settings" />
 
                     <TextView
                         style="@style/textView"
@@ -339,12 +464,12 @@
 
                 </LinearLayout>
 
-                <View style="@style/line_register" />
 
                 <LinearLayout
                     android:id="@+id/llFeedback"
                     style="@style/linear_register"
-                    android:background="@drawable/ripple">
+                    android:background="@drawable/ripple"
+                    android:visibility="gone">
 
                     <ImageView
                         style="@style/image_register"

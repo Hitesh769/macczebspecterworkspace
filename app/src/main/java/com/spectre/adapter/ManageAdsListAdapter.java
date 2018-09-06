@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.androidquery.AQuery;
 import com.spectre.R;
@@ -46,7 +47,7 @@ public class ManageAdsListAdapter extends RecyclerView.Adapter<ManageAdsListAdap
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_car_detail, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_car_detail_2, parent, false);
         ViewHolder viewHolder = new ViewHolder(v);
         return viewHolder;
     }
@@ -71,6 +72,11 @@ public class ManageAdsListAdapter extends RecyclerView.Adapter<ManageAdsListAdap
         } else {
             holder.txtCarName.setText(appContext.getString(R.string.na));
         }
+        if (!adPost.getCar_type().trim().isEmpty())
+            holder.txtType.setText(adPost.getCar_type());
+        else
+            holder.txtType.setText("");
+
 
 //        if(!adPost.getLocation().isEmpty()){
 //                   holder.txtRentLocation.setText(adPost.getLocation());
@@ -107,7 +113,13 @@ public class ManageAdsListAdapter extends RecyclerView.Adapter<ManageAdsListAdap
             new AQuery(appContext).id(holder.ivProduct).image(arraylist.get(position).getImage().get(0));
         }
 
-        holder.txtOwnerName.setVisibility(View.GONE);
+       // holder.txtOwnerName.setVisibility(View.GONE);
+        if (!adPost.getFull_name().isEmpty()) {
+            holder.txtOwnerName.setText(adPost.getFull_name());
+            //    holder.txtOwnerName.setCompoundDrawablesWithIntrinsicBounds(Utility.getDrawable(appContext, 1), null, null, null);
+        } else {
+            holder.txtOwnerName.setText(appContext.getString(R.string.na));
+        }
 
         holder.btnViewDetail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,7 +170,8 @@ public class ManageAdsListAdapter extends RecyclerView.Adapter<ManageAdsListAdap
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        CustomTextView txtCarName, txtCarPrice, txtCarModel, txtOwnerName, txtCarDate, txtRentLocation;
+        TextView txtCarName, txtCarPrice, txtCarModel, txtOwnerName, txtCarDate, txtRentLocation,txtType;
+        CustomTextView txt_car_date;
         ImageView ivProduct;
         CustomRayMaterialTextView btnViewDetail;
 
@@ -166,10 +179,11 @@ public class ManageAdsListAdapter extends RecyclerView.Adapter<ManageAdsListAdap
             super(itemView);
             btnViewDetail = (CustomRayMaterialTextView) itemView.findViewById(R.id.btn_view_detail);
             ivProduct = (ImageView) itemView.findViewById(R.id.iv_product);
-            txtCarName = (CustomTextView) itemView.findViewById(R.id.txt_car_name);
-            txtCarPrice = (CustomTextView) itemView.findViewById(R.id.txt_car_price);
-            txtCarModel = (CustomTextView) itemView.findViewById(R.id.txt_car_model);
-            txtOwnerName = (CustomTextView) itemView.findViewById(R.id.txt_owner_name);
+            txtType = (TextView) itemView.findViewById(R.id.txtType);
+            txtCarName = (TextView) itemView.findViewById(R.id.txt_car_name);
+            txtCarPrice = (TextView) itemView.findViewById(R.id.txt_car_price);
+            txtCarModel = (TextView) itemView.findViewById(R.id.txt_car_model);
+            txtOwnerName = (TextView) itemView.findViewById(R.id.txt_owner_name);
             txtCarDate = (CustomTextView) itemView.findViewById(R.id.txt_car_date);
             txtCarDate.setVisibility(View.GONE);
             //txtRentLocation = (CustomTextView) itemView.findViewById(R.id.tv_post_ad_location);

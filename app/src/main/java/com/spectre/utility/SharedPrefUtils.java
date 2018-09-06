@@ -46,6 +46,11 @@ public class SharedPrefUtils {
         editor.putLong(prefKey, value);
         editor.commit();
     }
+    public static void clearAllPreference(Context context){
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.clear();
+        editor.commit();
+    }
 
     public static void saveSharedSetting(Context ctx, String settingName, String settingValue) {
         SharedPreferences sharedPref = ctx.getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE);

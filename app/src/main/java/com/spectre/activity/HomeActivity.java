@@ -408,7 +408,7 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
     private void setCarNames() {
         listBrandName.clear();
         listBrandName.add(new CarName("0", getString(R.string.car_name)));
-        getList(1, "");
+         getList(1, "");
     }
 
     private void setCarModel(String id, boolean isCall) {
@@ -776,7 +776,6 @@ Post Your Ad,Manage Your Ad,Give for Rent,Manage Rented,Settings*/
             filterResponse.setYear_from(spinnerYearFrom.getSelectedItem().toString());
         else
             filterResponse.setYear_from("");
-
 
         if (spinnerCarName.getSelectedItemPosition() != 0) {
             if (listBrandName.size() > 0) {

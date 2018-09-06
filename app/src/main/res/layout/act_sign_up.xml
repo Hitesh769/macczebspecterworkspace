@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
@@ -152,6 +152,7 @@
                         android:inputType="textPassword" />
 
                     <RadioGroup
+                        android:id="@+id/rg_buyer_garage"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/_10sdp"
@@ -179,15 +180,94 @@
                             android:text="@string/garage"
                             android:textSize="@dimen/_11sdp" />
                     </RadioGroup>
+                    <!--for seller-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="10">
+
+                        <RadioGroup
+                            android:id="@+id/rg_garage"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_weight="6"
+                            android:orientation="vertical"
+                            android:visibility="gone"
+                            android:weightSum="2">
+
+                            <RadioButton
+                                android:id="@+id/rbtOwner"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:checked="true"
+                                android:padding="@dimen/_10sdp"
+                                android:text="Owner"
+                                android:textSize="@dimen/_11sdp" />
+
+                            <RadioButton
+                                android:id="@+id/rbtDealer"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:padding="@dimen/_10sdp"
+                                android:text="Dealer"
+                                android:textSize="@dimen/_11sdp" />
+
+                            <RadioButton
+                                android:id="@+id/rbtCertifiedPreOwned"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:padding="@dimen/_10sdp"
+                                android:text="Certified Pre-Owned"
+                                android:textSize="@dimen/_11sdp" />
+                        </RadioGroup>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="4">
+
+                            <ImageView
+                                android:id="@+id/iv_profile"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:visibility="gone"
+                                android:layout_marginEnd="@dimen/_10sdp"
+                                android:padding="@dimen/_5sdp"
+                                android:src="@drawable/default_image"
+                                 />
+
+                            <ImageView
+                                android:id="@+id/iv_remove"
+                                android:layout_width="@dimen/_20sdp"
+                                android:layout_height="@dimen/_20sdp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginEnd="@dimen/_5sdp"
+                                android:layout_marginTop="@dimen/_8sdp"
+                                android:background="@mipmap/cross"
+                                android:visibility="gone"
+                                android:backgroundTint="@color/gray"
+                                android:padding="@dimen/_5sdp"
+                                />
+                        </RelativeLayout>
+
+                    </LinearLayout>
 
                     <CheckBox
                         android:id="@+id/chkTerms"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/_10sdp"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_10sdp"
                         android:padding="@dimen/_10sdp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
                         android:text="@string/txt_term"
                         android:textSize="@dimen/_11sdp" />
 

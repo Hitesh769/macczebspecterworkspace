@@ -169,6 +169,7 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.ViewHold
         }
 
 
+
         holder.btnViewDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

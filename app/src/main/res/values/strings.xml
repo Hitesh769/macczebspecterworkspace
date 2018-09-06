@@ -199,7 +199,7 @@
 
 
     <string-array name="car_type">
-        <item>Select Type</item>
+        <item>Any Type</item>
         <item>4x4</item>
         <item>Convertible</item>
         <item>Family</item>
@@ -225,7 +225,7 @@
     </string-array>
 
     <string-array name="car_color">
-        <item>Select Color</item>
+        <item>Any Type</item>
         <item>Beige</item>
         <item>Black</item>
         <item>Blue</item>
@@ -247,7 +247,34 @@
         <item>Yellow</item>
         <item>Other</item>
     </string-array>
-
+    <string-array name="year">
+        <item>Any Type</item>
+        <item>2018</item>
+        <item>2017</item>
+        <item>2016</item>
+        <item>2015</item>
+        <item>2014</item>
+        <item>2013</item>
+        <item>2012</item>
+        <item>2011</item>
+        <item>2010</item>
+        <item>2009</item>
+        <item>2008</item>
+        <item>2007</item>
+        <item>2006</item>
+        <item>2005</item>
+        <item>2004</item>
+        <item>2003</item>
+        <item>2002</item>
+        <item>2001</item>
+        <item>2000</item>
+    </string-array>
+<string-array name="seller_type">
+    <item>Any Type</item>
+    <item>Owner</item>
+    <item>Dealer</item>
+    <item>Certified Pre-Owned</item>
+</string-array>
     <string name="demo_min_label">Min</string>
     <string name="demo_max_label">Max</string>
 
@@ -286,11 +313,11 @@
     <string name="manage_work">Manage your Ad (Garage)</string>
     <string name="add_work">Post your Ad (Garage)</string>
     <string name="edit_work">Edit your Ad (Garage)</string>
-    <string name="post_ad">Post your Ad (Buy)</string>
+    <string name="post_ad">Post Ad</string>
     <string name="posted_on">Posted On : </string>
     <string name="post_ad_buyer">Post Ad</string>
     <string name="edit_ad">Edit Your Ad (Buy)</string>
-    <string name="manage_ad">Manage your Ad (Buy)</string>
+    <string name="manage_ad">Manage Ads</string>
     <string name="give_for_rent">Post your Ad (Rent)</string>
     <string name="manage_rented">Manage your Ad (Rent)</string>
     <string name="settings">Settings</string>
@@ -341,8 +368,8 @@
 
     <!--More screen-->
     <string name="guest_user">Guest user</string>
-    <string name="sign_up">Sign Up</string>
-    <string name="my_account">My Account</string>
+    <string name="sign_up">Registration</string>
+    <string name="my_account">My Profile</string>
     <string name="sign_in">Sign in</string>
     <string name="forgot_your_password">Forgot your password?</string>
     <string name="_91">+91</string>

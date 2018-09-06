@@ -131,7 +131,6 @@ public class LoginActivity extends MasterAppCompactActivity implements View.OnCl
                 break;
             case R.id.tv_forget_pin:
                 //   showToast("Coming Soon");
-
                 resetPassword(et_mail.getText().toString().trim());
                 break;
         }
@@ -369,8 +368,8 @@ public class LoginActivity extends MasterAppCompactActivity implements View.OnCl
             @Override
             public void onSuccess(JSONObject js, String msg) {
                 saveData(js, msg);
+                SharedPrefUtils.setPreference(context, Constant.ISLOGIN, true);
             }
-
             @Override
             public void onFailed(JSONObject js, String msg) {
                 MyDialogProgress.close(context);

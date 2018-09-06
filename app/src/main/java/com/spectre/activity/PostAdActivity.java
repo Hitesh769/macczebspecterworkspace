@@ -31,6 +31,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -101,11 +102,12 @@ public class PostAdActivity extends AppCompatActivity implements View.OnClickLis
     private Spinner spinner_name, spinner_model, spinner_version, spinner_year, spinner_car_type, spinner_color;
 
     private CustomRayMaterialTextView btn_save_changes, btn_delete, btn_delete_;
-    private CustomEditText et_mileage, et_price, et_car_condition, et_model, et_version;
+    private CustomEditText et_mileage1, et_price1, et_model1, et_version;
     private RecyclerView recycler;
     private static final int REQUEST_CODE_CHOOSE = 23;
 
-    private CustomTextView tv_post_ad_buy_location, txt_post_ad_header;
+    private CustomTextView txt_post_ad_header;
+    private EditText edt_ad_buy_location,et_car_condition,et_mileage,et_price,et_model;
     private ImageView img_post_ad_buy_current_location;
     private String latitude = "";
     private String longitude = "";
@@ -206,20 +208,20 @@ public class PostAdActivity extends AppCompatActivity implements View.OnClickLis
         mRecyclerView.setLayoutParams(params);*/
 
         mRecyclerView.setNestedScrollingEnabled(false);
-        // et_model = (CustomEditText) findViewById(R.id.et_model);
+         et_model = (EditText) findViewById(R.id.edtModel);
         // et_version = (CustomEditText) findViewById(R.id.et_version);
-        et_car_condition = (CustomEditText) findViewById(R.id.et_car_condition);
-        et_mileage = (CustomEditText) findViewById(R.id.et_mileage);
-        et_price = (CustomEditText) findViewById(R.id.et_price);
+        et_car_condition = (EditText) findViewById(R.id.et_car_condition);
+        et_mileage = (EditText) findViewById(R.id.edtMileage);
+        et_price = (EditText) findViewById(R.id.edtPrice);
         btn_save_changes = (CustomRayMaterialTextView) findViewById(R.id.btn_save_changes);
         btn_delete = (CustomRayMaterialTextView) findViewById(R.id.btn_delete);
         btn_delete_ = (CustomRayMaterialTextView) findViewById(R.id.btn_delete_);
 
-        tv_post_ad_buy_location = (CustomTextView) findViewById(R.id.tv_post_ad_buy_location);
+        edt_ad_buy_location = (EditText) findViewById(R.id.edt_buy_location);
         img_post_ad_buy_current_location = (ImageView) findViewById(R.id.img_post_ad_buy_current_location);
 
 
-        tv_post_ad_buy_location.setOnClickListener(this);
+        edt_ad_buy_location.setOnClickListener(this);
         img_post_ad_buy_current_location.setOnClickListener(this);
 
         btn_save_changes.setOnClickListener(this);
@@ -237,7 +239,7 @@ public class PostAdActivity extends AppCompatActivity implements View.OnClickLis
 //            et_version.setText(adPost.getVersion());
             et_car_condition.setText(adPost.getCar_condition());
 
-            tv_post_ad_buy_location.setText(adPost.getLocation());
+            edt_ad_buy_location.setText(adPost.getLocation());
             spinner_color.setSelection(arrayAdapterCarColor.getPosition(adPost.getColor()));
             spinner_year.setSelection(arrayAdapterYear.getPosition(adPost.getYear()));
             spinner_car_type.setSelection(arrayAdapterCarType.getPosition(adPost.getCar_type()));
@@ -343,14 +345,14 @@ public class PostAdActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.btn_save_changes:
                 checkCondition();
                 break;
-            case R.id.btn_delete:
+          /*  case R.id.btn_delete:
                 callDeleteApi(2);
-                break;
+                break;*/
             case R.id.btn_delete_:
                 chooseDeleteAd();
 
                 break;
-            case R.id.tv_post_ad_buy_location:
+            case R.id.edt_buy_location:
                 try {
                     Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).build(this);
                     startActivityForResult(intent, PLACE_PICKER_REQUEST);
@@ -423,7 +425,7 @@ public class PostAdActivity extends AppCompatActivity implements View.OnClickLis
                 latitude = String.valueOf(bestLocation.getLatitude());
                 longitude = String.valueOf(bestLocation.getLongitude());
                 Utility.setLog("Lat : " + getFullAddress(Double.valueOf(latitude), Double.valueOf(longitude)));
-                tv_post_ad_buy_location.setText(getFullAddress(Double.valueOf(latitude), Double.valueOf(longitude)));
+                edt_ad_buy_location.setText(getFullAddress(Double.valueOf(latitude), Double.valueOf(longitude)));
 
             } else {
                 Utility.setLog("Location is null");
@@ -528,7 +530,7 @@ public class PostAdActivity extends AppCompatActivity implements View.OnClickLis
         et_price.setError(null);
 //        et_model.setError(null);
 //        et_version.setError(null);
-        tv_post_ad_buy_location.setError(null);
+        edt_ad_buy_location.setError(null);
 
         if (!canEdit && adPost != null) {
             Utility.showToast(context, getString(R.string.loading));
@@ -595,7 +597,7 @@ public class PostAdActivity extends AppCompatActivity implements View.OnClickLis
             return;
         }
 
-        if (tv_post_ad_buy_location.getText().toString().trim().isEmpty()) {
+        if (edt_ad_buy_location.getText().toString().trim().isEmpty()) {
             Utility.showToast(context, getString(R.string.pls_select_location));
             return;
         }
@@ -670,7 +672,7 @@ public class PostAdActivity extends AppCompatActivity implements View.OnClickLis
 //            jsonObject.put(Constant.MODEL, et_model.getText().toString().trim());
 //            jsonObject.put(Constant.VERSION, et_version.getText().toString().trim());
             jsonObject.put(Constant.CAR_CONDITION, et_car_condition.getText().toString().trim());
-            jsonObject.put(Constant.LOCATION, tv_post_ad_buy_location.getText().toString().trim());
+            jsonObject.put(Constant.LOCATION, edt_ad_buy_location.getText().toString().trim());
             jsonObject.put(Constant.LATITUDE, latitude);
             jsonObject.put(Constant.LONGITUDE, longitude);
             int i = 0;
@@ -921,7 +923,7 @@ public class PostAdActivity extends AppCompatActivity implements View.OnClickLis
                 stBuilder.append(placename);
                 stBuilder.append(", ");
                 stBuilder.append(address);
-                tv_post_ad_buy_location.setText(stBuilder.toString());
+                edt_ad_buy_location.setText(stBuilder.toString());
             }
         }
     }

@@ -46,6 +46,7 @@ import com.spectre.beans.ModelName;
 import com.spectre.beans.VersionName;
 import com.spectre.customView.CustomRayMaterialTextView;
 import com.spectre.dialog.ProgressDialog;
+import com.spectre.fragment.BuyFilterFragment;
 import com.spectre.fragment.BuyFragment;
 import com.spectre.fragment.GarageFragment;
 import com.spectre.fragment.RentFilterFragment;
@@ -585,8 +586,9 @@ public class HomeAct extends MasterAppCompactActivity implements LocationListene
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             // transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_left, R.anim.exit_to_left);
             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            transaction.replace(R.id.main_view, BuyFragment.newInstance(), BuyFragment.TAG);
-            transaction.addToBackStack(BuyFragment.TAG);
+            transaction.replace(R.id.main_view, BuyFilterFragment.newInstance(), BuyFragment.TAG);
+            //transaction.replace(R.id.main_view, BuyFragment.newInstance(), BuyFragment.TAG);
+            transaction.addToBackStack(BuyFilterFragment.TAG);
             transaction.commit();
 
 

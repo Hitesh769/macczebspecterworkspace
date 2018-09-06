@@ -32,6 +32,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -103,8 +104,9 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
     private Spinner spinner_name, spinner_model, spinner_version, spinner_year, spinner_car_type, spinner_color;
 
     private CustomRayMaterialTextView btn_save_changes, btn_delete, btn_delete_;
-    private CustomEditText et_mileage, et_price, et_car_condition, et_car_desc, et_model;
-    private CustomTextView et_car_to, et_car_from, tv_post_ad_location, txt_post_ad_header;
+    private CustomEditText et_mileage, et_car_condition, et_car_desc, et_model;
+    private EditText edtCaName,edtModel,edtVersion,edtCarSeries,et_car_to, et_car_from,tv_post_ad_location,et_price;
+    private CustomTextView  txt_post_ad_header;
     private ImageView img_post_ad_current_location;
     private String latitude = "";
     private String longitude = "";
@@ -325,12 +327,12 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
         et_car_condition = (CustomEditText) findViewById(R.id.et_car_condition);
         et_car_desc = (CustomEditText) findViewById(R.id.et_car_desc);
         et_mileage = (CustomEditText) findViewById(R.id.et_mileage);
-        et_price = (CustomEditText) findViewById(R.id.et_price);
+        et_price = (EditText) findViewById(R.id.edtPrice);
         //et_model = (CustomEditText) findViewById(R.id.et_model);
 
-        et_car_to = (CustomTextView) findViewById(R.id.et_car_to);
-        et_car_from = (CustomTextView) findViewById(R.id.et_car_from);
-        tv_post_ad_location = (CustomTextView) findViewById(R.id.tv_post_ad_location);
+        et_car_to = (EditText) findViewById(R.id.et_car_to);
+        et_car_from = (EditText) findViewById(R.id.et_car_from);
+        tv_post_ad_location = (EditText) findViewById(R.id.edt_rent_location);
         img_post_ad_current_location = (ImageView) findViewById(R.id.img_post_ad_current_location);
 
         btn_save_changes = (CustomRayMaterialTextView) findViewById(R.id.btn_save_changes);
@@ -477,7 +479,7 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.et_car_from:
                 Utility.openCalendarDialog(context, et_car_from);
                 break;
-            case R.id.tv_post_ad_location:
+            case R.id.edt_rent_location:
                 try {
                     Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).build(this);
                     startActivityForResult(intent, PLACE_PICKER_REQUEST);
@@ -502,7 +504,7 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
 
         btn_delete_yes = ddPostAd.findViewById(R.id.btn_delete_yes);
         btn_delete_no = ddPostAd.findViewById(R.id.btn_delete_no);
-        txt_post_ad_header = ddPostAd.findViewById(R.id.txt_post_ad_header);
+      //  txt_post_ad_header = ddPostAd.findViewById(R.id.txt_post_ad_header);
 
 //        if (!SharedPrefUtils.getPreference(context, Constant.USER_TYPE).isEmpty() && SharedPrefUtils.getPreference(context, Constant.USER_TYPE).equalsIgnoreCase("1")) {
 //            btn_post_garage.setVisibility(View.GONE);
@@ -529,12 +531,12 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
                 ddPostAd.dismiss();
             }
         });
-        txt_post_ad_header.setOnClickListener(new View.OnClickListener() {
+      /*  txt_post_ad_header.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ddPostAd.dismiss();
             }
-        });
+        });*/
     }
 
     private void checkCondition() {

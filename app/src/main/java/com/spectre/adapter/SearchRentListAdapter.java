@@ -13,6 +13,11 @@ import android.widget.TextView;
 import com.androidquery.AQuery;
 import com.spectre.R;
 import com.spectre.activity.CarDetailActivity;
+import com.spectre.activity.ManageAdActivity;
+import com.spectre.activity.ManageRentedActivity;
+import com.spectre.activity.PostAdActivity;
+import com.spectre.activity.RentCarActivity;
+import com.spectre.activity_new.HomeAct;
 import com.spectre.beans.AdPost;
 import com.spectre.other.Constant;
 
@@ -127,11 +132,21 @@ public class SearchRentListAdapter extends RecyclerView.Adapter<SearchRentListAd
     holder.itemView.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(appContext, CarDetailActivity.class);
-            intent.putExtra(Constant.DATA, adPost);
-            intent.putExtra(Constant.POSITION, position);
-            intent.putExtra(Constant.TYPE, status);
-            appContext.startActivity(intent);
+            if (appContext instanceof HomeAct) {
+                Intent intent = new Intent(appContext, CarDetailActivity.class);
+                intent.putExtra(Constant.DATA, adPost);
+                intent.putExtra(Constant.POSITION, position);
+                intent.putExtra(Constant.TYPE, status);
+                appContext.startActivity(intent);
+            }
+            if (appContext instanceof ManageRentedActivity) {
+                Intent intent = new Intent(appContext, RentCarActivity.class);
+                intent.putExtra(Constant.DATA, adPost);
+                intent.putExtra(Constant.POSITION, position);
+                intent.putExtra(Constant.TYPE, status);
+                appContext.startActivity(intent);
+            }
+
         }
     });
 
