@@ -1,6 +1,7 @@
 package com.spectre.activity;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -8,10 +9,10 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,12 +21,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
-
 
 import com.androidquery.AQuery;
 import com.google.gson.Gson;
@@ -33,6 +39,9 @@ import com.google.gson.reflect.TypeToken;
 import com.rey.material.widget.ProgressView;
 import com.rey.material.widget.Spinner;
 import com.spectre.R;
+import com.spectre.adapter.CarNameListAdapter;
+import com.spectre.adapter.ModelNameListAdapter;
+import com.spectre.adapter.VersionNameListAdapter;
 import com.spectre.beans.AdPost;
 import com.spectre.beans.CarName;
 import com.spectre.beans.ImageData;
@@ -71,15 +80,36 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 import static com.zhihu.matisse.MimeType.JPEG;
 import static com.zhihu.matisse.MimeType.PNG;
 
 public class AddWorkActivity extends AppCompatActivity implements View.OnClickListener {
 
+    @BindView(R.id.edtCaName)
+    EditText edtCaName;
+    @BindView(R.id.edtModel)
+    EditText edtModel;
+    @BindView(R.id.edtCarSeries)
+    EditText edtCarSeries;
+    @BindView(R.id.edtYear)
+    EditText edtYear;
+    @BindView(R.id.edtCarType)
+    EditText edtCarType;
+    @BindView(R.id.edt_color)
+    EditText edtColor;
+    @BindView(R.id.edtMileage)
+    EditText edtMileage;
+    @BindView(R.id.edtPrice)
+    EditText edtPrice;
+    @BindView(R.id.et_car_condition)
+    EditText etCarCondition;
     private Context context;
-    private ArrayList<String> carType = new ArrayList<>();
     private Spinner spinner_name, spinner_model, spinner_version, spinner_year, spinner_car_type, spinner_color;
-
+    ListView listView;
     private CustomRayMaterialTextView btn_save_changes, btn_delete, btn_delete_;
     private CustomEditText et_mileage, et_price, et_car_condition, et_problem;
     private RecyclerView recycler;
@@ -98,9 +128,11 @@ public class AddWorkActivity extends AppCompatActivity implements View.OnClickLi
     ArrayList<VersionName> version = new ArrayList<VersionName>();
     ArrayList<String> years = new ArrayList<String>();
     private ProgressView progressDialog1, progressDialogAfter;
-    ArrayAdapter<CarName> arrayAdapterCarName;
-    ArrayAdapter<ModelName> arrayAdapterModel;
-    ArrayAdapter<VersionName> arrayAdapterVersion;
+    CarNameListAdapter arrayAdapterCarName;
+    // ArrayAdapter<ModelName> arrayAdapterModel;
+    ModelNameListAdapter arrayAdapterModel;
+    // ArrayAdapter<VersionName> arrayAdapterVersion;
+    VersionNameListAdapter arrayAdapterVersion;
     private int oldName = 0;
     private int oldModel = 0;
     private AlertBox alertBox;
@@ -109,8 +141,9 @@ public class AddWorkActivity extends AppCompatActivity implements View.OnClickLi
     private boolean canEdit, refresh, canEdit2;
     private int position = -1;
     private AppCompatRadioButton radioyes, radioNo;
-
-
+    ArrayAdapter<String> arrayAdapterCarType, arrayAdapterCarColor, arrayAdapterYear;
+    List<String> carColor,carType;
+    Unbinder unbinder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,6 +151,7 @@ public class AddWorkActivity extends AppCompatActivity implements View.OnClickLi
         context = this;
         Utility.setContentView(context, R.layout.activity_add_work);
         actionBar = Utility.setUpToolbar_(context, getString(R.string.add_work), true);
+        unbinder = ButterKnife.bind(this);
         initView();
     }
 
@@ -130,10 +164,10 @@ public class AddWorkActivity extends AppCompatActivity implements View.OnClickLi
         spinner_color = (Spinner) findViewById(R.id.spinner_color);
 
         String arrayCarType[] = getResources().getStringArray(R.array.car_type);
-        List<String> carType = Arrays.asList(arrayCarType);
+        carType = Arrays.asList(arrayCarType);
 
         String arraycarColor[] = getResources().getStringArray(R.array.car_color);
-        List<String> carColor = Arrays.asList(arraycarColor);
+        carColor = Arrays.asList(arraycarColor);
 
 
         names.add(Utility.getCarName(context));
@@ -148,20 +182,22 @@ public class AddWorkActivity extends AppCompatActivity implements View.OnClickLi
             years.add(Integer.toString(i));
         }
 
-        arrayAdapterCarName = new ArrayAdapter<CarName>(context, R.layout.spinner_custom_text, names);
-        spinner_name.setAdapter(arrayAdapterCarName);
-        arrayAdapterModel = new ArrayAdapter<ModelName>(context, R.layout.spinner_custom_text, model);
+        // arrayAdapterCarName = new ArrayAdapter<CarName>(context, R.layout.spinner_custom_text, names);
+        arrayAdapterCarName = new CarNameListAdapter(this, names);
+
+        // spinner_name.setAdapter(arrayAdapterCarName);
+     /*   arrayAdapterModel = new ArrayAdapter<ModelName>(context, R.layout.spinner_custom_text, model);
         spinner_model.setAdapter(arrayAdapterModel);
         arrayAdapterVersion = new ArrayAdapter<VersionName>(context, R.layout.spinner_custom_text, version);
-        spinner_version.setAdapter(arrayAdapterVersion);
+        spinner_version.setAdapter(arrayAdapterVersion);*/
 
 
-        ArrayAdapter<String> arrayAdapterCarType = new ArrayAdapter<String>(context, R.layout.spinner_custom_text, carType);
-        spinner_car_type.setAdapter(arrayAdapterCarType);
-        ArrayAdapter<String> arrayAdapterCarColor = new ArrayAdapter<String>(context, R.layout.spinner_custom_text, carColor);
+        arrayAdapterCarType = new ArrayAdapter<String>(context, R.layout.dialoglistitem,R.id.tvName,carType);
+        //spinner_car_type.setAdapter(arrayAdapterCarType);
+        arrayAdapterCarColor = new ArrayAdapter<String>(context, R.layout.dialoglistitem,R.id.tvName, carColor);
         spinner_color.setAdapter(arrayAdapterCarColor);
-        ArrayAdapter<String> arrayAdapterYear = new ArrayAdapter<String>(context, R.layout.spinner_custom_text, years);
-        spinner_year.setAdapter(arrayAdapterYear);
+        arrayAdapterYear = new ArrayAdapter<String>(context, R.layout.dialoglistitem, R.id.tvName,years);
+        //spinner_year.setAdapter(arrayAdapterYear);
 
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
@@ -199,6 +235,13 @@ public class AddWorkActivity extends AppCompatActivity implements View.OnClickLi
         btn_save_changes.setOnClickListener(this);
         btn_delete.setOnClickListener(this);
         btn_delete_.setOnClickListener(this);
+        edtCaName.setOnClickListener(this);
+        edtColor.setOnClickListener(this);
+        edtCarSeries.setOnClickListener(this);
+        edtModel.setOnClickListener(this);
+        edtYear.setOnClickListener(this);
+        edtCarType.setOnClickListener(this);
+        et_car_condition.setOnClickListener(this);
 
         //   btn_delete_.setOnClickListener(this);
         alertBox = new AlertBox(context);
@@ -355,6 +398,35 @@ public class AddWorkActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.btn_delete_:
                 callDeleteApi(2);
+                break;
+            case R.id.edtCaName:
+                showDialog(AddWorkActivity.this, "Select Car Name", "carName");
+                edtModel.setText("");
+                edtCarSeries.setText("");
+                break;
+            case R.id.edt_color:
+                showDialog(AddWorkActivity.this, "Select Color", "color");
+                break;
+            case R.id.edtCarSeries:
+                if (version.size() > 1) {
+                    showDialog(AddWorkActivity.this, "Select Car Series", "series");
+                } else {
+                    Toast.makeText(context, "list not available", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.edtModel:
+                if (model.size() > 1) {
+                    showDialog(AddWorkActivity.this, "Select Car Model", "model");
+                } else {
+                    Toast.makeText(context, "list not available", Toast.LENGTH_SHORT).show();
+                }
+                edtCarSeries.setText("");
+                break;
+            case R.id.edtYear:
+                showDialog(AddWorkActivity.this, "Select Year", "year");
+                break;
+            case R.id.edtCarType:
+                showDialog(AddWorkActivity.this, "Select Car Type", "carType");
                 break;
 
         }
@@ -617,14 +689,14 @@ public class AddWorkActivity extends AppCompatActivity implements View.OnClickLi
         }
 
         @Override
-        public ShowImagesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recycler_images, parent, false);
-            ShowImagesAdapter.ViewHolder viewHolder = new ShowImagesAdapter.ViewHolder(v);
+            ViewHolder viewHolder = new ViewHolder(v);
             return viewHolder;
         }
 
         @Override
-        public void onBindViewHolder(final ShowImagesAdapter.ViewHolder holder, final int position) {
+        public void onBindViewHolder(final ViewHolder holder, final int position) {
             //    holder.itemView.btn_choose_file.
             if (AL.get(position).getBitmap() != null) {
                 new AQuery(context).id(holder.btn_choose_file).image(AL.get(position).getBitmap());
@@ -960,12 +1032,13 @@ public class AddWorkActivity extends AppCompatActivity implements View.OnClickLi
         }.getType();
         ArrayList<CarName> tempListNewsFeeds = new Gson().fromJson(jsonArray.toString(), type);
         names.addAll(tempListNewsFeeds);
-        arrayAdapterCarName = new ArrayAdapter<CarName>(context, R.layout.spinner_custom_text, names);
-        spinner_name.setAdapter(arrayAdapterCarName);
-
+        //   arrayAdapterCarName = new ArrayAdapter<CarName>(context, R.layout.spinner_custom_text, names);
+        // spinner_name.setAdapter(arrayAdapterCarName);
+        arrayAdapterCarName = new CarNameListAdapter(this, names);
+        listView.setAdapter(arrayAdapterCarName);
         if (adPost != null) {
             CarName carName = new CarName(adPost.getCar_name_id(), adPost.getCar_name());
-            spinner_name.setSelection(arrayAdapterCarName.getPosition(carName));
+            //  spinner_name.setSelection(arrayAdapterCarName.getPosition(carName));
             //    getList(2, carName.getId());
         }
 
@@ -984,11 +1057,13 @@ public class AddWorkActivity extends AppCompatActivity implements View.OnClickLi
             clearModel();
         }
         model.addAll(tempListNewsFeeds);
-        arrayAdapterModel = new ArrayAdapter<ModelName>(context, R.layout.spinner_custom_text, model);
-        spinner_model.setAdapter(arrayAdapterModel);
+       /* arrayAdapterModel = new ArrayAdapter<ModelName>(context, R.layout.spinner_custom_text, model);
+        spinner_model.setAdapter(arrayAdapterModel);*/
+        arrayAdapterModel = new ModelNameListAdapter(this, model);
+        listView.setAdapter(arrayAdapterModel);
         if (adPost != null) {
             ModelName modelName = new ModelName(adPost.getModel_id(), adPost.getModel());
-            spinner_model.setSelection(arrayAdapterModel.getPosition(modelName));
+            // spinner_model.setSelection(arrayAdapterModel.getPosition(modelName));
             //    getList(3, modelName.getId());
         }
 
@@ -1008,9 +1083,10 @@ public class AddWorkActivity extends AppCompatActivity implements View.OnClickLi
             clearVersion();
         }
         version.addAll(tempListNewsFeeds);
-        arrayAdapterVersion = new ArrayAdapter<VersionName>(context, R.layout.spinner_custom_text, version);
-        spinner_version.setAdapter(arrayAdapterVersion);
-
+      /*  arrayAdapterVersion = new ArrayAdapter<VersionName>(context, R.layout.spinner_custom_text, version);
+        spinner_version.setAdapter(arrayAdapterVersion);*/
+        arrayAdapterVersion = new VersionNameListAdapter(this, version);
+        listView.setAdapter(arrayAdapterVersion);
        /* if (version.size() > 0) {
             // getList(3, model.get(1).getId());
             spinner_version.setSelection(1);
@@ -1018,7 +1094,7 @@ public class AddWorkActivity extends AppCompatActivity implements View.OnClickLi
 
         if (adPost != null && !adPost.getVersion().isEmpty()) {
             VersionName versionName = new VersionName(adPost.getVersion_id(), adPost.getVersion());
-            spinner_version.setSelection(arrayAdapterVersion.getPosition(versionName));
+            // spinner_version.setSelection(arrayAdapterVersion.getPosition(versionName));
             // getList(3, versionName.getId());
         }
 
@@ -1235,6 +1311,147 @@ public class AddWorkActivity extends AppCompatActivity implements View.OnClickLi
         MyDialogProgress.close(context);
     }
 
+    public void showDialog(final Activity activity, String title, final String Type) {
+        final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.dilog_listsearch);
+
+        TextView texttitle = (TextView) dialog.findViewById(R.id.title);
+        texttitle.setText(title);
+        listView = (ListView) dialog.findViewById(R.id.List);
+        listView.setItemChecked(0, true);
+        //  listView.setOnItemClickListener((AdapterView.OnItemClickListener) activity);
+
+        switch (Type) {
+            case "carName":
+                // listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+                listView.setAdapter(arrayAdapterCarName);
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        CarName selItem = (CarName) parent.getItemAtPosition(position);
+                        edtCaName.setText(selItem.getCar_name());
+                        //Toast.makeText(AddWorkActivity.this, "clicked item", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+
+                        if (position == 0) {
+                            clearModel();
+                            clearVersion();
+                            if (names.size() == 1) {
+                                getList(1, "0");
+                            }
+                            return;
+                        }
+                        if (names.get(position).getCar_name().equals("Other")) {
+                            final Dialog dialog = new Dialog(activity);
+                            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                            dialog.setCancelable(true);
+                            dialog.setContentView(R.layout.dialog_other);
+                            final EditText name = (EditText) dialog.findViewById(R.id.edtOther);
+                            Button ok = (Button) dialog.findViewById(R.id.btn_ok);
+                            Button cancel = (Button) dialog.findViewById(R.id.btn_cancel);
+                            cancel.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                }
+                            });
+                            ok.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    if (!name.getText().toString().isEmpty()) {
+                                        edtCaName.setText(name.getText().toString());
+                                        dialog.dismiss();
+                                    } else {
+                                        Toast.makeText(AddWorkActivity.this, "Please enter text", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                            dialog.show();
+                            Toast.makeText(context, "other", Toast.LENGTH_SHORT).show();
+                        }
+
+                        oldName = position;
+                        clearModel();
+                        clearVersion();
+                        if (names != null && !names.isEmpty() && names.size() > position)
+                            getList(2, names.get(position).getId());
+                    }
+                });
+                break;
+            case "color":
+                listView.setAdapter(arrayAdapterCarColor);
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        edtColor.setText(carColor.get(position));
+                        dialog.dismiss();
+                    }
+                });
+                break;
+            case "series":
+                listView.setAdapter(arrayAdapterVersion);
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        VersionName selItem = (VersionName) parent.getItemAtPosition(position);
+                        edtCarSeries.setText(selItem.getVersion_name());
+                        dialog.dismiss();
+                    }
+                });
+                break;
+            case "model":
+                listView.setAdapter(arrayAdapterModel);
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        ModelName selItem = (ModelName) parent.getItemAtPosition(position);
+                        edtModel.setText(selItem.getModel_name());
+                        dialog.dismiss();
+                        if (position == 0) {
+                            clearVersion();
+                            return;
+                        }
+                        if (oldModel == position) {
+                            return;
+                        }
+                        oldModel = position;
+                        clearVersion();
+                        if (model != null && !model.isEmpty() && model.size() > position)
+                            getList(3, model.get(position).getId());
+                    }
+                });
+
+                break;
+            case "year":
+                listView.setAdapter(arrayAdapterYear);
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        edtYear.setText(years.get(position));
+                        dialog.dismiss();
+                    }
+                });
+                break;
+            case "carType":
+                listView.setAdapter(arrayAdapterCarType);
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        edtCarType.setText(carType.get(position));
+                        dialog.dismiss();
+                    }
+                });
+
+                break;
+
+        }
+
+
+        dialog.show();
+
+    }
  /*<com.spectre.customView.CustomTextView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

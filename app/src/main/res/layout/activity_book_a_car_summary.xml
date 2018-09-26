@@ -3,12 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:id="@+id/toolbar"
+    android:layout_height="wrap_content">
 
-    <include layout="@layout/toolbar" />
+    <include layout="@layout/toolbar"/>
+
+</RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/scrollView"
         android:scrollbars="none">
 
         <LinearLayout
@@ -95,7 +102,7 @@
                         android:paddingRight="2dp"
                         android:paddingTop="@dimen/_10sdp"
                         android:singleLine="true"
-                        android:text="@string/driver_details"
+                        android:text="@string/seller_detail"
                         android:textColor="@color/black"
                         android:textSize="20sp"
                         app:edittextfont="Poppins-Medium.ttf"

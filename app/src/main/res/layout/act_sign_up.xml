@@ -180,7 +180,7 @@
                             android:text="@string/garage"
                             android:textSize="@dimen/_11sdp" />
                     </RadioGroup>
-                    <!--for seller-->
+                    <!--for garage-->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -189,12 +189,11 @@
 
                         <RadioGroup
                             android:id="@+id/rg_garage"
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/_10sdp"
                             android:layout_marginStart="@dimen/_10sdp"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:layout_weight="6"
                             android:orientation="vertical"
                             android:visibility="gone"
                             android:weightSum="2">
@@ -228,35 +227,127 @@
                                 android:textSize="@dimen/_11sdp" />
                         </RadioGroup>
 
-                        <RelativeLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="4">
+                    </LinearLayout>
 
-                            <ImageView
-                                android:id="@+id/iv_profile"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center"
-                                android:visibility="gone"
-                                android:layout_marginEnd="@dimen/_10sdp"
-                                android:padding="@dimen/_5sdp"
-                                android:src="@drawable/default_image"
-                                 />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:id="@+id/linupload_doc"
+                        android:visibility="gone"
+                        android:weightSum="10">
 
-                            <ImageView
-                                android:id="@+id/iv_remove"
-                                android:layout_width="@dimen/_20sdp"
-                                android:layout_height="@dimen/_20sdp"
-                                android:layout_alignParentEnd="true"
-                                android:layout_marginEnd="@dimen/_5sdp"
-                                android:layout_marginTop="@dimen/_8sdp"
-                                android:background="@mipmap/cross"
-                                android:visibility="gone"
-                                android:backgroundTint="@color/gray"
-                                android:padding="@dimen/_5sdp"
-                                />
-                        </RelativeLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:weightSum="10"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:orientation="horizontal"
+                            android:layout_height="wrap_content">
+                            <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="6">
+                              <TextView
+                                  android:layout_width="wrap_content"
+                                  android:text="Upload Document"
+                                   android:textSize="@dimen/_11sdp"
+                                  android:textColor="@color/black"
+                                  android:layout_height="wrap_content" />
+                            </RelativeLayout>
+
+                            <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                android:id="@+id/widget_icon"
+                                android:layout_width="0dp"
+                                android:layout_weight="4"
+                                android:layout_height="@dimen/_100sdp" >
+                                <ImageView
+                                    android:id="@+id/iv_profile"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center"
+                                    android:layout_margin="7dp"
+                                    android:layout_marginEnd="@dimen/_10sdp"
+                                    android:gravity="center"
+                                    android:scaleType="fitXY"
+                                    android:src="@drawable/default_image"
+                                    />
+
+                                <ImageView
+                                    android:id="@+id/iv_remove"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="top|right"
+                                    android:adjustViewBounds="true"
+                                    android:paddingTop="-10dp"
+                                    android:visibility="gone"
+                                    android:scaleType="fitStart"
+                                    android:src="@drawable/ic_cancel_black_24dp" />
+
+                            </FrameLayout>
+                        </LinearLayout>
+
+                        <EditText
+                            android:id="@+id/edtCompanyName"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:backgroundTint="@color/setting_yellow"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:hint="Company Name"
+                            android:inputType="textPassword" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:weightSum="10"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:orientation="horizontal"
+                            android:layout_height="wrap_content">
+                            <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="6">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:text="Company Logo"
+                                    android:textSize="@dimen/_11sdp"
+                                    android:textColor="@color/black"
+                                    android:layout_height="wrap_content" />
+                            </RelativeLayout>
+
+                            <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                android:layout_width="0dp"
+                                android:layout_weight="4"
+                                android:layout_height="@dimen/_100sdp" >
+                                <ImageView
+                                    android:id="@+id/iv_profilel"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center"
+                                    android:layout_margin="7dp"
+                                    android:layout_marginEnd="@dimen/_10sdp"
+                                    android:gravity="center"
+                                    android:scaleType="fitXY"
+                                    android:src="@drawable/default_image"
+                                    />
+
+                                <ImageView
+                                    android:id="@+id/iv_removel"
+                                    android:visibility="gone"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="top|right"
+                                    android:adjustViewBounds="true"
+                                    android:paddingTop="-10dp"
+                                    android:scaleType="fitStart"
+                                    android:src="@drawable/ic_cancel_black_24dp" />
+
+                            </FrameLayout>
+
+                        </LinearLayout>
 
                     </LinearLayout>
 

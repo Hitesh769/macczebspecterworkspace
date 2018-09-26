@@ -37,7 +37,7 @@ Context context;
         Message message;
         message=new Message();
         message.setMessage("sender message sdfsadfjaklsjdfkasjdflasj");
-        message.setCreatedAt("12:00 Am");
+        message.setCreatedAt("12 mint");
         message.setSender("123");
         mMessageList.add(message);
         message=new Message();

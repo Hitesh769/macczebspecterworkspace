@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_horizontal"
+        android:weightSum="10">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="5">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="Cancel"
+                android:id="@+id/tv_cancel"
+                android:background="@drawable/roundedcorner_top_left"
+                android:padding="@dimen/_10sdp"
+                android:textSize="@dimen/_13sdp"
+                android:textColor="@color/colorBlue"
+                android:layout_height="wrap_content" />
+            <ListView
+                android:id="@+id/minrange1"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <com.wx.wheelview.widget.WheelView
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/minrange"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="5">
+            <TextView
+                android:layout_width="match_parent"
+                android:text="Confirm"
+                android:textAlignment="gravity"
+                android:id="@+id/tv_confirm"
+                android:gravity="right"
+                android:background="@drawable/roundedcorner_top_right"
+                android:padding="@dimen/_10sdp"
+                android:textSize="@dimen/_13sdp"
+                android:textColor="@color/colorBlue"
+                android:layout_height="wrap_content" />
+
+            <com.wx.wheelview.widget.WheelView
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/maxrange"
+                />
+            <ListView
+                android:id="@+id/maxrange1"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+</LinearLayout>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Spectre</string>
+    <string name="app_name">SpectreCar</string>
     <string name="logout">Logout</string>
     <string name="rationale_camera">This app needs access to your camera so you can take pictures.</string>
     <string name="permission_for_storage">This app needs access to your storage so you can take pictures.</string>
@@ -30,7 +30,7 @@
     <string name="txt_term">I agree to Spectre\'s Terms &amp; Conditions.</string>
     <string name="alphabets_only">abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
     <string name="numeric0123456789">0123456789</string>
-    <string name="show_interest">Show Interest</string>
+    <string name="show_interest">I\'m Interested</string>
     <string name="request_service">Request Service</string>
     <string name="request_service_">Service Requested</string>
 

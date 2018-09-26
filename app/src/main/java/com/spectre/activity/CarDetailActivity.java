@@ -36,6 +36,7 @@ import com.spectre.customView.CustomTextView;
 import com.spectre.customView.MyDialogProgress;
 import com.spectre.customView.SessionExpireDialog;
 import com.spectre.helper.AqueryCall;
+import com.spectre.helper.Common;
 import com.spectre.interfaces.RequestCallback;
 import com.spectre.other.Constant;
 import com.spectre.other.Urls;
@@ -55,6 +56,11 @@ public class CarDetailActivity extends AppCompatActivity implements View.OnClick
     private CustomTextView txt_car_name, txt_car_price, txt_car_model, txt_car_version,
             txt_car_type, txt_car_mileage, txt_email_id, txt_vendor_name, txt_adress,
             txt_contact, txt_from, txt_to, txt_car_posted_date,vendor_detail;
+
+    /*car specification*/
+
+    private CustomTextView txt_color,txt_distance,txt_quality,txt_year;
+
     private CircleImageView iv_profile;
     private CardView card1,card2,card3;
     private CustomRayMaterialTextView btn_show_interest;
@@ -93,6 +99,13 @@ public class CarDetailActivity extends AppCompatActivity implements View.OnClick
         txt_contact = (CustomTextView) findViewById(R.id.txt_contact);
         txt_to = (CustomTextView) findViewById(R.id.txt_to);
         txt_from = (CustomTextView) findViewById(R.id.txt_from);
+
+        txt_color = (CustomTextView) findViewById(R.id.txt_color);
+        txt_distance = (CustomTextView) findViewById(R.id.txt_distance);
+        txt_quality = (CustomTextView) findViewById(R.id.txt_quality);
+        txt_year = (CustomTextView) findViewById(R.id.txt_year);
+
+
         vendor_detail = (CustomTextView) findViewById(R.id.vendor_detail);
 
         card1 = (CardView) findViewById(R.id.card1);
@@ -181,6 +194,38 @@ public class CarDetailActivity extends AppCompatActivity implements View.OnClick
             }
 
 
+/*car specification*/
+
+         /*   txt_color =
+                    txt_distance
+            txt_quality
+                    txt_year = (*/
+
+            if (adPost.getColor() != null && !adPost.getColor().isEmpty()) {
+                txt_color.setText(adPost.getColor().trim());
+            } else {
+                txt_color.setText(context.getString(R.string.na));
+            }
+
+            if (adPost.getYear() != null && !adPost.getYear().isEmpty()) {
+                txt_year.setText(adPost.getYear().trim());
+            } else {
+                txt_year.setText(context.getString(R.string.na));
+            }
+
+            if (adPost.getCar_condition() != null && !adPost.getCar_condition().isEmpty()) {
+                txt_quality.setText(adPost.getCar_condition().trim());
+            } else {
+                txt_quality.setText(context.getString(R.string.na));
+            }
+
+            if (adPost.getMileage() != null && !adPost.getMileage().isEmpty()) {
+                txt_distance.setText(adPost.getMileage().trim());
+            } else {
+                txt_distance.setText(context.getString(R.string.na));
+            }
+
+
             if (adPost.getFull_name() != null && !adPost.getFull_name().isEmpty()) {
                 txt_vendor_name.setText(adPost.getFull_name().trim());
                 ((CustomTextView) findViewById(R.id.txt_name_)).setText(adPost.getFull_name().trim());
@@ -202,6 +247,7 @@ public class CarDetailActivity extends AppCompatActivity implements View.OnClick
 
             if (adPost.getAddress() != null && !adPost.getAddress().isEmpty()) {
                 txt_adress.setText(adPost.getAddress().trim());
+
                 ((CustomTextView) findViewById(R.id.txt_address_)).setText(adPost.getAddress().trim());
                 ((CustomTextView) findViewById(R.id.txt_address_)).setCompoundDrawablesWithIntrinsicBounds(Utility.getDrawable(context, 2), null, null, null);
 
@@ -327,6 +373,7 @@ public class CarDetailActivity extends AppCompatActivity implements View.OnClick
             js.put(Constant.PROBLEM, trim);
             js.put(Constant.FROM_DATE, from);
             js.put(Constant.TO_DATE, to);
+            js.put(Constant.END_USER,adPost.getCar_name_id());
 
            /* {
                 "second_user_id":"337",

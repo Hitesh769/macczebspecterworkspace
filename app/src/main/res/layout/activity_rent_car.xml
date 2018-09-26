@@ -75,6 +75,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/edtCaName"
+                    android:backgroundTint="@color/setting_yellow"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
                     android:hint="Car Name"
                     />
                 </android.support.design.widget.TextInputLayout>
@@ -110,6 +113,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:id="@+id/edtModel"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:backgroundTint="@color/setting_yellow"
                     android:hint="@string/model" />
                 </android.support.design.widget.TextInputLayout>
                 <!--  <com.spectre.customView.CustomEditText
@@ -155,11 +161,15 @@
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
+                    android:visibility="gone"
                     android:layout_height="wrap_content">
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:backgroundTint="@color/setting_yellow"
                     android:id="@+id/edtVersion"
                     android:hint="@string/version" />
                 </android.support.design.widget.TextInputLayout>
@@ -293,7 +303,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
                     android:id="@+id/edtCarSeries"
+                    android:backgroundTint="@color/setting_yellow"
                     android:hint="Car Series" />
                 </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
@@ -303,6 +316,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:backgroundTint="@color/setting_yellow"
                     android:id="@+id/edtPrice"
                     android:hint="@string/price_" />
                 </android.support.design.widget.TextInputLayout>
@@ -395,7 +409,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:hint="From Date"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
                     android:inputType="textCapSentences"
+                    android:backgroundTint="@color/setting_yellow"
                     android:longClickable="false"
                     android:singleLine="true" />
                 </android.support.design.widget.TextInputLayout>
@@ -421,6 +438,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:hint="To Date"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:backgroundTint="@color/setting_yellow"
                     android:inputType="textCapSentences"
                     android:longClickable="false"
                     android:singleLine="true" />
@@ -456,6 +476,7 @@
                         android:layout_weight="1"
                         android:focusableInTouchMode="false"
                         android:clickable="true"
+                        android:backgroundTint="@color/setting_yellow"
                         android:hint="@string/location_"
                         android:inputType="textCapSentences"
                         android:singleLine="true"

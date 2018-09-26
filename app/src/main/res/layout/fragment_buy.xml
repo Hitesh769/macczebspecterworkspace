@@ -3,11 +3,49 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:card_view="http://schemas.android.com/tools"
     android:orientation="vertical">
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardView2"
+        style="@style/cardView"
+        android:layout_marginBottom="@dimen/_5sdp"
+        card_view:cardBackgroundColor="@color/colorPrimaryDark"
+        card_view:cardCornerRadius="0dp"
+        card_view:cardElevation="@dimen/_3sdp">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:background="@color/colorPrimaryDark"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/_125sdp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/_3sdp"
+                android:padding="@dimen/_5sdp"
+                android:src="@mipmap/splashlogo" />
+            <Button
+                android:id="@+id/btnSearch"
+                style="@style/Button"
+                android:visibility="gone"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_25sdp"
+                android:layout_marginStart="@dimen/_25sdp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:minHeight="@dimen/_20sdp"
+                android:padding="@dimen/_10sdp"
+                android:text="Filter Car" />
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/_2sdp"
         android:background="@color/colorBackground">
 
         <android.support.v4.widget.SwipeRefreshLayout

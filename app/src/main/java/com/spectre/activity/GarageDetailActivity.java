@@ -1,10 +1,15 @@
 package com.spectre.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Point;
+import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,18 +18,22 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
 import com.daimajia.slider.library.SliderLayout;
 import com.spectre.R;
+import com.spectre.activity_new.BookCarSummaryActivity;
 import com.spectre.adapter.ReviewListAdapter;
 import com.spectre.adapter.WorkListAdapter;
 import com.spectre.beans.AdPost;
@@ -258,16 +267,18 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
                 }
 
                 break;
+           */
             case R.id.btn_show_interest:
 
                 if (s.isEmpty() || s.equalsIgnoreCase("0")) {
                     Utility.openDialogToLogin(context);
                 } else {
                     if (!btn_show_interest.getText().toString().equalsIgnoreCase(getString(R.string.request_service_)))
-                        showProblem();
+                      //  showProblem();
+                        callResetAPI(dd, "");
                 }
 
-                break;*/
+                break;
         }
     }
 
@@ -396,6 +407,7 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
                             // request.onException(json, context.getApplicationContext().getString(R.string.something_wrong));
                             showToast(getString(R.string.something_wrong));
                             MyDialogProgress.close(context);
+
                             e1.printStackTrace();
                         }
                     } else {
@@ -416,6 +428,9 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
                 @Override
                 public void onFailed(JSONObject js, String msg) {
                     showToast(msg);
+                    if (msg.equalsIgnoreCase("already interested.")){
+                        Utility.contectDialog(adPost.getMobile_no(),GarageDetailActivity.this);
+                    }
                     MyDialogProgress.close(context);
                 }
 
@@ -462,4 +477,8 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
     private void showToast(String msg) {
         Utility.showToast(context, msg);
     }
+
+
+
+
 }

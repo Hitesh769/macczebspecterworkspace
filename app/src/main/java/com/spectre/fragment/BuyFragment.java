@@ -2,6 +2,7 @@ package com.spectre.fragment;
 
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,13 +19,25 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -45,10 +58,14 @@ import com.spectre.customView.SessionExpireDialog;
 import com.spectre.helper.AqueryCall;
 import com.spectre.interfaces.RequestCallback;
 import com.spectre.other.Constant;
+import com.spectre.other.PrefConstant;
 import com.spectre.other.Urls;
 import com.spectre.utility.PermissionUtility;
 import com.spectre.utility.SharedPrefUtils;
 import com.spectre.utility.Utility;
+import com.wx.wheelview.adapter.ArrayWheelAdapter;
+import com.wx.wheelview.widget.WheelView;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -80,12 +97,21 @@ public class BuyFragment extends Fragment {
     RangeSeekBar rangPrice;
 
     Unbinder unbinder;
-    @BindView(R.id.txtMinRange)
+    @BindView(R.id.tvMinRange)
     TextView txtMinRange;
-    @BindView(R.id.txtMaxRange)
+    @BindView(R.id.tvMaxRange)
     TextView txtMaxRange;
-    @BindView(R.id.txtLocation)
-    TextView txtLocation;
+    @BindView(R.id.tv_filter)
+    TextView tv_filter;
+    @BindView(R.id.edtLocation)
+    EditText edtLocation;
+    @BindView(R.id.imgLocation)
+    ImageView imgLocation;
+    @BindView(R.id.btnSearch)
+    Button btnSearch;
+
+    @BindView(R.id.lin_range)
+    LinearLayout linRange;
 
     private View view;
 
@@ -103,6 +129,10 @@ public class BuyFragment extends Fragment {
     private SwipeRefreshLayout swipeRefreshLayout;
     private FilterResponse filterResponse;
     private String lastFragment = "";
+    ArrayList<String> arrayList_minrange=new ArrayList();
+    ArrayList<String> arrayList_maxrange=new ArrayList();
+
+    String strMinValue="1000",strMaxValue="100000";
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -151,13 +181,20 @@ public class BuyFragment extends Fragment {
         setSwipeLayout();
         setUpRecyclerListener();
         callMethodEventList(0);
+        arrayList_minrange.clear();
+        for(long i=1000;i<100000;i+=1000){
+            String istr=""+i;
+            arrayList_minrange.add(istr);
+            arrayList_maxrange.add(istr);
+        }
+
 
         // set visibility for menu and back icon
         mainActivity().changeBottomMenuColor(HomeAct.MENU_BUY);
 
         // hide back arrow
         mainActivity().imgBack.setVisibility(View.GONE);
-
+        mainActivity().imgCross.setVisibility(View.GONE);
         // set screen title
         mainActivity().txtAppBarTitle.setText(getString(R.string.buy));
 
@@ -175,101 +212,6 @@ public class BuyFragment extends Fragment {
             }
         });
     }
-
-//    private static final int PLACE_PICKER_REQUEST = 999;
-//    private static final int LOCATION_PERMISSION_CONSTANT = 101;
-//    private String latitude = "";
-//    private String longitude = "";
-
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (requestCode == PLACE_PICKER_REQUEST) {
-//            if (resultCode == RESULT_OK) {
-//                Place place = PlacePicker.getPlace(data, getActivity());
-//                StringBuilder stBuilder = new StringBuilder();
-//                String placename = String.format("%s", place.getName());
-//                latitude = String.valueOf(place.getLatLng().latitude);
-//                setLog("LAT 2 : " + latitude);
-//                longitude = String.valueOf(place.getLatLng().longitude);
-//                String address = String.format("%s", place.getAddress());
-//                stBuilder.append(placename);
-//                stBuilder.append(", ");
-//                stBuilder.append(address);
-//                // tv_rent_fragment_location.setText(stBuilder.toString());
-//                callMethodEventList(0);
-//            }
-//        }
-//
-//    }
-
-//    private void getLocation() {
-//        // get location
-//        if (!PermissionUtility.checkPermission(context, PermissionUtility.ACCESS_FINE_LOCATION) ||
-//                !PermissionUtility.checkPermission(context, PermissionUtility.ACCESS_COARSE_LOCATION)) {
-//            PermissionUtility.requestPermission(getActivity(), new String[]{PermissionUtility.ACCESS_FINE_LOCATION,
-//                    PermissionUtility.ACCESS_COARSE_LOCATION}, LOCATION_PERMISSION_CONSTANT);
-//        } else {
-//            setLog("PERMISSION grant");
-//            LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-//            List<String> providers = locationManager.getProviders(true);
-//            Location bestLocation = null;
-//            for (String provider : providers) {
-//                Location l = locationManager.getLastKnownLocation(provider);
-//                if (l == null) {
-//                    continue;
-//                }
-//                if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
-//                    bestLocation = l; // Found best last known location;
-//                }
-//            }
-//            if (bestLocation != null) {
-//                setLog("Lat : " + bestLocation.getLatitude() + " - Long : " + bestLocation.getLongitude());
-//                latitude = String.valueOf(bestLocation.getLatitude());
-//                setLog("LAT 1 : " + latitude);
-//                longitude = String.valueOf(bestLocation.getLongitude());
-//                setLog("Lat : " + getFullAddress(Double.valueOf(latitude), Double.valueOf(longitude)));
-//                // tv_rent_fragment_location.setText(getFullAddress(Double.valueOf(latitude), Double.valueOf(longitude)));
-//
-//            } else {
-//                setLog("Location is null");
-//            }
-//        }
-//    }
-
-//    private Address getAddress(Context context, double lat, double lng) {
-//        Geocoder geocoder = new Geocoder(context, Locale.getDefault());
-//
-//        if (!geocoder.isPresent()) {
-//            // showToast(context, R.string.e_service_not_available);
-//            return null;
-//        }
-//
-//        Address obj = null;
-//        try {
-//            List<Address> addresses = geocoder.getFromLocation(lat, lng, 1);
-//            if (addresses.size() > 0)
-//                obj = addresses.get(0);
-//            return obj;
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
-
-//    private String getFullAddress(double lat, double lng) {
-//        Address address = getAddress(context, lat, lng);
-//        if (address == null) {
-//            return "";
-//        }
-//        StringBuffer buffer = new StringBuffer();
-//        buffer.append(address.getAddressLine(0));
-//        buffer.append((address.getAdminArea() == null) ? "" : " ," + address.getLocality());
-//        buffer.append((address.getAdminArea() == null) ? "" : " ," + address.getAdminArea());
-//        buffer.append((address.getSubLocality() == null) ? "" : " ," + address.getSubLocality());
-//        buffer.append((address.getCountryName() == null) ? "" : " ," + address.getCountryName());
-//        buffer.append((address.getPostalCode() == null) ? "" : " ," + address.getPostalCode());
-//        return String.valueOf(buffer);
-//    }
 
     public void setSwipeLayout() {
         swipeRefreshLayout = ((SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout));
@@ -394,7 +336,7 @@ public class BuyFragment extends Fragment {
 
             AqueryCall request = new AqueryCall(getActivity());
             setLog("TOKEN : " + SharedPrefUtils.getPreference(context, Constant.USER_TOKEN, ""));
-            request.postWithJsonToken(Urls.FILTER, SharedPrefUtils.getPreference(context, Constant.USER_TOKEN, ""),params, new RequestCallback() {
+            request.postWithJsonToken(Urls.FILTER, SharedPrefUtils.getPreference(context, Constant.USER_TOKEN, ""), params, new RequestCallback() {
 
                 @Override
                 public void onSuccess(JSONObject js, String success) {
@@ -528,17 +470,152 @@ public class BuyFragment extends Fragment {
 
     @OnClick(R.id.btnSearch)
     public void onViewClicked() {
-
-        BuySearchFragment buySearchFragment =new BuySearchFragment();
-        Bundle bundle=new Bundle();
-        bundle.putString(Constant.MAXRANGE,getTextViewString(txtMaxRange));
-        bundle.putString(Constant.MINRANGE,getTextViewString(txtMinRange));
-        bundle.putString(Constant.LATITUDE,latitude);
-        bundle.putString(Constant.LONGITUDE,longitude);
+        BuySearchFragment buySearchFragment = new BuySearchFragment();
+        Bundle bundle = new Bundle();
+      /*  bundle.putString(Constant.MAXRANGE, getTextViewString(txtMaxRange));
+        bundle.putString(Constant.MINRANGE, getTextViewString(txtMinRange));
+        bundle.putString(Constant.LATITUDE, latitude);
+        bundle.putString(Constant.LONGITUDE, longitude);
+        buySearchFragment.setArguments(bundle);*/
+        bundle.putString(PrefConstant.BRANDID, "");
+        bundle.putString(PrefConstant.MODELID, "");
+        bundle.putString(PrefConstant.LONGITUDE, longitude);
+        bundle.putString(PrefConstant.LATITUDE, latitude);
+        bundle.putString(PrefConstant.COLOR, "");
+        bundle.putString(PrefConstant.FROMYEAR, "");
+        bundle.putString(PrefConstant.TOYEAR, "");
+        bundle.putString(PrefConstant.TRANSACTIONTYPE, "");
+        bundle.putString(PrefConstant.SELLERTYPE, "");
         buySearchFragment.setArguments(bundle);
         startNewFragment(buySearchFragment, BuySearchFragment.TAG);
         //setFilterData();
     }
+
+    @OnClick(R.id.tv_filter)
+    public void onFilterClick() {
+        mainActivity().txt_filter.setVisibility(View.GONE);
+        BuyFilterFragment buySearchFragment = new BuyFilterFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(PrefConstant.BRANDID, "");
+        bundle.putString(PrefConstant.MODELID, "");
+        bundle.putString(PrefConstant.LONGITUDE, longitude);
+        bundle.putString(PrefConstant.LATITUDE, latitude);
+        bundle.putString(PrefConstant.COLOR, "");
+        bundle.putString(PrefConstant.FROMYEAR, "");
+        bundle.putString(PrefConstant.TOYEAR, "");
+        bundle.putString(PrefConstant.TRANSACTIONTYPE, "");
+        bundle.putString(PrefConstant.SELLERTYPE, "");
+        buySearchFragment.setArguments(bundle);
+        startNewFragment(buySearchFragment, BuyFilterFragment.TAG);
+
+    }
+    @OnClick(R.id.lin_range)
+    public void rangeDialog(){
+        final Dialog dialog = new Dialog(context, R.style.Theme_Dialog);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.pickerdialog);
+        TextView tvCancel = (TextView) dialog.findViewById(R.id.tv_cancel);
+        TextView tvConfirm = (TextView) dialog.findViewById(R.id.tv_confirm);
+      //  ListView  minrange= (ListView) dialog.findViewById(R.id.minrange);
+        WheelView minrange = (WheelView) dialog.findViewById(R.id.minrange);
+        WheelView maxrange = (WheelView) dialog.findViewById(R.id.maxrange);
+     //   ListView maxrange = (ListView) dialog.findViewById(R.id.maxrange);
+
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, arrayList_minrange);
+
+        minrange.setSelection(0);
+        minrange.setWheelAdapter(new ArrayWheelAdapter(context));
+        minrange.setSkin(WheelView.Skin.Common);
+        minrange.setWheelSize(5);
+        minrange.setWheelData(arrayList_minrange);
+        minrange.setOnWheelItemSelectedListener(new WheelView.OnWheelItemSelectedListener() {
+            @Override
+            public void onItemSelected(int position, Object o) {
+               // Toast.makeText(context, arrayList_minrange.get(position), Toast.LENGTH_SHORT).show();
+                strMinValue=arrayList_minrange.get(position);
+            }
+        });
+
+
+        /*  minrange.setAdapter(adapter);
+        minrange.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(context, arrayList_minrange.get(i), Toast.LENGTH_SHORT).show();
+                strMinValue=arrayList_minrange.get(i);
+            }
+        });*/
+
+
+        final ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, arrayList_maxrange);
+
+
+        maxrange.setSelection(1);
+        maxrange.setWheelAdapter(new ArrayWheelAdapter(context));
+        maxrange.setWheelSize(5);
+        maxrange.setWheelData(arrayList_maxrange);
+        maxrange.setSkin(WheelView.Skin.Common);
+        maxrange.setOnWheelItemSelectedListener(new WheelView.OnWheelItemSelectedListener() {
+            @Override
+            public void onItemSelected(int position, Object o) {
+                //Toast.makeText(context, arrayList_maxrange.get(position), Toast.LENGTH_SHORT).show();
+                strMaxValue=arrayList_maxrange.get(position);
+            }
+        });
+
+      /*  maxrange.setAdapter(adapter1);
+        maxrange.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                adapter1.notifyDataSetChanged();
+                Toast.makeText(context, arrayList_maxrange.get(i), Toast.LENGTH_SHORT).show();
+
+                    strMaxValue = arrayList_maxrange.get(i);
+
+              //    view.setBackgroundColor(getResources().getColor(R.color.colorGray));
+
+
+            }
+        });*/
+
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                Toast.makeText(context,"Dismissed..!!",Toast.LENGTH_SHORT).show();
+            }
+        });
+        tvConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                long lngmin= Long.parseLong(strMinValue);
+                long lngmax= Long.parseLong(strMaxValue);
+                if (lngmin>lngmax){
+                    Toast.makeText(context, "min range can not be greater than max range", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    txtMinRange.setText(strMinValue);
+                    txtMaxRange.setText(strMaxValue);
+                    dialog.dismiss();
+                }
+            }
+        });
+        Window window = dialog.getWindow();
+        WindowManager.LayoutParams wlp =  new WindowManager.LayoutParams();
+        wlp.copyFrom(dialog.getWindow().getAttributes());
+        wlp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        wlp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        wlp.gravity = Gravity.BOTTOM;
+        window.setBackgroundDrawableResource(android.R.color.transparent);
+        //wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        window.setAttributes(wlp);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+    }
+
+
     public void startNewFragment(Fragment fragment, String tag) {
         // --- remove all fragment
         if (lastFragment.trim().length() > 0) {
@@ -553,6 +630,7 @@ public class BuyFragment extends Fragment {
         transaction.addToBackStack(tag);
         transaction.commit();
     }
+
     private void setFilterData() {
         FilterResponse filterResponse = new FilterResponse();
         filterResponse.setCar_type("");
@@ -567,13 +645,14 @@ public class BuyFragment extends Fragment {
         filterResponse.setModel_id("0");
         filterResponse.setCarModel("");
         filterResponse.setVersion_id("0");
-        filterResponse.setLocation(getTextViewString(txtLocation));
+        filterResponse.setLocation(getTextViewString(edtLocation));
         filterResponse.setCarVersion("");
         // resetData(filterResponse);
     }
 
     /* [START] - Location methods */
-    @OnClick(R.id.txtLocation)
+
+    @OnClick(R.id.edtLocation)
     public void onLocationClicked() {
         setLog("location text click");
         try {
@@ -587,12 +666,13 @@ public class BuyFragment extends Fragment {
     @OnClick(R.id.imgLocation)
     public void onImgLocationClicked() {
         setLog("location image click");
-        try {
+        getLocation();
+       /* try {
             Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).build(getActivity());
             startActivityForResult(intent, PLACE_PICKER_REQUEST);
         } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     private static final int LOCATION_PERMISSION_CONSTANT = 101;
@@ -626,7 +706,7 @@ public class BuyFragment extends Fragment {
                 Utility.setLog("LAT 1 : " + latitude);
                 longitude = String.valueOf(bestLocation.getLongitude());
                 Utility.setLog("Lat : " + getFullAddress(Double.valueOf(latitude), Double.valueOf(longitude)));
-                txtLocation.setText(getFullAddress(Double.valueOf(latitude), Double.valueOf(longitude)));
+                edtLocation.setText(getFullAddress(Double.valueOf(latitude), Double.valueOf(longitude)));
 
             } else {
                 Utility.setLog("Location is null");
@@ -650,7 +730,7 @@ public class BuyFragment extends Fragment {
                 stBuilder.append(", ");
                 stBuilder.append(address);
                 setLog("address : " + address);
-                txtLocation.setText(stBuilder.toString());
+                edtLocation.setText(stBuilder.toString());
                 Arraylist.clear();
                 // callMethodEventList(0);
             }
@@ -734,5 +814,9 @@ public class BuyFragment extends Fragment {
                 .create()
                 .show();
     }
+
+
+
+
     /* [END] - Location methods */
 }

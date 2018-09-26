@@ -38,6 +38,7 @@ import com.spectre.beans.VersionName;
 import com.spectre.helper.AqueryCall;
 import com.spectre.interfaces.RequestCallback;
 import com.spectre.other.Constant;
+import com.spectre.other.PrefConstant;
 import com.spectre.other.Urls;
 import com.spectre.utility.PermissionUtility;
 import com.spectre.utility.SharedPrefUtils;
@@ -123,7 +124,8 @@ public class BuyFilterFragment extends Fragment {
     private ArrayAdapter<CarName> arrayAdapterCarName;
     private ArrayAdapter<ModelName> arrayAdapterCarModel;
     private ArrayAdapter<VersionName> arrayAdapterCarVersion;
-
+    private String carNameId="",modelId="";
+    private static String carName="",modelName="";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -147,15 +149,67 @@ public class BuyFilterFragment extends Fragment {
 
         // hide back arrow
         mainActivity().imgBack.setVisibility(View.GONE);
+        mainActivity().imgCross.setVisibility(View.VISIBLE);
 
+        mainActivity().imgCross.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              mainActivity().onBackPressed();
+                mainActivity().imgCross.setVisibility(View.GONE);
+            }
+        });
         // set screen title
-        mainActivity().txtAppBarTitle.setText(getString(R.string.buy));
+        mainActivity().txtAppBarTitle.setText("Filter");
 
         // hide or show app bar
-        mainActivity().rlAppBarMain.setVisibility(View.GONE);
+        mainActivity().rlAppBarMain.setVisibility(View.VISIBLE);
 
         setCarNames();
         getLocation();
+
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            if (bundle.getString(PrefConstant.LATITUDE)!=null && !bundle.getString(PrefConstant.LATITUDE).isEmpty()) {
+                latitude = bundle.getString(PrefConstant.LATITUDE);
+                longitude=bundle.getString(PrefConstant.LONGITUDE);
+            }
+            if (bundle.getString(PrefConstant.BRANDID)!=null && !bundle.getString(PrefConstant.BRANDID).isEmpty()) {
+                carNameId=bundle.getString(PrefConstant.BRANDID);
+                inputBrandName.setText(carName);
+
+            }
+            if (!bundle.getString(PrefConstant.MODELID).isEmpty()) {
+                modelId=bundle.getString(PrefConstant.MODELID);
+                inputModelName.setText(modelName);
+              /*  for (int i=0;i<listModelName.size();i++) {
+                    if (bundle.getString(PrefConstant.MODELID).equals(listModelName.get(i).getId())) {
+                        inputModelName.setText(listModelName.get(i).getModel_name());
+                        modelId=listModelName.get(i).getId();
+                        break;
+                    }
+                }*/
+            }
+
+            if (!bundle.getString(PrefConstant.COLOR).isEmpty()) {
+                inputColor.setText(bundle.getString(PrefConstant.COLOR));
+            }
+            if (!bundle.getString(PrefConstant.FROMYEAR).isEmpty()) {
+                inputFromYear.setText(bundle.getString(PrefConstant.FROMYEAR));
+            }
+            if (!bundle.getString(PrefConstant.TOYEAR).isEmpty()) {
+                inputToYear.setText(bundle.getString(PrefConstant.TOYEAR));
+            }
+            if (!bundle.getString(PrefConstant.TRANSACTIONTYPE).isEmpty()) {
+                inputTransactionType.setText(bundle.getString(PrefConstant.TRANSACTIONTYPE));
+            }
+            if (!bundle.getString(PrefConstant.SELLERTYPE).isEmpty()) {
+                inputSellerType.setText(bundle.getString(PrefConstant.SELLERTYPE));
+            }
+
+            // maxrange = bundle.getString(Constant.MAXRANGE);
+            //  minrang=bundle.getString(Constant.MINRANGE);
+
+        }
         //setCarModel("", false);
         //setCarVersion("", false);
 
@@ -178,23 +232,19 @@ public class BuyFilterFragment extends Fragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btnSearch:
+                mainActivity().imgCross.setVisibility(View.GONE);
                 BuySearchFragment buySearchFragment = new BuySearchFragment();
-              /*  Bundle bundle=new Bundle();
-                bundle.putString(Constant.MAXRANGE,getTextViewString(txtMaxRange));
-                bundle.putString(Constant.MINRANGE,getTextViewString(txtMinRange));
-                bundle.putString(Constant.LATITUDE,latitude);
-                bundle.putString(Constant.LONGITUDE,longitude);
-
-                Common.strDatePickUp=txtDatePickUp.getText().toString();
-                Common.strMonthPickUp=txtMonthPickUp.getText().toString();
-                Common.strDayPickUp=txtDayPickUp.getText().toString();
-                Common.strYearPickUp=txtYearPickUp.getText().toString();
-                Common.strDateDropoff=txtDateDropUp.getText().toString();
-                Common.strMonthDropoff=txtMonthDropUp.getText().toString();
-                Common.strDayDropoff=txtDayDropUp.getText().toString();
-                Common.strYearDropoff=txtYearDropUp.getText().toString();
-                Common.location=input_location.getText().toString();
-                buySearchFragment.setArguments(bundle);*/
+                Bundle bundle=new Bundle();
+                bundle.putString(PrefConstant.BRANDID,carNameId);
+                bundle.putString(PrefConstant.MODELID,modelId);
+                bundle.putString(PrefConstant.LONGITUDE,longitude);
+                bundle.putString(PrefConstant.LATITUDE,latitude);
+                bundle.putString(PrefConstant.COLOR,inputColor.getText().toString());
+                bundle.putString(PrefConstant.FROMYEAR,inputFromYear.getText().toString());
+                bundle.putString(PrefConstant.TOYEAR,inputToYear.getText().toString());
+                bundle.putString(PrefConstant.TRANSACTIONTYPE,inputTransactionType.getText().toString());
+                bundle.putString(PrefConstant.SELLERTYPE,inputSellerType.getText().toString());
+                buySearchFragment.setArguments(bundle);
                 mainActivity().startNewFragment(buySearchFragment);
                 break;
             case R.id.input_brand_name:
@@ -204,6 +254,8 @@ public class BuyFilterFragment extends Fragment {
                         .setOnItemClickListener(new OnItemClickListener() {
                             @Override
                             public void onItemClick(DialogPlus dialog, Object item, View view, int position) {
+                                carNameId=listBrandName.get(position).getId();
+                                carName=listBrandName.get(position).getCar_name();
                                 inputBrandName.setText(listBrandName.get(position).getCar_name());
                                 setCarModel(listBrandName.get(position).getId(), true);
                                 //  setCarVersion("", false);
@@ -222,6 +274,8 @@ public class BuyFilterFragment extends Fragment {
                         .setOnItemClickListener(new OnItemClickListener() {
                             @Override
                             public void onItemClick(DialogPlus dialog1, Object item, View view, int position) {
+                                modelId=listModelName.get(position).getId();
+                                modelName=listModelName.get(position).getModel_name();
                                 inputModelName.setText(listModelName.get(position).getModel_name());
                                 setCarVersion(listModelName.get(position).getId(), true);
                                 //  setCarVersion("", false);
@@ -423,11 +477,11 @@ public class BuyFilterFragment extends Fragment {
     //Type 1 = Brand list,2 = Model,3=Version
     private void getList(final int type, String id) {
 
-        if (!Utility.isConnectingToInternet(context)) {
+       /* if (!Utility.isConnectingToInternet(context)) {
             Utility.showToast(context, getString(R.string.connection));
             return;
         }
-
+*/
         JSONObject jsonObject = new JSONObject();
         String Url = "";
 

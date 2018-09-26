@@ -45,13 +45,35 @@
                             android:id="@+id/txtLocation"
                             style="@style/textView"
                             android:layout_weight="1"
-                            android:background="@drawable/dialog_bg"
                             android:maxLines="1"
                             android:padding="@dimen/_8sdp"
                             android:singleLine="true"
                             android:text="@string/location_"
-                            android:textColor="@color/black_material"
-                            android:textSize="@dimen/_10sdp" />
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_10sdp"
+                            android:visibility="gone" />
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/input_layout_locatoin"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".9">
+
+                            <EditText
+                                android:id="@+id/edtLocation"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/setting_yellow"
+                                android:clickable="true"
+                                android:ellipsize="end"
+                                android:focusable="false"
+                                android:focusableInTouchMode="false"
+                                android:inputType="text"
+                                android:singleLine="true"
+                                android:text="@string/location_"
+                                android:textColor="@color/white" />
+
+                        </android.support.design.widget.TextInputLayout>
 
                         <ImageView
                             android:id="@+id/imgLocation"
@@ -70,20 +92,110 @@
                         android:layout_marginBottom="@dimen/_8sdp"
                         android:layout_marginEnd="@dimen/_10sdp"
                         android:layout_marginStart="@dimen/_15sdp"
-                        android:orientation="horizontal">
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:weightSum="10">
 
                         <TextView
-                            style="@style/textView"
-                            android:layout_gravity="bottom"
-                            android:layout_marginBottom="@dimen/_2sdp"
-                            android:padding="@dimen/_5sdp"
-                            android:text="@string/price_"
-                            android:textColor="@color/white" />
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.5"
+                            android:padding="@dimen/_2sdp"
+                            android:text="Price Range"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12sdp" />
+
+                        <LinearLayout
+                            android:id="@+id/lin_range"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/_5sdp"
+                            android:layout_weight="6"
+                            android:orientation="horizontal"
+                            android:weightSum="10">
+
+                            <TextView
+                                android:id="@+id/tvMinRange"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="@dimen/_5sdp"
+                                android:layout_marginStart="@dimen/_5sdp"
+                                android:layout_weight="5"
+                                android:background="@drawable/rectanglebshape"
+                                android:elevation="@dimen/_5sdp"
+                                android:gravity="center"
+                                android:padding="@dimen/_5sdp"
+                                android:text="1000"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_12sdp" />
+
+                            <TextView
+                                android:id="@+id/tvMaxRange"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="@dimen/_5sdp"
+                                android:layout_marginStart="@dimen/_5sdp"
+                                android:layout_weight="5"
+                                android:background="@drawable/rectanglebshape"
+                                android:elevation="@dimen/_5sdp"
+                                android:gravity="center"
+                                android:padding="@dimen/_5sdp"
+                                android:text="100000"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_12sdp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2.5"
+                            android:background="#2dffffff"
+                            android:gravity="center"
+                            android:paddingStart="@dimen/_5sdp"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="@dimen/_12sdp"
+                                android:layout_height="@dimen/_15sdp"
+                                android:background="@drawable/filtericon"
+                                android:backgroundTint="#fff"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:id="@+id/tv_filter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:elevation="@dimen/_5sdp"
+                                android:gravity="center"
+                                android:padding="@dimen/_5sdp"
+                                android:text="Filter"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_12sdp" />
+                        </LinearLayout>
+
+
+                        <TextView
+                            android:id="@+id/tv_filter1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:background="#2dffffff"
+                            android:elevation="@dimen/_5sdp"
+                            android:paddingBottom="@dimen/_5sdp"
+                            android:paddingLeft="@dimen/_15sdp"
+                            android:paddingRight="@dimen/_15sdp"
+                            android:paddingTop="@dimen/_5sdp"
+                            android:text="Filter"
+                            android:textColor="@color/white"
+                            android:visibility="gone" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:visibility="gone">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -114,6 +226,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_30sdp" />
                         </LinearLayout>
+
                     </LinearLayout>
 
                     <Button
@@ -134,11 +247,11 @@
             <com.spectre.customView.CustomTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Recommended Cars"
                 android:background="@color/colorBackground"
+                android:paddingBottom="@dimen/_5sdp"
                 android:paddingStart="@dimen/_20sdp"
                 android:paddingTop="@dimen/_5sdp"
-                android:paddingBottom="@dimen/_5sdp"
+                android:text="Recommended Cars"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_15sdp"
@@ -185,8 +298,9 @@
                     app:pv_circular="false"
                     app:pv_progressMode="indeterminate"
                     app:pv_progressStyle="@style/ColorsLinearProgressDrawableStyle" />
-
             </RelativeLayout>
+
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
+
 </android.support.v4.widget.SwipeRefreshLayout>

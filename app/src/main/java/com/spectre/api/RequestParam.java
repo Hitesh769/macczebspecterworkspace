@@ -10,5 +10,7 @@ public class RequestParam {
     public final static String USER_NAME = "user_name";
     public final static String USER_EMAIL = "user_email";
     public final static String USER_TYPE = "user_type";
+    public final static String SELLER_TYPE = "seller_type";
+    public final static String CERTIFICATE = "certificate";
     public final static String MOBILE_CODE = "mobile_code";
 }

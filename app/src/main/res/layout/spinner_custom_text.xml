@@ -8,5 +8,6 @@
     android:padding="8dp"
     android:textColor="@color/black"
     android:textSize="12sp"
+    android:focusable="false"
     app:edittextfont="Poppins-Regular.ttf"
     app:edittextfontHint="Poppins-Regular.ttf" />

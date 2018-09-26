@@ -1,5 +1,6 @@
 package com.spectre.activity_new;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
@@ -13,14 +14,24 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 
 import com.spectre.R;
 import com.spectre.beans.AdPost;
 import com.spectre.customView.AlertBox;
 import com.spectre.customView.CustomTextView;
+import com.spectre.customView.MyDialogProgress;
+import com.spectre.customView.SessionExpireDialog;
+import com.spectre.helper.AqueryCall;
 import com.spectre.helper.Common;
+import com.spectre.interfaces.RequestCallback;
 import com.spectre.other.Constant;
+import com.spectre.other.Urls;
+import com.spectre.utility.SharedPrefUtils;
 import com.spectre.utility.Utility;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -125,6 +136,8 @@ public class BookCarSummaryActivity extends AppCompatActivity {
     CustomTextView txtMileg;
     @BindView(R.id.summary_buyer)
     LinearLayout linSummaryBuyer;
+    @BindView(R.id.scrollView)
+    ScrollView scrollView;
     private ActionBar actionBar;
     private Context context;
     private AdPost adPost;
@@ -132,13 +145,18 @@ public class BookCarSummaryActivity extends AppCompatActivity {
     private String perDay = "";
     private Display display;
     private boolean isSuccess = false;
+    RelativeLayout toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
         Utility.setContentView(context, R.layout.activity_book_a_car_summary);
+
         actionBar = Utility.setUpToolbar_(context, "<font color='#ffffff'>Summary</font>", true);
+
+        toolbar = (RelativeLayout) findViewById(R.id.toolbar);
+
         ButterKnife.bind(this);
         initView();
     }
@@ -152,10 +170,11 @@ public class BookCarSummaryActivity extends AppCompatActivity {
     public void onViewClicked() {
 
         if (isSuccess == false) {
-            isSuccess = true;
-            card1.setVisibility(View.VISIBLE);
-            btnConfirm.setText("Finish");
+            callAPI("", "", "","");
+           // scrollView.pageScroll(0);
+           // scrollView.setVerticalScrollbarPosition(0);
         } else {
+
             getSuccessIntent();
         }
 
@@ -170,24 +189,22 @@ public class BookCarSummaryActivity extends AppCompatActivity {
         type = getIntent().getExtras().getInt(Constant.TYPE);
 
         if (type != 1) {
-        //    perDay = getString(R.string.per_day);
+            //    perDay = getString(R.string.per_day);
             linSummaryBuyer.setVisibility(View.VISIBLE);
             relGender.setVisibility(View.VISIBLE);
             relLocataion.setVisibility(View.VISIBLE);
             linSummaryRent.setVisibility(View.GONE);
-            
-        }
 
+        }
 
 
         txtPickUp.setText(Common.strDayPickUp + ", " + Common.strYearPickUp + " " + Common.strMonthPickUp + " " + Common.strDatePickUp);
         txtDropOff.setText(Common.strDayDropoff + ", " + Common.strYearDropoff + " " + Common.strMonthDropoff + " " + Common.strDateDropoff);
 
-        txtName.setText(getIntent().getStringExtra(Constant.DRIVER_NAME));
+      /*  txtName.setText(getIntent().getStringExtra(Constant.DRIVER_NAME));
         txtEmail.setText(getIntent().getStringExtra(Constant.DRIVER_EMAIL));
-        txtPhone.setText(getIntent().getStringExtra(Constant.DRIVER_PHONE));
+        txtPhone.setText(getIntent().getStringExtra(Constant.DRIVER_PHONE));*/
 
-        txtLocation.setText(Common.location);
 
         if (getIntent().getExtras() != null && getIntent().getExtras().get(Constant.DATA) != null) {
 
@@ -204,6 +221,63 @@ public class BookCarSummaryActivity extends AppCompatActivity {
             } else {
                 txtTotal.setText(context.getString(R.string.na));
             }
+            /*set data for buy*/
+
+            if (!adPost.getFull_name().isEmpty()) {
+                txtName.setText(adPost.getFull_name().trim());
+            } else {
+                txtName.setText(context.getString(R.string.na));
+            }
+            if (!adPost.getEmail().isEmpty()) {
+                txtEmail.setText(adPost.getEmail().trim());
+            } else {
+                txtEmail.setText(context.getString(R.string.na));
+            }
+            if (!adPost.getMobile_no().isEmpty()) {
+                txtPhone.setText(adPost.getMobile_no().trim());
+            } else {
+                txtPhone.setText(context.getString(R.string.na));
+            }
+            if (!adPost.getLocation().isEmpty()) {
+                txtLocation.setText(adPost.getLocation().trim());
+            } else {
+                txtLocation.setText(context.getString(R.string.na));
+            }
+            if (!adPost.getCar_name().isEmpty()) {
+                txtCarName.setText(adPost.getCar_name().trim());
+            } else {
+                txtCarName.setText(context.getString(R.string.na));
+            }
+            if (!adPost.getModel().isEmpty()) {
+                txtCarModel.setText(adPost.getModel().trim());
+            } else {
+                txtCarModel.setText(context.getString(R.string.na));
+            }
+            /*summary data*/
+            if (!adPost.getVersion().isEmpty()) {
+                txtCarSeries.setText(adPost.getVersion().trim());
+            } else {
+                txtLocation.setText(context.getString(R.string.na));
+            }
+            if (!adPost.getCar_type().isEmpty()) {
+                txtCarType.setText(adPost.getCar_type().trim());
+            } else {
+                txtCarType.setText(context.getString(R.string.na));
+            }
+            if (!adPost.getColor().isEmpty()) {
+                txtColor.setText(adPost.getColor().trim());
+            } else {
+                txtColor.setText(context.getString(R.string.na));
+            }
+            if (!adPost.getMileage().isEmpty()) {
+                txtMileg.setText(adPost.getMileage().trim());
+            } else {
+                txtMileg.setText(context.getString(R.string.na));
+            }
+
+
+
+
          /* if (adPost.getYear_from() != null && !adPost.getYear_from().isEmpty()) {
               txtFrom.setText(adPost.getYear_from().trim());
 
@@ -232,5 +306,106 @@ public class BookCarSummaryActivity extends AppCompatActivity {
     public void getSuccessIntent() {
         Intent intent = new Intent(context, HomeAct.class);
         startActivity(intent);
+    }
+
+    private void callAPI(String dialog, String trim, String from, String to) {
+        MyDialogProgress.open(context);
+
+        JSONObject js = new JSONObject();
+        try {
+            js.put(Constant.SECOND_USER_ID, adPost.getUser_id());
+            js.put(Constant.INTERESTED_ID, adPost.getAdd_id());
+            js.put(Constant.TYPE, type == 0 ? 1 : 2);
+            js.put(Constant.PROBLEM, trim);
+            js.put(Constant.FROM_DATE, from);
+            js.put(Constant.TO_DATE, to);
+            js.put(Constant.END_USER,adPost.getCar_name_id());
+
+           /* {
+                "second_user_id":"337",
+                    "type":"3",
+                    "interested_id":"0"
+            }*/
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        new AqueryCall(this).postWithJsonToken(Urls.INTEREST, SharedPrefUtils.getPreference(context, Constant.USER_TOKEN, ""), js, new RequestCallback() {
+            @Override
+            public void onSuccess(JSONObject js, String success) {
+                // showToast(success);
+                MyDialogProgress.close(context);
+               // isChange = true;
+                //dd.dismiss();
+                isSuccess = true;
+                card1.setVisibility(View.VISIBLE);
+                btnConfirm.setText("Finish");
+                toolbar.setVisibility(View.GONE);
+
+                adPost.setIs_interest("1");
+               // getSuccessIntent();
+                /*if (!adPost.getIs_interest().isEmpty() && adPost.getIs_interest().equalsIgnoreCase("1")) {
+                    btn_show_interest.setText(R.string.request_sent);
+                } else {
+                    if (type == 1) {
+                        btn_show_interest.setText(R.string.book_car);
+                    } else {
+                        btn_show_interest.setText(R.string.buy_car);
+                    }
+
+                }*/
+
+                Utility.contectDialog(adPost.getMobile_no(),BookCarSummaryActivity.this);
+
+                new AlertBox(context).openMessage(success, "Okay", "", false);
+            }
+
+            @Override
+            public void onFailed(JSONObject js, String failed) {
+                Utility.showToast(context, failed);
+
+             if (failed.equalsIgnoreCase("already interested.")){
+                 Utility.contectDialog(adPost.getMobile_no(),BookCarSummaryActivity.this);
+             }
+                MyDialogProgress.close(context);
+
+
+                //  showToast(failed);
+            }
+
+            @Override
+            public void onAuthFailed(JSONObject js, String failed) {
+                MyDialogProgress.close(context);
+                SessionExpireDialog.openDialog(context, 0, "");
+            }
+
+            @Override
+            public void onNull(JSONObject js, String nullp) {
+
+                if (nullp.equalsIgnoreCase("1")) {
+                    //  showToast(getString(R.string.connection));
+                    Utility.showToast(context, getString(R.string.connection));
+                } else {
+                    // showToast(getString(R.string.something_wrong));
+                    Utility.showToast(context, getString(R.string.something_wrong));
+                }
+
+                MyDialogProgress.close(context);
+            }
+
+            @Override
+            public void onException(JSONObject js, String exception) {
+                // showToast(exception);
+                Utility.showToast(context, exception);
+                MyDialogProgress.close(context);
+            }
+
+            @Override
+            public void onInactive(JSONObject js, String inactive, String status) {
+                Utility.showToast(context, inactive);
+                MyDialogProgress.close(context);
+            }
+        });
+
+        //  MyDialogProgress.close(context);
     }
 }

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/LinearLayout01"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="fill_parent"
+    android:layout_width="@dimen/_250sdp"
+    android:orientation="vertical"
+   android:layout_gravity="center">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:padding="@dimen/_10sdp"
+        android:background="@color/light_gray"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/title"
+            android:layout_centerInParent="true"
+            android:text="@string/app_name"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <EditText android:id="@+id/EditBox"
+        android:maxLines="1"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:hint="search here..">
+    </EditText>
+    <ListView android:id="@+id/List"
+        android:layout_width="match_parent"
+        android:divider="@color/light_gray"
+        android:dividerHeight="@dimen/_1sdp"
+        android:layout_height="fill_parent"
+        android:layout_margin="@dimen/_5sdp">
+    </ListView>
+</LinearLayout>

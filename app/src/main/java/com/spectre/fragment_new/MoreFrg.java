@@ -161,7 +161,7 @@ public class MoreFrg extends MasterFragment {
     private void initControls() {
         // set up screen context
         context = MoreFrg.this.getActivity();
-
+        mainActivity().rlAppBarMain.setVisibility(View.GONE);
         // set visibility for menu and back icon
         mainActivity().changeBottomMenuColor(HomeAct.MENU_MORE);
 
@@ -172,7 +172,7 @@ public class MoreFrg extends MasterFragment {
         mainActivity().imgBack.setVisibility(View.VISIBLE);
 
         // hide or show app bar
-        mainActivity().rlAppBarMain.setVisibility(View.VISIBLE);
+        mainActivity().rlAppBarMain.setVisibility(View.GONE);
 
         boolean isLogin = SharedPrefUtils.getPreference(context, Constant.ISLOGIN, false);
 

@@ -20,11 +20,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -106,10 +108,18 @@ public class SignUpAct extends MasterAppCompactActivity {
     RadioGroup rgBbuyerGarage;
     @BindView(R.id.iv_remove)
     ImageView ivRemove;
+    @BindView(R.id.edtCompanyName)
+    EditText edtCompanyName;
+    @BindView(R.id.iv_profilel)
+    ImageView ivProfilel;
+    @BindView(R.id.iv_removel)
+    ImageView ivRemovel;
+    @BindView(R.id.linupload_doc)
+    LinearLayout linuploadDoc;
 
     // screen context
     private Context context;
-
+    private String seller_type = "0";
     // progress dialog
     private Dialog dialog;
 
@@ -121,7 +131,8 @@ public class SignUpAct extends MasterAppCompactActivity {
     private static final int REQUEST_ACESS_STORAGE = 3;
     private static final int REQUEST_ACESS_CAMERA = 2;
     private Uri uri;
-
+    Bitmap bitmap = null;
+    int isDealer=0;
     // Get start intent for Activity
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, SignUpAct.class);
@@ -132,13 +143,10 @@ public class SignUpAct extends MasterAppCompactActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_sign_up);
-
         // bind view using butter knife
         ButterKnife.bind(this);
-
         // init controls
         initControls();
-
         // set all listener
         setListener();
     }
@@ -160,10 +168,18 @@ public class SignUpAct extends MasterAppCompactActivity {
                 // checkedId is the RadioButton selected
                 RadioButton rb = (RadioButton) findViewById(checkedId);
                 if (rb.getId() == R.id.rbtCertifiedPreOwned) {
-                    ivProfile.setVisibility(View.VISIBLE);
-                } else {
-                    ivProfile.setVisibility(View.INVISIBLE);
+                    seller_type = "3";
+                    linuploadDoc.setVisibility(View.VISIBLE);
+                } else if (rb.getId() == R.id.rbtOwner) {
+                    linuploadDoc.setVisibility(View.GONE);
+                    bitmap = null;
+                    seller_type = "1";
+                } else if (rb.getId() == R.id.rbtDealer) {
+                    bitmap = null;
+                    linuploadDoc.setVisibility(View.VISIBLE);
+                    seller_type = "2";
                 }
+
                 // textViewChoice.setText("You Selected " + rb.getText());
                 //Toast.makeText(getApplicationContext(), rb.getText(), Toast.LENGTH_SHORT).show();
             }
@@ -176,10 +192,12 @@ public class SignUpAct extends MasterAppCompactActivity {
                 if (rb.getId() == R.id.rbtGarage) {
                     rgGarage.setVisibility(View.VISIBLE);
                     rbtOwner.setChecked(true);
-
+                    seller_type = "1";
                 } else {
+                    seller_type = "0";
+                    bitmap = null;
                     rgGarage.setVisibility(View.GONE);
-                    ivProfile.setVisibility(View.GONE);
+                   // ivProfile.setVisibility(View.GONE);
                 }
                 // textViewChoice.setText("You Selected " + rb.getText());
                 //Toast.makeText(getApplicationContext(), rb.getText(), Toast.LENGTH_SHORT).show();
@@ -316,7 +334,7 @@ public class SignUpAct extends MasterAppCompactActivity {
     /* [END] - User define function */
 
     /* [START] - Butter knife listener */
-    @OnClick({R.id.imgBack, R.id.txtSignIn, R.id.txtCountryCode, R.id.btnSubmit, R.id.iv_profile, R.id.iv_remove})
+    @OnClick({R.id.imgBack, R.id.txtSignIn, R.id.txtCountryCode, R.id.btnSubmit, R.id.iv_profile, R.id.iv_profilel, R.id.iv_remove, R.id.iv_removel})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imgBack:
@@ -336,11 +354,20 @@ public class SignUpAct extends MasterAppCompactActivity {
                 startAct(LoginActivity.getStartIntent(context));
                 break;
             case R.id.iv_profile:
-                handleCamera();
+                isDealer=1;
+                handleCamera(isDealer);
+                break;
+            case R.id.iv_profilel:
+                isDealer=2;
+                handleCamera(isDealer);
                 break;
             case R.id.iv_remove:
                 ivProfile.setImageResource(R.drawable.default_image);
                 ivRemove.setVisibility(View.GONE);
+                break;
+            case R.id.iv_removel:
+                ivProfilel.setImageResource(R.drawable.default_image);
+                ivRemovel.setVisibility(View.GONE);
                 break;
         }
     }
@@ -361,6 +388,11 @@ public class SignUpAct extends MasterAppCompactActivity {
             // display api in log
             setLog("API : " + EndPoints.URL_SIGN_UP);
 
+            String encodedImageData = "";
+            if (bitmap != null) {
+                encodedImageData = getEncoded64ImageStringFromBitmap(bitmap);
+            }
+
             Map<String, String> params = new HashMap<>();
 
             params.put(RequestParam.USER_NAME, getEditTextString(edtName));
@@ -368,6 +400,8 @@ public class SignUpAct extends MasterAppCompactActivity {
             params.put(RequestParam.USER_EMAIL, getEditTextString(edtEmail));
             params.put(RequestParam.USER_PASSWORD, getEditTextString(edtPassword));
             params.put(RequestParam.USER_TYPE, rbtBuyer.isChecked() ? "1" : "2");
+            params.put(RequestParam.SELLER_TYPE, seller_type);
+            params.put(RequestParam.CERTIFICATE, encodedImageData);
             params.put(RequestParam.MOBILE_CODE, countryCode);
             params.put(RequestParam.LANGUAGE, AppConstants.ENGLISH);
 
@@ -428,6 +462,16 @@ public class SignUpAct extends MasterAppCompactActivity {
             setToast(context, getString(R.string.toast_cant_connect_to_internet));
         }
     }
+
+    private String getEncoded64ImageStringFromBitmap(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream);
+        byte[] byteFormat = stream.toByteArray();
+        // get the base 64 string
+        String imgString = Base64.encodeToString(byteFormat, Base64.NO_WRAP);
+
+        return imgString;
+    }
     /* [END] - All Volley request */
 
     @Override
@@ -443,9 +487,16 @@ public class SignUpAct extends MasterAppCompactActivity {
                         BitmapFactory.decodeStream(getContentResolver().openInputStream(uri), null, options);
                         options.inSampleSize = calculateInSampleSize(options, 100, 100);
                         options.inJustDecodeBounds = false;
-                        Bitmap image = BitmapFactory.decodeStream(getContentResolver().openInputStream(uri), null, options);
-                        ivProfile.setImageBitmap(image);
-                        ivRemove.setVisibility(View.VISIBLE);
+                        bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uri), null, options);
+
+                        if (isDealer==1) {
+                            ivProfile.setImageBitmap(bitmap);
+                            ivRemove.setVisibility(View.VISIBLE);
+                        }
+                        else if (isDealer==2){
+                            ivProfilel.setImageBitmap(bitmap);
+                            ivRemovel.setVisibility(View.VISIBLE);
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -460,11 +511,19 @@ public class SignUpAct extends MasterAppCompactActivity {
         } else if (requestCode == CAMERA_REQUEST) {
             if (resultCode == RESULT_OK) {
                 if (data.hasExtra("data")) {
-                    Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                    bitmap = (Bitmap) data.getExtras().get("data");
                     uri = getImageUri(SignUpAct.this, bitmap);
                     File finalFile = new File(getRealPathFromUri(uri));
-                    ivProfile.setImageBitmap(bitmap);
-                    ivRemove.setVisibility(View.VISIBLE);
+
+                    if (isDealer==1) {
+                        ivProfile.setImageBitmap(bitmap);
+                        ivRemove.setVisibility(View.VISIBLE);
+                    }
+                    else if (isDealer==2){
+                        ivProfilel.setImageBitmap(bitmap);
+                        ivRemovel.setVisibility(View.VISIBLE);
+                    }
+
                 } else if (data.getExtras() == null) {
 
                     Toast.makeText(getApplicationContext(),
@@ -473,7 +532,14 @@ public class SignUpAct extends MasterAppCompactActivity {
 
                     BitmapDrawable thumbnail = new BitmapDrawable(
                             getResources(), data.getData().getPath());
-                    ivProfile.setImageDrawable(thumbnail);
+
+                    if (isDealer==1) {
+                        ivProfile.setImageDrawable(thumbnail);
+                    }
+                    else if (isDealer==2){
+                        ivProfile.setImageDrawable(thumbnail);
+                    }
+
 
                 }
 
@@ -592,7 +658,7 @@ public class SignUpAct extends MasterAppCompactActivity {
         fragment.requestPermissions(permission, requestCode);
     }
 
-    private void handleCamera() {
+    private void handleCamera(int isDealer) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, this)) {
                 startDilog();
@@ -603,4 +669,5 @@ public class SignUpAct extends MasterAppCompactActivity {
             startDilog();
         }
     }
+
 }

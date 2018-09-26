@@ -1,13 +1,16 @@
 package com.spectre.utility;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -28,6 +31,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -43,7 +47,9 @@ import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -57,6 +63,7 @@ import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Transformers.BaseTransformer;
 import com.rey.material.app.DialogFragment;
 import com.spectre.R;
+import com.spectre.activity.ChatActivity;
 import com.spectre.activity.LoginActivity;
 import com.spectre.activity.ViewCatalogImagesActivity;
 import com.spectre.activity.ZoomActivity;
@@ -1095,6 +1102,55 @@ public class Utility {
         });
     }*/
 
+    public static void contectDialog(String phoneNumber, final Activity activity){
+        final Dialog dialog = new Dialog(activity, R.style.Theme_Dialog);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_contect_seller);
+        TextView tv_callNow = (TextView) dialog.findViewById(R.id.tv_callNow);
+        TextView tv_chatNow = (TextView) dialog.findViewById(R.id.tv_chatNow);
+        Button btnCancel = (Button) dialog.findViewById(R.id.btn_cancel);
+        final int REQUEST_PHONE_CALL = 1;
+        final Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNumber));
+        tv_callNow.setText("Call on "+phoneNumber);
+        tv_chatNow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activity.startActivity(new Intent(activity,ChatActivity.class));
+            }
+        });
+        tv_callNow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ContextCompat.checkSelfPermission(activity, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CALL_PHONE},REQUEST_PHONE_CALL);
+                }
+                else
+                {
+                    activity.startActivity(intent);
+
+                }
+            }
+        });
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                activity.finish();
+            }
+        });
+        Window window = dialog.getWindow();
+        WindowManager.LayoutParams wlp =  new WindowManager.LayoutParams();
+        wlp.copyFrom(dialog.getWindow().getAttributes());
+        wlp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        wlp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        wlp.gravity = Gravity.BOTTOM;
+        window.setBackgroundDrawableResource(android.R.color.transparent);
+        //wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        window.setAttributes(wlp);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+
+    }
 
     public static Toolbar setUpToolbarWithColor(final Context context, String title, int backgroundResource) {
         final AppCompatActivity activity = (AppCompatActivity) context;
@@ -1589,7 +1645,9 @@ public class Utility {
     public static CarName getCarName(Context context) {
         return new CarName("", (context.getString(R.string.select_car)));
     }
-
+public static CarName getOtherName(Context context){
+        return new CarName("","Other");
+}
     public static ModelName getModelName(Context context) {
         return new ModelName("", (context.getString(R.string.select_model)));
     }
@@ -1656,7 +1714,64 @@ public class Utility {
             e.printStackTrace();
         }
     }
+    public static void openCalendarDialogEdit(Context context, final EditText tvDob) {
+        try {
+            int mDay, mMonth, mYear, mMinDay, mMinMonth, mMinYear, mMaxDay, mMaxMonth, mMaxYear;
+            Calendar cal = Calendar.getInstance();
+            mDay = cal.get(Calendar.DAY_OF_MONTH);
+            mMonth = cal.get(Calendar.MONTH);
+            mYear = cal.get(Calendar.YEAR);
 
+
+            mMinDay = mDay;
+            mMinMonth = mMonth;
+            mMinYear = mYear;
+
+            mMaxDay = mDay;
+            mMaxMonth = mMonth;
+            mMaxYear = mYear + 1;
+
+//            if (dob != null && !dob.isEmpty()) {
+//                try {
+//                    Calendar dobCal = Calendar.getInstance();
+//                    dobCal.setTime(completeTimestampFormat.parse(dob));
+//                    mDay = dobCal.get(Calendar.DAY_OF_MONTH);
+//                    mMonth = dobCal.get(Calendar.MONTH);
+//                    mYear = dobCal.get(Calendar.YEAR);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+
+
+            com.rey.material.app.Dialog.Builder builder = new com.rey.material.app.DatePickerDialog.Builder(mMinDay, mMinMonth, mMinYear, mMaxDay, mMaxMonth, mMaxYear, mDay, mMonth, mYear) {
+                @Override
+                public void onPositiveActionClicked(DialogFragment fragment) {
+                    com.rey.material.app.DatePickerDialog dialog = (com.rey.material.app.DatePickerDialog) fragment.getDialog();
+                    //   mDob = dialog.getFormattedDate(displayDateFormat);
+
+                    tvDob.setText(dialog.getFormattedDate(displayDateFormat));
+                    fragment.dismiss();
+                }
+
+                @Override
+                public void onNegativeActionClicked(DialogFragment fragment) {
+                    fragment.dismiss();
+                }
+            };
+
+            builder.positiveAction("OK")
+                    .negativeAction("CANCEL").style(R.style.MyCalendarTheme);
+            DialogFragment fragment = DialogFragment.newInstance(builder);
+
+
+            fragment.show(((AppCompatActivity) context).getSupportFragmentManager(), null);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     public static void setUpViewPager(SliderLayout sliderLayout, final Context appContext, HashMap<String, String> url_from_api, String status) {
 
         sliderLayout.setDuration(5000);

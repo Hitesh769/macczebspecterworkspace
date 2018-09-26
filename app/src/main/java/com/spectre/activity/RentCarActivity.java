@@ -2,6 +2,7 @@ package com.spectre.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -31,10 +32,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
@@ -52,6 +58,9 @@ import com.google.gson.reflect.TypeToken;
 import com.rey.material.widget.ProgressView;
 import com.rey.material.widget.Spinner;
 import com.spectre.R;
+import com.spectre.adapter.CarNameListAdapter;
+import com.spectre.adapter.ModelNameListAdapter;
+import com.spectre.adapter.VersionNameListAdapter;
 import com.spectre.beans.AdPost;
 import com.spectre.beans.CarName;
 import com.spectre.beans.ImageData;
@@ -86,9 +95,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Locale;
@@ -105,7 +116,7 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
 
     private CustomRayMaterialTextView btn_save_changes, btn_delete, btn_delete_;
     private CustomEditText et_mileage, et_car_condition, et_car_desc, et_model;
-    private EditText edtCaName,edtModel,edtVersion,edtCarSeries,et_car_to, et_car_from,tv_post_ad_location,et_price;
+    private EditText edtCaName,edtModel,edtVersion,edtCarSeries,edtPrice,et_car_to, et_car_from,tv_post_ad_location,et_price;
     private CustomTextView  txt_post_ad_header;
     private ImageView img_post_ad_current_location;
     private String latitude = "";
@@ -130,16 +141,19 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
     ArrayList<VersionName> version = new ArrayList<VersionName>();
     ArrayList<String> years = new ArrayList<String>();
     private ProgressView progressDialog1;
-    ArrayAdapter<CarName> arrayAdapterCarName;
-    ArrayAdapter<ModelName> arrayAdapterModel;
-    ArrayAdapter<VersionName> arrayAdapterVersion;
+  //  ArrayAdapter<CarName> arrayAdapterCarName;
+    CarNameListAdapter arrayAdapterCarName;
+ //   ArrayAdapter<ModelName> arrayAdapterModel;
+    ModelNameListAdapter arrayAdapterModel;
+    //ArrayAdapter<VersionName> arrayAdapterVersion;
+    VersionNameListAdapter arrayAdapterVersion;
     private int oldName = 0;
     private int oldModel = 0;
     private AlertBox alertBox;
     private AdPost adPost;
     private ActionBar actionBar;
     private boolean canEdit, refresh;
-
+    ListView listView;
     private static final int PLACE_PICKER_REQUEST = 999;
     //Define a request code to send to Google Play services
     private static final int LOCATION_PERMISSION_CONSTANT = 101;
@@ -296,13 +310,13 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
         }
 
 
-        arrayAdapterCarName = new ArrayAdapter<CarName>(context, R.layout.spinner_custom_text, names);
+       /* arrayAdapterCarName = new ArrayAdapter<CarName>(context, R.layout.spinner_custom_text, names);
         spinner_name.setAdapter(arrayAdapterCarName);
         arrayAdapterModel = new ArrayAdapter<ModelName>(context, R.layout.spinner_custom_text, model);
         spinner_model.setAdapter(arrayAdapterModel);
         arrayAdapterVersion = new ArrayAdapter<VersionName>(context, R.layout.spinner_custom_text, version);
-        spinner_version.setAdapter(arrayAdapterVersion);
-
+        spinner_version.setAdapter(arrayAdapterVersion);*/
+        arrayAdapterCarName = new CarNameListAdapter(this, names);
 
         ArrayAdapter<String> arrayAdapterCarType = new ArrayAdapter<String>(context, R.layout.spinner_custom_text, carType);
         spinner_car_type.setAdapter(arrayAdapterCarType);
@@ -331,6 +345,13 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
         //et_model = (CustomEditText) findViewById(R.id.et_model);
 
         et_car_to = (EditText) findViewById(R.id.et_car_to);
+
+        edtCaName = (EditText) findViewById(R.id.edtCaName);
+        edtModel = (EditText) findViewById(R.id.edtModel);
+        edtVersion = (EditText) findViewById(R.id.edtVersion);
+        edtCarSeries = (EditText) findViewById(R.id.edtCarSeries);
+        edtPrice = (EditText) findViewById(R.id.edtPrice);
+
         et_car_from = (EditText) findViewById(R.id.et_car_from);
         tv_post_ad_location = (EditText) findViewById(R.id.edt_rent_location);
         img_post_ad_current_location = (ImageView) findViewById(R.id.img_post_ad_current_location);
@@ -342,6 +363,12 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
         btn_save_changes.setOnClickListener(this);
         btn_delete.setOnClickListener(this);
         btn_delete_.setOnClickListener(this);
+
+        edtCaName.setOnClickListener(this);
+        edtModel.setOnClickListener(this);
+        edtVersion.setOnClickListener(this);
+        edtCarSeries.setOnClickListener(this);
+        edtPrice.setOnClickListener(this);
 
         et_car_to.setOnClickListener(this);
         et_car_from.setOnClickListener(this);
@@ -474,10 +501,12 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
                 chooseDeleteAd();
                 break;
             case R.id.et_car_to:
-                Utility.openCalendarDialog(context, et_car_to);
+                // Utility.openCalendarDialogEdit(context, et_car_to);
+                showDialogCalender(1,et_car_from,et_car_to);
                 break;
             case R.id.et_car_from:
-                Utility.openCalendarDialog(context, et_car_from);
+                // Utility.openCalendarDialogEdit(context, et_car_from);
+                showDialogCalender(0,et_car_from,et_car_to);
                 break;
             case R.id.edt_rent_location:
                 try {
@@ -490,6 +519,31 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.img_post_ad_current_location:
                 getLocation();
                 break;
+            case R.id.edtCaName:
+                showDialog( RentCarActivity.this,"Select Car Name", "carName");
+                edtModel.setText("");
+                edtCarSeries.setText("");
+                break;
+            case R.id.edtModel:
+                if (model.size()>1) {
+                    showDialog(RentCarActivity.this, "Select Car Model", "model");
+                }
+                else {
+                    Toast.makeText(context,"list not available",Toast.LENGTH_SHORT).show();
+                }
+                edtCarSeries.setText("");
+                break;
+            case R.id.edtCarSeries:
+                if (version.size()>1) {
+                    showDialog(RentCarActivity.this, "Select Car Series", "series");
+                }else {
+                    Toast.makeText(context, "list not available", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.edtCarType:
+                showDialog(RentCarActivity.this, "Select Car Type", "carType");
+                break;
+
         }
     }
 
@@ -1116,8 +1170,10 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
         }.getType();
         ArrayList<CarName> tempListNewsFeeds = new Gson().fromJson(jsonArray.toString(), type);
         names.addAll(tempListNewsFeeds);
-        arrayAdapterCarName = new ArrayAdapter<CarName>(context, R.layout.spinner_custom_text, names);
+      /*  arrayAdapterCarName = new ArrayAdapter<CarName>(context, R.layout.dialoglistitem,R.id.tvName,names);
         spinner_name.setAdapter(arrayAdapterCarName);
+*/
+        arrayAdapterCarName = new CarNameListAdapter(this, names);
 
         if (adPost != null) {
             CarName carName = new CarName(adPost.getCar_name_id(), adPost.getCar_name());
@@ -1140,11 +1196,14 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
             clearModel();
         }
         model.addAll(tempListNewsFeeds);
-        arrayAdapterModel = new ArrayAdapter<ModelName>(context, R.layout.spinner_custom_text, model);
+       /* arrayAdapterModel = new ArrayAdapter<ModelName>(context, R.layout.dialoglistitem,R.id.tvName, model);
         spinner_model.setAdapter(arrayAdapterModel);
+*/
+        arrayAdapterModel = new ModelNameListAdapter(this, model);
+        listView.setAdapter(arrayAdapterModel);
         if (adPost != null) {
             ModelName modelName = new ModelName(adPost.getModel_id(), adPost.getModel());
-            spinner_model.setSelection(arrayAdapterModel.getPosition(modelName));
+        //    spinner_model.setSelection(arrayAdapterModel.getPosition(modelName));
             //    getList(3, modelName.getId());
         }
 
@@ -1164,9 +1223,10 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
             clearVersion();
         }
         version.addAll(tempListNewsFeeds);
-        arrayAdapterVersion = new ArrayAdapter<VersionName>(context, R.layout.spinner_custom_text, version);
-        spinner_version.setAdapter(arrayAdapterVersion);
-
+       // arrayAdapterVersion = new ArrayAdapter<VersionName>(context, R.layout.dialoglistitem,R.id.tvName, version);
+       // spinner_version.setAdapter(arrayAdapterVersion);
+        arrayAdapterVersion = new VersionNameListAdapter(this, version);
+        listView.setAdapter(arrayAdapterVersion);
        /* if (version.size() > 0) {
             // getList(3, model.get(1).getId());
             spinner_version.setSelection(1);
@@ -1174,7 +1234,7 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
 
         if (adPost != null && !adPost.getVersion().isEmpty()) {
             VersionName versionName = new VersionName(adPost.getVersion_id(), adPost.getVersion());
-            spinner_version.setSelection(arrayAdapterVersion.getPosition(versionName));
+          //  spinner_version.setSelection(arrayAdapterVersion.getPosition(versionName));
             // getList(3, versionName.getId());
         }
 
@@ -1349,6 +1409,165 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
             }
         });
     }
+    public void showDialog(final Activity activity, String title, final String Type){
+        final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.dilog_listsearch);
 
+        TextView texttitle = (TextView)dialog.findViewById(R.id.title);
+        texttitle.setText(title);
+        listView = (ListView) dialog.findViewById(R.id.List);
+        listView.setItemChecked(0, true);
+        //  listView.setOnItemClickListener((AdapterView.OnItemClickListener) activity);
+
+        switch(Type)
+        {
+            case "carName":
+                // listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+                listView.setAdapter(arrayAdapterCarName);
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        CarName selItem = (CarName) parent.getItemAtPosition(position);
+                        edtCaName.setText(selItem.getCar_name());
+                        //Toast.makeText(PostAdActivity.this, "clicked item", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+
+                        if (position == 0) {
+                            clearModel();
+                            clearVersion();
+                            if (names.size() == 1) {
+                                getList(1, "0");
+                            }
+                            return;
+                        }
+                        if (names.get(position).getCar_name().equals("Other")) {
+                            final Dialog dialog = new Dialog(activity);
+                            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                            dialog.setCancelable(true);
+                            dialog.setContentView(R.layout.dialog_other);
+                            final EditText name=(EditText)dialog.findViewById(R.id.edtOther);
+                            Button ok=(Button)dialog.findViewById(R.id.btn_ok);
+                            Button cancel=(Button)dialog.findViewById(R.id.btn_cancel);
+                            cancel.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                }
+                            });
+                            ok.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    if (!name.getText().toString().isEmpty()) {
+                                        edtCaName.setText(name.getText().toString());
+                                        dialog.dismiss();
+                                    }
+                                    else {
+                                        Toast.makeText(RentCarActivity.this, "Please enter text", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                            dialog.show();
+                            Toast.makeText(context, "other", Toast.LENGTH_SHORT).show();
+                        }
+
+                        oldName = position;
+                        clearModel();
+                        clearVersion();
+                        if (names != null && !names.isEmpty() && names.size() > position)
+                            getList(2, names.get(position).getId());
+                    }
+                });
+                break;
+
+            case "series":
+                listView.setAdapter(arrayAdapterVersion);
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        VersionName selItem = (VersionName) parent.getItemAtPosition(position);
+                        edtCarSeries.setText(selItem.getVersion_name());
+                        dialog.dismiss();
+                    }
+                });
+                break;
+            case "model":
+                listView.setAdapter(arrayAdapterModel);
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        ModelName selItem = (ModelName) parent.getItemAtPosition(position);
+                        edtModel.setText(selItem.getModel_name());
+                        dialog.dismiss();
+                        if (position == 0) {
+                            clearVersion();
+                            return;
+                        }
+                        if (oldModel == position) {
+                            return;
+                        }
+                        oldModel = position;
+                        clearVersion();
+                        if (model != null && !model.isEmpty() && model.size() > position)
+                            getList(3, model.get(position).getId());
+                    }
+                });
+
+                break;
+
+
+        }
+
+
+
+        dialog.show();
+
+    }
+    private void showDialogCalender(final int i, final EditText txtDatePickUp, final EditText txtDateDropUp) {
+
+        Calendar mcurrentDate = Calendar.getInstance();
+        int mYear = mcurrentDate.get(Calendar.YEAR);
+        int mMonth = mcurrentDate.get(Calendar.MONTH);
+        int mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
+        int dayofweek=mcurrentDate.get(Calendar.DAY_OF_WEEK);
+
+        DatePickerDialog mDatePicker = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
+            public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
+                Calendar myCalendar = Calendar.getInstance();
+                myCalendar.set(Calendar.YEAR, selectedyear);
+                myCalendar.set(Calendar.MONTH, selectedmonth);
+                myCalendar.set(Calendar.DAY_OF_MONTH, selectedday);
+                //  myCalendar.set(Calendar.DAY_OF_WEEK,);
+                //String myFormat = "dd/MM/yy"; //Change as you need
+                //SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
+                SimpleDateFormat monthname = new SimpleDateFormat("MMM");
+                String monthName=monthname.format(myCalendar.getTime());
+
+                SimpleDateFormat weekname = new SimpleDateFormat("EEEE");
+                Date date = new Date(selectedyear, selectedmonth, selectedday-1);
+                String weekNameStr=weekname.format(date);
+
+                int mDay = selectedday;
+                int mMonth = selectedmonth;
+                int mYear = selectedyear;
+                if (i==0) {
+                    txtDatePickUp.setText(mDay+"/"+mMonth+"/"+mYear);
+
+                    /*txtMonthPickUp.setText("" + monthName);
+                    txtYearPickUp.setText("" + mYear);
+                    txtDayPickUp.setText(weekNameStr);*/
+                }
+                else{
+                    txtDateDropUp.setText(mDay+"/"+mMonth+"/"+mYear);
+                    /*txtMonthDropUp.setText("" + monthName);
+                    txtYearDropUp.setText("" + mYear);
+                    txtDayDropUp.setText(weekNameStr);*/
+                }
+            }
+        }, mYear, mMonth, mDay);
+        //mDatePicker.setTitle("Select date");
+        mDatePicker.show();
+    }
 
 }

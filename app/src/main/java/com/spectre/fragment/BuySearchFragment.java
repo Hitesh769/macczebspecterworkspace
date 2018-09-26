@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -23,6 +24,7 @@ import com.spectre.customView.SessionExpireDialog;
 import com.spectre.helper.AqueryCall;
 import com.spectre.interfaces.RequestCallback;
 import com.spectre.other.Constant;
+import com.spectre.other.PrefConstant;
 import com.spectre.other.Urls;
 import com.spectre.utility.SharedPrefUtils;
 import com.spectre.utility.Utility;
@@ -59,8 +61,9 @@ public class BuySearchFragment extends Fragment {
     CustomTextView txtConnection;
     private FilterResponse filterResponse;
     String type = "0";
+    Button btnSearch;
     private String latitude = "";
-    private String longitude = "",maxrange="",minrang="";
+    private String longitude = "",maxrange="",minrang="",brandId="",modelId="",color="",fromyear="",toyear="",transactiontype="",sellertype="";
     private static final int LOCATION_PERMISSION_CONSTANT = 101;
     // Get main activity to access public variables and methods
     private HomeAct mainActivity() {
@@ -74,19 +77,53 @@ public class BuySearchFragment extends Fragment {
         // return inflater.inflate(R.layout.fragment_garage, container, false);
         view = inflater.inflate(R.layout.fragment_buy, container, false);
         context = getActivity();
-        initView();
+        initView(view);
         return view;
     }
+    public static BuySearchFragment newInstance() {
+        BuySearchFragment fragment = new BuySearchFragment();
+        return fragment;
+    }
+    private void initView(View view) {
 
-    private void initView() {
+        btnSearch=(Button)view.findViewById(R.id.btnSearch);
+        btnSearch.setVisibility(View.VISIBLE);
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BuyFilterFragment buySearchFragment = new BuyFilterFragment();
+                Bundle bundle=new Bundle();
+                bundle.putString(PrefConstant.BRANDID,brandId);
+                bundle.putString(PrefConstant.MODELID,modelId);
+                bundle.putString(PrefConstant.LONGITUDE,longitude);
+                bundle.putString(PrefConstant.LATITUDE,latitude);
+                bundle.putString(PrefConstant.COLOR,color);
+                bundle.putString(PrefConstant.FROMYEAR,fromyear);
+                bundle.putString(PrefConstant.TOYEAR,toyear);
+                bundle.putString(PrefConstant.TRANSACTIONTYPE,transactiontype);
+                bundle.putString(PrefConstant.SELLERTYPE,sellertype);
+                buySearchFragment.setArguments(bundle);
+
+                mainActivity().startNewFragment(buySearchFragment);
+            }
+        });
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            latitude = bundle.getString(Constant.LATITUDE);
-            longitude=bundle.getString(Constant.LONGITUDE);
-            maxrange = bundle.getString(Constant.MAXRANGE);
-            minrang=bundle.getString(Constant.MINRANGE);
+            latitude = bundle.getString(PrefConstant.LATITUDE);
+            longitude=bundle.getString(PrefConstant.LONGITUDE);
+            brandId=bundle.getString(PrefConstant.BRANDID);
+            modelId=bundle.getString(PrefConstant.MODELID);
+            color=bundle.getString(PrefConstant.COLOR);
+            fromyear=bundle.getString(PrefConstant.FROMYEAR);
+            toyear=bundle.getString(PrefConstant.TOYEAR);
+            transactiontype=bundle.getString(PrefConstant.TRANSACTIONTYPE);
+            sellertype=bundle.getString(PrefConstant.SELLERTYPE);
+           // maxrange = bundle.getString(Constant.MAXRANGE);
+          //  minrang=bundle.getString(Constant.MINRANGE);
         }
+
+
 
         // set visibility for menu and back icon
         mainActivity().changeBottomMenuColor(HomeAct.MENU_BUY);
@@ -96,6 +133,35 @@ public class BuySearchFragment extends Fragment {
 
         // hide back arrow
         mainActivity().imgBack.setVisibility(View.VISIBLE);
+        mainActivity().txt_filter.setVisibility(View.VISIBLE);
+
+        mainActivity().txt_filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mainActivity().txt_filter.setVisibility(View.GONE);
+                BuyFilterFragment buySearchFragment = new BuyFilterFragment();
+                Bundle bundle=new Bundle();
+                bundle.putString(PrefConstant.BRANDID,brandId);
+                bundle.putString(PrefConstant.MODELID,modelId);
+                bundle.putString(PrefConstant.LONGITUDE,longitude);
+                bundle.putString(PrefConstant.LATITUDE,latitude);
+                bundle.putString(PrefConstant.COLOR,color);
+                bundle.putString(PrefConstant.FROMYEAR,fromyear);
+                bundle.putString(PrefConstant.TOYEAR,toyear);
+                bundle.putString(PrefConstant.TRANSACTIONTYPE,transactiontype);
+                bundle.putString(PrefConstant.SELLERTYPE,sellertype);
+                buySearchFragment.setArguments(bundle);
+                mainActivity().startNewFragment(buySearchFragment);
+            }
+        });
+
+        mainActivity().imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mainActivity().txt_filter.setVisibility(View.GONE);
+                mainActivity().onBackPressed();
+            }
+        });
 
         // hide or show app bar
         mainActivity().rlAppBarMain.setVisibility(View.VISIBLE);
@@ -174,10 +240,30 @@ public class BuySearchFragment extends Fragment {
             filterResponse.setType("1");
             JSONObject params = new JSONObject(new Gson().toJson(filterResponse));
 
+            if (fromyear.equalsIgnoreCase("Any Type")) {
+                fromyear = "";
+            }
+            if (toyear.equalsIgnoreCase("Any Type")) {
+                toyear = "";
+            }
+            if (color.equalsIgnoreCase("Any Type")) {
+                color = "";
+            }
+            if (brandId.equalsIgnoreCase("0") || brandId.equalsIgnoreCase("Any Type")) {
+                brandId = "";
+            }
+            if (modelId.equalsIgnoreCase("0") || modelId.equalsIgnoreCase("Any Type")) {
+                modelId = "";
+            }
             params.put(Constant.LATITUDE, latitude);
             params.put(Constant.LONGITUDE, longitude);
             params.put(Constant.MAXPRICE,maxrange);
             params.put(Constant.MINPRICE,minrang);
+            params.put(Constant.CAR_NAME_ID,brandId);
+            params.put(Constant.MODEL_ID,modelId);
+            params.put(Constant.COLOUR,color);
+            params.put(Constant.YEAR_FROM,fromyear);
+            params.put(Constant.YEAR_TO,toyear);
 
             AqueryCall request = new AqueryCall(getActivity());
             setLog("TOKEN : " + SharedPrefUtils.getPreference(context, Constant.USER_TOKEN, ""));

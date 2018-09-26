@@ -87,7 +87,7 @@ public class GarageFragment extends Fragment {
         mainActivity().imgBack.setVisibility(View.VISIBLE);
 
         // hide or show app bar
-        mainActivity().rlAppBarMain.setVisibility(View.VISIBLE);
+        mainActivity().rlAppBarMain.setVisibility(View.GONE);
 
         setUpRecycler();
         setSwipeLayout();

@@ -137,29 +137,30 @@
                     android:layout_height="wrap_content"
                     android:padding="5dp"
                     android:text="@string/car_name"
+                    android:visibility="gone"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     app:edittextfont="Poppins-Regular.ttf"
                     app:edittextfontHint="Poppins-Regular.ttf" />
 
-                <!-- <com.spectre.customView.CustomEditText
-                     android:id="@+id/et_name"
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:background="@drawable/semi_transparent_box"
-                     android:hint="@string/enter_car_name"
-                     android:inputType="textCapWords"
-                     android:padding="5dp"
-                     android:singleLine="true"
-                     android:textColor="@color/black"
-                     android:textColorHint="@color/light_gray"
-                     android:textSize="12sp"
-                     app:edittextfont="Poppins-Regular.ttf"
-                     app:edittextfontHint="Poppins-Regular.ttf" />
- -->
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/edtCaName"
+                        android:backgroundTint="@color/setting_yellow"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:focusableInTouchMode="false"
+                        android:hint="Car Name"
+                        />
+                </android.support.design.widget.TextInputLayout>
 
                 <com.rey.material.widget.Spinner
                     android:id="@+id/spinner_name"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/semi_transparent_box"
@@ -171,30 +172,30 @@
                     android:layout_marginTop="10dp"
                     android:padding="5dp"
                     android:text="@string/model"
+                    android:visibility="gone"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     app:edittextfont="Poppins-Regular.ttf"
                     app:edittextfontHint="Poppins-Regular.ttf" />
 
-                <!--  <com.spectre.customView.CustomEditText
-                      android:id="@+id/et_email"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_marginTop="5dp"
-                      android:background="@drawable/gray_bg_line"
-                      android:hint="@string/enter_model"
-                      android:inputType="textEmailAddress"
-                      android:padding="5dp"
-                      android:singleLine="true"
-                      android:textColor="@color/black"
-                      android:textColorHint="@color/light_gray"
-                      android:textSize="12sp"
-                      app:edittextfont="Poppins-Regular.ttf"
-                      app:edittextfontHint="Poppins-Regular.ttf" />
-  -->
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/edtModel"
+                        android:backgroundTint="@color/setting_yellow"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:focusableInTouchMode="false"
+                        android:hint="@string/model" />
+                </android.support.design.widget.TextInputLayout>
 
                 <com.rey.material.widget.Spinner
                     android:id="@+id/spinner_model"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/semi_transparent_box"
@@ -208,37 +209,34 @@
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
                     android:text="@string/version"
+                    android:visibility="gone"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     app:edittextfont="Poppins-Regular.ttf"
                     app:edittextfontHint="Poppins-Regular.ttf" />
 
 
-                <!-- <com.spectre.customView.CustomTextView
-                     android:id="@+id/et_mob"
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:layout_marginTop="5dp"
-                     android:background="@drawable/gray_bg_line"
-                     android:digits="@string/numeric0123456789"
-                     android:enabled="false"
-                     android:focusable="false"
-                     android:hint="@string/enter_version"
-                     android:inputType="number"
-                     android:longClickable="false"
-                     android:maxLength="10"
-                     android:padding="5dp"
-                     android:singleLine="true"
-                     android:textColor="@color/black"
-                     android:textColorHint="@color/light_gray"
-                     android:textSize="12sp"
-                     app:edittextfont="Poppins-Regular.ttf"
-                     app:edittextfontHint="Poppins-Regular.ttf" />
- -->
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:hint="Car Series"
+                        android:backgroundTint="@color/setting_yellow"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:focusableInTouchMode="false"
+                        android:id="@+id/edtCarSeries"
+                        android:textColor="@color/black"
+                        />
+                </android.support.design.widget.TextInputLayout>
                 <com.rey.material.widget.Spinner
                     android:id="@+id/spinner_version"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:background="@drawable/semi_transparent_box"
                     android:spinnerMode="dialog" />
 
@@ -250,33 +248,34 @@
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
                     android:text="@string/year"
+                    android:visibility="gone"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     app:edittextfont="Poppins-Regular.ttf"
                     app:edittextfontHint="Poppins-Regular.ttf" />
 
 
-                <!--  <com.spectre.customView.CustomEditText
-                      android:id="@+id/et_address"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_marginTop="5dp"
-                      android:background="@drawable/gray_bg_line"
-                      android:hint="Enter Address"
-                      android:inputType="textCapSentences"
-                      android:padding="5dp"
-                      android:singleLine="true"
-                      android:textColor="@color/black"
-                      android:textColorHint="@color/light_gray"
-                      android:textSize="12sp"
-                      app:edittextfont="Poppins-Regular.ttf"
-                      app:edittextfontHint="Poppins-Regular.ttf" />
-  -->
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/edtYear"
+                        android:backgroundTint="@color/setting_yellow"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:focusableInTouchMode="false"
+                        android:hint="@string/year"
+                        />
+                </android.support.design.widget.TextInputLayout>
 
                 <com.rey.material.widget.Spinner
                     android:id="@+id/spinner_year"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:background="@drawable/semi_transparent_box"
                     android:spinnerMode="dialog" />
 
@@ -286,6 +285,7 @@
                     android:layout_marginTop="10dp"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
+                    android:visibility="gone"
                     android:text="@string/car_type"
                     android:textColor="@color/black"
                     android:textSize="14sp"
@@ -295,11 +295,26 @@
                 <com.rey.material.widget.Spinner
                     android:id="@+id/spinner_car_type"
                     android:layout_width="match_parent"
+                    android:visibility="gone"
                     android:layout_height="wrap_content"
                     android:background="@drawable/semi_transparent_box"
                     android:spinnerMode="dialog" />
 
-
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/edtCarType"
+                        android:hint="@string/car_type"
+                        android:backgroundTint="@color/setting_yellow"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:focusableInTouchMode="false"
+                        android:textColor="@color/black" />
+                </android.support.design.widget.TextInputLayout>
                 <com.spectre.customView.CustomTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -307,6 +322,7 @@
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
                     android:text="@string/color"
+                    android:visibility="gone"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     app:edittextfont="Poppins-Regular.ttf"
@@ -316,10 +332,24 @@
                 <com.rey.material.widget.Spinner
                     android:id="@+id/spinner_color"
                     android:layout_width="match_parent"
+                    android:visibility="gone"
                     android:layout_height="wrap_content"
                     android:background="@drawable/semi_transparent_box"
                     android:spinnerMode="dialog" />
-
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:id="@+id/edt_color"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:backgroundTint="@color/setting_yellow"
+                        android:focusableInTouchMode="false"
+                        android:hint="@string/color"/>
+                </android.support.design.widget.TextInputLayout>
                 <com.spectre.customView.CustomTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -369,6 +399,7 @@
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
                     android:text="@string/mileage"
+                    android:visibility="gone"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     app:edittextfont="Poppins-Regular.ttf"
@@ -383,6 +414,7 @@
                     android:background="@drawable/semi_transparent_box"
                     android:hint="@string/enter_mileage"
                     android:inputType="number"
+                    android:visibility="gone"
                     android:padding="8dp"
                     android:singleLine="true"
                     android:textColor="@color/black"
@@ -390,13 +422,25 @@
                     android:textSize="12sp"
                     app:edittextfont="Poppins-Regular.ttf"
                     app:edittextfontHint="Poppins-Regular.ttf" />
-
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:backgroundTint="@color/setting_yellow"
+                        android:hint="Mileage"
+                        android:id="@+id/edtMileage"
+                        android:textColor="@color/black" />
+                </android.support.design.widget.TextInputLayout>
                 <com.spectre.customView.CustomTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
+                    android:visibility="gone"
                     android:text="@string/price"
                     android:textColor="@color/black"
                     android:textSize="14sp"
@@ -413,6 +457,7 @@
                     android:hint="@string/enter_price"
                     android:inputType="number"
                     android:padding="8dp"
+                    android:visibility="gone"
                     android:singleLine="true"
                     android:textColor="@color/black"
                     android:textColorHint="@color/light_gray"
@@ -420,7 +465,19 @@
                     app:edittextfont="Poppins-Regular.ttf"
                     app:edittextfontHint="Poppins-Regular.ttf" />
 
-
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:backgroundTint="@color/setting_yellow"
+                        android:hint="@string/price"
+                        android:id="@+id/edtPrice"
+                        android:textColor="@color/black"
+                        />
+                </android.support.design.widget.TextInputLayout>
                 <com.spectre.customView.CustomTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -430,11 +487,13 @@
                     android:text="@string/car_condition"
                     android:textColor="@color/black"
                     android:textSize="14sp"
+                    android:visibility="gone"
                     app:edittextfont="Poppins-Regular.ttf"
                     app:edittextfontHint="Poppins-Regular.ttf" />
 
                 <com.spectre.customView.CustomEditText
                     android:id="@+id/et_car_condition"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
@@ -448,7 +507,18 @@
                     android:textSize="12sp"
                     app:edittextfont="Poppins-Regular.ttf"
                     app:edittextfontHint="Poppins-Regular.ttf" />
-
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:id="@+id/et_car_condition"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:hint="@string/car_condition"
+                        android:backgroundTint="@color/setting_yellow"
+                        android:inputType="textCapSentences" />
+                </android.support.design.widget.TextInputLayout>
                 <com.spectre.customView.CustomTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

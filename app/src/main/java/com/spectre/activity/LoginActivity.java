@@ -26,6 +26,7 @@ import com.spectre.LoginModel;
 import com.spectre.R;
 import com.spectre.activity_new.HomeAct;
 import com.spectre.activity_new.MasterAppCompactActivity;
+import com.spectre.activity_new.SignUpAct;
 import com.spectre.api.ApiClient;
 import com.spectre.api.ApiInterface;
 import com.spectre.customView.AlertBox;
@@ -127,7 +128,7 @@ public class LoginActivity extends MasterAppCompactActivity implements View.OnCl
                 // finish();
                 break;
             case R.id.tv_signup:
-                startActivity(new Intent(context, SignupActivity.class));
+                startActivity(new Intent(context, SignUpAct.class));
                 break;
             case R.id.tv_forget_pin:
                 //   showToast("Coming Soon");
