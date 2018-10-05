@@ -1,32 +1,26 @@
 package com.spectre.activity;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Point;
-import android.net.Uri;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.Display;
-import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
@@ -34,9 +28,6 @@ import com.androidquery.callback.AjaxStatus;
 import com.daimajia.slider.library.SliderLayout;
 import com.spectre.R;
 import com.spectre.activity_new.BookCarSummaryActivity;
-import com.spectre.adapter.ReviewListAdapter;
-import com.spectre.adapter.WorkListAdapter;
-import com.spectre.beans.AdPost;
 import com.spectre.beans.Garage;
 import com.spectre.beans.Review;
 import com.spectre.beans.Work;
@@ -47,7 +38,6 @@ import com.spectre.customView.CustomTextView;
 import com.spectre.customView.MyDialogProgress;
 import com.spectre.customView.SessionExpireDialog;
 import com.spectre.helper.AqueryCall;
-import com.spectre.helper.DividerItemDecoration;
 import com.spectre.interfaces.RequestCallback;
 import com.spectre.other.Constant;
 import com.spectre.other.Urls;
@@ -82,7 +72,8 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
     //  private int reviewIsThere = -1;
     private Dialog dd;
     CircleImageView iv_profile;
-    CustomTextView txt_email_id,txt_adress,txt_contact,txt_expertise,txt_repair;
+    CustomTextView txt_email_id, txt_adress, txt_contact, txt_expertise, txt_repair;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,9 +81,10 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
         context = this;
         Utility.setContentView(context, R.layout.activity_garage_details_new);
         actionBar = Utility.setUpToolbar_(context, "<font color='#ffffff'>Garage Detail</font>", true);
-       // Utility.setUpToolbar_(context, "<font color='#ffffff'>"+getString(R.string.manage_ad)+"</font>",true);
+        // Utility.setUpToolbar_(context, "<font color='#ffffff'>"+getString(R.string.manage_ad)+"</font>",true);
         initView();
     }
+
     private void initView() {
 
         imageSlider = (SliderLayout) findViewById(R.id.slider);
@@ -274,7 +266,7 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
                     Utility.openDialogToLogin(context);
                 } else {
                     if (!btn_show_interest.getText().toString().equalsIgnoreCase(getString(R.string.request_service_)))
-                      //  showProblem();
+                        //  showProblem();
                         callResetAPI(dd, "");
                 }
 
@@ -290,6 +282,41 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater mymenu = getMenuInflater();
+        mymenu.inflate(R.menu.menu_notification, menu);
+        //mymenu = (MenuInflater) menu.findItem(R.id.gallary);
+        if (adPost.getGarage_image().isEmpty()) {
+         menu.getItem(0).setVisible(false);
+        }
+            return super.onCreateOptionsMenu(menu);
+
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.notification:
+                //startActivity(new Intent(context, ReviewListActivity.class));
+                Intent intent = new Intent(context, ReviewListActivity.class);
+                intent.putExtra(Constant.DATA, adPost);
+                intent.putExtra(Constant.POSITION, position);
+                context.startActivity(intent);
+                break;
+            case R.id.gallary:
+                //startActivity(new Intent(context, ReviewListActivity.class));
+                Intent intent1 = new Intent(context, WorkListUserActivity.class);
+                intent1.putExtra(Constant.DATA, adPost);
+                intent1.putExtra(Constant.POSITION, position);
+                context.startActivity(intent1);
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -423,13 +450,14 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
                     MyDialogProgress.close(context);
                     dd.dismiss();
                     setInterestData();
+                    Utility.contectDialog(adPost.getMobile_no(),GarageDetailActivity.this,adPost.getUser_id(),adPost.getFull_name());
                 }
 
                 @Override
                 public void onFailed(JSONObject js, String msg) {
                     showToast(msg);
-                    if (msg.equalsIgnoreCase("already interested.")){
-                        Utility.contectDialog(adPost.getMobile_no(),GarageDetailActivity.this);
+                    if (msg.equalsIgnoreCase("already interested.")) {
+                        Utility.contectDialog(adPost.getMobile_no(), GarageDetailActivity.this,adPost.getUser_id(),adPost.getFull_name());
                     }
                     MyDialogProgress.close(context);
                 }
@@ -477,8 +505,6 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
     private void showToast(String msg) {
         Utility.showToast(context, msg);
     }
-
-
 
 
 }

@@ -64,6 +64,8 @@
             android:layout_gravity="bottom"
             android:layout_marginStart="@dimen/_8sdp"
             android:elevation="@dimen/_2sdp"
+            android:clickable="true"
+            android:id="@+id/img_send"
             android:background="@drawable/green_circle_bg"
             android:backgroundTint="#4dc066"
             android:layout_height="@dimen/_30sdp">
@@ -73,7 +75,7 @@
                 android:layout_width="@dimen/_15sdp"
                 android:layout_height="@dimen/_15sdp"
                 android:background="@drawable/msgsend"
-                android:clickable="true"
+                android:clickable="false"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:layout_marginEnd="@dimen/_5sdp"
                 android:backgroundTint="@color/white"

@@ -1,4 +1,303 @@
 <?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    style="@style/cardView"
+    android:layout_margin="@dimen/_5sdp"
+    card_view:cardBackgroundColor="@color/white"
+    card_view:cardCornerRadius="@dimen/_5sdp"
+    card_view:cardElevation="@dimen/_3sdp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txt_car_name"
+            style="@style/textView"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:fontFamily="@font/poppins_regular"
+            android:padding="@dimen/_2sdp"
+            android:singleLine="true"
+            android:text="Honda City"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_10sdp" />
+
+        <View
+            style="@style/line_register"
+            android:layout_marginTop="@dimen/_5sdp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1.2"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/textView"
+                            android:layout_height="@dimen/_22sdp"
+                            android:layout_marginEnd="@dimen/_5sdp"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:padding="@dimen/_2sdp"
+                            android:text="•"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="@dimen/_10sdp" />
+
+                        <TextView
+                            style="@style/textView"
+                            android:layout_height="@dimen/_22sdp"
+                            android:layout_marginEnd="@dimen/_5sdp"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:padding="@dimen/_2sdp"
+                            android:text="•"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="@dimen/_10sdp" />
+
+                        <TextView
+                            style="@style/textView"
+                            android:layout_height="@dimen/_22sdp"
+                            android:layout_marginEnd="@dimen/_5sdp"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:padding="@dimen/_2sdp"
+                            android:text="•"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="@dimen/_10sdp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_Model"
+                            style="@style/textView"
+                            android:layout_height="@dimen/_22sdp"
+                            android:layout_marginEnd="@dimen/_5sdp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:padding="@dimen/_2sdp"
+                            android:singleLine="true"
+                            android:text="Honda City"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_10sdp" />
+
+                        <TextView
+                            android:id="@+id/txtType"
+                            style="@style/textView"
+                            android:layout_height="@dimen/_22sdp"
+                            android:layout_marginEnd="@dimen/_5sdp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:padding="@dimen/_2sdp"
+                            android:singleLine="true"
+                            android:text="Type"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_10sdp" />
+
+                        <TextView
+                            android:id="@+id/txt_owner_name"
+                            style="@style/textView"
+                            android:layout_height="@dimen/_22sdp"
+                            android:layout_marginEnd="@dimen/_5sdp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:padding="@dimen/_2sdp"
+                            android:singleLine="true"
+                            android:text="Text"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_10sdp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.8"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_product"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_80sdp"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:src="@drawable/ic_launcher_web" />
+
+                <TextView
+                    android:id="@+id/txt_car_price"
+                    style="@style/textView"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:singleLine="true"
+                    android:text="AED 20000"
+                    android:textColor="@color/colorRed"
+                    android:textSize="@dimen/_10sdp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View style="@style/line_register" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:src="@drawable/ic_color"
+                    android:padding="@dimen/_2sdp"
+                    android:tint="@color/hint_color" />
+
+                <TextView
+                    android:id="@+id/txtColor"
+                    style="@style/textView"
+                    android:layout_width="match_parent"
+                    android:fontFamily="@font/poppins_regular"
+                    android:padding="@dimen/_2sdp"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColor="@color/colorSubText"
+                    android:textSize="@dimen/_10sdp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:padding="@dimen/_2sdp"
+                    android:src="@drawable/ic_miles"
+                    android:tint="@color/hint_color" />
+
+                <TextView
+                    android:id="@+id/txtMiles"
+                    style="@style/textView"
+                    android:layout_width="wrap_content"
+                    android:fontFamily="@font/poppins_regular"
+                    android:padding="@dimen/_2sdp"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColor="@color/colorSubText"
+                    android:textSize="@dimen/_10sdp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:padding="@dimen/_2sdp"
+                    android:src="@drawable/ic_event_available"
+                    android:tint="@color/hint_color" />
+
+                <TextView
+                    android:id="@+id/txtYear"
+                    style="@style/textView"
+                    android:layout_width="match_parent"
+                    android:fontFamily="@font/poppins_regular"
+                    android:padding="@dimen/_2sdp"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColor="@color/colorSubText"
+                    android:textSize="@dimen/_10sdp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txt_car_model"
+            style="@style/textView"
+            android:visibility="gone"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:fontFamily="@font/poppins_regular"
+            android:padding="@dimen/_2sdp"
+            android:singleLine="true"
+            android:text="Model: i- DTEC SV"
+            android:textColor="@color/colorSubText"
+            android:textSize="@dimen/_10sdp" />
+
+        <com.spectre.customView.CustomTextView
+            android:id="@+id/txt_car_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:singleLine="true"
+            android:text="12 Jan 2018"
+            android:textColor="@color/colorSubText"
+            android:textSize="8sp"
+            android:visibility="gone"
+            app:edittextfont="Poppins-Regular.ttf"
+            app:edittextfontHint="Poppins-Regular.ttf" />
+
+        <com.spectre.customView.CustomRayMaterialTextView
+            android:id="@+id/btn_view_detail"
+            style="@style/splashRipple"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/yellow_rounded_2dp"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="Details"
+            android:textColor="@color/colorWhite"
+            android:textSize="10sp"
+            android:visibility="gone"
+            app:edittextfont="Poppins-Regular.ttf" />
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
+<!--
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -89,5 +388,6 @@
     </LinearLayout>
 
 </LinearLayout>
+-->
 
 

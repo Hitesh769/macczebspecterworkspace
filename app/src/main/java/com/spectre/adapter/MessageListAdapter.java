@@ -9,8 +9,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.spectre.R;
+import com.spectre.model.Chat.ChatModel;
 import com.spectre.model.Message;
 import com.spectre.model.User;
+import com.spectre.other.Constant;
+import com.spectre.utility.SharedPrefUtils;
 
 import java.util.List;
 
@@ -19,9 +22,9 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     private static final int VIEW_TYPE_MESSAGE_RECEIVED = 2;
 
     private Context mContext;
-    private List<Message> mMessageList;
+    private List<ChatModel.Datum> mMessageList;
 
-    public MessageListAdapter(Context context, List<Message> messageList) {
+    public MessageListAdapter(Context context, List<ChatModel.Datum> messageList) {
         mContext = context;
         mMessageList = messageList;
     }
@@ -34,9 +37,9 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     // Determines the appropriate ViewType according to the sender of the message.
     @Override
     public int getItemViewType(int position) {
-        Message message = (Message) mMessageList.get(position);
+        ChatModel.Datum message = (ChatModel.Datum)mMessageList.get(position);
 
-        if (message.getSender().equals("123")) {
+        if (message.getToId().equals(SharedPrefUtils.getPreference(mContext, Constant.USER_ID,""))) {
             // If the current user is the sender of the message
             return VIEW_TYPE_MESSAGE_SENT;
         } else {
@@ -66,7 +69,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     // Passes the message object to a ViewHolder so that the contents can be bound to UI.
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Message message = (Message) mMessageList.get(position);
+        ChatModel.Datum message = (ChatModel.Datum) mMessageList.get(position);
 
         switch (holder.getItemViewType()) {
             case VIEW_TYPE_MESSAGE_SENT:
@@ -87,10 +90,10 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             timeText = (TextView) itemView.findViewById(R.id.text_message_time);
         }
 
-        void bind(Message message) {
-            messageText.setText(message.getMessage());
+        void bind(ChatModel.Datum message) {
+            messageText.setText(message.getToChat());
             // Format the stored timestamp into a readable String using method.
-            timeText.setText(message.getCreatedAt());
+            timeText.setText(message.getCreated());
         }
     }
 
@@ -107,10 +110,10 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             profileImage = (ImageView) itemView.findViewById(R.id.image_message_profile);
         }
 
-        void bind(Message message) {
-            messageText.setText(message.getMessage());
+        void bind(ChatModel.Datum message) {
+            messageText.setText(message.getToChat());
             // Format the stored timestamp into a readable String using method.
-            timeText.setText(message.getCreatedAt());
+            timeText.setText(message.getCreated());
 
            //nameText.setText(message.getSender().getNickname());
 

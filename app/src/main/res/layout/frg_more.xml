@@ -237,6 +237,40 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/linNotification"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/llNotification"
+                        style="@style/linear_register"
+                        android:background="@drawable/ripple">
+
+                        <ImageView
+                            style="@style/image_register"
+                            android:tint="#8802c9"
+                            android:src="@drawable/ic_notifications_black_24dp" />
+
+                        <TextView
+                            style="@style/textView"
+                            android:layout_weight="1"
+                            android:padding="@dimen/_10sdp"
+                            android:text="Notification"
+                            android:textColor="@color/black" />
+
+                        <ImageView
+                            style="@style/image_register"
+                            android:rotation="180"
+                            android:tint="@color/hint_color"
+                            app:srcCompat="@drawable/ic_keyboard_arrow_left" />
+
+                    </LinearLayout>
+
+                    <View style="@style/line_register" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/linMessage"

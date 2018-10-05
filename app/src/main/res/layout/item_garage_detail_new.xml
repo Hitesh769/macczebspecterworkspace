@@ -183,14 +183,14 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:padding="@dimen/_2sdp"
-                    android:src="@drawable/ic_brush_black_24dp" />
+                    android:src="@drawable/ic_format_list_numbered_black_24dp" />
                 <TextView
                     android:id="@+id/txt_review_count"
                     style="@style/textView"
                     android:fontFamily="@font/poppins_regular"
                     android:padding="@dimen/_2sdp"
                     android:singleLine="true"
-                    android:text="Black"
+                    android:text="0"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_10sdp" />
             </LinearLayout>
@@ -205,15 +205,16 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:padding="@dimen/_2sdp"
-                    android:src="@drawable/ic_directions_car_black_24dp" />
+                    android:tint="@color/black"
+                    android:src="@drawable/ic_star_black_24dp" />
                 <TextView
-                    android:id="@+id/txt_count_star"
+                    android:id="@+id/txt_count_avg"
                     style="@style/textView"
                     android:layout_centerVertical="true"
                     android:fontFamily="@font/poppins_regular"
                     android:padding="@dimen/_2sdp"
                     android:singleLine="true"
-                    android:text="mileg"
+                    android:text="0"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_10sdp" />
             </LinearLayout>

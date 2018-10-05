@@ -133,6 +133,12 @@ public class Constant {
     public static final String DRIVER_NAME="driver_name";
     public static final String DRIVER_PHONE="driver_phone";
 
+    public static final String TO_ID="to_id";
+    public static final String TO_CHAT="to_chat";
+    public static final String FROM_ID="from_id";
+
+
+
     /*{
         "second_user_id":"337",
             "type":"3",

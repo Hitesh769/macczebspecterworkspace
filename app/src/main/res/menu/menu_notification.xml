@@ -1,0 +1,23 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:yourapp="http://schemas.android.com/apk/res-auto"
+    tools:context="com.waggingpal.Activity.Register_Activity">
+
+
+    <item
+        android:id="@+id/gallary"
+        android:icon="@drawable/ic_gallary"
+        android:title="@string/submit"
+        yourapp:showAsAction="always" />
+
+    <item
+        android:id="@+id/notification"
+        android:icon="@drawable/ic_star_black_24dp"
+        android:title="@string/submit"
+        yourapp:showAsAction="always"
+        android:iconTint="@color/white"
+         />
+
+
+</menu>

@@ -138,6 +138,7 @@
                     android:inputType="textCapWords"
                     android:padding="5dp"
                     android:singleLine="true"
+                    android:backgroundTint="@color/setting_yellow"
                     android:textColor="@color/black"
                     android:textColorHint="@color/light_gray"
                     android:textSize="12sp"
@@ -167,6 +168,7 @@
                     android:padding="5dp"
                     android:singleLine="true"
                     android:textColor="@color/black"
+                    android:backgroundTint="@color/setting_yellow"
                     android:textColorHint="@color/light_gray"
                     android:textSize="12sp"
                     app:edittextfont="Poppins-Regular.ttf"
@@ -200,6 +202,7 @@
                     android:maxLength="10"
                     android:padding="5dp"
                     android:singleLine="true"
+                    android:backgroundTint="@color/setting_yellow"
                     android:textColor="@color/black"
                     android:textColorHint="@color/light_gray"
                     android:textSize="12sp"
@@ -231,6 +234,7 @@
                     android:padding="5dp"
                     android:singleLine="true"
                     android:textColor="@color/black"
+                    android:backgroundTint="@color/setting_yellow"
                     android:textColorHint="@color/light_gray"
                     android:textSize="12sp"
                     app:edittextfont="Poppins-Regular.ttf"
@@ -269,6 +273,7 @@
                         android:textColor="@color/black"
                         android:textColorHint="@color/light_gray"
                         android:textSize="12sp"
+                        android:backgroundTint="@color/setting_yellow"
                         app:edittextfont="Poppins-Regular.ttf"
                         app:edittextfontHint="Poppins-Regular.ttf" />
 
@@ -296,6 +301,7 @@
                         android:padding="5dp"
                         android:singleLine="true"
                         android:textColor="@color/black"
+                        android:backgroundTint="@color/setting_yellow"
                         android:textColorHint="@color/light_gray"
                         android:textSize="12sp"
                         app:edittextfont="Poppins-Regular.ttf"
@@ -355,7 +361,6 @@
                     </LinearLayout>
                 </LinearLayout>
 
-
                 <com.spectre.customView.CustomRayMaterialTextView
                     android:id="@+id/btn_save_changes"
                     style="@style/splashRipple"
@@ -368,7 +373,7 @@
                     android:background="@drawable/pink_round_solid_rectangle"
                     android:gravity="center"
                     android:padding="8dp"
-                    android:text="Save Changes"
+                    android:text="Update"
                     android:textColor="@color/colorWhite"
                     android:textSize="16sp"
                     app:edittextfont="Poppins-Regular.ttf" />

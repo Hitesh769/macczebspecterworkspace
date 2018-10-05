@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.androidquery.AQuery;
 import com.spectre.R;
@@ -102,7 +103,20 @@ public class WorkListAdapter extends RecyclerView.Adapter<WorkListAdapter.ViewHo
         } else {
             holder.txtCarModel.setText(appContext.getString(R.string.na));
         }
+        if (!adPost.getColor().trim().isEmpty())
+            holder.txtColor.setText(adPost.getColor());
+        else
+            holder.txtColor.setText("");
 
+        if (!adPost.getMileage().trim().isEmpty())
+            holder.txtMiles.setText(adPost.getMileage() + " " + appContext.getString(R.string.miles));
+        else
+            holder.txtMiles.setText("");
+
+        if (!adPost.getYear().trim().isEmpty())
+            holder.txtYear.setText(adPost.getYear());
+        else
+            holder.txtYear.setText("");
 
       /*  if (!adPost.getModel().isEmpty()) {
             holder.txtCarModel.setText(appContext.getString(R.string.model_) + " " + adPost.getModel().trim());
@@ -160,7 +174,7 @@ public class WorkListAdapter extends RecyclerView.Adapter<WorkListAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        CustomTextView txtCarName, txtCarPrice, txtCarModel;
+        TextView txtCarName, txtCarPrice, txtCarModel,txtColor,txtMiles,txtYear;
         ImageView ivProduct;
         CustomRayMaterialTextView btnViewDetail;
 
@@ -168,9 +182,13 @@ public class WorkListAdapter extends RecyclerView.Adapter<WorkListAdapter.ViewHo
             super(itemView);
             btnViewDetail = (CustomRayMaterialTextView) itemView.findViewById(R.id.btn_view_detail);
             ivProduct = (ImageView) itemView.findViewById(R.id.iv_product);
-            txtCarName = (CustomTextView) itemView.findViewById(R.id.txt_car_name);
-            txtCarPrice = (CustomTextView) itemView.findViewById(R.id.txt_car_price);
-            txtCarModel = (CustomTextView) itemView.findViewById(R.id.txt_car_model);
+            txtCarName = (TextView) itemView.findViewById(R.id.txt_car_name);
+            txtCarPrice = (TextView) itemView.findViewById(R.id.txt_car_price);
+            txtCarModel = (TextView) itemView.findViewById(R.id.txt_car_model);
+            txtColor = (TextView) itemView.findViewById(R.id.txtColor);
+            txtMiles = (TextView) itemView.findViewById(R.id.txtMiles);
+            txtYear = (TextView) itemView.findViewById(R.id.txtYear);
+
         }
     }
 }

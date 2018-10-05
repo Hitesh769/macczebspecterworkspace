@@ -229,7 +229,13 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         etAddress.setError(null);
         etEmail.setError(null);
         etName.setError(null);
+        String user="1";
+        if (user.equalsIgnoreCase("1")){
 
+        }
+        else{
+
+        }
         if (name.isEmpty()) {
             etName.setError(getString(R.string.enter_valid_name));
             return;
@@ -598,5 +604,9 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    public static Intent getStartIntent(Context context) {
+        Intent intent = new Intent(context, EditProfileActivity.class);
+        return intent;
     }
 }

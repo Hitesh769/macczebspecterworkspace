@@ -1102,7 +1102,7 @@ public class Utility {
         });
     }*/
 
-    public static void contectDialog(String phoneNumber, final Activity activity){
+    public static void contectDialog(String phoneNumber, final Activity activity, final String userId, final String name){
         final Dialog dialog = new Dialog(activity, R.style.Theme_Dialog);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_contect_seller);
@@ -1115,7 +1115,12 @@ public class Utility {
         tv_chatNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.startActivity(new Intent(activity,ChatActivity.class));
+                //activity.startActivity(new Intent(activity,ChatActivity.class));
+                Intent intent=new Intent(activity,ChatActivity.class);
+                intent.putExtra(Constant.USER_ID,userId);
+                intent.putExtra(Constant.USER_NAME,name);
+                activity.startActivity(intent);
+                activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
         tv_callNow.setOnClickListener(new View.OnClickListener() {

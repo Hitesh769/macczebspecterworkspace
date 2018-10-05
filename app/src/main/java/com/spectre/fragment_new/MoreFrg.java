@@ -20,10 +20,13 @@ import android.widget.TextView;
 import com.spectre.R;
 import com.spectre.activity.AddWorkActivity;
 import com.spectre.activity.ChatActivity;
+import com.spectre.activity.ChatUserListActivity;
+import com.spectre.activity.EditProfileActivity;
 import com.spectre.activity.LoginActivity;
 import com.spectre.activity.ManageAdActivity;
 import com.spectre.activity.ManageRentedActivity;
 import com.spectre.activity.ManageWorkActivity;
+import com.spectre.activity.NotificationActivity;
 import com.spectre.activity.PostAdActivity;
 import com.spectre.activity.RentCarActivity;
 import com.spectre.activity_new.HomeAct;
@@ -100,6 +103,8 @@ public class MoreFrg extends MasterFragment {
     LinearLayout linSettings;
     @BindView(R.id.linMessage)
     LinearLayout linMessage;
+    @BindView(R.id.linNotification)
+    LinearLayout linNotification;
 
 
     // screen context
@@ -112,6 +117,7 @@ public class MoreFrg extends MasterFragment {
     private Dialog ddManageAd = null;
     private CustomRayMaterialTextView btn_manage_buy, btn_manage_rent, btn_manage_garage;
     private CustomTextView txt_header, txt_manage_ad_header;
+
     // A new instance of fragment.
     public static MoreFrg newInstance() {
         MoreFrg fragment = new MoreFrg();
@@ -186,6 +192,7 @@ public class MoreFrg extends MasterFragment {
             linManageAds.setVisibility(View.VISIBLE);
             linSettings.setVisibility(View.VISIBLE);
             linMessage.setVisibility(View.VISIBLE);
+            linNotification.setVisibility(View.VISIBLE);
             llSocial.setVisibility(View.VISIBLE);
 
         } else {
@@ -201,7 +208,7 @@ public class MoreFrg extends MasterFragment {
     /* [END] - User define function */
 
     /* [START] - Butter knife listener */
-    @OnClick({R.id.linMessage,R.id.llLogout, R.id.llLogin, R.id.llSignUp, R.id.llMyAccount, R.id.llPostAd, R.id.llManageAd, R.id.llSettings, R.id.llAboutUs, R.id.llPrivacyPolicy, R.id.llSocial, R.id.llFeedback})
+    @OnClick({R.id.linMessage,R.id.linNotification ,R.id.llLogout, R.id.llLogin, R.id.llSignUp, R.id.llMyAccount, R.id.llPostAd, R.id.llManageAd, R.id.llSettings, R.id.llAboutUs, R.id.llPrivacyPolicy, R.id.llSocial, R.id.llFeedback})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.llLogout:
@@ -219,6 +226,7 @@ public class MoreFrg extends MasterFragment {
                 startAct(mainActivity(), SignUpAct.getStartIntent(context));
                 break;
             case R.id.llMyAccount:
+                startAct(mainActivity(), EditProfileActivity.getStartIntent(context));
                 break;
             case R.id.llPostAd:
                 choosePostAd();
@@ -227,9 +235,15 @@ public class MoreFrg extends MasterFragment {
                 chooseManageAd();
                 break;
             case R.id.linMessage:
-                startAct(mainActivity(), ChatActivity.getStartIntent(context));
+               startAct(mainActivity(), ChatUserListActivity.getStartIntent(context));
+               /* Intent intent=new Intent(mainActivity(),ChatUserListActivity.class);
+                mainActivity().startActivity(intent);
+                mainActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);*/
                 break;
-                case R.id.llSettings:
+            case R.id.linNotification:
+                startActivity(new Intent(context, NotificationActivity.class));
+                break;
+            case R.id.llSettings:
                 break;
             case R.id.llAboutUs:
                 break;
@@ -241,6 +255,7 @@ public class MoreFrg extends MasterFragment {
                 break;
         }
     }
+
     public void choosePostAd() {
 
         ddPostAd = new Dialog(context);
@@ -306,6 +321,7 @@ public class MoreFrg extends MasterFragment {
             }
         });
     }
+
     public void chooseManageAd() {
 
         ddManageAd = new Dialog(context);

@@ -14,6 +14,7 @@ import com.google.gson.reflect.TypeToken;
 import com.rey.material.widget.ProgressView;
 import com.spectre.R;
 import com.spectre.adapter.WorkListAdapter;
+import com.spectre.beans.Garage;
 import com.spectre.beans.Work;
 import com.spectre.customView.CustomTextView;
 import com.spectre.customView.MyDialogProgress;
@@ -37,7 +38,7 @@ public class WorkListUserActivity extends AppCompatActivity {
 
     private Context context;
     private ActionBar actionBar;
-
+    private Garage adPost;
     RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private RecyclerView.Adapter mAdapter;
@@ -66,7 +67,8 @@ public class WorkListUserActivity extends AppCompatActivity {
         setUpRecycler();
         setSwipeLayout();
         setUpRecyclerListener();
-        userId= (String) getIntent().getExtras().get(Constant.DATA);
+        adPost= (Garage) getIntent().getExtras().get(Constant.DATA);
+        userId=adPost.getUser_id();
         callMethodEventList(0);
     }
 

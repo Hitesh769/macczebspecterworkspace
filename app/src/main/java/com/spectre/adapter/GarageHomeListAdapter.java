@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import com.spectre.utility.SharedPrefUtils;
 import com.spectre.utility.Utility;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -72,6 +74,23 @@ public class GarageHomeListAdapter extends RecyclerView.Adapter<GarageHomeListAd
             holder.txt_number.setText(mobile);
         } else {
             holder.txt_number.setText(appContext.getString(R.string.na));
+        }
+        if (!adPost.getReviews().isEmpty()) {
+            ArrayList<Integer> avg=new ArrayList<>();
+            avg.clear();
+            for(int i=0;i<adPost.getReviews().size();i++){
+                avg.add(Integer.parseInt(adPost.getReviews().get(i).getRating()));
+            }
+           double dblavg=calculateAverage(avg);
+           holder.txt_count_avg.setText(""+dblavg);
+        } else {
+            holder.txt_count_avg.setText(appContext.getString(R.string.na));
+        }
+        if (!adPost.getReviews().isEmpty()) {
+            String reviewcount = "" +adPost.getReviews().size();
+            holder.txt_review_count.setText(reviewcount);
+        } else {
+             holder.txt_review_count.setText(appContext.getString(R.string.na));
         }
 
 
@@ -124,7 +143,7 @@ public class GarageHomeListAdapter extends RecyclerView.Adapter<GarageHomeListAd
 
 
                 String s = SharedPrefUtils.getPreference(appContext, Constant.USER_TYPE, "");
-               // if (appContext instanceof HomeActivity && status == 1) {
+                // if (appContext instanceof HomeActivity && status == 1) {
                 if (status == 1) {
                     Intent intent = new Intent(appContext, GarageDetailActivity.class);
                     intent.putExtra(Constant.DATA, adPost);
@@ -146,17 +165,19 @@ public class GarageHomeListAdapter extends RecyclerView.Adapter<GarageHomeListAd
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         CustomTextView txt_address, txt_number;
-        TextView txt_name;
+        TextView txt_name, txt_review_count, txt_count_avg;
         ImageView iv_product;
         CustomRayMaterialTextView btn_save_changes;
 
         public ViewHolder(View itemView) {
             super(itemView);
             txt_name = (TextView) itemView.findViewById(R.id.txt_name);
+            txt_review_count = (TextView) itemView.findViewById(R.id.txt_review_count);
+            txt_count_avg = (TextView) itemView.findViewById(R.id.txt_count_avg);
             txt_address = (CustomTextView) itemView.findViewById(R.id.txt_address);
             txt_number = (CustomTextView) itemView.findViewById(R.id.txt_number);
             iv_product = (ImageView) itemView.findViewById(R.id.iv_product);
-         //   btn_save_changes = (CustomRayMaterialTextView) itemView.findViewById(R.id.btn_save_changes);
+            //   btn_save_changes = (CustomRayMaterialTextView) itemView.findViewById(R.id.btn_save_changes);
 
             if (status == 1) {
                 //txt_number.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.garage_call, 0, 0, 0);
@@ -168,5 +189,15 @@ public class GarageHomeListAdapter extends RecyclerView.Adapter<GarageHomeListAd
             }
 
         }
+    }
+    private double calculateAverage(List<Integer> marks) {
+        Integer sum = 0;
+        if(!marks.isEmpty()) {
+            for (Integer mark : marks) {
+                sum += mark;
+            }
+            return sum.doubleValue() / marks.size();
+        }
+        return sum;
     }
 }

@@ -41,7 +41,7 @@ public class ReviewListActivity extends AppCompatActivity {
     RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private RecyclerView.Adapter mAdapter;
-    ArrayList<Review> Arraylist = new ArrayList<>();
+    ArrayList<Review> arraylist = new ArrayList<>();
     CustomTextView txtConnection;
     private boolean loaddingDone = true;
     private boolean loading = true;
@@ -62,11 +62,13 @@ public class ReviewListActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        callMethodEventList(0);
         setUpRecycler();
         setSwipeLayout();
         setUpRecyclerListener();
-        userId= (String) getIntent().getExtras().get(Constant.DATA);
-        callMethodEventList(0);
+        //userId= (String) getIntent().getExtras().get(Constant.DATA);
+        userId= SharedPrefUtils.getPreference(context, Constant.USER_ID,"");
+       // callMethodEventList(0);
     }
 
     public void setSwipeLayout() {
@@ -84,7 +86,7 @@ public class ReviewListActivity extends AppCompatActivity {
 
     private void refreshItems() {
         if (loading) {
-            if (Arraylist.size() == 0) {
+            if (arraylist.size() == 0) {
                 loading = false;
                 onItemsLoadComplete();
                 callMethodEventList(0);
@@ -101,7 +103,7 @@ public class ReviewListActivity extends AppCompatActivity {
     private void setUpRecycler() {
         /*for (int i = 0; i <= 9; i++) {
             EventDetail eventDetail = new EventDetail();
-            Arraylist.add(eventDetail);
+            arraylist.add(eventDetail);
         }*/
         progressDialog1 = (ProgressView) findViewById(R.id.progress_pv_linear_colors);
         txtConnection = ((CustomTextView) findViewById(R.id.no_data));
@@ -109,7 +111,7 @@ public class ReviewListActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(context);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new ReviewListAdapter(context, Arraylist, 1);
+        mAdapter = new ReviewListAdapter(context, arraylist, 1);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -158,17 +160,17 @@ public class ReviewListActivity extends AppCompatActivity {
         // Upcoming_event
         try {
             if (i == 0) {
-                if (Arraylist.size() == 0) {
+                if (arraylist.size() == 0) {
                     MyDialogProgress.open(context);
                     params.put(Constant.CREATE_AT, "0");
 
                 } else {
                     (progressDialog1).start();
-                    params.put(Constant.CREATE_AT, Arraylist.get(Arraylist.size() - 1).getCreate_at());
+                    params.put(Constant.CREATE_AT, arraylist.get(arraylist.size() - 1).getCreate_at());
                 }
                 params.put(Constant.LIST_TYPE, "0");
             } else {
-                params.put(Constant.CREATE_AT, Arraylist.get(0).getCreate_at());
+                params.put(Constant.CREATE_AT, arraylist.get(0).getCreate_at());
                 params.put(Constant.LIST_TYPE, "1");
             }
 
@@ -188,7 +190,7 @@ public class ReviewListActivity extends AppCompatActivity {
 
                     loading = true;
                     loaddingDone = false;
-                    if (Arraylist.size() == 0) {
+                    if (arraylist.size() == 0) {
                         txtConnection.setVisibility(View.VISIBLE);
                         txtConnection.setText(failed);
                         txtConnection.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
@@ -208,7 +210,7 @@ public class ReviewListActivity extends AppCompatActivity {
                 public void onNull(JSONObject js, String nullp) {
                     loading = true;
                     loaddingDone = false;
-                    if (Arraylist.size() == 0) {
+                    if (arraylist.size() == 0) {
                         txtConnection.setVisibility(View.VISIBLE);
                         txtConnection.setText(nullp);
                         if (nullp.equalsIgnoreCase(getString(R.string.connection)))
@@ -222,7 +224,7 @@ public class ReviewListActivity extends AppCompatActivity {
                 @Override
                 public void onException(JSONObject js, String exception) {
                     // MyDialog.dialog_(exception, context);
-                    if (Arraylist.size() == 0) {
+                    if (arraylist.size() == 0) {
                         txtConnection.setVisibility(View.VISIBLE);
                         txtConnection.setText(exception);
                         //   txtConnection.setCompoundDrawablesWithIntrinsicBounds(0, R.mipmap.nodata, 0, 0);
@@ -254,9 +256,9 @@ public class ReviewListActivity extends AppCompatActivity {
                 }.getType();
                 List<Review> tempListNewsFeeds = new Gson().fromJson(jsonArray.toString(), type);
                 if (i == 0) {
-                    Arraylist.addAll(Arraylist.size(), tempListNewsFeeds);
+                    arraylist.addAll(arraylist.size(), tempListNewsFeeds);
                 } else {
-                    Arraylist.addAll(0, tempListNewsFeeds);
+                    arraylist.addAll(0, tempListNewsFeeds);
                 }
             }
 

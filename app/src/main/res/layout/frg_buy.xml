@@ -247,6 +247,7 @@
             <com.spectre.customView.CustomTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/recyler_title"
                 android:background="@color/colorBackground"
                 android:paddingBottom="@dimen/_5sdp"
                 android:paddingStart="@dimen/_20sdp"

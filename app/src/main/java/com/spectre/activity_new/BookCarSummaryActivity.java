@@ -354,7 +354,7 @@ public class BookCarSummaryActivity extends AppCompatActivity {
 
                 }*/
 
-                Utility.contectDialog(adPost.getMobile_no(),BookCarSummaryActivity.this);
+                Utility.contectDialog(adPost.getMobile_no(),BookCarSummaryActivity.this,adPost.getUser_id(),adPost.getFull_name());
 
                 new AlertBox(context).openMessage(success, "Okay", "", false);
             }
@@ -364,7 +364,7 @@ public class BookCarSummaryActivity extends AppCompatActivity {
                 Utility.showToast(context, failed);
 
              if (failed.equalsIgnoreCase("already interested.")){
-                 Utility.contectDialog(adPost.getMobile_no(),BookCarSummaryActivity.this);
+                 Utility.contectDialog(adPost.getMobile_no(),BookCarSummaryActivity.this,adPost.getUser_id(),adPost.getFull_name());
              }
                 MyDialogProgress.close(context);
 
