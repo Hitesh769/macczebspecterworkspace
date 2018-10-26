@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#8700C9</color>
+    <color name="colorPrimaryold">#8700C9</color>
     <!--<color name="colorPrimaryDark">#7400bc</color>-->
     <color name="colorPrimaryDark">#341747</color>
+    <color name="colorPrimary">#341747</color>
     <color name="colorAccent">#FFB600</color>
     <color name="colorWhite">#ffffff</color>
     <color name="transprent_white">#90ffffff</color>
@@ -29,6 +30,7 @@
     <color name="colorSubText">#AEAEAE</color>
     <color name="colorRating">#888</color>
     <color name="colorBox">#EBEBEB</color>
+    <color name="grayimgback">#ababab</color>
     <array name="progress_colors">
         <item>@color/colorRed</item>
         <!-- <item>@color/colorAccent</item>-->
@@ -51,6 +53,6 @@
     <color name="white">#ffffff</color>
     <color name="black_material">#363739</color>
     <color name="edittext_color">@color/hint_color</color>
-    <color name="signup_back">#A050D1</color>
+    <color name="signup_back">#341747</color>
     <color name="back_new">#341747</color>
 </resources>

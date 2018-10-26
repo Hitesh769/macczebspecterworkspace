@@ -43,6 +43,9 @@ public class Constant {
     public static String RATING = "rating";
 
     public static String USER_GENDER = "user_gender";
+    public static String GENDER = "gender";
+    public static String EMAIL = "email";
+    public static String NAME = "name";
     public static String ANDROID = "android";
     public static String USER_TOKEN = "user_token";
     public static String FACEBOOK_IMAGE = "facebook_image";
@@ -132,6 +135,7 @@ public class Constant {
     public static final String DRIVER_EMAIL="driver_email";
     public static final String DRIVER_NAME="driver_name";
     public static final String DRIVER_PHONE="driver_phone";
+    public static final String PHONE="phone";
 
     public static final String TO_ID="to_id";
     public static final String TO_CHAT="to_chat";

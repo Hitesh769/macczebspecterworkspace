@@ -94,7 +94,7 @@
                     android:orientation="vertical">
 
                     <com.spectre.customView.CustomTextView
-                        android:id="@+id/driver_detail"
+                        android:id="@+id/buyer_detail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="left"
@@ -102,7 +102,7 @@
                         android:paddingRight="2dp"
                         android:paddingTop="@dimen/_10sdp"
                         android:singleLine="true"
-                        android:text="@string/seller_detail"
+                        android:text="@string/buyer_details"
                         android:textColor="@color/black"
                         android:textSize="20sp"
                         app:edittextfont="Poppins-Medium.ttf"

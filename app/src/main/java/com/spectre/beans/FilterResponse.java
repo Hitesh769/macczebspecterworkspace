@@ -29,8 +29,8 @@ public class FilterResponse implements Parcelable {
     private String carVersion = "";
     private String service_type = "0";
     private String location = "location";
-    private String latitude = "lot";
-    private String longitude = "lon";
+    private String lat = "lat";
+    private String lon = "lon";
 
     /*{
         "car_name_id": "0",
@@ -69,8 +69,8 @@ public class FilterResponse implements Parcelable {
         carVersion = in.readString();
         service_type = in.readString();
         location = in.readString();
-        latitude = in.readString();
-        longitude = in.readString();
+        lat= in.readString();
+        lon = in.readString();
     }
 
     public static final Creator<FilterResponse> CREATOR = new Creator<FilterResponse>() {
@@ -110,8 +110,8 @@ public class FilterResponse implements Parcelable {
         dest.writeString(carVersion);
         dest.writeString(service_type);
         dest.writeString(location);
-        dest.writeString(longitude);
-        dest.writeString(latitude);
+        dest.writeString(lon);
+        dest.writeString(lat);
 
     }
 
@@ -264,19 +264,19 @@ public class FilterResponse implements Parcelable {
     }
 
     public String getLatitude() {
-        return latitude;
+        return lat;
     }
 
     public void setLatitude(String latitude) {
-        this.latitude = latitude;
+        this.lat = latitude;
     }
 
     public String getLongitude() {
-        return longitude;
+        return lon;
     }
 
     public void setLongitude(String longitude) {
-        this.longitude = longitude;
+        this.lon = longitude;
     }
 }
 

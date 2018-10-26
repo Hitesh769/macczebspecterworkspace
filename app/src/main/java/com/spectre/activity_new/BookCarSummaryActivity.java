@@ -7,11 +7,13 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatRadioButton;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.Display;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -42,8 +44,6 @@ public class BookCarSummaryActivity extends AppCompatActivity {
     CustomTextView toolbarTitle;
     @BindView(R.id.toolbar_actionbar)
     Toolbar toolbarActionbar;
-    @BindView(R.id.driver_detail)
-    CustomTextView driverDetail;
     @BindView(R.id.view1)
     View view1;
     @BindView(R.id.nametitle)
@@ -138,6 +138,8 @@ public class BookCarSummaryActivity extends AppCompatActivity {
     LinearLayout linSummaryBuyer;
     @BindView(R.id.scrollView)
     ScrollView scrollView;
+
+
     private ActionBar actionBar;
     private Context context;
     private AdPost adPost;
@@ -146,6 +148,7 @@ public class BookCarSummaryActivity extends AppCompatActivity {
     private Display display;
     private boolean isSuccess = false;
     RelativeLayout toolbar;
+    String name="",location="",email="",phone="",gender="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,6 +167,7 @@ public class BookCarSummaryActivity extends AppCompatActivity {
 
     private void initView() {
         setData();
+
     }
 
     @OnClick(R.id.btnConfirm)
@@ -174,8 +178,8 @@ public class BookCarSummaryActivity extends AppCompatActivity {
            // scrollView.pageScroll(0);
            // scrollView.setVerticalScrollbarPosition(0);
         } else {
-
-            getSuccessIntent();
+            Utility.contectDialog(adPost.getMobile_no(),BookCarSummaryActivity.this,adPost.getUser_id(),adPost.getFull_name());
+           // getSuccessIntent();
         }
 
        /* Intent intent = new Intent(this, BookCarConfirmBooking.class);
@@ -188,22 +192,31 @@ public class BookCarSummaryActivity extends AppCompatActivity {
     private void setData() {
         type = getIntent().getExtras().getInt(Constant.TYPE);
 
+        name=getIntent().getStringExtra(Constant.NAME);
+        location=getIntent().getStringExtra(Constant.LOCATION);
+        email=getIntent().getStringExtra(Constant.EMAIL);
+        phone=getIntent().getStringExtra(Constant.PHONE);
+        gender=getIntent().getStringExtra(Constant.GENDER);
+
         if (type != 1) {
             //    perDay = getString(R.string.per_day);
             linSummaryBuyer.setVisibility(View.VISIBLE);
             relGender.setVisibility(View.VISIBLE);
             relLocataion.setVisibility(View.VISIBLE);
             linSummaryRent.setVisibility(View.GONE);
-
         }
-
-
         txtPickUp.setText(Common.strDayPickUp + ", " + Common.strYearPickUp + " " + Common.strMonthPickUp + " " + Common.strDatePickUp);
         txtDropOff.setText(Common.strDayDropoff + ", " + Common.strYearDropoff + " " + Common.strMonthDropoff + " " + Common.strDateDropoff);
-
-      /*  txtName.setText(getIntent().getStringExtra(Constant.DRIVER_NAME));
-        txtEmail.setText(getIntent().getStringExtra(Constant.DRIVER_EMAIL));
-        txtPhone.setText(getIntent().getStringExtra(Constant.DRIVER_PHONE));*/
+        txtName.setText(name);
+        txtEmail.setText(email);
+        txtPhone.setText(phone);
+        txtBuyerLocation.setText(location);
+        if (gender.equals("1")){
+            txtGender.setText("male");
+        }
+        else {
+            txtGender.setText("female");
+        }
 
 
         if (getIntent().getExtras() != null && getIntent().getExtras().get(Constant.DATA) != null) {
@@ -223,7 +236,7 @@ public class BookCarSummaryActivity extends AppCompatActivity {
             }
             /*set data for buy*/
 
-            if (!adPost.getFull_name().isEmpty()) {
+           /* if (!adPost.getFull_name().isEmpty()) {
                 txtName.setText(adPost.getFull_name().trim());
             } else {
                 txtName.setText(context.getString(R.string.na));
@@ -242,7 +255,7 @@ public class BookCarSummaryActivity extends AppCompatActivity {
                 txtLocation.setText(adPost.getLocation().trim());
             } else {
                 txtLocation.setText(context.getString(R.string.na));
-            }
+            }*/
             if (!adPost.getCar_name().isEmpty()) {
                 txtCarName.setText(adPost.getCar_name().trim());
             } else {
@@ -319,7 +332,12 @@ public class BookCarSummaryActivity extends AppCompatActivity {
             js.put(Constant.PROBLEM, trim);
             js.put(Constant.FROM_DATE, from);
             js.put(Constant.TO_DATE, to);
-            js.put(Constant.END_USER,adPost.getCar_name_id());
+            js.put(Constant.END_USER, SharedPrefUtils.getPreference(context, Constant.USER_ID, ""));
+            js.put(Constant.GENDER,gender);
+            js.put(Constant.NAME,name);
+            js.put(Constant.LOCATION,location);
+            js.put(Constant.PHONE,phone);
+            js.put(Constant.EMAIL,email);
 
            /* {
                 "second_user_id":"337",
@@ -353,9 +371,6 @@ public class BookCarSummaryActivity extends AppCompatActivity {
                     }
 
                 }*/
-
-                Utility.contectDialog(adPost.getMobile_no(),BookCarSummaryActivity.this,adPost.getUser_id(),adPost.getFull_name());
-
                 new AlertBox(context).openMessage(success, "Okay", "", false);
             }
 

@@ -93,6 +93,7 @@
                         android:layout_marginEnd="@dimen/_10sdp"
                         android:layout_marginStart="@dimen/_15sdp"
                         android:gravity="center"
+                        android:id="@+id/lin_range_row"
                         android:orientation="horizontal"
                         android:weightSum="10">
 

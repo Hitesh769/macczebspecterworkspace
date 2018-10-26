@@ -13,17 +13,26 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatRadioButton;
 import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.androidquery.AQuery;
 import com.daimajia.slider.library.SliderLayout;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.spectre.R;
 import com.spectre.activity_new.BookCarInfoActivity;
 import com.spectre.activity_new.BookCarSummaryActivity;
@@ -41,28 +50,33 @@ import com.spectre.interfaces.RequestCallback;
 import com.spectre.other.Constant;
 import com.spectre.other.Urls;
 import com.spectre.utility.SharedPrefUtils;
+import com.spectre.utility.TouchImageView;
 import com.spectre.utility.Utility;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.spectre.utility.Utility.setLog;
 
 public class CarDetailActivity extends AppCompatActivity implements View.OnClickListener {
     private Context context;
     private SliderLayout imageSlider;
     private CustomTextView txt_car_name, txt_car_price, txt_car_model, txt_car_version,
             txt_car_type, txt_car_mileage, txt_email_id, txt_vendor_name, txt_adress,
-            txt_contact, txt_from, txt_to, txt_car_posted_date,vendor_detail;
-
+            txt_contact, txt_from, txt_to, txt_car_posted_date, vendor_detail;
     /*car specification*/
 
-    private CustomTextView txt_color,txt_distance,txt_quality,txt_year;
+    private CustomTextView txt_color, txt_distance, txt_quality, txt_year;
 
     private CircleImageView iv_profile;
-    private CardView card1,card2,card3;
+    private CardView card1, card2, card3;
     private CustomRayMaterialTextView btn_show_interest;
     private Display display;
     private ActionBar actionBar;
@@ -72,7 +86,12 @@ public class CarDetailActivity extends AppCompatActivity implements View.OnClick
     private boolean isChange;
     private String perDay = "";
     private Dialog dd;
-
+    AppCompatRadioButton male;
+    AppCompatRadioButton female;
+    EditText edtFirstName, edtLocation, edtEmail, edtContect;
+    private static final int PLACE_PICKER_REQUEST = 999;
+    private String latitude = "";
+    private String longitude = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,10 +119,17 @@ public class CarDetailActivity extends AppCompatActivity implements View.OnClick
         txt_to = (CustomTextView) findViewById(R.id.txt_to);
         txt_from = (CustomTextView) findViewById(R.id.txt_from);
 
+        edtFirstName = (EditText) findViewById(R.id.input_first_name);
+        edtLocation = (EditText) findViewById(R.id.input_location);
+        edtContect = (EditText) findViewById(R.id.input_contect);
+        edtEmail = (EditText) findViewById(R.id.input_email);
+
         txt_color = (CustomTextView) findViewById(R.id.txt_color);
         txt_distance = (CustomTextView) findViewById(R.id.txt_distance);
         txt_quality = (CustomTextView) findViewById(R.id.txt_quality);
         txt_year = (CustomTextView) findViewById(R.id.txt_year);
+        male = (AppCompatRadioButton) findViewById(R.id.radio_male);
+        female = (AppCompatRadioButton) findViewById(R.id.radio_female);
 
 
         vendor_detail = (CustomTextView) findViewById(R.id.vendor_detail);
@@ -114,9 +140,38 @@ public class CarDetailActivity extends AppCompatActivity implements View.OnClick
 
         iv_profile = (CircleImageView) findViewById(R.id.iv_profile);
 
+        edtLocation.setOnClickListener(this);
         btn_show_interest = (CustomRayMaterialTextView) findViewById(R.id.btn_show_interest);
         btn_show_interest.setOnClickListener(this);
 
+        AppCompatRadioButton.OnCheckedChangeListener listener = new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    male.setChecked(male == buttonView);
+                    female.setChecked(female == buttonView);
+                }
+            }
+        };
+        male.setOnCheckedChangeListener(listener);
+        female.setOnCheckedChangeListener(listener);
+
+        //save data in buyer details
+        edtFirstName.setText(SharedPrefUtils.getPreference(context, Constant.USER_NAME, ""));
+        edtLocation.setText(SharedPrefUtils.getPreference(context, Constant.USER_ADDRESS_, ""));
+        edtContect.setText(SharedPrefUtils.getPreference(context, Constant.USER_MOBILE, ""));
+        edtEmail.setText(SharedPrefUtils.getPreference(context, Constant.USER_EMAIL, ""));
+
+        iv_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CarDetailActivity.this, SellerDetailsActivity.class);
+                intent.putExtra(Constant.DATA, adPost);
+                intent.putExtra(Constant.POSITION, position);
+                intent.putExtra(Constant.TYPE, type);
+                startActivity(intent);
+            }
+        });
 
         if (getIntent().getExtras() != null && getIntent().getExtras().get(Constant.DATA) != null) {
 
@@ -138,11 +193,6 @@ public class CarDetailActivity extends AppCompatActivity implements View.OnClick
             layoutParams.width = display.getWidth();
             layoutParams.height = Utility.dpToPx(context, 250);
             imageSlider.setLayoutParams(layoutParams);
-
-           /* if (adPost.getCar_name() != null && !adPost.getCar_name().isEmpty())
-                txt_car_name.setText(adPost.getCar_name());
-            else
-                txt_car_name.setText(getString(R.string.na));*/
 
 
             if (adPost.getPrice() != null && !adPost.getPrice().isEmpty()) {
@@ -192,14 +242,6 @@ public class CarDetailActivity extends AppCompatActivity implements View.OnClick
             } else {
                 txt_email_id.setText(context.getString(R.string.na));
             }
-
-
-/*car specification*/
-
-         /*   txt_color =
-                    txt_distance
-            txt_quality
-                    txt_year = (*/
 
             if (adPost.getColor() != null && !adPost.getColor().isEmpty()) {
                 txt_color.setText(adPost.getColor().trim());
@@ -272,7 +314,6 @@ public class CarDetailActivity extends AppCompatActivity implements View.OnClick
             }
 
             if (type == 1) {
-                //((RelativeLayout) findViewById(R.id.rl_rent)).setVisibility(View.VISIBLE);
                 ((LinearLayout) findViewById(R.id.ll_from)).setVisibility(View.VISIBLE);
                 ((LinearLayout) findViewById(R.id.ll_to)).setVisibility(View.VISIBLE);
                 ((LinearLayout) findViewById(R.id.ll_car_type)).setVisibility(View.GONE);
@@ -296,9 +337,9 @@ public class CarDetailActivity extends AppCompatActivity implements View.OnClick
                 ((LinearLayout) findViewById(R.id.ll_car_milleage)).setVisibility(View.VISIBLE);
             }
 
-            if (!adPost.getIs_interest().isEmpty() && adPost.getIs_interest().equalsIgnoreCase("1")) {
+         /*   if (!adPost.getIs_interest().isEmpty() && adPost.getIs_interest().equalsIgnoreCase("1")) {
                 btn_show_interest.setText(R.string.request_sent);
-            } else {
+            } else {*/
                 if (type == 1) {
                     btn_show_interest.setText(R.string.book_car);
                     vendor_detail.setText(R.string.vendor_detail);
@@ -307,7 +348,7 @@ public class CarDetailActivity extends AppCompatActivity implements View.OnClick
                     btn_show_interest.setText(R.string.buy_car);
                 }
 
-            }
+          //  }
 
 
         } else {
@@ -333,35 +374,73 @@ public class CarDetailActivity extends AppCompatActivity implements View.OnClick
         String s = SharedPrefUtils.getPreference(context, Constant.USER_TYPE, "");
         switch (v.getId()) {
             case R.id.btn_show_interest:
-               /* if (s.isEmpty() || s.equalsIgnoreCase("0")) {
-                    Utility.openDialogToLogin(context);
-                } else {
-                    if (btn_show_interest.getText().toString().equalsIgnoreCase(getResources().getString(R.string.book_car)))
-                        showProblem(1);
-
-                    if (btn_show_interest.getText().toString().equalsIgnoreCase(getResources().getString(R.string.buy_car)))
-                        showProblem(2);
-                }*/
                 //display information activity
                 if (btn_show_interest.getText().toString().equalsIgnoreCase(getResources().getString(R.string.book_car))) {
-                // startActivity(new Intent(this, BookCarInfoActivity.class));
                     Intent intent = new Intent(this, BookCarInfoActivity.class);
                     intent.putExtra(Constant.DATA, adPost);
                     intent.putExtra(Constant.POSITION, position);
                     intent.putExtra(Constant.TYPE, type);
                     startActivity(intent);
+                } else if (btn_show_interest.getText().toString().equalsIgnoreCase(getResources().getString(R.string.buy_car))) {
+                    String gender = "1";
+                    if (male.isChecked()) {
+                        gender = "1";
+                    } else {
+                        gender = "2";
+                    }
+                    if (!edtFirstName.getText().toString().trim().isEmpty()&&!edtLocation.getText().toString().trim().isEmpty()&&!edtEmail.getText().toString().trim().isEmpty()&&!edtContect.getText().toString().trim().isEmpty()) {
+                        if (emailValidator(edtEmail.getText().toString()) == true) {
+                            Intent intent = new Intent(this, BookCarSummaryActivity.class);
+                            intent.putExtra(Constant.DATA, adPost);
+                            intent.putExtra(Constant.POSITION, position);
+                            intent.putExtra(Constant.TYPE, type);
+                            intent.putExtra(Constant.NAME, edtFirstName.getText().toString());
+                            intent.putExtra(Constant.LOCATION, edtLocation.getText().toString());
+                            intent.putExtra(Constant.EMAIL, edtEmail.getText().toString());
+                            intent.putExtra(Constant.PHONE, edtContect.getText().toString());
+                            intent.putExtra(Constant.GENDER, gender);
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(context,"Please enter valid EmailID",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    else{
+                        Toast.makeText(context,"Field can't empty",Toast.LENGTH_SHORT).show();
+                    }
                 }
-                else if (btn_show_interest.getText().toString().equalsIgnoreCase(getResources().getString(R.string.buy_car))) {
-                    Intent intent = new Intent(this, BookCarSummaryActivity.class);
-                    intent.putExtra(Constant.DATA, adPost);
-                    intent.putExtra(Constant.POSITION, position);
-                    intent.putExtra(Constant.TYPE, type);
-                    startActivity(intent);
+                break;
+            case R.id.input_location:
+                try {
+                    Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).build(CarDetailActivity.this);
+                    startActivityForResult(intent, PLACE_PICKER_REQUEST);
+                } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
+                    e.printStackTrace();
                 }
                 break;
         }
     }
-
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        setLog("location getting");
+        if (requestCode == PLACE_PICKER_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlacePicker.getPlace(data, CarDetailActivity.this);
+                StringBuilder stBuilder = new StringBuilder();
+                String placename = String.format("%s", place.getName());
+                latitude = String.valueOf(place.getLatLng().latitude);
+                Utility.setLog("LAT 2 : " + latitude);
+                longitude = String.valueOf(place.getLatLng().longitude);
+                String address = String.format("%s", place.getAddress());
+                stBuilder.append(placename);
+                stBuilder.append(", ");
+                stBuilder.append(address);
+                setLog("address : " + address);
+                edtLocation.setText(stBuilder.toString());
+                // Arraylist.clear();
+                // callMethodEventList(0);
+            }
+        }
+    }
     private void callAPI(final Dialog dd, String trim, String from, String to) {
         MyDialogProgress.open(context);
 
@@ -373,13 +452,8 @@ public class CarDetailActivity extends AppCompatActivity implements View.OnClick
             js.put(Constant.PROBLEM, trim);
             js.put(Constant.FROM_DATE, from);
             js.put(Constant.TO_DATE, to);
-            js.put(Constant.END_USER,adPost.getCar_name_id());
+            js.put(Constant.END_USER, adPost.getCar_name_id());
 
-           /* {
-                "second_user_id":"337",
-                    "type":"3",
-                    "interested_id":"0"
-            }*/
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -392,16 +466,16 @@ public class CarDetailActivity extends AppCompatActivity implements View.OnClick
                 dd.dismiss();
                 adPost.setIs_interest("1");
 
-                if (!adPost.getIs_interest().isEmpty() && adPost.getIs_interest().equalsIgnoreCase("1")) {
+              /*  if (!adPost.getIs_interest().isEmpty() && adPost.getIs_interest().equalsIgnoreCase("1")) {
                     btn_show_interest.setText(R.string.request_sent);
-                } else {
+                } else {*/
                     if (type == 1) {
                         btn_show_interest.setText(R.string.book_car);
                     } else {
                         btn_show_interest.setText(R.string.buy_car);
                     }
 
-                }
+              //  }
 
 
                 new AlertBox(context).openMessage(success, "Okay", "", false);
@@ -451,7 +525,15 @@ public class CarDetailActivity extends AppCompatActivity implements View.OnClick
         //  MyDialogProgress.close(context);
     }
 
-
+    public boolean emailValidator(String email)
+    {
+        Pattern pattern;
+        Matcher matcher;
+        final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        pattern = Pattern.compile(EMAIL_PATTERN);
+        matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
     private void showProblem(final int isRent) {
 
         try {

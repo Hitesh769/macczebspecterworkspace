@@ -27,7 +27,7 @@ public class AboutUsActivity extends AppCompatActivity {
         Utility.setContentView(context, R.layout.activity_about_us);
         //  Utility.setUpToolbar_(context, "<font color='#ffffff'>About Us</font>", true);
         actionBar = Utility.setUpToolbarWithColor(context, "<font color='#8700C9'>"+getString(R.string.about_us)+"</font>", getResources().getColor(R.color.colorWhite));
-        ((WebView) findViewById(R.id.web_view)).loadData("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.", "text/html; charset=utf-8", "UTF-8");
+        ((WebView) findViewById(R.id.web_view)).loadData("SpectreApp is the only marketplace for Dealers, Certified PreOwned Car owners and Individuals to list their services and portfolio and get discovered. Search, Compare and Save Using the UAE's Biggest Online Car Listing for Buying & Selling and Car Rental Services.", "text/html; charset=utf-8", "UTF-8");
 
         /* Drawable drawable = ResourcesCompat.getDrawable(context.getResources(), R.mipmap.back, null);
         drawable = DrawableCompat.wrap(drawable);

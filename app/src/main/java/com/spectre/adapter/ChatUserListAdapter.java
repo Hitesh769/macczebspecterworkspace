@@ -17,8 +17,6 @@ import com.spectre.other.Constant;
 import com.spectre.utility.SharedPrefUtils;
 
 import java.util.ArrayList;
-
-
 /**
  * Created by Sumit on 9/25/2016.
  */

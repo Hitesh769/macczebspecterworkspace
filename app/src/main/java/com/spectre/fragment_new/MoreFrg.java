@@ -17,8 +17,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.androidquery.AQuery;
 import com.spectre.R;
+import com.spectre.activity.AboutUsActivity;
 import com.spectre.activity.AddWorkActivity;
+import com.spectre.activity.CarDetailActivity;
 import com.spectre.activity.ChatActivity;
 import com.spectre.activity.ChatUserListActivity;
 import com.spectre.activity.EditProfileActivity;
@@ -29,8 +32,10 @@ import com.spectre.activity.ManageWorkActivity;
 import com.spectre.activity.NotificationActivity;
 import com.spectre.activity.PostAdActivity;
 import com.spectre.activity.RentCarActivity;
+import com.spectre.activity.SellerDetailsActivity;
 import com.spectre.activity_new.HomeAct;
 import com.spectre.activity_new.SignUpAct;
+import com.spectre.beans.Garage;
 import com.spectre.customView.CustomRayMaterialTextView;
 import com.spectre.customView.CustomTextView;
 import com.spectre.other.Constant;
@@ -200,6 +205,11 @@ public class MoreFrg extends MasterFragment {
         }
 
 
+        txtName.setText(SharedPrefUtils.getPreference(context, Constant.USER_NAME, ""));
+      /*  if (!SharedPrefUtils.getPreference(context, Constant.GARAGE_IMAGE, "").isEmpty())
+            new AQuery(context).id(imv_banner).image(SharedPrefUtils.getPreference(context, Constant.GARAGE_IMAGE, ""), true, true, 0, 0);
+        else
+            ivProfile.setImageResource(R.mipmap.gestuser);*/
     }
 
     private void setListener() {
@@ -219,14 +229,21 @@ public class MoreFrg extends MasterFragment {
                 ft.detach(MoreFrg.this).attach(MoreFrg.this).commit();
                 break;
             case R.id.llLogin:
-                // startAct(mainActivity(), LoginAct.getStartIntent(context));
+                //startAct(mainActivity(), LoginAct.getStartIntent(context));
                 startAct(mainActivity(), LoginActivity.getStartIntent(context));
                 break;
             case R.id.llSignUp:
                 startAct(mainActivity(), SignUpAct.getStartIntent(context));
                 break;
             case R.id.llMyAccount:
-                startAct(mainActivity(), EditProfileActivity.getStartIntent(context));
+               if(SharedPrefUtils.getPreference(context,Constant.USER_TYPE,"").equals("2")){
+                   Intent intent = new Intent(context, SellerDetailsActivity.class);
+                   intent.putExtra(Constant.DATA, "2");
+                   startActivity(intent);
+               }
+               else {
+                   startAct(mainActivity(), EditProfileActivity.getStartIntent(context));
+               }
                 break;
             case R.id.llPostAd:
                 choosePostAd();
@@ -246,6 +263,7 @@ public class MoreFrg extends MasterFragment {
             case R.id.llSettings:
                 break;
             case R.id.llAboutUs:
+                startActivity(new Intent(context, AboutUsActivity.class));
                 break;
             case R.id.llPrivacyPolicy:
                 break;

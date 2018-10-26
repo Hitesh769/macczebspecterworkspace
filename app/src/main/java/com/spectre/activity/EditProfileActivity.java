@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
@@ -50,6 +51,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 
+import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class EditProfileActivity extends AppCompatActivity implements View.OnClickListener {
@@ -74,7 +76,8 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     private int imageType = -1;
     private AppCompatRadioButton radio_main, radio_repair, radio_repair_service, radio_both;
     private String radioInput = "0";
-
+    TextView txtAppBarTitle;
+     ImageView backImg;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +85,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         context = this;
         Utility.setContentView(context, R.layout.activity_edit_profile);
         //  Utility.setUpToolbarWithColor(context, "<font color='#ffffff'>Change Password</font>", true);
-        Utility.setUpToolbarWithColor(context, "<font color='#ffffff'>"+getString(R.string.update_profile)+"</font>", getResources().getColor(R.color.transparent));
+        //Utility.setUpToolbarWithColor(context, "<font color='#ffffff'>"+getString(R.string.update_profile)+"</font>", getResources().getColor(R.color.transparent));
         initView();
     }
 
@@ -95,8 +98,8 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         etExpertise = (CustomEditText) findViewById(R.id.et_expertise);
         etCarRepaired = (CustomEditText) findViewById(R.id.et_repair);
         ll_is_garage = (LinearLayout) findViewById(R.id.ll_is_garage);
-
-
+        txtAppBarTitle = (TextView) findViewById(R.id.txtAppBarTitle);
+        backImg = (ImageView) findViewById(R.id.imgBack);
 
       /*etMob.setEnabled(false);
         etMob.setFocusable(false);
@@ -111,7 +114,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         etEmail.setText(SharedPrefUtils.getPreference(context, Constant.USER_EMAIL, ""));
         etMob.setText(SharedPrefUtils.getPreference(context, Constant.USER_MOBILE, ""));
         etAddress.setText(SharedPrefUtils.getPreference(context, Constant.USER_ADDRESS_, ""));
-
+        txtAppBarTitle.setText(getString(R.string.update_profile));
         ivProfile.setOnClickListener(this);
         btnCamera.setOnClickListener(this);
         edit_banner.setOnClickListener(this);
@@ -141,7 +144,12 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         radio_repair.setOnCheckedChangeListener(listener);
         radio_both.setOnCheckedChangeListener(listener);
         radio_repair_service.setOnCheckedChangeListener(listener);
-
+        backImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
         alertBox = new AlertBox(context);
         //  ((CustomEditText)findViewById(R.id.et_address)).setText(SharedPrefUtils.getPreference(context, Constant.USER_MOBILE));

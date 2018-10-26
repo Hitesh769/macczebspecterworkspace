@@ -42,7 +42,7 @@ public class WorkListUserActivity extends AppCompatActivity {
     RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private RecyclerView.Adapter mAdapter;
-    ArrayList<Work> Arraylist = new ArrayList<>();
+    ArrayList<Work> worklist = new ArrayList<>();
     CustomTextView txtConnection;
     private boolean loaddingDone = true;
     private boolean loading = true;
@@ -55,8 +55,6 @@ public class WorkListUserActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-     //   setContentView(R.layout.activity_work_list_user);
         context = this;
         Utility.setContentView(context, R.layout.activity_manage_rented);
         actionBar = Utility.setUpToolbar_(context, "<font color='#ffffff'>Work List</font>", true);
@@ -87,7 +85,7 @@ public class WorkListUserActivity extends AppCompatActivity {
 
     private void refreshItems() {
         if (loading) {
-            if (Arraylist.size() == 0) {
+            if (worklist.size() == 0) {
                 loading = false;
                 onItemsLoadComplete();
                 callMethodEventList(0);
@@ -112,7 +110,7 @@ public class WorkListUserActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(context);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new WorkListAdapter(context, Arraylist, 2);
+        mAdapter = new WorkListAdapter(context, worklist, 2);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -161,17 +159,17 @@ public class WorkListUserActivity extends AppCompatActivity {
         // Upcoming_event
         try {
             if (i == 0) {
-                if (Arraylist.size() == 0) {
+                if (worklist.size() == 0) {
                     MyDialogProgress.open(context);
                     params.put(Constant.CREATE_AT, "0");
 
                 } else {
                     (progressDialog1).start();
-                    params.put(Constant.CREATE_AT, Arraylist.get(Arraylist.size() - 1).getCreate_at());
+                    params.put(Constant.CREATE_AT, worklist.get(worklist.size() - 1).getCreate_at());
                 }
                 params.put(Constant.LIST_TYPE, "0");
             } else {
-                params.put(Constant.CREATE_AT, Arraylist.get(0).getCreate_at());
+                params.put(Constant.CREATE_AT, worklist.get(0).getCreate_at());
                 params.put(Constant.LIST_TYPE, "1");
             }
 
@@ -190,7 +188,7 @@ public class WorkListUserActivity extends AppCompatActivity {
 
                     loading = true;
                     loaddingDone = false;
-                    if (Arraylist.size() == 0) {
+                    if (worklist.size() == 0) {
                         txtConnection.setVisibility(View.VISIBLE);
                         txtConnection.setText(failed);
                         txtConnection.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
@@ -210,7 +208,7 @@ public class WorkListUserActivity extends AppCompatActivity {
                 public void onNull(JSONObject js, String nullp) {
                     loading = true;
                     loaddingDone = false;
-                    if (Arraylist.size() == 0) {
+                    if (worklist.size() == 0) {
                         txtConnection.setVisibility(View.VISIBLE);
                         txtConnection.setText(nullp);
                         if (nullp.equalsIgnoreCase(getString(R.string.connection)))
@@ -224,7 +222,7 @@ public class WorkListUserActivity extends AppCompatActivity {
                 @Override
                 public void onException(JSONObject js, String exception) {
                     // MyDialog.dialog_(exception, context);
-                    if (Arraylist.size() == 0) {
+                    if (worklist.size() == 0) {
                         txtConnection.setVisibility(View.VISIBLE);
                         txtConnection.setText(exception);
                         //   txtConnection.setCompoundDrawablesWithIntrinsicBounds(0, R.mipmap.nodata, 0, 0);
@@ -256,9 +254,9 @@ public class WorkListUserActivity extends AppCompatActivity {
                 }.getType();
                 List<Work> tempListNewsFeeds = new Gson().fromJson(jsonArray.toString(), type);
                 if (i == 0) {
-                    Arraylist.addAll(Arraylist.size(), tempListNewsFeeds);
+                    worklist.addAll(worklist.size(), tempListNewsFeeds);
                 } else {
-                    Arraylist.addAll(0, tempListNewsFeeds);
+                    worklist.addAll(0, tempListNewsFeeds);
                 }
             }
 

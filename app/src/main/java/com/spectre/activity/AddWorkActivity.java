@@ -388,7 +388,8 @@ public class AddWorkActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_save_changes:
-                checkCondition();
+              //  checkCondition();
+                callApi();
                 break;
            /* case R.id.btn_delete:
                 callDeleteApi();
@@ -399,29 +400,29 @@ public class AddWorkActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.btn_delete_:
                 callDeleteApi(2);
                 break;
-            case R.id.edtCaName:
+         /*   case R.id.edtCaName:
                 showDialog(AddWorkActivity.this, "Select Car Name", "carName");
                 edtModel.setText("");
                 edtCarSeries.setText("");
-                break;
+                break;*/
             case R.id.edt_color:
                 showDialog(AddWorkActivity.this, "Select Color", "color");
                 break;
-            case R.id.edtCarSeries:
+          /*  case R.id.edtCarSeries:
                 if (version.size() > 1) {
                     showDialog(AddWorkActivity.this, "Select Car Series", "series");
                 } else {
                     Toast.makeText(context, "list not available", Toast.LENGTH_SHORT).show();
                 }
-                break;
-            case R.id.edtModel:
+                break;*/
+           /* case R.id.edtModel:
                 if (model.size() > 1) {
                     showDialog(AddWorkActivity.this, "Select Car Model", "model");
                 } else {
                     Toast.makeText(context, "list not available", Toast.LENGTH_SHORT).show();
                 }
                 edtCarSeries.setText("");
-                break;
+                break;*/
             case R.id.edtYear:
                 showDialog(AddWorkActivity.this, "Select Year", "year");
                 break;
@@ -581,22 +582,29 @@ public class AddWorkActivity extends AppCompatActivity implements View.OnClickLi
             } else {
                 Url = Urls.GARAGE_WORK;
             }
-            jsonObject.put(Constant.CAR_NAME_ID, ((CarName) spinner_name.getSelectedItem()).getId());
+           /* jsonObject.put(Constant.CAR_NAME_ID, ((CarName) spinner_name.getSelectedItem()).getId());
             jsonObject.put(Constant.CAR_NAME, ((CarName) spinner_name.getSelectedItem()).getCar_name());
             jsonObject.put(Constant.MODEL, ((ModelName) spinner_model.getSelectedItem()).getModel_name());
             jsonObject.put(Constant.MODEL_ID, ((ModelName) spinner_model.getSelectedItem()).getId());
+            */
+            jsonObject.put(Constant.CAR_NAME_ID, 11);
+            jsonObject.put(Constant.CAR_NAME, edtCaName.getText().toString());
+            jsonObject.put(Constant.MODEL, edtModel.getText().toString());
+            jsonObject.put(Constant.MODEL_ID, 12);
 
             if (spinner_version.getSelectedItemPosition() != 0) {
-                jsonObject.put(Constant.VERSION, ((VersionName) spinner_version.getSelectedItem()).getVersion_name());
+                /*jsonObject.put(Constant.VERSION, ((VersionName) spinner_version.getSelectedItem()).getVersion_name());
                 jsonObject.put(Constant.VERSION_ID, ((VersionName) spinner_version.getSelectedItem()).getId());
+                */
+                jsonObject.put(Constant.VERSION, edtCarSeries.getText().toString());
+                jsonObject.put(Constant.VERSION_ID,16);
             } else {
                 jsonObject.put(Constant.VERSION, "");
                 jsonObject.put(Constant.VERSION_ID, 0);
-
             }
-            jsonObject.put(Constant.YEAR, ((String) spinner_year.getSelectedItem()));
-            jsonObject.put(Constant.CAR_TYPE, ((String) spinner_car_type.getSelectedItem()));
-            jsonObject.put(Constant.COLOUR, ((String) spinner_color.getSelectedItem()));
+            jsonObject.put(Constant.YEAR, edtYear.getText().toString().trim());
+            jsonObject.put(Constant.CAR_TYPE, edtCarType.getText().toString().trim());
+            jsonObject.put(Constant.COLOUR, edtColor.getText().toString().trim());
             jsonObject.put(Constant.MILEAGE, et_mileage.getText().toString().trim());
             jsonObject.put(Constant.PRICE, et_price.getText().toString().trim());
             jsonObject.put(Constant.CAR_CONDITION, et_car_condition.getText().toString().trim());

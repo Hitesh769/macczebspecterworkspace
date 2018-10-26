@@ -343,7 +343,6 @@ public class BuySearchFragment extends Fragment {
         try {
             JSONArray jsonArray = js.getJSONArray("data");
             if (jsonArray.length() > 0) {
-
                 Type type = new TypeToken<List<AdPost>>() {
                 }.getType();
                 List<AdPost> tempListNewsFeeds = new Gson().fromJson(jsonArray.toString(), type);

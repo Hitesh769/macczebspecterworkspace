@@ -112,7 +112,10 @@ public class BuyFragment extends Fragment {
 
     @BindView(R.id.lin_range)
     LinearLayout linRange;
-
+    private static final int LOCATION_PERMISSION_CONSTANT = 101;
+    private static final int PLACE_PICKER_REQUEST = 999;
+    private String latitude = "";
+    private String longitude = "";
     private View view;
 
     private Context context;
@@ -187,8 +190,6 @@ public class BuyFragment extends Fragment {
             arrayList_minrange.add(istr);
             arrayList_maxrange.add(istr);
         }
-
-
         // set visibility for menu and back icon
         mainActivity().changeBottomMenuColor(HomeAct.MENU_BUY);
 
@@ -197,10 +198,8 @@ public class BuyFragment extends Fragment {
         mainActivity().imgCross.setVisibility(View.GONE);
         // set screen title
         mainActivity().txtAppBarTitle.setText(getString(R.string.buy));
-
         // hide or show app bar
         mainActivity().rlAppBarMain.setVisibility(View.GONE);
-
         // Set the range
         rangPrice.setRangeValues(0, 10000);
         rangPrice.setNotifyWhileDragging(true);
@@ -252,8 +251,8 @@ public class BuyFragment extends Fragment {
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(context);
         mRecyclerView.setLayoutManager(mLayoutManager);
-//        gridHorizontal = new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false);
-//        mRecyclerView.setLayoutManager(gridHorizontal);
+//      gridHorizontal = new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false);
+//      mRecyclerView.setLayoutManager(gridHorizontal);
         mRecyclerView.setNestedScrollingEnabled(false);
         mAdapter = new CarListAdapter(context, Arraylist, 0);
         mRecyclerView.setAdapter(mAdapter);
@@ -273,9 +272,9 @@ public class BuyFragment extends Fragment {
                 visibleItemCount = mLayoutManager.getChildCount();
                 totalItemCount = mLayoutManager.getItemCount();
                 pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
-//                visibleItemCount = gridHorizontal.getChildCount();
-//                totalItemCount = gridHorizontal.getItemCount();
-//                pastVisiblesItems = gridHorizontal.findFirstVisibleItemPosition();
+//              visibleItemCount = gridHorizontal.getChildCount();
+//              totalItemCount = gridHorizontal.getItemCount();
+//              pastVisiblesItems = gridHorizontal.findFirstVisibleItemPosition();
 
                 if (loading && loaddingDone) {
                     if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
@@ -361,11 +360,9 @@ public class BuyFragment extends Fragment {
 
                 @Override
                 public void onAuthFailed(JSONObject js, String failed) {
-
                     setLog("Buy Fragment FAIL");
                     closeProgressDialog(i);
                     SessionExpireDialog.openDialog(context, 0, "");
-
                 }
 
                 @Override
@@ -667,18 +664,9 @@ public class BuyFragment extends Fragment {
     public void onImgLocationClicked() {
         setLog("location image click");
         getLocation();
-       /* try {
-            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).build(getActivity());
-            startActivityForResult(intent, PLACE_PICKER_REQUEST);
-        } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
-            e.printStackTrace();
-        }*/
     }
 
-    private static final int LOCATION_PERMISSION_CONSTANT = 101;
-    private static final int PLACE_PICKER_REQUEST = 999;
-    private String latitude = "";
-    private String longitude = "";
+
 
     private void getLocation() {
         // get location

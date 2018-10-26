@@ -153,7 +153,7 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onFailed(JSONObject js, String msg) {
                 MyDialogProgress.close(context);
-                Utility.showToast(context, msg);
+               // Utility.showToast(context, msg);
             }
 
             @Override
@@ -177,7 +177,7 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onException(JSONObject js, String msg) {
                 MyDialogProgress.close(context);
-                Utility.showToast(context, msg);
+               // Utility.showToast(context, msg);
             }
 
             @Override
@@ -191,7 +191,7 @@ public class ChatActivity extends AppCompatActivity {
         // MyDialogProgress.open(context);
         JSONObject jsonObject = new JSONObject();
       //  mMessageAdapter.add
-   /*     cDatum = new ChatModel.Datum();
+   /*   cDatum = new ChatModel.Datum();
         cDatum.setId("");
         cDatum.setToId(SharedPrefUtils.getPreference(context, Constant.USER_ID,""));
         cDatum.setToChat(edittext_chatbox.getText().toString());

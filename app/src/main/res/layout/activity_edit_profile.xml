@@ -38,7 +38,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="220dp"
-                        android:background="#bb8700C9" />
+                        android:background="@color/back_new" />
 
                     <FrameLayout
                         android:layout_width="match_parent"
@@ -382,6 +382,8 @@
         </LinearLayout>
     </ScrollView>
 
-    <include layout="@layout/toolbar" />
+    <include
+        android:id="@+id/include"
+        layout="@layout/app_bar_back" />
 </RelativeLayout>
 

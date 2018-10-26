@@ -47,7 +47,8 @@ public class WorkListAdapter extends RecyclerView.Adapter<WorkListAdapter.ViewHo
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = null;
         if (status == 1) {
-            v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_work_detail, parent, false);
+            //v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_work_detail, parent, false);
+            v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_seller_profile, parent, false);
         } else {
             v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_work_detail_, parent, false);
         }
@@ -57,9 +58,50 @@ public class WorkListAdapter extends RecyclerView.Adapter<WorkListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
+
+        if (status == 2) { //if gallary
+            setGallaryData(holder,position);
+        }
+        else{ //if seller profile
+            setSellerData(holder,position);
+        }
+
+    }
+
+    private void setSellerData(ViewHolder holder, final int position) {
         final Work adPost = arraylist.get(position);
+        String nameModel = "";
+        String yearMileage = "";
+        if (!adPost.getCar_name().isEmpty()) {
+            nameModel = adPost.getCar_name().trim();
+        }
 
+        if (!adPost.getModel().isEmpty()) {
+            nameModel = nameModel + " " + adPost.getModel().trim();
+        }
+        if (!nameModel.isEmpty()) {
+            holder.txtCarName.setText(nameModel);
+        } else {
+            holder.txtCarName.setText(appContext.getString(R.string.na));
+        }
+        if (arraylist.get(position).getImage() != null && arraylist.get(position).getImage().size() > 0) {
+            new AQuery(appContext).id(holder.ivProduct).image(arraylist.get(position).getImage().get(0), true, true, 300,R.color.grayimgback);
+        }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                Intent intent = new Intent(appContext, WorkDetailActivity.class);
+                intent.putExtra(Constant.DATA, adPost);
+                intent.putExtra(Constant.POSITION, position);
+                appContext.startActivity(intent);
+
+            }
+        });
+    }
+
+    private void setGallaryData(final ViewHolder holder, final int position) {
+        final Work adPost = arraylist.get(position);
         String nameModel = "";
         String yearMileage = "";
 
@@ -70,20 +112,11 @@ public class WorkListAdapter extends RecyclerView.Adapter<WorkListAdapter.ViewHo
         if (!adPost.getModel().isEmpty()) {
             nameModel = nameModel + " \u2022 " + adPost.getModel().trim();
         }
-
-
         if (!nameModel.isEmpty()) {
             holder.txtCarName.setText(nameModel);
         } else {
             holder.txtCarName.setText(appContext.getString(R.string.na));
         }
-
-       /* if (!adPost.getCar_name().isEmpty()) {
-            holder.txtCarName.setText(adPost.getCar_name());
-        } else {
-            holder.txtCarName.setText(appContext.getString(R.string.na));
-        }*/
-
         if (!adPost.getPrice().isEmpty()) {
             holder.txtCarPrice.setText(appContext.getString(R.string.dollar) + " " + adPost.getPrice().trim());
         } else {
@@ -118,51 +151,17 @@ public class WorkListAdapter extends RecyclerView.Adapter<WorkListAdapter.ViewHo
         else
             holder.txtYear.setText("");
 
-      /*  if (!adPost.getModel().isEmpty()) {
-            holder.txtCarModel.setText(appContext.getString(R.string.model_) + " " + adPost.getModel().trim());
-        } else {
-            holder.txtCarModel.setText(appContext.getString(R.string.na));
-        }
-*/
         if (arraylist.get(position).getImage() != null && arraylist.get(position).getImage().size() > 0) {
             new AQuery(appContext).id(holder.ivProduct).image(arraylist.get(position).getImage().get(0), true, true, 300, R.drawable.ic_launcher_web);
         }
 
-        holder.btnViewDetail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(appContext, WorkDetailActivity.class);
-                intent.putExtra(Constant.DATA, adPost);
-                intent.putExtra(Constant.POSITION, position);
-                appContext.startActivity(intent);
-
-
-                /*if (appContext instanceof ManageRentedActivity) {
-                    Intent intent = new Intent(appContext, RentCarActivity.class);
-                    intent.putExtra(Constant.DATA, adPost);
-                    intent.putExtra(Constant.POSITION, position);
-                    ((ManageRentedActivity) appContext).startActivityForResult(intent, 404);
-                }*/
-            }
-        });
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(appContext, WorkDetailActivity.class);
                 intent.putExtra(Constant.DATA, adPost);
                 intent.putExtra(Constant.POSITION, position);
                 appContext.startActivity(intent);
-
-
-                /*if (appContext instanceof ManageRentedActivity) {
-                    Intent intent = new Intent(appContext, RentCarActivity.class);
-                    intent.putExtra(Constant.DATA, adPost);
-                    intent.putExtra(Constant.POSITION, position);
-                    ((ManageRentedActivity) appContext).startActivityForResult(intent, 404);
-                }*/
             }
         });
     }
@@ -174,21 +173,24 @@ public class WorkListAdapter extends RecyclerView.Adapter<WorkListAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtCarName, txtCarPrice, txtCarModel,txtColor,txtMiles,txtYear;
+        TextView txtCarName, txtCarPrice, txtCarModel, txtColor, txtMiles, txtYear;
         ImageView ivProduct;
-        CustomRayMaterialTextView btnViewDetail;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            btnViewDetail = (CustomRayMaterialTextView) itemView.findViewById(R.id.btn_view_detail);
-            ivProduct = (ImageView) itemView.findViewById(R.id.iv_product);
-            txtCarName = (TextView) itemView.findViewById(R.id.txt_car_name);
-            txtCarPrice = (TextView) itemView.findViewById(R.id.txt_car_price);
-            txtCarModel = (TextView) itemView.findViewById(R.id.txt_car_model);
-            txtColor = (TextView) itemView.findViewById(R.id.txtColor);
-            txtMiles = (TextView) itemView.findViewById(R.id.txtMiles);
-            txtYear = (TextView) itemView.findViewById(R.id.txtYear);
-
+            if (status==1) {
+                ivProduct = (ImageView) itemView.findViewById(R.id.iv_product);
+                txtCarName = (TextView) itemView.findViewById(R.id.txt_car_name);
+                txtCarPrice = (TextView) itemView.findViewById(R.id.txt_car_price);
+                txtCarModel = (TextView) itemView.findViewById(R.id.txt_car_model);
+                txtColor = (TextView) itemView.findViewById(R.id.txtColor);
+                txtMiles = (TextView) itemView.findViewById(R.id.txtMiles);
+                txtYear = (TextView) itemView.findViewById(R.id.txtYear);
+            }
+            else{
+                txtCarName = (TextView) itemView.findViewById(R.id.txt_car_name);
+                ivProduct = (ImageView) itemView.findViewById(R.id.iv_product);
+            }
         }
     }
 }

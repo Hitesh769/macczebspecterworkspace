@@ -252,7 +252,7 @@
                         <ImageView
                             style="@style/image_register"
                             android:tint="#8802c9"
-                            android:src="@drawable/ic_notifications_black_24dp" />
+                            android:src="@drawable/ic_notifications_none_black_24dp" />
 
                         <TextView
                             style="@style/textView"
@@ -274,7 +274,7 @@
 
                 <LinearLayout
                     android:id="@+id/linMessage"
-                    android:visibility="gone"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -286,7 +286,8 @@
 
                         <ImageView
                             style="@style/image_register"
-                            android:src="@drawable/ic_settings" />
+                            android:tint="@color/colorPrimaryold"
+                            android:src="@drawable/ic_chat_bubble_outline_black_24dp" />
 
                         <TextView
                             style="@style/textView"
@@ -419,7 +420,8 @@
 
                         <ImageView
                             style="@style/image_register"
-                            android:src="@drawable/ic_settings" />
+                            android:tint="@color/colorPrimaryold"
+                            android:src="@drawable/ic_info_outline_black_24dp" />
 
                         <TextView
                             style="@style/textView"
@@ -452,7 +454,8 @@
 
                         <ImageView
                             style="@style/image_register"
-                            android:src="@drawable/ic_settings" />
+                            android:tint="@color/colorPrimaryold"
+                            android:src="@drawable/ic_privacy" />
 
                         <TextView
                             style="@style/textView"

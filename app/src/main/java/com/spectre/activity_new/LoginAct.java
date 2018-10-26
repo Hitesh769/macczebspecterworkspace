@@ -211,6 +211,7 @@ public class LoginAct extends MasterAppCompactActivity {
             SharedPrefUtils.setPreference(context, Constant.SERVICE_TYPE, loginModel.data.serviceType);
         }
 
+
         // dismiss progress dialog after getting response
         dismissProgressDialog();
 
