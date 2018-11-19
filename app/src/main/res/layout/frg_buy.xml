@@ -7,7 +7,12 @@
     android:layout_height="match_parent"
     android:layout_above="@+id/progress_pv_linear_colors"
     android:layout_below="@+id/toolbar_actionbar">
-
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -34,7 +39,6 @@
                         android:id="@+id/llLocation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/_8sdp"
                         android:layout_marginEnd="@dimen/_10sdp"
                         android:layout_marginStart="@dimen/_15sdp"
                         android:layout_marginTop="@dimen/_8sdp"
@@ -89,6 +93,68 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:weightSum="10">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.5"
+                            android:padding="@dimen/_2sdp"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12sdp" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/_5sdp"
+                            android:layout_weight="6"
+                            android:orientation="horizontal"
+                            android:weightSum="10">
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="@dimen/_5sdp"
+                                android:layout_marginStart="@dimen/_5sdp"
+                                android:layout_weight="5"
+                                android:elevation="@dimen/_5sdp"
+                                android:gravity="center"
+                                android:text="Min"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_10sdp" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="@dimen/_5sdp"
+                                android:layout_marginStart="@dimen/_5sdp"
+                                android:layout_weight="5"
+                                android:elevation="@dimen/_5sdp"
+                                android:gravity="center"
+                                android:text="Max"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_10sdp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2.5"
+                            android:background="#2dffffff"
+                            android:gravity="center"
+                            android:paddingStart="@dimen/_5sdp"
+                            android:orientation="horizontal">
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/_8sdp"
                         android:layout_marginEnd="@dimen/_10sdp"
                         android:layout_marginStart="@dimen/_15sdp"
@@ -114,7 +180,6 @@
                             android:layout_weight="6"
                             android:orientation="horizontal"
                             android:weightSum="10">
-
                             <TextView
                                 android:id="@+id/tvMinRange"
                                 android:layout_width="0dp"
@@ -275,6 +340,7 @@
 
                 <com.spectre.customView.CustomTextView
                     android:id="@+id/no_data"
+                    android:drawableTop="@drawable/notfound"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
@@ -289,7 +355,6 @@
                     android:visibility="gone"
                     app:edittextfont="Poppins-Medium.ttf"
                     app:edittextfontHint="Poppins-Medium.ttf" />
-
                 <com.rey.material.widget.ProgressView
                     android:id="@+id/progress_pv_linear_colors"
                     android:layout_width="match_parent"
@@ -300,9 +365,27 @@
                     app:pv_circular="false"
                     app:pv_progressMode="indeterminate"
                     app:pv_progressStyle="@style/ColorsLinearProgressDrawableStyle" />
-            </RelativeLayout>
 
+            </RelativeLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
-
+</RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:clickable="true"
+            app:elevation="5dp"
+            app:borderWidth="0dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="@dimen/_5sdp"
+            android:src="@drawable/save" />
+    </RelativeLayout>
+    </RelativeLayout>
 </android.support.v4.widget.SwipeRefreshLayout>

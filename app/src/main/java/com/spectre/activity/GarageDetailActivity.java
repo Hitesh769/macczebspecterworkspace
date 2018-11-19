@@ -56,6 +56,7 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
     private ActionBar actionBar;
     private ImageView imv_banner;
     private Garage adPost;
+   /* private WorkList workList;*/
     private CustomRayMaterialTextView btn_show_interest, btn_review;
     private int position = -1, type = -1;
     private Display display;
@@ -110,9 +111,25 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
         btn_show_interest.setOnClickListener(this);
 
 
+        iv_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(GarageDetailActivity.this, SellerDetailsActivity.class);
+                intent.putExtra(Constant.DATA, adPost);
+                intent.putExtra(Constant.ISGARAGE,"YES");
+                intent.putExtra(Constant.POSITION, position);
+                intent.putExtra(Constant.TYPE, type);
+                startActivity(intent);
+            }
+        });
+
         if (getIntent().getExtras() != null && getIntent().getExtras().get(Constant.DATA) != null) {
 
+         /*   if (getIntent().getStringExtra("myprofile")!=null){
+               // adPost = (WorkList) getIntent().getExtras().get(Constant.DATA);
+            }*/
             adPost = (Garage) getIntent().getExtras().get(Constant.DATA);
+
             actionBar.setTitle(Html.fromHtml("<font color='#ffffff'>" + adPost.getFull_name() + "</font>"));
             position = getIntent().getExtras().getInt(Constant.POSITION);
             type = getIntent().getExtras().getInt(Constant.TYPE);
@@ -288,8 +305,8 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater mymenu = getMenuInflater();
         mymenu.inflate(R.menu.menu_notification, menu);
-        //mymenu = (MenuInflater) menu.findItem(R.id.gallary);
-        if (adPost.getGarage_image().isEmpty()) {
+       // mymenu = (MenuInflater) menu.findItem(R.id.gallary);
+        if (!adPost.getGarage_image().isEmpty()) {
          menu.getItem(0).setVisible(false);
         }
             return super.onCreateOptionsMenu(menu);
@@ -424,7 +441,7 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
                             if (jsonStatus.equalsIgnoreCase("success")) {
                                 //  request.onSuccess(json, Message);
                                 MyDialogProgress.close(context);
-                                dd.dismiss();
+                              //  dd.dismiss();
                             } else {
                                 //  request.onException(json, context.getApplicationContext().getString(R.string.something_wrong));
                                 showToast(Message);
@@ -448,7 +465,7 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
                 @Override
                 public void onSuccess(JSONObject js, String msg) {
                     MyDialogProgress.close(context);
-                    dd.dismiss();
+                   // dd.dismiss();
                     setInterestData();
                     Utility.contectDialog(adPost.getMobile_no(),GarageDetailActivity.this,adPost.getUser_id(),adPost.getFull_name());
                 }

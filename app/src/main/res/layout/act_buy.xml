@@ -25,6 +25,7 @@
                 android:layout_height="match_parent" />
         </android.support.v4.widget.SwipeRefreshLayout>
 
+
         <com.spectre.customView.CustomTextView
             android:id="@+id/no_data"
             android:layout_width="wrap_content"
@@ -33,14 +34,16 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:drawablePadding="18dp"
+            android:visibility="gone"
+            android:drawableTop="@drawable/notfound"
             android:gravity="center"
             android:text="No data available"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/colorPrimary"
             android:textSize="15sp"
-            android:visibility="gone"
             app:edittextfont="Poppins-Medium.ttf"
             app:edittextfontHint="Poppins-Medium.ttf" />
+
 
         <com.rey.material.widget.ProgressView
             android:id="@+id/progress_pv_linear_colors"

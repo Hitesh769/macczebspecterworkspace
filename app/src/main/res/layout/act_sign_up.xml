@@ -25,17 +25,17 @@
                 android:layout_width="@dimen/_120sdp"
                 android:layout_height="@dimen/_60sdp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
                 android:src="@mipmap/splashlogo" />
 
             <android.support.v7.widget.CardView
                 style="@style/cardView"
                 android:layout_below="@+id/cardView1"
-                android:layout_marginBottom="@dimen/_20sdp"
-                android:layout_marginEnd="@dimen/_30sdp"
                 android:layout_marginStart="@dimen/_30sdp"
                 android:layout_marginTop="@dimen/_minus20sdp"
+                android:layout_marginEnd="@dimen/_30sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
                 card_view:cardBackgroundColor="@color/signup_back"
                 card_view:cardCornerRadius="@dimen/_5sdp"
                 card_view:cardElevation="@dimen/_5sdp">
@@ -44,8 +44,8 @@
                     android:id="@+id/txtSignIn"
                     style="@style/textView"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="@dimen/_8sdp"
                     android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_8sdp"
                     android:padding="@dimen/_10sdp"
                     android:text="@string/already_have_account"
                     android:textColor="@color/white" />
@@ -56,10 +56,10 @@
                 android:id="@+id/cardView1"
                 style="@style/cardView"
                 android:layout_below="@+id/imgLogo"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
                 card_view:cardBackgroundColor="@color/white"
                 card_view:cardCornerRadius="@dimen/_5sdp"
                 card_view:cardElevation="@dimen/_5sdp">
@@ -67,10 +67,10 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_5sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
                     android:background="@drawable/dialog_bg"
                     android:orientation="vertical">
 
@@ -86,18 +86,18 @@
                     <EditText
                         android:id="@+id/edtName"
                         style="@style/EditText"
-                        android:layout_marginEnd="@dimen/_10sdp"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
                         android:hint="@string/name"
                         android:inputType="textPersonName" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/_10sdp"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
                         android:orientation="horizontal">
 
                         <TextView
@@ -128,26 +128,26 @@
                     <EditText
                         android:id="@+id/edtEmail"
                         style="@style/EditText"
-                        android:layout_marginEnd="@dimen/_10sdp"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
                         android:hint="@string/email" />
 
                     <EditText
                         android:id="@+id/edtPassword"
                         style="@style/EditText"
-                        android:layout_marginEnd="@dimen/_10sdp"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
                         android:hint="@string/password"
                         android:inputType="textPassword" />
 
                     <EditText
                         android:id="@+id/edtConfirmPassword"
                         style="@style/EditText"
-                        android:layout_marginEnd="@dimen/_10sdp"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
                         android:hint="@string/confirm_password"
                         android:inputType="textPassword" />
 
@@ -155,9 +155,9 @@
                         android:id="@+id/rg_buyer_garage"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/_10sdp"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
                         android:orientation="horizontal"
                         android:weightSum="2">
 
@@ -168,7 +168,7 @@
                             android:layout_weight="1"
                             android:checked="true"
                             android:padding="@dimen/_10sdp"
-                            android:text="@string/buyer"
+                            android:text="@string/as_buyer"
                             android:textSize="@dimen/_11sdp" />
 
                         <RadioButton
@@ -177,7 +177,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:padding="@dimen/_10sdp"
-                            android:text="@string/garage"
+                            android:text="@string/as_seller"
                             android:textSize="@dimen/_11sdp" />
                     </RadioGroup>
                     <!--for garage-->
@@ -191,9 +191,9 @@
                             android:id="@+id/rg_garage"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="@dimen/_10sdp"
                             android:layout_marginStart="@dimen/_10sdp"
                             android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
                             android:orientation="vertical"
                             android:visibility="gone"
                             android:weightSum="2">
@@ -228,136 +228,207 @@
                         </RadioGroup>
 
                     </LinearLayout>
-
                     <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:id="@+id/linLocation"
+                        android:visibility="gone"
+                        android:layout_height="wrap_content">
+                    <RelativeLayout
+                        android:id="@+id/llLocation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_8sdp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+
+                        <ImageView
+                            android:id="@+id/imgLocation"
+                            android:layout_width="@dimen/_20sdp"
+                            android:layout_height="@dimen/_20sdp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:padding="@dimen/_3sdp"
+                            android:src="@drawable/ic_location"
+                            android:tint="@color/hint_color" />
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/input_layout_search"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toStartOf="@+id/imgLocation"
+                            android:background="@android:color/transparent">
+
+                            <EditText
+                                android:id="@+id/input_location"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@android:color/transparent"
+                                android:clickable="true"
+                                android:ellipsize="end"
+                                android:focusable="false"
+                                android:focusableInTouchMode="false"
+                                android:hint="Location"
+                                android:inputType="text"
+                                android:maxLines="1"
+                                android:singleLine="true" />
+
+                        </android.support.design.widget.TextInputLayout>
+
+
+                    </RelativeLayout>
+
+                    <View
+                        style="@style/line_register"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginTop="@dimen/_minus5sdp"
+                        android:layout_marginEnd="@dimen/_35sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:background="@color/colorAccent" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/linupload_doc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:id="@+id/linupload_doc"
                         android:visibility="gone"
                         android:weightSum="10">
-
                         <LinearLayout
+                            android:id="@+id/lindoc"
                             android:layout_width="match_parent"
-                            android:weightSum="10"
-                            android:layout_marginStart="@dimen/_10sdp"
-                            android:orientation="horizontal"
-                            android:layout_height="wrap_content">
-                            <RelativeLayout
-                                android:layout_width="0dp"
-                                android:layout_gravity="center_vertical"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="6">
-                              <TextView
-                                  android:layout_width="wrap_content"
-                                  android:text="Upload Document"
-                                   android:textSize="@dimen/_11sdp"
-                                  android:textColor="@color/black"
-                                  android:layout_height="wrap_content" />
-                            </RelativeLayout>
-
-                            <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                android:id="@+id/widget_icon"
-                                android:layout_width="0dp"
-                                android:layout_weight="4"
-                                android:layout_height="@dimen/_100sdp" >
-                                <ImageView
-                                    android:id="@+id/iv_profile"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_gravity="center"
-                                    android:layout_margin="7dp"
-                                    android:layout_marginEnd="@dimen/_10sdp"
-                                    android:gravity="center"
-                                    android:scaleType="fitXY"
-                                    android:src="@drawable/default_image"
-                                    />
-
-                                <ImageView
-                                    android:id="@+id/iv_remove"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="top|right"
-                                    android:adjustViewBounds="true"
-                                    android:paddingTop="-10dp"
-                                    android:visibility="gone"
-                                    android:scaleType="fitStart"
-                                    android:src="@drawable/ic_cancel_black_24dp" />
-
-                            </FrameLayout>
-                        </LinearLayout>
-
-                        <EditText
-                            android:id="@+id/edtCompanyName"
                             android:layout_height="wrap_content"
-                            android:layout_width="match_parent"
-                            android:backgroundTint="@color/setting_yellow"
-                            android:layout_marginEnd="@dimen/_10sdp"
-                            android:layout_marginStart="@dimen/_10sdp"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:hint="Company Name"
-                            android:inputType="textPassword" />
+                            android:orientation="vertical">
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:weightSum="10"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:layout_marginStart="@dimen/_10sdp"
-                            android:orientation="horizontal"
-                            android:layout_height="wrap_content">
-                            <RelativeLayout
-                                android:layout_width="0dp"
-                                android:layout_gravity="center_vertical"
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="6">
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:text="Company Logo"
-                                    android:textSize="@dimen/_11sdp"
-                                    android:textColor="@color/black"
-                                    android:layout_height="wrap_content" />
-                            </RelativeLayout>
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:orientation="horizontal"
+                                android:weightSum="10">
 
-                            <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                android:layout_width="0dp"
-                                android:layout_weight="4"
-                                android:layout_height="@dimen/_100sdp" >
-                                <ImageView
-                                    android:id="@+id/iv_profilel"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_gravity="center"
-                                    android:layout_margin="7dp"
-                                    android:layout_marginEnd="@dimen/_10sdp"
-                                    android:gravity="center"
-                                    android:scaleType="fitXY"
-                                    android:src="@drawable/default_image"
-                                    />
-
-                                <ImageView
-                                    android:id="@+id/iv_removel"
-                                    android:visibility="gone"
-                                    android:layout_width="wrap_content"
+                                <RelativeLayout
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="top|right"
-                                    android:adjustViewBounds="true"
-                                    android:paddingTop="-10dp"
-                                    android:scaleType="fitStart"
-                                    android:src="@drawable/ic_cancel_black_24dp" />
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="6">
 
-                            </FrameLayout>
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Upload Document"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/_11sdp" />
+                                </RelativeLayout>
 
+                                <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                    android:id="@+id/widget_icon"
+                                    android:layout_width="0dp"
+                                    android:layout_height="@dimen/_100sdp"
+                                    android:layout_weight="4">
+
+                                    <ImageView
+                                        android:id="@+id/iv_profile"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_gravity="center"
+                                        android:layout_margin="7dp"
+                                        android:layout_marginEnd="@dimen/_10sdp"
+                                        android:gravity="center"
+                                        android:scaleType="fitXY"
+                                        android:src="@drawable/default_image" />
+
+                                    <ImageView
+                                        android:id="@+id/iv_remove"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="top|right"
+                                        android:adjustViewBounds="true"
+                                        android:paddingTop="-10dp"
+                                        android:scaleType="fitStart"
+                                        android:src="@drawable/ic_cancel_black_24dp"
+                                        android:visibility="gone" />
+
+                                </FrameLayout>
+                            </LinearLayout>
+
+                            <EditText
+                                android:id="@+id/edtCompanyName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:layout_marginEnd="@dimen/_10sdp"
+                                android:backgroundTint="@color/setting_yellow"
+                                android:hint="Company Name"
+                                android:inputType="text" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:orientation="horizontal"
+                                android:weightSum="10">
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="6">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Company Logo"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/_11sdp" />
+                                </RelativeLayout>
+
+                                <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                    android:layout_width="0dp"
+                                    android:layout_height="@dimen/_100sdp"
+                                    android:layout_weight="4">
+
+                                    <ImageView
+                                        android:id="@+id/iv_profilel"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_gravity="center"
+                                        android:layout_margin="7dp"
+                                        android:layout_marginEnd="@dimen/_10sdp"
+                                        android:gravity="center"
+                                        android:scaleType="fitXY"
+                                        android:src="@drawable/default_image" />
+
+                                    <ImageView
+                                        android:id="@+id/iv_removel"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="top|right"
+                                        android:adjustViewBounds="true"
+                                        android:paddingTop="-10dp"
+                                        android:scaleType="fitStart"
+                                        android:src="@drawable/ic_cancel_black_24dp"
+                                        android:visibility="gone" />
+
+                                </FrameLayout>
+
+                            </LinearLayout>
                         </LinearLayout>
-
                     </LinearLayout>
 
                     <CheckBox
                         android:id="@+id/chkTerms"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/_10sdp"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
                         android:padding="@dimen/_10sdp"
                         android:text="@string/txt_term"
                         android:textSize="@dimen/_11sdp" />
@@ -365,10 +436,10 @@
                     <Button
                         android:id="@+id/btnSubmit"
                         style="@style/Button"
-                        android:layout_marginBottom="@dimen/_20sdp"
-                        android:layout_marginEnd="@dimen/_10sdp"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_20sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_20sdp"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:minHeight="@dimen/_20sdp"

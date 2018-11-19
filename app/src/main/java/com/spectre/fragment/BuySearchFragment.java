@@ -119,8 +119,8 @@ public class BuySearchFragment extends Fragment {
             toyear=bundle.getString(PrefConstant.TOYEAR);
             transactiontype=bundle.getString(PrefConstant.TRANSACTIONTYPE);
             sellertype=bundle.getString(PrefConstant.SELLERTYPE);
-           // maxrange = bundle.getString(Constant.MAXRANGE);
-          //  minrang=bundle.getString(Constant.MINRANGE);
+            maxrange = bundle.getString(Constant.MAXRANGE);
+            minrang=bundle.getString(Constant.MINRANGE);
         }
 
 
@@ -158,8 +158,13 @@ public class BuySearchFragment extends Fragment {
         mainActivity().imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mainActivity().txt_filter.setVisibility(View.GONE);
-                mainActivity().onBackPressed();
+                try {
+                    mainActivity().txt_filter.setVisibility(View.GONE);
+                    mainActivity().onBackPressed();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
             }
         });
 
@@ -208,7 +213,7 @@ public class BuySearchFragment extends Fragment {
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(context);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new SearchBuyListAdapter(context, Arraylist, 1);
+        mAdapter = new SearchBuyListAdapter(context, Arraylist, 0);
         mRecyclerView.setAdapter(mAdapter);
     }
     private void callMethodEventList(final int i) {
@@ -285,7 +290,7 @@ public class BuySearchFragment extends Fragment {
                     if (Arraylist.size() == 0) {
                         txtConnection.setVisibility(View.VISIBLE);
                         txtConnection.setText(failed);
-                        txtConnection.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                     //   txtConnection.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                     }
                     closeProgressDialog(i);
                 }
@@ -308,8 +313,8 @@ public class BuySearchFragment extends Fragment {
                         txtConnection.setText(nullp);
                         if (nullp.equalsIgnoreCase(getString(R.string.connection)))
                             txtConnection.setCompoundDrawablesWithIntrinsicBounds(0, R.mipmap.nointernet, 0, 0);
-                        else
-                            txtConnection.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                      /*  else
+                            txtConnection.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);*/
                     }
                     closeProgressDialog(i);
                 }

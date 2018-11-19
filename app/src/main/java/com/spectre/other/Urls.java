@@ -36,6 +36,7 @@ public class Urls {
     public static String REVIEW_N_RATING_LIST = BASE_URL + "review_n_rating_list";
     public static String REVIEW_N_RATING = BASE_URL + "review_n_rating";
     public static String GETCHATROOM = BASE_URL + "getchatroom";
+    public static String GETCHATCOUNT = BASE_URL + "getchatcount";
     public static String GETCHATLIST = BASE_URL + "chatlist";
     public static String CHATROOM = BASE_URL + "chatroom";
    // public static String NOTIFICATION_LIST = BASE_URL + "notification_list";

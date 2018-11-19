@@ -6,9 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackground">
 
-    <include
-        android:id="@+id/toolbar_actionbar"
-        layout="@layout/toolbar" />
+    <include layout="@layout/toolbar" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
@@ -30,6 +28,7 @@
         android:layout_centerInParent="true"
         android:drawablePadding="18dp"
         android:gravity="center"
+        android:drawableTop="@drawable/notfound"
         android:text="No data available"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textSize="15sp"

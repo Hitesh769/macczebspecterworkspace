@@ -124,7 +124,9 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     </style>
-
+    <style name="myCustomMenuTextApearance" parent="@android:style/TextAppearance.Widget.IconMenu.Item">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
 
     <style name="MyCalendarTheme" parent="Material.App.Dialog.DatePicker">
         <item name="dp_yearTextSize">@dimen/abc_text_size_title_material</item>

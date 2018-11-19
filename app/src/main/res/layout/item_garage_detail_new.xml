@@ -24,13 +24,14 @@
                 android:id="@+id/txt_name"
                 style="@style/textView"
                 android:layout_marginStart="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_2sdp"
                 android:fontFamily="@font/poppins_regular"
                 android:padding="@dimen/_2sdp"
                 android:singleLine="true"
                 android:text="Honda City"
+                android:textStyle="bold"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_10sdp" />
+                android:textSize="@dimen/_12sdp" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -130,7 +131,6 @@
                         android:layout_marginStart="@dimen/_10sdp"
                         android:fontFamily="@font/poppins_regular"
                         android:padding="@dimen/_2sdp"
-                        android:singleLine="true"
                         android:text="Text"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_10sdp" />

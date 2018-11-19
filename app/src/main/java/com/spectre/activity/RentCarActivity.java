@@ -364,10 +364,10 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
         btn_delete.setOnClickListener(this);
         btn_delete_.setOnClickListener(this);
 
-        edtCaName.setOnClickListener(this);
+       /* edtCaName.setOnClickListener(this);
         edtModel.setOnClickListener(this);
         edtVersion.setOnClickListener(this);
-        edtCarSeries.setOnClickListener(this);
+        edtCarSeries.setOnClickListener(this);*/
         edtPrice.setOnClickListener(this);
 
         et_car_to.setOnClickListener(this);
@@ -383,6 +383,9 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
             position = getIntent().getExtras().getInt(Constant.POSITION);
             //       et_mileage.setText(adPost.getMileage());
             et_price.setText(adPost.getPrice());
+            edtCaName.setText(adPost.getCar_name());
+            edtModel.setText(adPost.getModel());
+            edtCarSeries.setText(adPost.getVersion());
             //et_model.setText(adPost.getModel());
             //        et_car_desc.setText(adPost.getDescription());
             et_car_to.setText(adPost.getYear_to());
@@ -419,7 +422,7 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
             mRecyclerView.setAdapter(mAdapter);
         }
         getList(1, "");
-        listners();
+        //listners();
         mGoogleApiClient = new GoogleApiClient
                 .Builder(this)
                 .addApi(Places.GEO_DATA_API)
@@ -610,7 +613,7 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
             return;
         }
 
-        if (spinner_name.getSelectedItemPosition() == 0) {
+        /*if (spinner_name.getSelectedItemPosition() == 0) {
             Utility.showToast(context, getString(R.string.pls_select_cname));
             return;
         }
@@ -618,58 +621,28 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
         if (spinner_model.getSelectedItemPosition() == 0) {
             Utility.showToast(context, getString(R.string.pls_select_cmodel));
             return;
-        }
+        }*/
 
         if (tv_post_ad_location.getText().toString().trim().isEmpty()) {
             Utility.showToast(context, getString(R.string.pls_select_location));
             return;
         }
-
-      /*  if (spinner_version.getSelectedItemPosition() == 0) {
-            Utility.showToast(context, getString(R.string.pls_select_cversion));
-            return;
-        }*/
-
-      /*  if (spinner_year.getSelectedItemPosition() == 0) {
-            Utility.showToast(context, getString(R.string.pls_select_cyear));
+        if (edtCaName.getText().toString().trim().isEmpty()) {
+            et_mileage.setError(getString(R.string.pls_select_cname));
             return;
         }
-
-        if (spinner_color.getSelectedItemPosition() == 0) {
-            Utility.showToast(context, getString(R.string.pls_select_cColor));
+        if (edtModel.getText().toString().trim().isEmpty()) {
+            edtModel.setError(getString(R.string.pls_select_cmodel));
             return;
         }
-
-        if (spinner_car_type.getSelectedItemPosition() == 0) {
-            Utility.showToast(context, getString(R.string.pls_select_ctype));
+        if (edtCarSeries.getText().toString().trim().isEmpty()) {
+            edtCarSeries.setError(getString(R.string.pls_select_cversion));
             return;
         }
-
-        if (et_mileage.getText().toString().trim().isEmpty()) {
-            et_mileage.setError(getString(R.string.pls_select_cMileage));
-            return;
-        }*/
-
         if (et_price.getText().toString().trim().isEmpty()) {
             et_price.setError(getString(R.string.pls_select_cPrice));
             return;
         }
-//        if (et_model.getText().toString().trim().isEmpty()) {
-//            et_model.setError(getString(R.string.pls_enter_model));
-//            return;
-//        }
-
-
-       /* if (et_car_condition.getText().toString().trim().isEmpty()) {
-            et_car_condition.setError(getString(R.string.pls_select_cCondition));
-            return;
-        }
-
-        if (et_car_desc.getText().toString().trim().isEmpty()) {
-            et_car_desc.setError(getString(R.string.pls_select_desc));
-            return;
-        }*/
-
         if (et_car_from.getText().toString().trim().isEmpty()) {
             // et_car_condition.setError(getString(R.string.pls_select_cCondition));
             Utility.showToast(context, getString(R.string.pls_select_fromtype));
@@ -682,10 +655,10 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
             return;
         }
 
-        if (!Utility.checkDate(et_car_from.getText().toString().trim(), et_car_to.getText().toString().trim())) {
+       /* if (!Utility.checkDate(et_car_from.getText().toString().trim(), et_car_to.getText().toString().trim())) {
             Utility.showToast(context, getString(R.string.date_validation));
             return;
-        }
+        }*/
 
         callApi();
 
@@ -695,39 +668,6 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
 
         JSONObject jsonObject = new JSONObject();
         MyDialogProgress.open(context);
-        /*
-        // Add Post
-        "car_name":tfCarName.text!,
-                "model":tfModel.text!,
-                "version":tfVersion.text!,
-                "year":tfYear.text!,
-                "car_name_id":carNameId,
-                "model_id":carModelId,
-                "version_id":carVersionId,
-                "mileage":tfMilage.text!,
-                "price":tfPrice.text!,
-                "colour":tfColor.text!,
-                "car_type":tfCarType.text!,
-                "car_condition":tfCondition.text!,
-                "image":imageArray
-
-                //Edit Post
-                "post_id" : postEntity.add_id,
-                            "car_name":tfCarName.text!,
-                            "model":tfModel.text!,
-                            "version":tfVersion.text!,
-                            "year":tfYear.text!,
-                            "car_name_id":carNameId,
-                            "model_id":carModelId,
-                            "version_id":carVersionId,
-                            "mileage":tfMilage.text!,
-                            "price":tfPrice.text!,
-                            "colour":tfColor.text!,
-                            "car_type":tfCarType.text!,
-                            "car_condition":tfCondition.text!,
-                            "image":imageArray ] as [String: Any]
-
-                */
         String Url = "";
         try {
             if (adPost != null) {
@@ -736,27 +676,23 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
             } else {
                 Url = Urls.ADD_RENT;
             }
-            jsonObject.put(Constant.CAR_NAME_ID, ((CarName) spinner_name.getSelectedItem()).getId());
-            jsonObject.put(Constant.CAR_NAME, ((CarName) spinner_name.getSelectedItem()).getCar_name());
-            jsonObject.put(Constant.MODEL, ((ModelName) spinner_model.getSelectedItem()).getModel_name());
-            jsonObject.put(Constant.MODEL_ID, ((ModelName) spinner_model.getSelectedItem()).getId());
-            if (spinner_version.getSelectedItemPosition() != 0) {
-                jsonObject.put(Constant.VERSION, ((VersionName) spinner_version.getSelectedItem()).getVersion_name());
-                jsonObject.put(Constant.VERSION_ID, ((VersionName) spinner_version.getSelectedItem()).getId());
-            } else {
-                jsonObject.put(Constant.VERSION, "");
-                jsonObject.put(Constant.VERSION_ID, 0);
-            }
-            jsonObject.put(Constant.YEAR, ((String) spinner_year.getSelectedItem()));
-            jsonObject.put(Constant.CAR_TYPE, ((String) spinner_car_type.getSelectedItem()));
-            jsonObject.put(Constant.COLOUR, ((String) spinner_color.getSelectedItem()));
-            jsonObject.put(Constant.MILEAGE, et_mileage.getText().toString().trim());
+            jsonObject.put(Constant.CAR_NAME_ID, edtCaName.getText().toString());
+            jsonObject.put(Constant.CAR_NAME, edtCaName.getText().toString());
+            jsonObject.put(Constant.MODEL, edtModel.getText().toString());
+            jsonObject.put(Constant.MODEL_ID, edtModel.getText().toString());
+            jsonObject.put(Constant.VERSION, edtCarSeries.getText().toString());
+            jsonObject.put(Constant.VERSION_ID, edtCarSeries.getText().toString());
+
+            jsonObject.put(Constant.YEAR, "");
+            jsonObject.put(Constant.CAR_TYPE, "");
+            jsonObject.put(Constant.COLOUR, "");
+            jsonObject.put(Constant.MILEAGE, "");
             jsonObject.put(Constant.PRICE, et_price.getText().toString().trim());
             //  jsonObject.put(Constant.MODEL, et_model.getText().toString().trim());
-            jsonObject.put(Constant.CAR_CONDITION, et_car_condition.getText().toString().trim());
+            jsonObject.put(Constant.CAR_CONDITION, "");
             jsonObject.put(Constant.YEAR_TO, et_car_to.getText().toString().trim());
             jsonObject.put(Constant.YEAR_FROM, et_car_from.getText().toString().trim());
-            jsonObject.put(Constant.DESCRIPTION, et_car_desc.getText().toString().trim());
+            jsonObject.put(Constant.DESCRIPTION, "");
             jsonObject.put(Constant.LOCATION, tv_post_ad_location.getText().toString().trim());
             jsonObject.put(Constant.LATITUDE, latitude);
             jsonObject.put(Constant.LONGITUDE, longitude);
@@ -1382,10 +1318,9 @@ public class RentCarActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onAuthFailed(JSONObject js, String msg) {
                 MyDialogProgress.close(context);
-               /* Intent intent = new Intent(context, AuthDialogActivity.class);
+               /*Intent intent = new Intent(context, AuthDialogActivity.class);
                 intent.putExtra("type", 1);
                 startActivity(intent);*/
-
                 SessionExpireDialog.openDialog(context, 0, "");
             }
 

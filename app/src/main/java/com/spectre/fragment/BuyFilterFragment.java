@@ -35,6 +35,7 @@ import com.spectre.activity_new.HomeAct;
 import com.spectre.beans.CarName;
 import com.spectre.beans.ModelName;
 import com.spectre.beans.VersionName;
+import com.spectre.customView.RangeSeekBar;
 import com.spectre.helper.AqueryCall;
 import com.spectre.interfaces.RequestCallback;
 import com.spectre.other.Constant;
@@ -61,6 +62,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 import static android.app.Activity.RESULT_OK;
+import static com.spectre.utility.Utility.getTextViewString;
 import static com.spectre.utility.Utility.setLog;
 
 
@@ -107,6 +109,12 @@ public class BuyFilterFragment extends Fragment {
     EditText edtLocation;
     @BindView(R.id.imgLocation)
     ImageView imgLocation;
+    @BindView(R.id.txtMinRange)
+    TextView txtMinRange;
+    @BindView(R.id.txtMaxRange)
+    TextView txtMaxRange;
+    @BindView(R.id.rangPrice)
+    RangeSeekBar rangPrice;
 
     private View view;
     private Context context;
@@ -212,6 +220,15 @@ public class BuyFilterFragment extends Fragment {
         }
         //setCarModel("", false);
         //setCarVersion("", false);
+        rangPrice.setRangeValues(0, 10000);
+        rangPrice.setNotifyWhileDragging(true);
+        rangPrice.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener() {
+            @Override
+            public void onRangeSeekBarValuesChanged(RangeSeekBar bar, Object minValue, Object maxValue) {
+                txtMinRange.setText(String.valueOf(minValue));
+                txtMaxRange.setText(String.valueOf(maxValue));
+            }
+        });
 
     }
 
@@ -235,6 +252,8 @@ public class BuyFilterFragment extends Fragment {
                 mainActivity().imgCross.setVisibility(View.GONE);
                 BuySearchFragment buySearchFragment = new BuySearchFragment();
                 Bundle bundle=new Bundle();
+                bundle.putString(Constant.MAXRANGE,getTextViewString(txtMaxRange));
+                bundle.putString(Constant.MINRANGE,getTextViewString(txtMinRange));
                 bundle.putString(PrefConstant.BRANDID,carNameId);
                 bundle.putString(PrefConstant.MODELID,modelId);
                 bundle.putString(PrefConstant.LONGITUDE,longitude);

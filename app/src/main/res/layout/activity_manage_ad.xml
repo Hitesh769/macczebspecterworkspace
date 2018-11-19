@@ -32,6 +32,7 @@
         android:drawablePadding="18dp"
         android:gravity="center"
         android:layout_marginLeft="15dp"
+        android:drawableTop="@drawable/notfound"
         android:layout_marginRight="15dp"
         android:text="No data available"
         android:textAppearance="?android:attr/textAppearanceMedium"

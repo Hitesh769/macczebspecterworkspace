@@ -5,9 +5,9 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
 
@@ -17,7 +17,7 @@ import com.spectre.utility.Utility;
 
 public class AboutUsActivity extends AppCompatActivity {
     private Context context;
-    private Toolbar actionBar;
+    private ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +26,7 @@ public class AboutUsActivity extends AppCompatActivity {
         context = this;
         Utility.setContentView(context, R.layout.activity_about_us);
         //  Utility.setUpToolbar_(context, "<font color='#ffffff'>About Us</font>", true);
-        actionBar = Utility.setUpToolbarWithColor(context, "<font color='#8700C9'>"+getString(R.string.about_us)+"</font>", getResources().getColor(R.color.colorWhite));
+        actionBar = Utility.setUpToolbar_(context, "<font color='#ffffff'>"+getString(R.string.about_us)+"</font>", true);
         ((WebView) findViewById(R.id.web_view)).loadData("SpectreApp is the only marketplace for Dealers, Certified PreOwned Car owners and Individuals to list their services and portfolio and get discovered. Search, Compare and Save Using the UAE's Biggest Online Car Listing for Buying & Selling and Car Rental Services.", "text/html; charset=utf-8", "UTF-8");
 
         /* Drawable drawable = ResourcesCompat.getDrawable(context.getResources(), R.mipmap.back, null);

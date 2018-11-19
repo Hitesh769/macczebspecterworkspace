@@ -58,8 +58,8 @@ public class MoreFrg extends MasterFragment {
     CircleImageView imgProfileImage;
     @BindView(R.id.txtName)
     TextView txtName;
-    @BindView(R.id.txtEmail)
-    TextView txtEmail;
+    @BindView(R.id.txtUserTYpe)
+    TextView txtUserTYpe;
     @BindView(R.id.llLogout)
     LinearLayout llLogout;
     @BindView(R.id.linearLayout)
@@ -110,6 +110,8 @@ public class MoreFrg extends MasterFragment {
     LinearLayout linMessage;
     @BindView(R.id.linNotification)
     LinearLayout linNotification;
+    @BindView(R.id.rl_profile)
+    RelativeLayout rlProfile;
 
 
     // screen context
@@ -200,16 +202,33 @@ public class MoreFrg extends MasterFragment {
             linNotification.setVisibility(View.VISIBLE);
             llSocial.setVisibility(View.VISIBLE);
 
+            if (!SharedPrefUtils.getPreference(context, Constant.USER_TYPE, "").isEmpty() && SharedPrefUtils.getPreference(context, Constant.USER_TYPE, "").equalsIgnoreCase("1")) {
+                linPostAd.setVisibility(View.GONE);
+                linManageAds.setVisibility(View.GONE);
+                txtUserTYpe.setText("As Buyer");
+            }else{
+                txtUserTYpe.setText("As Seller");
+            }
+
         } else {
             llLogout.setVisibility(View.GONE);
         }
 
 
-        txtName.setText(SharedPrefUtils.getPreference(context, Constant.USER_NAME, ""));
-      /*  if (!SharedPrefUtils.getPreference(context, Constant.GARAGE_IMAGE, "").isEmpty())
-            new AQuery(context).id(imv_banner).image(SharedPrefUtils.getPreference(context, Constant.GARAGE_IMAGE, ""), true, true, 0, 0);
+
+        if (SharedPrefUtils.getPreference(context, Constant.USER_NAME, "").length()!=0){
+            txtName.setText(SharedPrefUtils.getPreference(context, Constant.USER_NAME, ""));
+        }
+
+        if (SharedPrefUtils.getPreference(context, Constant.USER_IMAGE, "") != null && !SharedPrefUtils.getPreference(context, Constant.USER_IMAGE, "").isEmpty())
+            new AQuery(context).id(imgProfileImage).image(SharedPrefUtils.getPreference(context, Constant.USER_IMAGE, ""), true, true, 0, R.mipmap.gestuser);
         else
-            ivProfile.setImageResource(R.mipmap.gestuser);*/
+            imgProfileImage.setImageResource(R.mipmap.gestuser);
+
+      /*  if (!SharedPrefUtils.getPreference(context, Constant.GARAGE_IMAGE, "").isEmpty())
+            new AQuery(context).id(imgProfileImage).image(SharedPrefUtils.getPreference(context, Constant.GARAGE_IMAGE, ""), true, true, 0, 0);
+        else
+            imgProfileImage.setImageResource(R.mipmap.gestuser);*/
     }
 
     private void setListener() {
@@ -218,7 +237,7 @@ public class MoreFrg extends MasterFragment {
     /* [END] - User define function */
 
     /* [START] - Butter knife listener */
-    @OnClick({R.id.linMessage,R.id.linNotification ,R.id.llLogout, R.id.llLogin, R.id.llSignUp, R.id.llMyAccount, R.id.llPostAd, R.id.llManageAd, R.id.llSettings, R.id.llAboutUs, R.id.llPrivacyPolicy, R.id.llSocial, R.id.llFeedback})
+    @OnClick({R.id.linMessage,R.id.linNotification ,R.id.llLogout, R.id.llLogin, R.id.llSignUp, R.id.llMyAccount, R.id.llPostAd, R.id.llManageAd, R.id.llSettings, R.id.llAboutUs, R.id.llPrivacyPolicy, R.id.llSocial, R.id.llFeedback,R.id.rl_profile})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.llLogout:
@@ -270,6 +289,16 @@ public class MoreFrg extends MasterFragment {
             case R.id.llSocial:
                 break;
             case R.id.llFeedback:
+                break;
+            case R.id.rl_profile:
+                if(SharedPrefUtils.getPreference(context,Constant.USER_TYPE,"").equals("2")){
+                    Intent intent = new Intent(context, SellerDetailsActivity.class);
+                    intent.putExtra(Constant.DATA, "2");
+                    startActivity(intent);
+                }
+                else if (SharedPrefUtils.getPreference(context,Constant.USER_TYPE,"").equals("1")){
+                    startAct(mainActivity(), EditProfileActivity.getStartIntent(context));
+                }
                 break;
         }
     }

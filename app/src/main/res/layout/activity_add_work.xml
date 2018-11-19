@@ -489,7 +489,7 @@
                     app:edittextfontHint="Poppins-Regular.ttf" />
 
                 <com.spectre.customView.CustomEditText
-                    android:id="@+id/et_car_condition"
+                    android:id="@+id/et_car_condition1"
                     android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -534,8 +534,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:background="@drawable/semi_transparent_box"
                     android:gravity="top"
+                    android:backgroundTint="@color/setting_yellow"
                     android:hint="@string/enter_problem"
                     android:inputType="textCapSentences|textMultiLine"
                     android:lines="3"

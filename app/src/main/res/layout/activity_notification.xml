@@ -29,6 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_marginLeft="15dp"
+        android:drawableTop="@drawable/notfound"
         android:layout_marginRight="15dp"
         android:drawablePadding="18dp"
         android:gravity="center"

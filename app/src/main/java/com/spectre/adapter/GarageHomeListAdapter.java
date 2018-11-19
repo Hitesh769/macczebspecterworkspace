@@ -60,20 +60,24 @@ public class GarageHomeListAdapter extends RecyclerView.Adapter<GarageHomeListAd
         if (adPost.getFull_name() != null && !adPost.getFull_name().isEmpty()) {
             holder.txt_name.setText(adPost.getFull_name());
         } else {
-            holder.txt_name.setText(appContext.getString(R.string.na));
+            holder.txt_name.setText("");
         }
 
         if (!adPost.getAddress().isEmpty()) {
             holder.txt_address.setText(adPost.getAddress().trim());
         } else {
-            holder.txt_address.setText(appContext.getString(R.string.na));
+            holder.txt_address.setText("");
         }
-
+        if (adPost.getFull_name() != null && !adPost.getExpertise().isEmpty()) {
+            holder.txt_car_type.setText(adPost.getExpertise());
+        } else {
+            holder.txt_car_type.setText("");
+        }
         if (!adPost.getMobile_no().isEmpty()) {
             String mobile = adPost.getMobile_code() + "" + adPost.getMobile_no().trim();
             holder.txt_number.setText(mobile);
         } else {
-            holder.txt_number.setText(appContext.getString(R.string.na));
+            holder.txt_number.setText("");
         }
         if (!adPost.getReviews().isEmpty()) {
             ArrayList<Integer> avg=new ArrayList<>();
@@ -90,7 +94,7 @@ public class GarageHomeListAdapter extends RecyclerView.Adapter<GarageHomeListAd
             String reviewcount = "" +adPost.getReviews().size();
             holder.txt_review_count.setText(reviewcount);
         } else {
-             holder.txt_review_count.setText(appContext.getString(R.string.na));
+             holder.txt_review_count.setText("0");
         }
 
 
@@ -164,7 +168,7 @@ public class GarageHomeListAdapter extends RecyclerView.Adapter<GarageHomeListAd
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        CustomTextView txt_address, txt_number;
+        CustomTextView txt_address, txt_number,txt_car_type;
         TextView txt_name, txt_review_count, txt_count_avg;
         ImageView iv_product;
         CustomRayMaterialTextView btn_save_changes;
@@ -176,6 +180,7 @@ public class GarageHomeListAdapter extends RecyclerView.Adapter<GarageHomeListAd
             txt_count_avg = (TextView) itemView.findViewById(R.id.txt_count_avg);
             txt_address = (CustomTextView) itemView.findViewById(R.id.txt_address);
             txt_number = (CustomTextView) itemView.findViewById(R.id.txt_number);
+            txt_car_type = (CustomTextView) itemView.findViewById(R.id.txt_car_type);
             iv_product = (ImageView) itemView.findViewById(R.id.iv_product);
             //   btn_save_changes = (CustomRayMaterialTextView) itemView.findViewById(R.id.btn_save_changes);
 

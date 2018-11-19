@@ -191,7 +191,7 @@ public class WorkListUserActivity extends AppCompatActivity {
                     if (worklist.size() == 0) {
                         txtConnection.setVisibility(View.VISIBLE);
                         txtConnection.setText(failed);
-                        txtConnection.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                      //  txtConnection.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                     }
                     closeProgressDialog(i);
                 }
@@ -213,8 +213,8 @@ public class WorkListUserActivity extends AppCompatActivity {
                         txtConnection.setText(nullp);
                         if (nullp.equalsIgnoreCase(getString(R.string.connection)))
                             txtConnection.setCompoundDrawablesWithIntrinsicBounds(0, R.mipmap.nointernet, 0, 0);
-                        else
-                            txtConnection.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                       /* else
+                            txtConnection.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);*/
                     }
                     closeProgressDialog(i);
                 }

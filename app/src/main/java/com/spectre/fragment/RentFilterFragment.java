@@ -136,7 +136,7 @@ public class RentFilterFragment extends Fragment {
         // hide or show app bar
         mainActivity().rlAppBarMain.setVisibility(View.GONE);
 
-        rangPrice.setRangeValues(100, 10000);
+        rangPrice.setRangeValues(0, 10000);
         rangPrice.setNotifyWhileDragging(true);
         rangPrice.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener() {
             @Override
@@ -224,7 +224,7 @@ public class RentFilterFragment extends Fragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.rel_pickUp, R.id.rel_dropUp, R.id.btnSearch,R.id.llLocation})
+    @OnClick({R.id.rel_pickUp, R.id.rel_dropUp, R.id.btnSearch,R.id.input_location,R.id.imgLocation})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rel_pickUp:
@@ -254,13 +254,16 @@ public class RentFilterFragment extends Fragment {
                 buySearchFragment.setArguments(bundle);
                 mainActivity().startNewFragment(buySearchFragment);
                 break;
-            case R.id.llLocation:
+            case R.id.input_location:
                 try {
                     Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).build(getActivity());
                     startActivityForResult(intent, PLACE_PICKER_REQUEST);
                 } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
                     e.printStackTrace();
                 }
+                break;
+            case R.id.imgLocation:
+                getLocation();
                 break;
         }
     }

@@ -272,7 +272,7 @@ public class ChatActivity extends AppCompatActivity {
     }
     @OnClick(R.id.imgBack)
     public void onViewClicked() {
-        onBackPressed();
+        finish();
     }
 
 

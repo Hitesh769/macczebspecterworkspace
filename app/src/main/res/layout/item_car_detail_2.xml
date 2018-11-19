@@ -22,9 +22,10 @@
             android:fontFamily="@font/poppins_regular"
             android:padding="@dimen/_2sdp"
             android:singleLine="true"
+            android:textStyle="bold"
             android:text="Honda City"
             android:textColor="@color/black"
-            android:textSize="@dimen/_10sdp" />
+            android:textSize="@dimen/_12sdp" />
 
         <View
             style="@style/line_register"
@@ -41,59 +42,26 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1.2"
+                android:layout_marginStart="@dimen/_10sdp"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:id="@+id/rel1"
+                        android:layout_height="wrap_content">
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <TextView
-                            style="@style/textView"
-                            android:layout_height="@dimen/_22sdp"
-                            android:layout_marginEnd="@dimen/_5sdp"
-                            android:layout_marginStart="@dimen/_5sdp"
-                            android:padding="@dimen/_2sdp"
-                            android:text="•"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="@dimen/_10sdp" />
-
-                        <TextView
-                            style="@style/textView"
-                            android:layout_height="@dimen/_22sdp"
-                            android:layout_marginEnd="@dimen/_5sdp"
-                            android:layout_marginStart="@dimen/_5sdp"
-                            android:padding="@dimen/_2sdp"
-                            android:text="•"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="@dimen/_10sdp" />
-
-                        <TextView
-                            style="@style/textView"
-                            android:layout_height="@dimen/_22sdp"
-                            android:layout_marginEnd="@dimen/_5sdp"
-                            android:layout_marginStart="@dimen/_5sdp"
-                            android:padding="@dimen/_2sdp"
-                            android:text="•"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="@dimen/_10sdp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_circle_yellow" />
                         <TextView
                             android:id="@+id/txt_Model"
                             style="@style/textView"
-                            android:layout_height="@dimen/_22sdp"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_centerVertical="true"
                             android:layout_marginEnd="@dimen/_5sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
                             android:fontFamily="@font/poppins_regular"
                             android:padding="@dimen/_2sdp"
                             android:singleLine="true"
@@ -101,31 +69,58 @@
                             android:textColor="@color/black"
                             android:textSize="@dimen/_10sdp" />
 
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_below="@+id/rel1"
+                        android:id="@+id/rel2"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_circle_yellow" />
                         <TextView
                             android:id="@+id/txtType"
                             style="@style/textView"
-                            android:layout_height="@dimen/_22sdp"
+                            android:layout_centerVertical="true"
                             android:layout_marginEnd="@dimen/_5sdp"
+                            android:layout_marginStart="@dimen/_10sdp"
                             android:fontFamily="@font/poppins_regular"
                             android:padding="@dimen/_2sdp"
                             android:singleLine="true"
-                            android:text="Type"
+                            android:text="car version"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_10sdp" />
 
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_below="@+id/rel2"
+                        android:id="@+id/rel3"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_circle_yellow" />
                         <TextView
                             android:id="@+id/txt_owner_name"
                             style="@style/textView"
-                            android:layout_height="@dimen/_22sdp"
+                            android:layout_centerVertical="true"
                             android:layout_marginEnd="@dimen/_5sdp"
+                            android:layout_marginStart="@dimen/_10sdp"
                             android:fontFamily="@font/poppins_regular"
                             android:padding="@dimen/_2sdp"
                             android:singleLine="true"
                             android:text="Text"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_10sdp" />
-                    </LinearLayout>
-                </LinearLayout>
+
+                    </RelativeLayout>
+
 
             </LinearLayout>
 
@@ -176,8 +171,8 @@
                 android:gravity="center_vertical">
 
                 <ImageView
-                    android:layout_width="@dimen/_20sdp"
-                    android:layout_height="@dimen/_20sdp"
+                    android:layout_width="@dimen/_17sdp"
+                    android:layout_height="@dimen/_17sdp"
                     android:src="@drawable/ic_color"
                     android:padding="@dimen/_2sdp"
                     android:tint="@color/hint_color" />
@@ -201,8 +196,8 @@
                 android:gravity="center_vertical">
 
                 <ImageView
-                    android:layout_width="@dimen/_20sdp"
-                    android:layout_height="@dimen/_20sdp"
+                    android:layout_width="@dimen/_17sdp"
+                    android:layout_height="@dimen/_17sdp"
                     android:padding="@dimen/_2sdp"
                     android:src="@drawable/ic_miles"
                     android:tint="@color/hint_color" />
@@ -227,8 +222,8 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="@dimen/_20sdp"
-                    android:layout_height="@dimen/_20sdp"
+                    android:layout_width="@dimen/_17sdp"
+                    android:layout_height="@dimen/_17sdp"
                     android:padding="@dimen/_2sdp"
                     android:src="@drawable/ic_event_available"
                     android:tint="@color/hint_color" />

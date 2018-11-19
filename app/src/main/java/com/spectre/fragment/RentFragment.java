@@ -84,7 +84,7 @@ public class RentFragment extends Fragment implements View.OnClickListener, Goog
     private boolean loaddingDone = true;
     private boolean loading = true;
     private int pastVisiblesItems, visibleItemCount, totalItemCount;
-    private ArrayList<AdPost> Arraylist = new ArrayList<>();
+    private ArrayList<AdPost> arraylist = new ArrayList<>();
     private CustomTextView txtConnection;
     private FilterResponse filterResponse;
 
@@ -105,9 +105,7 @@ public class RentFragment extends Fragment implements View.OnClickListener, Goog
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_rent, container, false);
         context = getActivity();
-
         initView();
-
         return view;
     }
 
@@ -152,7 +150,18 @@ public class RentFragment extends Fragment implements View.OnClickListener, Goog
                 .addApi(Places.PLACE_DETECTION_API)
                 .enableAutoManage(getActivity(), this)
                 .build();
+        mainActivity().imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    mainActivity().txt_filter.setVisibility(View.GONE);
+                    mainActivity().onBackPressed();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
 
+            }
+        });
         // tv_rent_fragment_location.setText(filterResponse.getLocation());
     }
 
@@ -308,7 +317,7 @@ public class RentFragment extends Fragment implements View.OnClickListener, Goog
                 stBuilder.append(", ");
                 stBuilder.append(address);
                 tv_rent_fragment_location.setText(stBuilder.toString());
-                Arraylist.clear();
+                arraylist.clear();
                 callMethodEventList(0);
             }
         }
@@ -329,7 +338,7 @@ public class RentFragment extends Fragment implements View.OnClickListener, Goog
 
     private void refreshItems() {
         if (loading) {
-            if (Arraylist.size() == 0) {
+            if (arraylist.size() == 0) {
                 loading = false;
                 onItemsLoadComplete();
                 callMethodEventList(0);
@@ -353,7 +362,7 @@ public class RentFragment extends Fragment implements View.OnClickListener, Goog
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(context);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new SearchRentListAdapter(context, Arraylist, 1);
+        mAdapter = new SearchRentListAdapter(context, arraylist, 1);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -405,20 +414,20 @@ public class RentFragment extends Fragment implements View.OnClickListener, Goog
         // Upcoming_event
         try {
             if (i == 0) {
-                if (Arraylist.size() == 0) {
+                if (arraylist.size() == 0) {
                     // MyDialogProgress.open(context);
                     // params.put(Constant.CREATE_AT, "0");
                     filterResponse.setCreate_at("0");
                 } else {
                     (progressDialog1).start();
                     //params.put(Constant.CREATE_AT, Arraylist.get(Arraylist.size() - 1).getCreate_at());
-                    filterResponse.setCreate_at(Arraylist.get(Arraylist.size() - 1).getCreate_at() + "");
+                    filterResponse.setCreate_at(arraylist.get(arraylist.size() - 1).getCreate_at() + "");
                 }
                 //  params.put(Constant.LIST_TYPE, "0");
                 filterResponse.setList_type("0");
                 (progressDialog1).start();
             } else {
-                filterResponse.setCreate_at(Arraylist.get(0).getCreate_at() + "");
+                filterResponse.setCreate_at(arraylist.get(0).getCreate_at() + "");
                 filterResponse.setList_type("2");
 
                 //  params.put(Constant.CREATE_AT, Arraylist.get(0).getCreate_at());
@@ -441,6 +450,7 @@ public class RentFragment extends Fragment implements View.OnClickListener, Goog
                 @Override
                 public void onSuccess(JSONObject js, String success) {
                     txtConnection.setVisibility(View.GONE);
+                    mRecyclerView.setVisibility(View.VISIBLE);
                     //js.put(Constant.LOCATION, tv_rent_fragment_location.getText().toString().trim());
                     saveAndForward(js, i);
                     Utility.setLog("Rent fragment");
@@ -452,11 +462,11 @@ public class RentFragment extends Fragment implements View.OnClickListener, Goog
 
                     loading = true;
                     loaddingDone = false;
-                    if (Arraylist.size() == 0) {
+                    if (arraylist.size() == 0) {
                         mRecyclerView.setVisibility(View.GONE);
                         txtConnection.setVisibility(View.VISIBLE);
-                        txtConnection.setText(failed);
-                        txtConnection.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                    /*    txtConnection.setText(failed);
+                        txtConnection.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);*/
                     }
 
                     closeProgressDialog(i);
@@ -474,13 +484,13 @@ public class RentFragment extends Fragment implements View.OnClickListener, Goog
                 public void onNull(JSONObject js, String nullp) {
                     loading = true;
                     loaddingDone = false;
-                    if (Arraylist.size() == 0) {
+                    if (arraylist.size() == 0) {
                         txtConnection.setVisibility(View.VISIBLE);
                         txtConnection.setText(nullp);
                         if (nullp.equalsIgnoreCase(getString(R.string.connection)))
                             txtConnection.setCompoundDrawablesWithIntrinsicBounds(0, R.mipmap.nointernet, 0, 0);
-                        else
-                            txtConnection.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                     /*   else
+                            txtConnection.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);*/
                     }
                     closeProgressDialog(i);
                 }
@@ -488,10 +498,10 @@ public class RentFragment extends Fragment implements View.OnClickListener, Goog
                 @Override
                 public void onException(JSONObject js, String exception) {
                     // MyDialog.dialog_(exception, context);
-                    if (Arraylist.size() == 0) {
+                    if (arraylist.size() == 0) {
                         txtConnection.setVisibility(View.VISIBLE);
                         txtConnection.setText(exception);
-                        //   txtConnection.setCompoundDrawablesWithIntrinsicBounds(0, R.mipmap.nodata, 0, 0);
+                        // txtConnection.setCompoundDrawablesWithIntrinsicBounds(0, R.mipmap.nodata, 0, 0);
                     }
                     closeProgressDialog(i);
                 }
@@ -520,10 +530,10 @@ public class RentFragment extends Fragment implements View.OnClickListener, Goog
                 }.getType();
                 List<AdPost> tempListNewsFeeds = new Gson().fromJson(jsonArray.toString(), type);
                 if (i == 0) {
-                    Arraylist.addAll(Arraylist.size(), tempListNewsFeeds);
+                    arraylist.addAll(arraylist.size(), tempListNewsFeeds);
 
                 } else {
-                    Arraylist.addAll(0, tempListNewsFeeds);
+                    arraylist.addAll(0, tempListNewsFeeds);
                 }
             }
             mRecyclerView.setVisibility(View.VISIBLE);
@@ -538,8 +548,8 @@ public class RentFragment extends Fragment implements View.OnClickListener, Goog
     }
 
     public void resetData(FilterResponse filterResponse) {
-        if (Arraylist != null) {
-            Arraylist.clear();
+        if (arraylist != null) {
+            arraylist.clear();
             mAdapter.notifyDataSetChanged();
         }
 
@@ -552,8 +562,8 @@ public class RentFragment extends Fragment implements View.OnClickListener, Goog
         try {
             int pos = data.getIntExtra(Constant.POSITION, -1);
             AdPost adPost = data.getParcelableExtra(Constant.DATA);
-            if (pos != -1 && Arraylist != null && Arraylist.size() > 0) {
-                Arraylist.set(pos, adPost);
+            if (pos != -1 && arraylist != null && arraylist.size() > 0) {
+                arraylist.set(pos, adPost);
                 mAdapter.notifyDataSetChanged();
             }
         } catch (Exception e) {
@@ -589,4 +599,5 @@ public class RentFragment extends Fragment implements View.OnClickListener, Goog
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
+
 }

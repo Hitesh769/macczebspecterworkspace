@@ -88,8 +88,8 @@
                         android:id="@+id/edit_banner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
                         android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
                         android:background="@color/transprent_white"
                         android:drawableLeft="@mipmap/black_camera"
                         android:drawablePadding="5dp"
@@ -112,10 +112,10 @@
                 android:layout_height="wrap_content"
                 android:background="@color/colorWhite"
                 android:orientation="vertical"
-                android:paddingBottom="20dp"
                 android:paddingLeft="40dp"
+                android:paddingTop="20dp"
                 android:paddingRight="40dp"
-                android:paddingTop="20dp">
+                android:paddingBottom="20dp">
 
                 <com.spectre.customView.CustomTextView
                     android:layout_width="match_parent"
@@ -133,12 +133,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/gray_bg_line"
+                    android:backgroundTint="@color/setting_yellow"
                     android:digits="@string/alphabets_only"
                     android:hint="@string/enter_name"
                     android:inputType="textCapWords"
                     android:padding="5dp"
                     android:singleLine="true"
-                    android:backgroundTint="@color/setting_yellow"
                     android:textColor="@color/black"
                     android:textColorHint="@color/light_gray"
                     android:textSize="12sp"
@@ -163,12 +163,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/gray_bg_line"
+                    android:backgroundTint="@color/setting_yellow"
                     android:hint="Enter Email"
                     android:inputType="textEmailAddress"
                     android:padding="5dp"
                     android:singleLine="true"
                     android:textColor="@color/black"
-                    android:backgroundTint="@color/setting_yellow"
                     android:textColorHint="@color/light_gray"
                     android:textSize="12sp"
                     app:edittextfont="Poppins-Regular.ttf"
@@ -193,6 +193,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/gray_bg_line"
+                    android:backgroundTint="@color/setting_yellow"
                     android:digits="@string/numeric0123456789"
                     android:enabled="false"
                     android:focusable="false"
@@ -202,43 +203,48 @@
                     android:maxLength="10"
                     android:padding="5dp"
                     android:singleLine="true"
-                    android:backgroundTint="@color/setting_yellow"
                     android:textColor="@color/black"
                     android:textColorHint="@color/light_gray"
                     android:textSize="12sp"
                     app:edittextfont="Poppins-Regular.ttf"
                     app:edittextfontHint="Poppins-Regular.ttf" />
 
-
-                <com.spectre.customView.CustomTextView
+                <LinearLayout
+                    android:id="@+id/lin_buyer_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
-                    android:text="@string/address"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    app:edittextfont="Poppins-Regular.ttf"
-                    app:edittextfontHint="Poppins-Regular.ttf" />
+                    android:orientation="vertical">
+
+                    <com.spectre.customView.CustomTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:text="@string/address"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        app:edittextfont="Poppins-Regular.ttf"
+                        app:edittextfontHint="Poppins-Regular.ttf" />
 
 
-                <com.spectre.customView.CustomEditText
-                    android:id="@+id/et_address"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/gray_bg_line"
-                    android:hint="@string/enter_address"
-                    android:inputType="textCapSentences"
-                    android:padding="5dp"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:backgroundTint="@color/setting_yellow"
-                    android:textColorHint="@color/light_gray"
-                    android:textSize="12sp"
-                    app:edittextfont="Poppins-Regular.ttf"
-                    app:edittextfontHint="Poppins-Regular.ttf" />
+                    <com.spectre.customView.CustomEditText
+                        android:id="@+id/et_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/gray_bg_line"
+                        android:backgroundTint="@color/setting_yellow"
+                        android:hint="@string/enter_address"
+                        android:inputType="textCapSentences"
+                        android:padding="5dp"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/light_gray"
+                        android:textSize="12sp"
+                        app:edittextfont="Poppins-Regular.ttf"
+                        app:edittextfontHint="Poppins-Regular.ttf" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/ll_is_garage"
@@ -266,6 +272,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:background="@drawable/gray_bg_line"
+                        android:backgroundTint="@color/setting_yellow"
                         android:hint="@string/enter_expertise"
                         android:inputType="textCapSentences"
                         android:padding="5dp"
@@ -273,7 +280,6 @@
                         android:textColor="@color/black"
                         android:textColorHint="@color/light_gray"
                         android:textSize="12sp"
-                        android:backgroundTint="@color/setting_yellow"
                         app:edittextfont="Poppins-Regular.ttf"
                         app:edittextfontHint="Poppins-Regular.ttf" />
 
@@ -286,6 +292,7 @@
                         android:text="@string/car_repair"
                         android:textColor="@color/black"
                         android:textSize="14sp"
+                        android:visibility="gone"
                         app:edittextfont="Poppins-Regular.ttf"
                         app:edittextfontHint="Poppins-Regular.ttf" />
 
@@ -296,14 +303,15 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:background="@drawable/gray_bg_line"
+                        android:backgroundTint="@color/setting_yellow"
                         android:hint="@string/enter_car_repair"
                         android:inputType="textCapSentences"
                         android:padding="5dp"
                         android:singleLine="true"
                         android:textColor="@color/black"
-                        android:backgroundTint="@color/setting_yellow"
                         android:textColorHint="@color/light_gray"
                         android:textSize="12sp"
+                        android:visibility="gone"
                         app:edittextfont="Poppins-Regular.ttf"
                         app:edittextfontHint="Poppins-Regular.ttf" />
 
@@ -329,36 +337,279 @@
                             android:id="@+id/radio_main"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:buttonTint="@color/colorAccent"
                             android:padding="5dp"
-                            android:text="@string/service_repair" />
+                            android:text="@string/service_repair"
+                            app:buttonTint="@color/colorAccent" />
 
                         <android.support.v7.widget.AppCompatRadioButton
                             android:id="@+id/radio_repair"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:buttonTint="@color/colorAccent"
                             android:padding="5dp"
-                            android:text="@string/service_modify" />
+                            android:text="@string/service_modify"
+                            app:buttonTint="@color/colorAccent" />
 
                         <android.support.v7.widget.AppCompatRadioButton
                             android:id="@+id/radio_repair_service"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:buttonTint="@color/colorAccent"
+                            android:padding="5dp"
                             android:singleLine="true"
                             android:text="@string/repair_services"
-                            android:padding="5dp" />
+                            app:buttonTint="@color/colorAccent" />
 
                         <android.support.v7.widget.AppCompatRadioButton
                             android:id="@+id/radio_both"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:buttonTint="@color/colorAccent"
                             android:checked="true"
                             android:padding="5dp"
-                            android:text="@string/both" />
+                            android:text="@string/both"
+                            app:buttonTint="@color/colorAccent" />
                     </LinearLayout>
+                    <!--for seller-->
+                    <View
+                        style="@style/line_register"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:background="@color/colorAccent" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="10">
+
+                        <RadioGroup
+                            android:id="@+id/rg_garage"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:weightSum="2">
+
+                            <RadioButton
+                                android:id="@+id/rbtOwner"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:checked="true"
+                                android:padding="@dimen/_10sdp"
+                                android:text="Owner"
+                                android:textSize="@dimen/_11sdp" />
+
+                            <RadioButton
+                                android:id="@+id/rbtDealer"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:padding="@dimen/_10sdp"
+                                android:text="Dealer"
+                                android:textSize="@dimen/_11sdp" />
+
+                            <RadioButton
+                                android:id="@+id/rbtCertifiedPreOwned"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:padding="@dimen/_10sdp"
+                                android:text="Certified Pre-Owned"
+                                android:textSize="@dimen/_11sdp" />
+                        </RadioGroup>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linLocation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:id="@+id/llLocation"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:layout_marginBottom="@dimen/_8sdp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+
+                            <ImageView
+                                android:id="@+id/imgLocation"
+                                android:layout_width="@dimen/_20sdp"
+                                android:layout_height="@dimen/_20sdp"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="@dimen/_5sdp"
+                                android:padding="@dimen/_3sdp"
+                                android:src="@drawable/ic_location"
+                                android:tint="@color/hint_color" />
+
+                            <android.support.design.widget.TextInputLayout
+                                android:id="@+id/input_layout_search"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_toStartOf="@+id/imgLocation"
+                                android:background="@android:color/transparent">
+
+                                <EditText
+                                    android:id="@+id/input_location"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@android:color/transparent"
+                                    android:clickable="true"
+                                    android:ellipsize="end"
+                                    android:focusable="false"
+                                    android:focusableInTouchMode="false"
+                                    android:hint="Location"
+                                    android:inputType="text"
+                                    android:maxLines="1"
+                                    android:singleLine="true" />
+
+                            </android.support.design.widget.TextInputLayout>
+
+
+                        </RelativeLayout>
+
+                        <View
+                            style="@style/line_register"
+                            android:layout_marginTop="@dimen/_minus5sdp"
+                            android:layout_marginEnd="@dimen/_35sdp"
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            android:background="@color/colorAccent" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linupload_doc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        android:weightSum="10">
+
+                        <LinearLayout
+                            android:id="@+id/lindoc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:weightSum="10">
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="6">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Upload Document"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/_11sdp" />
+                                </RelativeLayout>
+
+                                <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                    android:id="@+id/widget_icon"
+                                    android:layout_width="0dp"
+                                    android:layout_height="@dimen/_100sdp"
+                                    android:layout_weight="4">
+
+                                    <ImageView
+                                        android:id="@+id/iv_doc"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_gravity="center"
+                                        android:layout_margin="7dp"
+                                        android:layout_marginEnd="@dimen/_10sdp"
+                                        android:gravity="center"
+                                        android:scaleType="fitXY"
+                                        android:src="@drawable/default_image" />
+
+                                    <ImageView
+                                        android:id="@+id/iv_remove"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="top|right"
+                                        android:adjustViewBounds="true"
+                                        android:paddingTop="-10dp"
+                                        android:scaleType="fitStart"
+                                        android:src="@drawable/ic_cancel_black_24dp"
+                                        android:visibility="gone" />
+
+                                </FrameLayout>
+                            </LinearLayout>
+
+                            <EditText
+                                android:id="@+id/edtCompanyName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:layout_marginEnd="@dimen/_10sdp"
+                                android:backgroundTint="@color/setting_yellow"
+                                android:hint="Company Name"
+                                android:inputType="text" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:orientation="horizontal"
+                                android:weightSum="10">
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="6">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Company Logo"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/_11sdp" />
+                                </RelativeLayout>
+
+                                <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                    android:layout_width="0dp"
+                                    android:layout_height="@dimen/_100sdp"
+                                    android:layout_weight="4">
+
+                                    <ImageView
+                                        android:id="@+id/iv_logo"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_gravity="center"
+                                        android:layout_margin="7dp"
+                                        android:layout_marginEnd="@dimen/_10sdp"
+                                        android:gravity="center"
+                                        android:scaleType="fitXY"
+                                        android:src="@drawable/default_image" />
+
+                                    <ImageView
+                                        android:id="@+id/iv_removel"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="top|right"
+                                        android:adjustViewBounds="true"
+                                        android:paddingTop="-10dp"
+                                        android:scaleType="fitStart"
+                                        android:src="@drawable/ic_cancel_black_24dp"
+                                        android:visibility="gone" />
+
+                                </FrameLayout>
+
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
                 </LinearLayout>
 
                 <com.spectre.customView.CustomRayMaterialTextView
@@ -366,10 +617,10 @@
                     style="@style/splashRipple"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="12dp"
-                    android:layout_marginRight="12dp"
                     android:layout_marginTop="30dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginBottom="10dp"
                     android:background="@drawable/pink_round_solid_rectangle"
                     android:gravity="center"
                     android:padding="8dp"

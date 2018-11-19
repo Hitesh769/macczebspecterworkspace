@@ -4,28 +4,42 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.soundcloud.android.crop.Crop;
 import com.spectre.R;
+import com.spectre.activity_new.HomeAct;
+import com.spectre.api.RequestParam;
 import com.spectre.customView.AlertBox;
 import com.spectre.customView.CustomEditText;
 import com.spectre.customView.CustomRayMaterialTextView;
@@ -37,6 +51,7 @@ import com.spectre.interfaces.RequestCallback;
 import com.spectre.other.Constant;
 import com.spectre.other.Urls;
 import com.spectre.utility.ConvetBitmap;
+import com.spectre.utility.PermissionUtility;
 import com.spectre.utility.PermissionsUtils;
 import com.spectre.utility.SharedPrefUtils;
 import com.spectre.utility.Utility;
@@ -50,11 +65,45 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.spectre.utility.Utility.setLog;
+
 public class EditProfileActivity extends AppCompatActivity implements View.OnClickListener {
+
+    @BindView(R.id.rg_garage)
+    RadioGroup rgGarage;
+    @BindView(R.id.linupload_doc)
+    LinearLayout linuploadDoc;
+    @BindView(R.id.input_location)
+    EditText input_location;
+    @BindView(R.id.imgLocation)
+    ImageView imgLocation;
+    private static final int PLACE_PICKER_REQUEST = 999;
+    private static final int LOCATION_PERMISSION_CONSTANT = 101;
+    @BindView(R.id.iv_doc)
+    ImageView ivDoc;
+    @BindView(R.id.iv_remove)
+    ImageView ivRemove;
+    @BindView(R.id.iv_logo)
+    ImageView ivLogo;
+    @BindView(R.id.iv_removel)
+    ImageView ivRemovel;
+    @BindView(R.id.edtCompanyName)
+    EditText edtCompanyName;
+    @BindView(R.id.lin_buyer_address)
+    LinearLayout relBuyerAddress;
+    @BindView(R.id.rbtOwner)
+    RadioButton rbtOwner;
+    @BindView(R.id.rbtDealer)
+    RadioButton rbtDealer;
+    @BindView(R.id.rbtCertifiedPreOwned)
+    RadioButton rbtCertifiedPreOwned;
 
     private Context context;
     private CustomEditText etName, etEmail, etAddress, etExpertise, etCarRepaired;
@@ -69,7 +118,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     public int isForCamera = 0;
     private Uri mImageCaptureUri;
     private String mCurrentPhotoPath;
-    private byte[] byteArray1, byteArray2;
+    private byte[] byteArray1, byteArray2, byteArray3, byteArray4;
     private Bitmap bitmap;
     private LinearLayout ll_is_garage;
     private ImageView imv_banner;
@@ -77,13 +126,19 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     private AppCompatRadioButton radio_main, radio_repair, radio_repair_service, radio_both;
     private String radioInput = "0";
     TextView txtAppBarTitle;
-     ImageView backImg;
+    ImageView backImg;
+    private String latitude = "";
+    private String longitude = "";
+
+    private String seller_type = "0";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // setContentView(R.layout.activity_edit_profile);
         context = this;
         Utility.setContentView(context, R.layout.activity_edit_profile);
+        ButterKnife.bind(this);
         //  Utility.setUpToolbarWithColor(context, "<font color='#ffffff'>Change Password</font>", true);
         //Utility.setUpToolbarWithColor(context, "<font color='#ffffff'>"+getString(R.string.update_profile)+"</font>", getResources().getColor(R.color.transparent));
         initView();
@@ -114,6 +169,10 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         etEmail.setText(SharedPrefUtils.getPreference(context, Constant.USER_EMAIL, ""));
         etMob.setText(SharedPrefUtils.getPreference(context, Constant.USER_MOBILE, ""));
         etAddress.setText(SharedPrefUtils.getPreference(context, Constant.USER_ADDRESS_, ""));
+        input_location.setText(SharedPrefUtils.getPreference(context, Constant.USER_ADDRESS_, ""));
+
+
+        //edtCompanyName.setText(SharedPrefUtils.getPreference(context,Constant.));
         txtAppBarTitle.setText(getString(R.string.update_profile));
         ivProfile.setOnClickListener(this);
         btnCamera.setOnClickListener(this);
@@ -155,7 +214,6 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         //  ((CustomEditText)findViewById(R.id.et_address)).setText(SharedPrefUtils.getPreference(context, Constant.USER_MOBILE));
         ((CustomRayMaterialTextView) findViewById(R.id.btn_save_changes)).setOnClickListener(this);
 
-
         // Remove Comments to Make things like earlier
 
         if (!SharedPrefUtils.getPreference(context, Constant.USER_TYPE, "").isEmpty()
@@ -163,12 +221,52 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             ll_is_garage.setVisibility(View.GONE);
             imv_banner.setVisibility(View.GONE);
             edit_banner.setVisibility(View.GONE);
+            relBuyerAddress.setVisibility(View.VISIBLE);
         } else {
             ll_is_garage.setVisibility(View.VISIBLE);
+            relBuyerAddress.setVisibility(View.GONE);
             etCarRepaired.setText(SharedPrefUtils.getPreference(context, Constant.CAR_REPAIRE, ""));
             etExpertise.setText(SharedPrefUtils.getPreference(context, Constant.EXPERTISE, ""));
             imv_banner.setVisibility(View.VISIBLE);
             edit_banner.setVisibility(View.VISIBLE);
+
+            edtCompanyName.setText(SharedPrefUtils.getPreference(context, Constant.COMPANYNAME, ""));
+
+            if (SharedPrefUtils.getPreference(context, Constant.SELLERTYPE, "").equalsIgnoreCase("1")) {
+                linuploadDoc.setVisibility(View.GONE);
+                bitmap = null;
+                seller_type = "1";
+                rbtOwner.setChecked(true);
+            } else if (SharedPrefUtils.getPreference(context, Constant.SELLERTYPE, "").equalsIgnoreCase("2")) {
+                seller_type = "2";
+                linuploadDoc.setVisibility(View.VISIBLE);
+                rbtDealer.setChecked(true);
+                if (!SharedPrefUtils.getPreference(context, Constant.CERTIFICATE, "").isEmpty())
+                    new AQuery(context).id(ivDoc).image(SharedPrefUtils.getPreference(context, Constant.CERTIFICATE, ""), true, true, 0, 0);
+                else
+                    ivDoc.setImageResource(R.mipmap.gestuser);
+
+                if (!SharedPrefUtils.getPreference(context, Constant.COMPANYLOGO, "").isEmpty())
+                    new AQuery(context).id(ivLogo).image(SharedPrefUtils.getPreference(context, Constant.COMPANYLOGO, ""), true, true, 0, 0);
+                else
+                    ivLogo.setImageResource(R.mipmap.gestuser);
+
+            } else if (SharedPrefUtils.getPreference(context, Constant.SELLERTYPE, "").equalsIgnoreCase("3")) {
+                seller_type = "3";
+                linuploadDoc.setVisibility(View.VISIBLE);
+                rbtCertifiedPreOwned.setChecked(true);
+                if (!SharedPrefUtils.getPreference(context, Constant.CERTIFICATE, "").isEmpty())
+                    new AQuery(context).id(ivDoc).image(SharedPrefUtils.getPreference(context, Constant.CERTIFICATE, ""), true, true, 0, 0);
+                else
+                    ivDoc.setImageResource(R.mipmap.gestuser);
+
+                if (!SharedPrefUtils.getPreference(context, Constant.COMPANYLOGO, "").isEmpty())
+                    new AQuery(context).id(ivLogo).image(SharedPrefUtils.getPreference(context, Constant.COMPANYLOGO, ""), true, true, 0, 0);
+                else
+                    ivLogo.setImageResource(R.mipmap.gestuser);
+            }
+
+
 
             if (SharedPrefUtils.getPreference(context, Constant.SERVICE_TYPE, "").equalsIgnoreCase("1")) {
                 radio_main.setChecked(true);
@@ -187,6 +285,76 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                 radioInput = "0";
             }
 
+            rgGarage.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    // checkedId is the RadioButton selected
+                    RadioButton rb = (RadioButton) findViewById(checkedId);
+                    if (rb.getId() == R.id.rbtCertifiedPreOwned) {
+                        seller_type = "3";
+                        linuploadDoc.setVisibility(View.VISIBLE);
+                    } else if (rb.getId() == R.id.rbtOwner) {
+                        linuploadDoc.setVisibility(View.GONE);
+                        bitmap = null;
+                        seller_type = "1";
+                    } else if (rb.getId() == R.id.rbtDealer) {
+                        //bitmap = null;
+                        linuploadDoc.setVisibility(View.VISIBLE);
+                        seller_type = "2";
+                    }
+
+                    // textViewChoice.setText("You Selected " + rb.getText());
+                    //Toast.makeText(getApplicationContext(), rb.getText(), Toast.LENGTH_SHORT).show();
+                }
+            });
+            imgLocation.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getLocation();
+                }
+            });
+
+            input_location.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    try {
+                        Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).build(EditProfileActivity.this);
+                        startActivityForResult(intent, PLACE_PICKER_REQUEST);
+                    } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            ivRemove.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ivDoc.setImageResource(R.drawable.default_image);
+                    ivRemove.setVisibility(View.GONE);
+                }
+            });
+            ivRemovel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ivLogo.setImageResource(R.drawable.default_image);
+                    ivRemovel.setVisibility(View.GONE);
+                }
+            });
+            ivDoc.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    imageType = 3;
+                    alertBox.openDialogImage();
+                }
+            });
+            ivLogo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    imageType = 4;
+                    alertBox.openDialogImage();
+                }
+            });
+
+            //getLocation();
             if (!SharedPrefUtils.getPreference(context, Constant.GARAGE_IMAGE, "").isEmpty())
                 new AQuery(context).id(imv_banner).image(SharedPrefUtils.getPreference(context, Constant.GARAGE_IMAGE, ""), true, true, 0, 0);
             else
@@ -230,18 +398,26 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     private void checkValidation() {
         String name = etName.getText().toString().trim();
         String email = etEmail.getText().toString().trim();
-        String address = etAddress.getText().toString().trim();
+        String address = "";
+        if (!SharedPrefUtils.getPreference(context, Constant.USER_TYPE, "").isEmpty()
+                && SharedPrefUtils.getPreference(context, Constant.USER_TYPE, "").equalsIgnoreCase("1")) {
+
+            address = etAddress.getText().toString().trim();
+        } else {
+            address = input_location.getText().toString();
+        }
+
         String expertise = etExpertise.getText().toString().trim();
         String carRepaired = etCarRepaired.getText().toString().trim();
 
         etAddress.setError(null);
+        input_location.setError(null);
         etEmail.setError(null);
         etName.setError(null);
-        String user="1";
-        if (user.equalsIgnoreCase("1")){
+        String user = "1";
+        if (user.equalsIgnoreCase("1")) {
 
-        }
-        else{
+        } else {
 
         }
         if (name.isEmpty()) {
@@ -260,7 +436,12 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         }
 
         if (address.isEmpty()) {
-            etAddress.setError(getString(R.string.please_enter_address));
+            if (!SharedPrefUtils.getPreference(context, Constant.USER_TYPE, "").isEmpty()
+                    && SharedPrefUtils.getPreference(context, Constant.USER_TYPE, "").equalsIgnoreCase("1")) {
+                etAddress.setError(getString(R.string.please_enter_address));
+            } else {
+                input_location.setError(getString(R.string.please_enter_address));
+            }
             return;
         }
 
@@ -295,19 +476,36 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
 
 
         try {
+            /*jsonObject.put(Constant.LONGITUDE, "sd");
+            jsonObject.put(Constant.LOCATION, "sdas");
+            jsonObject.put(Constant.COMPANYNAME, "sds");
+            jsonObject.put(Constant.SELLERTYPE, "1");*/
+        /*    $seller_type
+            $certificate
+            $latitude
+            $longitude
+            $company_name
+            $company_logo*/
             jsonObject.put(Constant.USER_NAME, etName.getText().toString().trim());
             jsonObject.put(Constant.USER_EMAIL, etEmail.getText().toString().trim());
             jsonObject.put(Constant.USER_MOBILE, etMob.getText().toString().trim());
             jsonObject.put(Constant.EXPERTISE, etExpertise.getText().toString().trim());
             jsonObject.put(Constant.CAR_REPAIRE, etCarRepaired.getText().toString().trim());
+            jsonObject.put(RequestParam.COMPANYNAME, edtCompanyName.getText().toString());
+            jsonObject.put(RequestParam.LATITUDE, latitude);
+            jsonObject.put(RequestParam.LONGITUDE, longitude);
+            jsonObject.put(RequestParam.SELLER_TYPE, seller_type);
             if (!SharedPrefUtils.getPreference(context, Constant.USER_TYPE, "").isEmpty()
                     && SharedPrefUtils.getPreference(context, Constant.USER_TYPE, "").equalsIgnoreCase("1")) {
                 jsonObject.put(Constant.SERVICE_TYPE, radioInput + "");
+
             } else {
                 jsonObject.put(Constant.SERVICE_TYPE, radioInput + "");
             }
             String encodedString = "";
             String encodedString1 = "";
+            String encodedString2 = "";
+            String encodedString3 = "";
             if (byteArray1 != null) {
                 encodedString = Base64.encodeToString(byteArray1, Base64.DEFAULT);
             } else {
@@ -319,10 +517,27 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             } else {
                 encodedString1 = "";
             }
+            if (byteArray3 != null) {
+                encodedString2 = Base64.encodeToString(byteArray3, Base64.DEFAULT);
+            } else {
+                encodedString2 = "";
+            }
+            if (byteArray4 != null) {
+                encodedString3 = Base64.encodeToString(byteArray4, Base64.DEFAULT);
+            } else {
+                encodedString3 = "";
+            }
 
             jsonObject.put(Constant.image, encodedString);
             jsonObject.put(Constant.GARAGE_IMAGE, encodedString1);
-            jsonObject.put(Constant.USER_ADDRESS, etAddress.getText().toString().trim());
+            jsonObject.put(RequestParam.CERTIFICATE, encodedString2);
+            jsonObject.put(Constant.COMPANYLOGO, encodedString3);
+            if (!SharedPrefUtils.getPreference(context, Constant.USER_TYPE, "").isEmpty()
+                    && SharedPrefUtils.getPreference(context, Constant.USER_TYPE, "").equalsIgnoreCase("1")) {
+                jsonObject.put(Constant.USER_ADDRESS, etAddress.getText().toString().trim());
+            } else {
+                jsonObject.put(Constant.USER_ADDRESS, input_location.getText().toString().trim());
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -331,8 +546,12 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onSuccess(JSONObject js, String msg) {
                 saveResponse(js);
-                // Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
-                alertBox.openMessageWithFinish(msg, "Okay", "", false);
+                Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                finish();
+                Intent i = new Intent(EditProfileActivity.this, HomeAct.class);
+                i.putExtra(Constant.ISEDITPROFILE, "YES");
+                startActivity(i);
+                //alertBox.openMessageWithFinish(msg, "Okay", "", false);
                 MyDialogProgress.close(context);
             }
 
@@ -390,6 +609,17 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             SharedPrefUtils.setPreference(context, Constant.USER_IMAGE, jsonObject.getString(Constant.USER_IMAGE));
             SharedPrefUtils.setPreference(context, Constant.USER_MOBILE, jsonObject.getString(Constant.USER_MOBILE));
             SharedPrefUtils.setPreference(context, Constant.USER_TOKEN, jsonObject.getString(Constant.USER_TOKEN));
+
+
+            if (jsonObject.has(Constant.COMPANYNAME))
+                SharedPrefUtils.setPreference(context, Constant.COMPANYNAME, jsonObject.getString(Constant.COMPANYNAME));
+            if (jsonObject.has(Constant.COMPANYLOGO))
+                SharedPrefUtils.setPreference(context, Constant.COMPANYLOGO, jsonObject.getString(Constant.COMPANYLOGO));
+            if (jsonObject.has(Constant.CERTIFICATE))
+                SharedPrefUtils.setPreference(context, Constant.CERTIFICATE, jsonObject.getString(Constant.CERTIFICATE));
+            if (jsonObject.has(Constant.SELLERTYPE))
+                SharedPrefUtils.setPreference(context, Constant.SELLERTYPE, jsonObject.getString(Constant.SELLERTYPE));
+
 
             if (jsonObject.has(Constant.USER_ADDRESS_))
                 SharedPrefUtils.setPreference(context, Constant.USER_ADDRESS_, jsonObject.getString(Constant.USER_ADDRESS_));
@@ -516,9 +746,17 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             if (imageType == 1) {
                 byteArray1 = datasecond.toByteArray();
                 ivProfile.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 300, 300, false));
-            } else {
+            } else if (imageType == 2) {
                 byteArray2 = datasecond.toByteArray();
                 imv_banner.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 300, 300, false));
+            } else if (imageType == 3) {
+                byteArray3 = datasecond.toByteArray();
+                ivDoc.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 300, 300, false));
+
+            } else if (imageType == 4) {
+                byteArray4 = datasecond.toByteArray();
+                ivLogo.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 300, 300, false));
+
             }
 
 
@@ -581,15 +819,41 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                         if (imageType == 1) {
                             byteArray1 = datasecond.toByteArray();
                             ivProfile.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 300, 300, false));
-                        } else {
+                        } else if (imageType == 2) {
                             byteArray2 = datasecond.toByteArray();
                             imv_banner.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 300, 300, false));
+                        } else if (imageType == 3) {
+                            byteArray3 = datasecond.toByteArray();
+                            ivDoc.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 300, 300, false));
+                            ivRemove.setVisibility(View.VISIBLE);
+                        } else if (imageType == 4) {
+                            byteArray4 = datasecond.toByteArray();
+                            ivLogo.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 300, 300, false));
+                            ivRemovel.setVisibility(View.VISIBLE);
                         }
 
                         // img1.setImageBitmap(bitmap);
                         // check();
                     } catch (Exception e) {
                         e.printStackTrace();
+                    }
+                    break;
+                case PLACE_PICKER_REQUEST:
+                    if (resultCode == RESULT_OK) {
+                        Place place = PlacePicker.getPlace(data, EditProfileActivity.this);
+                        StringBuilder stBuilder = new StringBuilder();
+                        String placename = String.format("%s", place.getName());
+                        latitude = String.valueOf(place.getLatLng().latitude);
+                        Utility.setLog("LAT 2 : " + latitude);
+                        longitude = String.valueOf(place.getLatLng().longitude);
+                        String address = String.format("%s", place.getAddress());
+                        stBuilder.append(placename);
+                        stBuilder.append(", ");
+                        stBuilder.append(address);
+                        setLog("address : " + address);
+                        input_location.setText(stBuilder.toString());
+                        //Arraylist.clear();
+                        // callMethodEventList(0);
                     }
                     break;
             }
@@ -613,8 +877,78 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             e.printStackTrace();
         }
     }
+
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, EditProfileActivity.class);
         return intent;
+    }
+
+    private void getLocation() {
+        // get location
+        if (!PermissionUtility.checkPermission(context, PermissionUtility.ACCESS_FINE_LOCATION) ||
+                !PermissionUtility.checkPermission(context, PermissionUtility.ACCESS_COARSE_LOCATION)) {
+            PermissionUtility.requestPermission(EditProfileActivity.this, new String[]{PermissionUtility.ACCESS_FINE_LOCATION,
+                    PermissionUtility.ACCESS_COARSE_LOCATION}, LOCATION_PERMISSION_CONSTANT);
+        } else {
+            Utility.setLog("PERMISSION grant");
+            LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+            List<String> providers = locationManager.getProviders(true);
+            Location bestLocation = null;
+            for (String provider : providers) {
+                Location l = locationManager.getLastKnownLocation(provider);
+                if (l == null) {
+                    continue;
+                }
+                if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+                    bestLocation = l; // Found best last known location;
+                }
+            }
+            if (bestLocation != null) {
+                Utility.setLog("Lat : " + bestLocation.getLatitude() + " - Long : " + bestLocation.getLongitude());
+                latitude = String.valueOf(bestLocation.getLatitude());
+                Utility.setLog("LAT 1 : " + latitude);
+                longitude = String.valueOf(bestLocation.getLongitude());
+                Utility.setLog("Lat : " + getFullAddress(Double.valueOf(latitude), Double.valueOf(longitude)));
+                input_location.setText(getFullAddress(Double.valueOf(latitude), Double.valueOf(longitude)));
+
+            } else {
+                Utility.setLog("Location is null");
+            }
+        }
+    }
+
+    private String getFullAddress(double lat, double lng) {
+        Address address = getAddress(context, lat, lng);
+        if (address == null) {
+            return "";
+        }
+        StringBuffer buffer = new StringBuffer();
+        buffer.append(address.getAddressLine(0));
+        buffer.append((address.getAdminArea() == null) ? "" : " ," + address.getLocality());
+        buffer.append((address.getAdminArea() == null) ? "" : " ," + address.getAdminArea());
+        buffer.append((address.getSubLocality() == null) ? "" : " ," + address.getSubLocality());
+        buffer.append((address.getCountryName() == null) ? "" : " ," + address.getCountryName());
+        buffer.append((address.getPostalCode() == null) ? "" : " ," + address.getPostalCode());
+        return String.valueOf(buffer);
+    }
+
+    private Address getAddress(Context context, double lat, double lng) {
+        Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+
+        if (!geocoder.isPresent()) {
+            // showToast(context, R.string.e_service_not_available);
+            return null;
+        }
+
+        Address obj = null;
+        try {
+            List<Address> addresses = geocoder.getFromLocation(lat, lng, 1);
+            if (addresses.size() > 0)
+                obj = addresses.get(0);
+            return obj;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

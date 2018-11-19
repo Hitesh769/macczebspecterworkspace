@@ -15,6 +15,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -23,21 +24,18 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -48,10 +46,14 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.rey.material.widget.ProgressView;
 import com.spectre.R;
+import com.spectre.activity.AddWorkActivity;
+import com.spectre.activity.PostAdActivity;
+import com.spectre.activity.RentCarActivity;
 import com.spectre.activity_new.HomeAct;
 import com.spectre.adapter.CarListAdapter;
 import com.spectre.beans.AdPost;
 import com.spectre.beans.FilterResponse;
+import com.spectre.customView.CustomRayMaterialTextView;
 import com.spectre.customView.CustomTextView;
 import com.spectre.customView.RangeSeekBar;
 import com.spectre.customView.SessionExpireDialog;
@@ -65,7 +67,6 @@ import com.spectre.utility.SharedPrefUtils;
 import com.spectre.utility.Utility;
 import com.wx.wheelview.adapter.ArrayWheelAdapter;
 import com.wx.wheelview.widget.WheelView;
-
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -114,6 +115,10 @@ public class BuyFragment extends Fragment {
     LinearLayout linRange;
     private static final int LOCATION_PERMISSION_CONSTANT = 101;
     private static final int PLACE_PICKER_REQUEST = 999;
+    @BindView(R.id.lin_range_row)
+    LinearLayout linRangeRow;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
     private String latitude = "";
     private String longitude = "";
     private View view;
@@ -132,10 +137,14 @@ public class BuyFragment extends Fragment {
     private SwipeRefreshLayout swipeRefreshLayout;
     private FilterResponse filterResponse;
     private String lastFragment = "";
-    ArrayList<String> arrayList_minrange=new ArrayList();
-    ArrayList<String> arrayList_maxrange=new ArrayList();
+    ArrayList<String> arrayList_minrange = new ArrayList();
+    ArrayList<String> arrayList_maxrange = new ArrayList();
+    private Dialog ddPostAd = null;
+    private CustomRayMaterialTextView btn_post_buy, btn_post_rent, btn_post_garage;
+    private CustomTextView txt_post_ad_header;
 
-    String strMinValue="1000",strMaxValue="100000";
+    String strMinValue = "1000", strMaxValue = "100000";
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -185,8 +194,8 @@ public class BuyFragment extends Fragment {
         setUpRecyclerListener();
         callMethodEventList(0);
         arrayList_minrange.clear();
-        for(long i=1000;i<100000;i+=1000){
-            String istr=""+i;
+        for (long i = 1000; i < 100000; i += 1000) {
+            String istr = "" + i;
             arrayList_minrange.add(istr);
             arrayList_maxrange.add(istr);
         }
@@ -210,6 +219,15 @@ public class BuyFragment extends Fragment {
                 txtMaxRange.setText(String.valueOf(maxValue));
             }
         });
+        fab.setVisibility(View.VISIBLE);
+        boolean isLogin = SharedPrefUtils.getPreference(context, Constant.ISLOGIN, false);
+        if (isLogin == true){
+            if (!SharedPrefUtils.getPreference(context, Constant.USER_TYPE, "").isEmpty() && SharedPrefUtils.getPreference(context, Constant.USER_TYPE, "").equalsIgnoreCase("1")) {
+               fab.setVisibility(View.GONE);//buyer
+            }else{
+                fab.setVisibility(View.VISIBLE);//seller
+            }
+        }
     }
 
     public void setSwipeLayout() {
@@ -353,7 +371,7 @@ public class BuyFragment extends Fragment {
                     if (Arraylist.size() == 0) {
                         txtConnection.setVisibility(View.VISIBLE);
                         txtConnection.setText(failed);
-                        txtConnection.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                        //   txtConnection.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                     }
                     closeProgressDialog(i);
                 }
@@ -374,8 +392,8 @@ public class BuyFragment extends Fragment {
                         txtConnection.setText(nullp);
                         if (nullp.equalsIgnoreCase(getString(R.string.connection)))
                             txtConnection.setCompoundDrawablesWithIntrinsicBounds(0, R.mipmap.nointernet, 0, 0);
-                        else
-                            txtConnection.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                     /*   else
+                            txtConnection.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);*/
                     }
                     closeProgressDialog(i);
                 }
@@ -465,26 +483,35 @@ public class BuyFragment extends Fragment {
         unbinder.unbind();
     }
 
-    @OnClick(R.id.btnSearch)
-    public void onViewClicked() {
-        BuySearchFragment buySearchFragment = new BuySearchFragment();
-        Bundle bundle = new Bundle();
-      /*  bundle.putString(Constant.MAXRANGE, getTextViewString(txtMaxRange));
-        bundle.putString(Constant.MINRANGE, getTextViewString(txtMinRange));
-        bundle.putString(Constant.LATITUDE, latitude);
-        bundle.putString(Constant.LONGITUDE, longitude);
-        buySearchFragment.setArguments(bundle);*/
-        bundle.putString(PrefConstant.BRANDID, "");
-        bundle.putString(PrefConstant.MODELID, "");
-        bundle.putString(PrefConstant.LONGITUDE, longitude);
-        bundle.putString(PrefConstant.LATITUDE, latitude);
-        bundle.putString(PrefConstant.COLOR, "");
-        bundle.putString(PrefConstant.FROMYEAR, "");
-        bundle.putString(PrefConstant.TOYEAR, "");
-        bundle.putString(PrefConstant.TRANSACTIONTYPE, "");
-        bundle.putString(PrefConstant.SELLERTYPE, "");
-        buySearchFragment.setArguments(bundle);
-        startNewFragment(buySearchFragment, BuySearchFragment.TAG);
+    @OnClick({R.id.btnSearch, R.id.fab})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btnSearch:
+                BuySearchFragment buySearchFragment = new BuySearchFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString(Constant.MAXRANGE, txtMaxRange.getText().toString());
+                bundle.putString(Constant.MINRANGE, txtMinRange.getText().toString());
+                bundle.putString(PrefConstant.BRANDID, "");
+                bundle.putString(PrefConstant.MODELID, "");
+                bundle.putString(PrefConstant.LONGITUDE, longitude);
+                bundle.putString(PrefConstant.LATITUDE, latitude);
+                bundle.putString(PrefConstant.COLOR, "");
+                bundle.putString(PrefConstant.FROMYEAR, "");
+                bundle.putString(PrefConstant.TOYEAR, "");
+                bundle.putString(PrefConstant.TRANSACTIONTYPE, "");
+                bundle.putString(PrefConstant.SELLERTYPE, "");
+                buySearchFragment.setArguments(bundle);
+                startNewFragment(buySearchFragment, BuySearchFragment.TAG);
+                break;
+            case R.id.fab:
+                boolean isLogin = SharedPrefUtils.getPreference(context, Constant.ISLOGIN, false);
+                if (isLogin == true){
+                    choosePostAd();
+                }else {
+                    Utility.openDialogToLogin(context);
+                }
+                break;
+        }
         //setFilterData();
     }
 
@@ -506,17 +533,18 @@ public class BuyFragment extends Fragment {
         startNewFragment(buySearchFragment, BuyFilterFragment.TAG);
 
     }
+
     @OnClick(R.id.lin_range)
-    public void rangeDialog(){
+    public void rangeDialog() {
         final Dialog dialog = new Dialog(context, R.style.Theme_Dialog);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.pickerdialog);
         TextView tvCancel = (TextView) dialog.findViewById(R.id.tv_cancel);
         TextView tvConfirm = (TextView) dialog.findViewById(R.id.tv_confirm);
-      //  ListView  minrange= (ListView) dialog.findViewById(R.id.minrange);
+        //  ListView  minrange= (ListView) dialog.findViewById(R.id.minrange);
         WheelView minrange = (WheelView) dialog.findViewById(R.id.minrange);
         WheelView maxrange = (WheelView) dialog.findViewById(R.id.maxrange);
-     //   ListView maxrange = (ListView) dialog.findViewById(R.id.maxrange);
+        //   ListView maxrange = (ListView) dialog.findViewById(R.id.maxrange);
 
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, arrayList_minrange);
@@ -529,8 +557,8 @@ public class BuyFragment extends Fragment {
         minrange.setOnWheelItemSelectedListener(new WheelView.OnWheelItemSelectedListener() {
             @Override
             public void onItemSelected(int position, Object o) {
-               // Toast.makeText(context, arrayList_minrange.get(position), Toast.LENGTH_SHORT).show();
-                strMinValue=arrayList_minrange.get(position);
+                // Toast.makeText(context, arrayList_minrange.get(position), Toast.LENGTH_SHORT).show();
+                strMinValue = arrayList_minrange.get(position);
             }
         });
 
@@ -557,7 +585,7 @@ public class BuyFragment extends Fragment {
             @Override
             public void onItemSelected(int position, Object o) {
                 //Toast.makeText(context, arrayList_maxrange.get(position), Toast.LENGTH_SHORT).show();
-                strMaxValue=arrayList_maxrange.get(position);
+                strMaxValue = arrayList_maxrange.get(position);
             }
         });
 
@@ -580,19 +608,18 @@ public class BuyFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                Toast.makeText(context,"Dismissed..!!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Dismissed..!!", Toast.LENGTH_SHORT).show();
             }
         });
         tvConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                long lngmin= Long.parseLong(strMinValue);
-                long lngmax= Long.parseLong(strMaxValue);
-                if (lngmin>lngmax){
+                long lngmin = Long.parseLong(strMinValue);
+                long lngmax = Long.parseLong(strMaxValue);
+                if (lngmin > lngmax) {
                     Toast.makeText(context, "min range can not be greater than max range", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     txtMinRange.setText(strMinValue);
                     txtMaxRange.setText(strMaxValue);
                     dialog.dismiss();
@@ -600,7 +627,7 @@ public class BuyFragment extends Fragment {
             }
         });
         Window window = dialog.getWindow();
-        WindowManager.LayoutParams wlp =  new WindowManager.LayoutParams();
+        WindowManager.LayoutParams wlp = new WindowManager.LayoutParams();
         wlp.copyFrom(dialog.getWindow().getAttributes());
         wlp.width = WindowManager.LayoutParams.MATCH_PARENT;
         wlp.height = WindowManager.LayoutParams.WRAP_CONTENT;
@@ -665,7 +692,6 @@ public class BuyFragment extends Fragment {
         setLog("location image click");
         getLocation();
     }
-
 
 
     private void getLocation() {
@@ -804,6 +830,71 @@ public class BuyFragment extends Fragment {
     }
 
 
+    public void choosePostAd() {
+
+        ddPostAd = new Dialog(context);
+
+        ddPostAd.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        ddPostAd.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        ddPostAd.setContentView(R.layout.dialog_post_ad_buyer);
+
+        btn_post_buy = ddPostAd.findViewById(R.id.btn_post_buy);
+        btn_post_garage = ddPostAd.findViewById(R.id.btn_post_garage);
+        btn_post_rent = ddPostAd.findViewById(R.id.btn_post_rent);
+        txt_post_ad_header = ddPostAd.findViewById(R.id.txt_post_ad_header);
+
+        if (!SharedPrefUtils.getPreference(context, Constant.USER_TYPE, "").isEmpty() && SharedPrefUtils.getPreference(context, Constant.USER_TYPE, "").equalsIgnoreCase("1")) {
+            btn_post_garage.setVisibility(View.GONE);
+        } else
+            btn_post_garage.setVisibility(View.VISIBLE);
+        ddPostAd.setCancelable(false);
+        ddPostAd.getWindow().setLayout(-1, -2);
+        ddPostAd.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+
+        ddPostAd.show();
+
+        btn_post_buy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(context, PostAdActivity.class));
+                ddPostAd.dismiss();
+            }
+        });
+
+        btn_post_rent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(context, RentCarActivity.class));
+                ddPostAd.dismiss();
+            }
+        });
+
+        btn_post_garage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(context, AddWorkActivity.class));
+//                Garage adPost = new Garage();
+//                if (context instanceof HomeFormatActivity && status == 1) {
+//                    Intent intent = new Intent(context, GarageDetailActivity.class);
+//                    intent.putExtra(Constant.DATA, adPost);
+//                    intent.putExtra(Constant.POSITION, arraylist.get(0));
+//                    ((HomeFormatActivity) context).startActivityForResult(intent, 404);
+//                }
+
+//                Intent intent = new Intent(context, GarageDetailActivity.class);
+//                intent.putExtra(Constant.DATA, adPost);
+//                startActivity(intent);
+                ddPostAd.dismiss();
+            }
+        });
+
+        txt_post_ad_header.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ddPostAd.dismiss();
+            }
+        });
+    }
 
 
     /* [END] - Location methods */

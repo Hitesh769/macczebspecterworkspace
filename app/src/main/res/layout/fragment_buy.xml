@@ -149,6 +149,7 @@
             android:layout_marginRight="15dp"
             android:drawablePadding="18dp"
             android:gravity="center"
+            android:drawableTop="@drawable/notfound"
             android:text="No data available"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/colorPrimary"

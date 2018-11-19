@@ -1116,6 +1116,7 @@ public class Utility {
             @Override
             public void onClick(View v) {
                 //activity.startActivity(new Intent(activity,ChatActivity.class));
+                activity.finish();
                 Intent intent=new Intent(activity,ChatActivity.class);
                 intent.putExtra(Constant.USER_ID,userId);
                 intent.putExtra(Constant.USER_NAME,name);
@@ -1141,6 +1142,7 @@ public class Utility {
             public void onClick(View v) {
                 dialog.dismiss();
                 activity.finish();
+
             }
         });
         Window window = dialog.getWindow();
@@ -1231,10 +1233,12 @@ public class Utility {
     public static void resetPreferences(Context appcontext) {
         appcontext.getSharedPreferences(Utility.LIRA_TAXI_PREFERENCE, Context.MODE_PRIVATE).edit().clear().commit();
         Intent logout = new Intent(appcontext, LoginActivity.class);
-        logout.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        SharedPrefUtils.setPreference(appcontext, Constant.ISLOGIN, false);
+        SharedPrefUtils.clearAllPreference(appcontext);
+        /*logout.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         logout.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        logout.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        logout.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        logout.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);*/
+       // logout.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         appcontext.startActivity(logout);
     }
 
@@ -1547,7 +1551,10 @@ public class Utility {
     }*/
 
     public static void openDialogToLogin(final Context context) {
-        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(context);
+
+        context.startActivity(new Intent(context, LoginActivity.class));
+
+        /*android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(context);
         builder.setMessage("You need to login to perform this action.");
         builder.setTitle("Login");
         builder.setPositiveButton("Login", new DialogInterface.OnClickListener() {
@@ -1562,7 +1569,7 @@ public class Utility {
                 // Utils.logout(context);
             }
         });
-        builder.create().show();
+        builder.create().show();*/
     }
 
 
@@ -1635,6 +1642,14 @@ public class Utility {
         editor.commit();
     }
 
+   /* public static void startService(View view,Activity activity) {
+        startService(new Intent(activity.getBaseContext(), ChatService.class));
+    }
+
+    // Method to stop the service
+    public static void stopService(View view,Activity activity) {
+        stopService(new Intent(activity.getBaseContext(), ChatService.class));
+    }*/
 
     public static void showToast(Context context, String msg) {
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();

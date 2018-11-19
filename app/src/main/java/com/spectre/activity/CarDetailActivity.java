@@ -159,13 +159,14 @@ public class CarDetailActivity extends AppCompatActivity implements View.OnClick
         //save data in buyer details
         edtFirstName.setText(SharedPrefUtils.getPreference(context, Constant.USER_NAME, ""));
         edtLocation.setText(SharedPrefUtils.getPreference(context, Constant.USER_ADDRESS_, ""));
-        edtContect.setText(SharedPrefUtils.getPreference(context, Constant.USER_MOBILE, ""));
+        edtContect.setText(SharedPrefUtils.getPreference(context, Constant.MOBILE_CODE, "")+SharedPrefUtils.getPreference(context, Constant.USER_MOBILE, ""));
         edtEmail.setText(SharedPrefUtils.getPreference(context, Constant.USER_EMAIL, ""));
 
         iv_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(CarDetailActivity.this, SellerDetailsActivity.class);
+                intent.putExtra(Constant.ISGARAGE,"NO");
                 intent.putExtra(Constant.DATA, adPost);
                 intent.putExtra(Constant.POSITION, position);
                 intent.putExtra(Constant.TYPE, type);
@@ -341,7 +342,7 @@ public class CarDetailActivity extends AppCompatActivity implements View.OnClick
                 btn_show_interest.setText(R.string.request_sent);
             } else {*/
                 if (type == 1) {
-                    btn_show_interest.setText(R.string.book_car);
+                    //btn_show_interest.setText(R.string.book_car);
                     vendor_detail.setText(R.string.vendor_detail);
 
                 } else {
@@ -372,24 +373,42 @@ public class CarDetailActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View v) {
         String s = SharedPrefUtils.getPreference(context, Constant.USER_TYPE, "");
+
         switch (v.getId()) {
             case R.id.btn_show_interest:
+                if (s.isEmpty() || s.equalsIgnoreCase("0")) {
+                    Utility.openDialogToLogin(context);
+                }else{
+                String gender = "1";
+                if (male.isChecked()) {
+                    gender = "1";
+                } else {
+                    gender = "2";
+                }
                 //display information activity
-                if (btn_show_interest.getText().toString().equalsIgnoreCase(getResources().getString(R.string.book_car))) {
+                if (btn_show_interest.getText().toString().equalsIgnoreCase(getResources().getString(R.string.show_interest))) {
+                    finish();
                     Intent intent = new Intent(this, BookCarInfoActivity.class);
                     intent.putExtra(Constant.DATA, adPost);
                     intent.putExtra(Constant.POSITION, position);
                     intent.putExtra(Constant.TYPE, type);
+                    intent.putExtra(Constant.NAME, edtFirstName.getText().toString());
+                    intent.putExtra(Constant.LOCATION, Common.location);
+                    intent.putExtra(Constant.EMAIL, edtEmail.getText().toString());
+                    intent.putExtra(Constant.PHONE, edtContect.getText().toString());
+                    intent.putExtra(Constant.GENDER, gender);
+                    intent.putExtra(Constant.TYPE, type);
                     startActivity(intent);
                 } else if (btn_show_interest.getText().toString().equalsIgnoreCase(getResources().getString(R.string.buy_car))) {
-                    String gender = "1";
+                    /*String gender = "1";
                     if (male.isChecked()) {
                         gender = "1";
                     } else {
                         gender = "2";
-                    }
-                    if (!edtFirstName.getText().toString().trim().isEmpty()&&!edtLocation.getText().toString().trim().isEmpty()&&!edtEmail.getText().toString().trim().isEmpty()&&!edtContect.getText().toString().trim().isEmpty()) {
+                    }*/
+                    if (!edtFirstName.getText().toString().trim().isEmpty() && !edtLocation.getText().toString().trim().isEmpty() && !edtEmail.getText().toString().trim().isEmpty() && !edtContect.getText().toString().trim().isEmpty()) {
                         if (emailValidator(edtEmail.getText().toString()) == true) {
+                            finish();
                             Intent intent = new Intent(this, BookCarSummaryActivity.class);
                             intent.putExtra(Constant.DATA, adPost);
                             intent.putExtra(Constant.POSITION, position);
@@ -401,12 +420,12 @@ public class CarDetailActivity extends AppCompatActivity implements View.OnClick
                             intent.putExtra(Constant.GENDER, gender);
                             startActivity(intent);
                         } else {
-                            Toast.makeText(context,"Please enter valid EmailID",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Please enter valid EmailID", Toast.LENGTH_SHORT).show();
                         }
+                    } else {
+                        Toast.makeText(context, "Field can't empty", Toast.LENGTH_SHORT).show();
                     }
-                    else{
-                        Toast.makeText(context,"Field can't empty",Toast.LENGTH_SHORT).show();
-                    }
+                }
                 }
                 break;
             case R.id.input_location:

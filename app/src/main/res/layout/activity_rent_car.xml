@@ -74,10 +74,8 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/edtCaName"
+                        android:id="@+id/edtCaName"
                     android:backgroundTint="@color/setting_yellow"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
                     android:hint="Car Name"
                     />
                 </android.support.design.widget.TextInputLayout>
@@ -113,8 +111,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:id="@+id/edtModel"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
                     android:backgroundTint="@color/setting_yellow"
                     android:hint="@string/model" />
                 </android.support.design.widget.TextInputLayout>
@@ -303,8 +299,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
                     android:id="@+id/edtCarSeries"
                     android:backgroundTint="@color/setting_yellow"
                     android:hint="Car Series" />

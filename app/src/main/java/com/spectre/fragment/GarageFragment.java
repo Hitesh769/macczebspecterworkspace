@@ -198,10 +198,10 @@ public class GarageFragment extends Fragment {
                 pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
 
                 if (loading && loaddingDone) {
-                    if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                   /* if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
                         loading = false;
                         callMethodEventList(0);
-                    }
+                    }*/
                 }
             }
         });
@@ -271,7 +271,7 @@ public class GarageFragment extends Fragment {
                     if (arraylist.size() == 0) {
                         txtConnection.setVisibility(View.VISIBLE);
                         txtConnection.setText(failed);
-                        txtConnection.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                      //  txtConnection.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                     }
                     closeProgressDialog(i);
                 }
@@ -294,8 +294,8 @@ public class GarageFragment extends Fragment {
                         txtConnection.setText(nullp);
                         if (nullp.equalsIgnoreCase(getString(R.string.connection)))
                             txtConnection.setCompoundDrawablesWithIntrinsicBounds(0, R.mipmap.nointernet, 0, 0);
-                        else
-                            txtConnection.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                      /*  else
+                            txtConnection.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);*/
                     }
                     closeProgressDialog(i);
                 }
@@ -488,7 +488,7 @@ public class GarageFragment extends Fragment {
                 stBuilder.append(address);
                 setLog("address : " + address);
                 edtLocation.setText(stBuilder.toString());
-                // Arraylist.clear();
+               //  arraylist.clear();
                 // callMethodEventList(0);
             }
         }

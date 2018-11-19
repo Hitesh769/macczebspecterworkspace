@@ -1,6 +1,7 @@
 package com.spectre.helper;
 
 import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 
 import com.androidquery.AQuery;
@@ -23,10 +24,10 @@ import java.util.Map;
 
 public class AqueryCall {
 
-    private Activity context;
+    private Context context;
     AQuery aq;
 
-    public AqueryCall(Activity context) {
+    public AqueryCall(Context context) {
         this.context = context;
     }
 

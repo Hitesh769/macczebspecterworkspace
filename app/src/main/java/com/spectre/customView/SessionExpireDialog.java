@@ -18,7 +18,7 @@ public class SessionExpireDialog {
 
 
     public static void openDialog(final Context context, int type, String msg) {
-        String title = "";
+/*        String title = "";
         String msgs = "";
         if (type == 0) {
             title = context.getString(R.string.login_expire);
@@ -51,6 +51,6 @@ public class SessionExpireDialog {
             alertDialog.getButton(alertDialog.BUTTON_POSITIVE).setTextColor(context.getResources().getColor(R.color.colorPrimaryDark));
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
     }
 }

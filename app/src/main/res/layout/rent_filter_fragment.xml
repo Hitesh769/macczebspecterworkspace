@@ -382,7 +382,7 @@
                                             android:id="@+id/txtMinRange"
                                             style="@style/textView"
                                             android:layout_weight="1"
-                                            android:text="100"
+                                            android:text="0"
                                             android:textColor="@color/black"
                                             android:textSize="@dimen/_10sdp" />
 

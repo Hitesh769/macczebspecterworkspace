@@ -10,11 +10,16 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -29,6 +34,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +42,11 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.gson.Gson;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
@@ -45,18 +56,25 @@ import com.spectre.activity.LoginActivity;
 import com.spectre.api.EndPoints;
 import com.spectre.api.RequestParam;
 import com.spectre.application.SpecterApplication;
+import com.spectre.customView.MyDialogProgress;
 import com.spectre.dialog.ProgressDialog;
 import com.spectre.model.SignUpModel;
 import com.spectre.other.Constant;
 import com.spectre.utility.AppConstants;
+import com.spectre.utility.ChatService;
+import com.spectre.utility.PermissionUtility;
 import com.spectre.utility.SharedPrefUtils;
 import com.spectre.utility.Utility;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -64,6 +82,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.spectre.utility.Utility.getEditTextString;
+import static com.spectre.utility.Utility.logout;
 import static com.spectre.utility.Utility.makeToast;
 import static com.spectre.utility.Utility.setLog;
 import static com.spectre.utility.Utility.setToast;
@@ -116,6 +135,18 @@ public class SignUpAct extends MasterAppCompactActivity {
     ImageView ivRemovel;
     @BindView(R.id.linupload_doc)
     LinearLayout linuploadDoc;
+    @BindView(R.id.input_location)
+    EditText input_location;
+    @BindView(R.id.imgLocation)
+    ImageView imgLocation;
+    @BindView(R.id.input_layout_search)
+    TextInputLayout inputLayoutSearch;
+    @BindView(R.id.llLocation)
+    RelativeLayout llLocation;
+    @BindView(R.id.linLocation)
+    LinearLayout linLocation;
+    @BindView(R.id.lindoc)
+    LinearLayout lindoc;
 
     // screen context
     private Context context;
@@ -130,9 +161,14 @@ public class SignUpAct extends MasterAppCompactActivity {
     protected static final int GALLERY_REQUEST = 1;
     private static final int REQUEST_ACESS_STORAGE = 3;
     private static final int REQUEST_ACESS_CAMERA = 2;
+    private static final int LOCATION_PERMISSION_CONSTANT = 101;
+    private static final int PLACE_PICKER_REQUEST = 999;
+    private String latitude = "";
+    private String longitude = "";
     private Uri uri;
     Bitmap bitmap = null;
-    int isDealer=0;
+    int isDealer = 0;
+
     // Get start intent for Activity
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, SignUpAct.class);
@@ -175,7 +211,7 @@ public class SignUpAct extends MasterAppCompactActivity {
                     bitmap = null;
                     seller_type = "1";
                 } else if (rb.getId() == R.id.rbtDealer) {
-                    bitmap = null;
+                    //bitmap = null;
                     linuploadDoc.setVisibility(View.VISIBLE);
                     seller_type = "2";
                 }
@@ -192,17 +228,22 @@ public class SignUpAct extends MasterAppCompactActivity {
                 if (rb.getId() == R.id.rbtGarage) {
                     rgGarage.setVisibility(View.VISIBLE);
                     rbtOwner.setChecked(true);
+                    linLocation.setVisibility(View.VISIBLE);
                     seller_type = "1";
                 } else {
                     seller_type = "0";
                     bitmap = null;
+                    linuploadDoc.setVisibility(View.GONE);
                     rgGarage.setVisibility(View.GONE);
-                   // ivProfile.setVisibility(View.GONE);
+                    linLocation.setVisibility(View.GONE);
+                    // ivProfile.setVisibility(View.GONE);
                 }
                 // textViewChoice.setText("You Selected " + rb.getText());
                 //Toast.makeText(getApplicationContext(), rb.getText(), Toast.LENGTH_SHORT).show();
             }
         });
+
+        getLocation();
     }
 
     private void setListener() {
@@ -334,7 +375,7 @@ public class SignUpAct extends MasterAppCompactActivity {
     /* [END] - User define function */
 
     /* [START] - Butter knife listener */
-    @OnClick({R.id.imgBack, R.id.txtSignIn, R.id.txtCountryCode, R.id.btnSubmit, R.id.iv_profile, R.id.iv_profilel, R.id.iv_remove, R.id.iv_removel})
+    @OnClick({R.id.imgBack, R.id.txtSignIn, R.id.txtCountryCode, R.id.btnSubmit, R.id.iv_profile, R.id.iv_profilel, R.id.iv_remove, R.id.iv_removel, R.id.input_location, R.id.imgLocation})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imgBack:
@@ -354,11 +395,11 @@ public class SignUpAct extends MasterAppCompactActivity {
                 startAct(LoginActivity.getStartIntent(context));
                 break;
             case R.id.iv_profile:
-                isDealer=1;
+                isDealer = 1;
                 handleCamera(isDealer);
                 break;
             case R.id.iv_profilel:
-                isDealer=2;
+                isDealer = 2;
                 handleCamera(isDealer);
                 break;
             case R.id.iv_remove:
@@ -368,6 +409,17 @@ public class SignUpAct extends MasterAppCompactActivity {
             case R.id.iv_removel:
                 ivProfilel.setImageResource(R.drawable.default_image);
                 ivRemovel.setVisibility(View.GONE);
+                break;
+            case R.id.input_location:
+                try {
+                    Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).build(SignUpAct.this);
+                    startActivityForResult(intent, PLACE_PICKER_REQUEST);
+                } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case R.id.imgLocation:
+                getLocation();
                 break;
         }
     }
@@ -388,11 +440,14 @@ public class SignUpAct extends MasterAppCompactActivity {
             // display api in log
             setLog("API : " + EndPoints.URL_SIGN_UP);
 
-            String encodedImageData = "";
+            String encodedImageDataCertificate = "";
+            String encodeImageCompanyLogo="";
             if (bitmap != null) {
-                encodedImageData = getEncoded64ImageStringFromBitmap(bitmap);
+                encodedImageDataCertificate = getEncoded64ImageStringFromBitmap(bitmap);
             }
-
+            if (bitmap != null) {
+                encodeImageCompanyLogo = getEncoded64ImageStringFromBitmap(bitmap);
+            }
             Map<String, String> params = new HashMap<>();
 
             params.put(RequestParam.USER_NAME, getEditTextString(edtName));
@@ -401,9 +456,15 @@ public class SignUpAct extends MasterAppCompactActivity {
             params.put(RequestParam.USER_PASSWORD, getEditTextString(edtPassword));
             params.put(RequestParam.USER_TYPE, rbtBuyer.isChecked() ? "1" : "2");
             params.put(RequestParam.SELLER_TYPE, seller_type);
-            params.put(RequestParam.CERTIFICATE, encodedImageData);
+            params.put(RequestParam.CERTIFICATE, encodedImageDataCertificate);
+            params.put(RequestParam.LOCATION, input_location.getText().toString());
+            params.put(RequestParam.COMPANYNAME, edtCompanyName.getText().toString());
             params.put(RequestParam.MOBILE_CODE, countryCode);
             params.put(RequestParam.LANGUAGE, AppConstants.ENGLISH);
+            params.put(Constant.LATITUDE, latitude);
+            params.put(Constant.LONGITUDE, longitude);
+            params.put(Constant.COMPANYLOGO, encodeImageCompanyLogo);
+
 
             JSONObject parameters = new JSONObject(params);
             setLog("PARAM : " + parameters);
@@ -428,9 +489,13 @@ public class SignUpAct extends MasterAppCompactActivity {
                                     String status = model.status; // get response status
                                     String message = model.message;
                                     if (status.equalsIgnoreCase(AppConstants.SUCCESS)) {
-                                        // saveData(model, message);
+
                                         SharedPrefUtils.setPreference(context, Constant.USER_MOBILE, mobileNumber);
                                         // startActivity(new Intent(context, OTPActivity.class).putExtra(Constant.TYPE, 1));
+
+                                        Intent intent=new Intent(getBaseContext(),ChatService.class);
+                                        startService(intent);
+
                                         startActFinish(new Intent(context, OTPAct.class).putExtra(Constant.TYPE, 1));
                                     } else {
                                         makeToast(context, message);
@@ -489,11 +554,10 @@ public class SignUpAct extends MasterAppCompactActivity {
                         options.inJustDecodeBounds = false;
                         bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uri), null, options);
 
-                        if (isDealer==1) {
+                        if (isDealer == 1) {
                             ivProfile.setImageBitmap(bitmap);
                             ivRemove.setVisibility(View.VISIBLE);
-                        }
-                        else if (isDealer==2){
+                        } else if (isDealer == 2) {
                             ivProfilel.setImageBitmap(bitmap);
                             ivRemovel.setVisibility(View.VISIBLE);
                         }
@@ -515,11 +579,10 @@ public class SignUpAct extends MasterAppCompactActivity {
                     uri = getImageUri(SignUpAct.this, bitmap);
                     File finalFile = new File(getRealPathFromUri(uri));
 
-                    if (isDealer==1) {
+                    if (isDealer == 1) {
                         ivProfile.setImageBitmap(bitmap);
                         ivRemove.setVisibility(View.VISIBLE);
-                    }
-                    else if (isDealer==2){
+                    } else if (isDealer == 2) {
                         ivProfilel.setImageBitmap(bitmap);
                         ivRemovel.setVisibility(View.VISIBLE);
                     }
@@ -533,10 +596,9 @@ public class SignUpAct extends MasterAppCompactActivity {
                     BitmapDrawable thumbnail = new BitmapDrawable(
                             getResources(), data.getData().getPath());
 
-                    if (isDealer==1) {
+                    if (isDealer == 1) {
                         ivProfile.setImageDrawable(thumbnail);
-                    }
-                    else if (isDealer==2){
+                    } else if (isDealer == 2) {
                         ivProfile.setImageDrawable(thumbnail);
                     }
 
@@ -546,6 +608,24 @@ public class SignUpAct extends MasterAppCompactActivity {
             } else if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(getApplicationContext(), "Cancelled",
                         Toast.LENGTH_SHORT).show();
+            }
+        }
+        if (requestCode == PLACE_PICKER_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlacePicker.getPlace(data, SignUpAct.this);
+                StringBuilder stBuilder = new StringBuilder();
+                String placename = String.format("%s", place.getName());
+                latitude = String.valueOf(place.getLatLng().latitude);
+                Utility.setLog("LAT 2 : " + latitude);
+                longitude = String.valueOf(place.getLatLng().longitude);
+                String address = String.format("%s", place.getAddress());
+                stBuilder.append(placename);
+                stBuilder.append(", ");
+                stBuilder.append(address);
+                setLog("address : " + address);
+                input_location.setText(stBuilder.toString());
+                //Arraylist.clear();
+                // callMethodEventList(0);
             }
         }
     }
@@ -669,5 +749,75 @@ public class SignUpAct extends MasterAppCompactActivity {
             startDilog();
         }
     }
+
+    private void getLocation() {
+        // get location
+        if (!PermissionUtility.checkPermission(context, PermissionUtility.ACCESS_FINE_LOCATION) ||
+                !PermissionUtility.checkPermission(context, PermissionUtility.ACCESS_COARSE_LOCATION)) {
+            PermissionUtility.requestPermission(SignUpAct.this, new String[]{PermissionUtility.ACCESS_FINE_LOCATION,
+                    PermissionUtility.ACCESS_COARSE_LOCATION}, LOCATION_PERMISSION_CONSTANT);
+        } else {
+            Utility.setLog("PERMISSION grant");
+            LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+            List<String> providers = locationManager.getProviders(true);
+            Location bestLocation = null;
+            for (String provider : providers) {
+                Location l = locationManager.getLastKnownLocation(provider);
+                if (l == null) {
+                    continue;
+                }
+                if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+                    bestLocation = l; // Found best last known location;
+                }
+            }
+            if (bestLocation != null) {
+                Utility.setLog("Lat : " + bestLocation.getLatitude() + " - Long : " + bestLocation.getLongitude());
+                latitude = String.valueOf(bestLocation.getLatitude());
+                Utility.setLog("LAT 1 : " + latitude);
+                longitude = String.valueOf(bestLocation.getLongitude());
+                Utility.setLog("Lat : " + getFullAddress(Double.valueOf(latitude), Double.valueOf(longitude)));
+                input_location.setText(getFullAddress(Double.valueOf(latitude), Double.valueOf(longitude)));
+
+            } else {
+                Utility.setLog("Location is null");
+            }
+        }
+    }
+
+    private String getFullAddress(double lat, double lng) {
+        Address address = getAddress(context, lat, lng);
+        if (address == null) {
+            return "";
+        }
+        StringBuffer buffer = new StringBuffer();
+        buffer.append(address.getAddressLine(0));
+        buffer.append((address.getAdminArea() == null) ? "" : " ," + address.getLocality());
+        buffer.append((address.getAdminArea() == null) ? "" : " ," + address.getAdminArea());
+        buffer.append((address.getSubLocality() == null) ? "" : " ," + address.getSubLocality());
+        buffer.append((address.getCountryName() == null) ? "" : " ," + address.getCountryName());
+        buffer.append((address.getPostalCode() == null) ? "" : " ," + address.getPostalCode());
+        return String.valueOf(buffer);
+    }
+
+    private Address getAddress(Context context, double lat, double lng) {
+        Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+
+        if (!geocoder.isPresent()) {
+            // showToast(context, R.string.e_service_not_available);
+            return null;
+        }
+
+        Address obj = null;
+        try {
+            List<Address> addresses = geocoder.getFromLocation(lat, lng, 1);
+            if (addresses.size() > 0)
+                obj = addresses.get(0);
+            return obj;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
 }

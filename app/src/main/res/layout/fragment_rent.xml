@@ -73,6 +73,7 @@
 
     <com.spectre.customView.CustomTextView
         android:id="@+id/no_data"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -81,10 +82,11 @@
         android:drawablePadding="18dp"
         android:gravity="center"
         android:text="No data available"
+        android:drawableTop="@drawable/notfound"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/colorPrimary"
         android:textSize="15sp"
-        android:visibility="gone"
+
         app:edittextfont="Poppins-Medium.ttf"
         app:edittextfontHint="Poppins-Medium.ttf" />
 

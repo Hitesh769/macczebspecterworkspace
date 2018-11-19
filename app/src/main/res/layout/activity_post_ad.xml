@@ -77,9 +77,6 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/edtCaName"
                     android:backgroundTint="@color/setting_yellow"
-                    android:focusable="false"
-                    android:clickable="true"
-                    android:focusableInTouchMode="false"
                     android:hint="Car Name"
                     />
                 </android.support.design.widget.TextInputLayout>
@@ -117,9 +114,6 @@
                         android:layout_marginTop="10dp"
                         android:id="@+id/edtModel"
                         android:backgroundTint="@color/setting_yellow"
-                        android:focusable="false"
-                        android:clickable="true"
-                        android:focusableInTouchMode="false"
                         android:hint="@string/model" />
                 </android.support.design.widget.TextInputLayout>
                 <!--  <com.spectre.customView.CustomEditText
@@ -171,9 +165,6 @@
                     android:layout_marginTop="10dp"
                     android:hint="Car Series"
                     android:backgroundTint="@color/setting_yellow"
-                    android:focusable="false"
-                    android:clickable="true"
-                    android:focusableInTouchMode="false"
                     android:id="@+id/edtCarSeries"
                     android:textColor="@color/black"
                     />

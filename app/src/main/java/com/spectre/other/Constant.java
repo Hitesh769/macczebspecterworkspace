@@ -11,6 +11,7 @@ public class Constant {
     public static String POSITION = "Position";
     public static String ISLOGIN = "isLogin";
     public static String SECRETKEY = "secret_key";
+    public static String ISGARAGE = "isGarage";
 
     public static String USER_CONTACT = "user_contact";
     public static String USER_MOBILE = "user_mobile";
@@ -18,6 +19,7 @@ public class Constant {
     public static String USER_TYPE = "user_type";
     public static String MOBILE_CODE = "mobile_code";
     public static String USER_EMAIL = "user_email";
+
     public static String EXPERTISE = "expertise";
     public static String CAR_REPAIRE = "car_repaire";
     public static String SERVICE_TYPE = "service_type";
@@ -124,6 +126,9 @@ public class Constant {
     public final static String NOTIFICATION_ID = "notification_id";
     public final static String INTERESTED_ID = "interested_id";
     public final static String TYPE = "type";
+    public final static String COMPANYNAME = "company_name";
+    public final static String SELLERTYPE = "sellertype";
+    public final static String CERTIFICATE = "certificate";
     public final static String LANGUAGE = "language";
     public final static String LOCATION = "location";
     public static final String LATITUDE = "lat";
@@ -136,10 +141,12 @@ public class Constant {
     public static final String DRIVER_NAME="driver_name";
     public static final String DRIVER_PHONE="driver_phone";
     public static final String PHONE="phone";
+    public static final String COMPANYLOGO="company_logo";
 
     public static final String TO_ID="to_id";
     public static final String TO_CHAT="to_chat";
     public static final String FROM_ID="from_id";
+    public static final String ISEDITPROFILE="IsEditProfile";
 
 
 

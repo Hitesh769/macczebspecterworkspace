@@ -148,7 +148,7 @@ public class PostAdActivity extends AppCompatActivity implements View.OnClickLis
     private static final int REQUEST_CODE_CHOOSE = 23;
 
     private CustomTextView txt_post_ad_header;
-    private EditText edt_ad_buy_location, et_car_condition, et_mileage, et_price, et_model;
+    //private EditText edt_ad_buy_location, et_car_condition, et_mileage, et_price, et_model;
     private ImageView img_post_ad_buy_current_location;
     private String latitude = "";
     private String longitude = "";
@@ -257,27 +257,27 @@ public class PostAdActivity extends AppCompatActivity implements View.OnClickLis
         mRecyclerView.setLayoutParams(params);*/
 
         mRecyclerView.setNestedScrollingEnabled(false);
-        et_model = (EditText) findViewById(R.id.edtModel);
+      //  et_model = (EditText) findViewById(R.id.edtModel);
         // et_version = (CustomEditText) findViewById(R.id.et_version);
-        et_car_condition = (EditText) findViewById(R.id.et_car_condition);
-        et_mileage = (EditText) findViewById(R.id.edtMileage);
-        et_price = (EditText) findViewById(R.id.edtPrice);
+     //   et_car_condition = (EditText) findViewById(R.id.et_car_condition);
+     //   et_mileage = (EditText) findViewById(R.id.edtMileage);
+     //   et_price = (EditText) findViewById(R.id.edtPrice);
         btn_save_changes = (CustomRayMaterialTextView) findViewById(R.id.btn_save_changes);
         btn_delete = (CustomRayMaterialTextView) findViewById(R.id.btn_delete);
         btn_delete_ = (CustomRayMaterialTextView) findViewById(R.id.btn_delete_);
 
-        edt_ad_buy_location = (EditText) findViewById(R.id.edt_buy_location);
+     //   edt_ad_buy_location = (EditText) findViewById(R.id.edt_buy_location);
         img_post_ad_buy_current_location = (ImageView) findViewById(R.id.img_post_ad_buy_current_location);
 
 
-        edt_ad_buy_location.setOnClickListener(this);
-        edtCaName.setOnClickListener(this);
+        edtBuyLocation.setOnClickListener(this);
+     //   edtCaName.setOnClickListener(this);
         edtColor.setOnClickListener(this);
-        edtCarSeries.setOnClickListener(this);
-        edtModel.setOnClickListener(this);
+   //     edtCarSeries.setOnClickListener(this);
+   //     edtModel.setOnClickListener(this);
         edtYear.setOnClickListener(this);
         edtCarType.setOnClickListener(this);
-        et_car_condition.setOnClickListener(this);
+        etCarCondition.setOnClickListener(this);
 
         img_post_ad_buy_current_location.setOnClickListener(this);
 
@@ -290,13 +290,20 @@ public class PostAdActivity extends AppCompatActivity implements View.OnClickLis
             actionBar.setTitle(Html.fromHtml("<font color='#ffffff'>" + getString(R.string.edit_ad) + "</font>"));
             adPost = (AdPost) getIntent().getExtras().get(Constant.DATA);
             position = getIntent().getExtras().getInt(Constant.POSITION);
-            et_mileage.setText(adPost.getMileage());
-            et_price.setText(adPost.getPrice());
+            edtMileage.setText(adPost.getMileage());
+            edtPrice.setText(adPost.getPrice());
+            edtCaName.setText(adPost.getCar_name());
+            edtModel.setText(adPost.getModel());
+            edtYear.setText(adPost.getYear());
+            edtCarSeries.setText(adPost.getVersion());
+            edtCarType.setText(adPost.getCar_type());
+            edtColor.setText(adPost.getColor());
+
 //            et_model.setText(adPost.getModel());
 //            et_version.setText(adPost.getVersion());
-            et_car_condition.setText(adPost.getCar_condition());
+            etCarCondition.setText(adPost.getCar_condition());
 
-            edt_ad_buy_location.setText(adPost.getLocation());
+            edtBuyLocation.setText(adPost.getLocation());
             spinner_color.setSelection(arrayAdapterCarColor.getPosition(adPost.getColor()));
             spinner_year.setSelection(arrayAdapterYear.getPosition(adPost.getYear()));
             spinner_car_type.setSelection(arrayAdapterCarType.getPosition(adPost.getCar_type()));
@@ -527,7 +534,7 @@ public class PostAdActivity extends AppCompatActivity implements View.OnClickLis
                 latitude = String.valueOf(bestLocation.getLatitude());
                 longitude = String.valueOf(bestLocation.getLongitude());
                 Utility.setLog("Lat : " + getFullAddress(Double.valueOf(latitude), Double.valueOf(longitude)));
-                edt_ad_buy_location.setText(getFullAddress(Double.valueOf(latitude), Double.valueOf(longitude)));
+                edtBuyLocation.setText(getFullAddress(Double.valueOf(latitude), Double.valueOf(longitude)));
 
             } else {
                 Utility.setLog("Location is null");
@@ -627,12 +634,25 @@ public class PostAdActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void checkCondition() {
-        et_mileage.setError(null);
-        et_car_condition.setError(null);
-        et_price.setError(null);
+        edtMileage.setError(null);
+        etCarCondition.setError(null);
+        edtPrice.setError(null);
+        edtCaName.setError(null);
+        edtModel.setError(null);
+        edtYear.setError(null);
+        edtCarSeries.setError(null);
+        edtCarType.setError(null);
+        edtColor.setError(null);
+        edtBuyLocation.setError(null);
+//            et_model.setText(adPost.getModel());
+//            et_version.setText(adPost.getVersion());
+      //  etCarCondition.setText(adPost.getCar_condition());
+
+       // edtBuyLocation.setText(adPost.getLocation());
+
 //        et_model.setError(null);
 //        et_version.setError(null);
-        edt_ad_buy_location.setError(null);
+
 
         if (!canEdit && adPost != null) {
             Utility.showToast(context, getString(R.string.loading));
@@ -644,27 +664,27 @@ public class PostAdActivity extends AppCompatActivity implements View.OnClickLis
             return;
         }
 
-        if (spinner_name.getSelectedItemPosition() == 0) {
+       /* if (spinner_name.getSelectedItemPosition() == 0) {
             Utility.showToast(context, getString(R.string.pls_select_cname));
             return;
-        }
+        }*/
 
-        if (spinner_model.getSelectedItemPosition() == 0) {
+      /*  if (spinner_model.getSelectedItemPosition() == 0) {
             Utility.showToast(context, getString(R.string.pls_select_cmodel));
             return;
-        }
+        }*/
 
        /* if (spinner_version.getSelectedItemPosition() == 0) {
             Utility.showToast(context, getString(R.string.pls_select_cversion));
             return;
         }*/
 
-        if (spinner_year.getSelectedItemPosition() == 0) {
+     /*   if (spinner_year.getSelectedItemPosition() == 0) {
             Utility.showToast(context, getString(R.string.pls_select_cyear));
             return;
-        }
+        }*/
 
-        if (spinner_car_type.getSelectedItemPosition() == 0) {
+       /* if (spinner_car_type.getSelectedItemPosition() == 0) {
             Utility.showToast(context, getString(R.string.pls_select_ctype));
             return;
         }
@@ -673,15 +693,34 @@ public class PostAdActivity extends AppCompatActivity implements View.OnClickLis
             Utility.showToast(context, getString(R.string.pls_select_cColor));
             return;
         }
-
-
-        if (et_mileage.getText().toString().trim().isEmpty()) {
-            et_mileage.setError(getString(R.string.pls_select_cMileage));
+*/
+        if (edtCaName.getText().toString().trim().isEmpty()) {
+            edtCaName.setError(getString(R.string.pls_select_cname));
+            return;
+        }
+        if (edtModel.getText().toString().trim().isEmpty()) {
+            edtModel.setError(getString(R.string.pls_select_cmodel));
+            return;
+        }
+        if (edtCarSeries.getText().toString().trim().isEmpty()) {
+            edtCarSeries.setError(getString(R.string.pls_select_cversion));
+            return;
+        }
+        if (edtYear.getText().toString().trim().isEmpty()) {
+            edtYear.setError(getString(R.string.pls_select_cyear));
+            return;
+        }
+        if (edtMileage.getText().toString().trim().isEmpty()) {
+            edtMileage.setError(getString(R.string.pls_select_cMileage));
             return;
         }
 
-        if (et_price.getText().toString().trim().isEmpty()) {
-            et_price.setError(getString(R.string.pls_select_cPrice));
+        if (edtPrice.getText().toString().trim().isEmpty()) {
+            edtPrice.setError(getString(R.string.pls_select_cPrice));
+            return;
+        }
+        if (etCarCondition.getText().toString().trim().isEmpty()) {
+            etCarCondition.setError(getString(R.string.pls_select_cCondition));
             return;
         }
 //        if (et_model.getText().toString().trim().isEmpty()) {
@@ -694,12 +733,7 @@ public class PostAdActivity extends AppCompatActivity implements View.OnClickLis
 //            return;
 //        }
 
-        if (et_car_condition.getText().toString().trim().isEmpty()) {
-            et_car_condition.setError(getString(R.string.pls_select_cCondition));
-            return;
-        }
-
-        if (edt_ad_buy_location.getText().toString().trim().isEmpty()) {
+        if (edtBuyLocation.getText().toString().trim().isEmpty()) {
             Utility.showToast(context, getString(R.string.pls_select_location));
             return;
         }
@@ -754,27 +788,29 @@ public class PostAdActivity extends AppCompatActivity implements View.OnClickLis
             } else {
                 Url = Urls.ADD_POST;
             }
-            jsonObject.put(Constant.CAR_NAME_ID, ((CarName) spinner_name.getSelectedItem()).getId());
-            jsonObject.put(Constant.CAR_NAME, ((CarName) spinner_name.getSelectedItem()).getCar_name());
-            jsonObject.put(Constant.MODEL, ((ModelName) spinner_model.getSelectedItem()).getModel_name());
-            jsonObject.put(Constant.MODEL_ID, ((ModelName) spinner_model.getSelectedItem()).getId());
-            if (spinner_version.getSelectedItemPosition() != 0) {
-                jsonObject.put(Constant.VERSION, ((VersionName) spinner_version.getSelectedItem()).getVersion_name());
-                jsonObject.put(Constant.VERSION_ID, ((VersionName) spinner_version.getSelectedItem()).getId());
+            jsonObject.put(Constant.CAR_NAME_ID, "");
+            jsonObject.put(Constant.CAR_NAME, edtCaName.getText().toString());
+            jsonObject.put(Constant.MODEL, edtModel.getText().toString());
+            jsonObject.put(Constant.MODEL_ID, "");
+            jsonObject.put(Constant.VERSION, edtCarSeries.getText().toString());
+            jsonObject.put(Constant.VERSION_ID, "");
+         /*   if (spinner_version.getSelectedItemPosition() != 0) {
+                jsonObject.put(Constant.VERSION, edtCarSeries.getText().toString());
+                jsonObject.put(Constant.VERSION_ID, "");
             } else {
                 jsonObject.put(Constant.VERSION, "");
                 jsonObject.put(Constant.VERSION_ID, 0);
-            }
+            }*/
 
-            jsonObject.put(Constant.YEAR, ((String) spinner_year.getSelectedItem()));
-            jsonObject.put(Constant.CAR_TYPE, ((String) spinner_car_type.getSelectedItem()));
-            jsonObject.put(Constant.COLOUR, ((String) spinner_color.getSelectedItem()));
-            jsonObject.put(Constant.MILEAGE, et_mileage.getText().toString().trim());
-            jsonObject.put(Constant.PRICE, et_price.getText().toString().trim());
+            jsonObject.put(Constant.YEAR, edtYear.getText().toString());
+            jsonObject.put(Constant.CAR_TYPE, edtCarType.getText().toString());
+            jsonObject.put(Constant.COLOUR, edtColor.getText().toString());
+            jsonObject.put(Constant.MILEAGE, edtMileage.getText().toString().trim());
+            jsonObject.put(Constant.PRICE, edtPrice.getText().toString().trim());
 //            jsonObject.put(Constant.MODEL, et_model.getText().toString().trim());
 //            jsonObject.put(Constant.VERSION, et_version.getText().toString().trim());
-            jsonObject.put(Constant.CAR_CONDITION, et_car_condition.getText().toString().trim());
-            jsonObject.put(Constant.LOCATION, edt_ad_buy_location.getText().toString().trim());
+            jsonObject.put(Constant.CAR_CONDITION, etCarCondition.getText().toString().trim());
+            jsonObject.put(Constant.LOCATION, edtBuyLocation.getText().toString().trim());
             jsonObject.put(Constant.LATITUDE, latitude);
             jsonObject.put(Constant.LONGITUDE, longitude);
             int i = 0;
@@ -1025,7 +1061,7 @@ public class PostAdActivity extends AppCompatActivity implements View.OnClickLis
                 stBuilder.append(placename);
                 stBuilder.append(", ");
                 stBuilder.append(address);
-                edt_ad_buy_location.setText(stBuilder.toString());
+                edtBuyLocation.setText(stBuilder.toString());
             }
         }
     }
@@ -1168,7 +1204,7 @@ public class PostAdActivity extends AppCompatActivity implements View.OnClickLis
         //arrayAdapterCarName = new ArrayAdapter<CarName>(context, R.layout.spinner_custom_text, names);
        // spinner_name.setAdapter(arrayAdapterCarName);
         arrayAdapterCarName = new CarNameListAdapter(this, names);
-        listView.setAdapter(arrayAdapterCarName);
+        //listView.setAdapter(arrayAdapterCarName);
         if (adPost != null) {
             CarName carName = new CarName(adPost.getCar_name_id(), adPost.getCar_name());
            // spinner_name.setSelection(arrayAdapterCarName.getPosition(carName));

@@ -106,12 +106,13 @@ public class AddWorkActivity extends AppCompatActivity implements View.OnClickLi
     @BindView(R.id.edtPrice)
     EditText edtPrice;
     @BindView(R.id.et_car_condition)
-    EditText etCarCondition;
+    EditText et_car_condition;
     private Context context;
     private Spinner spinner_name, spinner_model, spinner_version, spinner_year, spinner_car_type, spinner_color;
     ListView listView;
     private CustomRayMaterialTextView btn_save_changes, btn_delete, btn_delete_;
-    private CustomEditText et_mileage, et_price, et_car_condition, et_problem;
+    private CustomEditText et_mileage, et_price,et_problem;
+   // private  EditText et_car_condition;
     private RecyclerView recycler;
     private static final int REQUEST_CODE_CHOOSE = 23;
     private static final int REQUEST_CODE_CHOOSE1 = 24;
@@ -169,11 +170,11 @@ public class AddWorkActivity extends AppCompatActivity implements View.OnClickLi
         String arraycarColor[] = getResources().getStringArray(R.array.car_color);
         carColor = Arrays.asList(arraycarColor);
 
-
-        names.add(Utility.getCarName(context));
+//temp commment
+      /*  names.add(Utility.getCarName(context));
         model.add(Utility.getModelName(context));
-        version.add(Utility.getVersionName(context));
-        years.add(getString(R.string.select_year));
+        version.add(Utility.getVersionName(context));*/
+      //  years.add(getString(R.string.select_year));
 
         int thisYear = Calendar.getInstance().get(Calendar.YEAR);
 
@@ -225,7 +226,7 @@ public class AddWorkActivity extends AppCompatActivity implements View.OnClickLi
         mRecyclerViewAfter.setNestedScrollingEnabled(false);
 
 
-        et_car_condition = (CustomEditText) findViewById(R.id.et_car_condition);
+        et_car_condition = (EditText) findViewById(R.id.et_car_condition);
         et_mileage = (CustomEditText) findViewById(R.id.et_mileage);
         et_price = (CustomEditText) findViewById(R.id.et_price);
         et_problem = (CustomEditText) findViewById(R.id.et_problem);
@@ -270,15 +271,23 @@ public class AddWorkActivity extends AppCompatActivity implements View.OnClickLi
             actionBar.setTitle(getString(R.string.edit_work));
             adPost = (AdPost) getIntent().getExtras().get(Constant.DATA);
             position = getIntent().getExtras().getInt(Constant.POSITION);
-            et_mileage.setText(adPost.getMileage());
-            et_price.setText(adPost.getPrice());
+            edtCaName.setText(adPost.getCar_name());
+            edtMileage.setText(adPost.getMileage());
+            edtModel.setText(adPost.getModel());
+            edtColor.setText(adPost.getColor());
+            edtPrice.setText(adPost.getPrice());
             et_problem.setText(adPost.getProblem());
+            edtYear.setText(adPost.getYear());
+            edtCarSeries.setText(adPost.getVersion());
             et_car_condition.setText(adPost.getCar_condition());
             spinner_color.setSelection(arrayAdapterCarColor.getPosition(adPost.getColor()));
             spinner_year.setSelection(arrayAdapterYear.getPosition(adPost.getYear()));
             spinner_car_type.setSelection(arrayAdapterCarType.getPosition(adPost.getCar_type()));
             btn_delete.setVisibility(View.VISIBLE);
             btn_delete_.setVisibility(View.VISIBLE);
+
+
+
             if (adPost.getCar_modified() != null && !adPost.getCar_modified().isEmpty()) {
                 if (adPost.getCar_modified().equalsIgnoreCase("1")) {
                     radioyes.setChecked(true);
@@ -587,17 +596,17 @@ public class AddWorkActivity extends AppCompatActivity implements View.OnClickLi
             jsonObject.put(Constant.MODEL, ((ModelName) spinner_model.getSelectedItem()).getModel_name());
             jsonObject.put(Constant.MODEL_ID, ((ModelName) spinner_model.getSelectedItem()).getId());
             */
-            jsonObject.put(Constant.CAR_NAME_ID, 11);
+            jsonObject.put(Constant.CAR_NAME_ID, "");
             jsonObject.put(Constant.CAR_NAME, edtCaName.getText().toString());
             jsonObject.put(Constant.MODEL, edtModel.getText().toString());
-            jsonObject.put(Constant.MODEL_ID, 12);
+            jsonObject.put(Constant.MODEL_ID, "");
 
             if (spinner_version.getSelectedItemPosition() != 0) {
                 /*jsonObject.put(Constant.VERSION, ((VersionName) spinner_version.getSelectedItem()).getVersion_name());
                 jsonObject.put(Constant.VERSION_ID, ((VersionName) spinner_version.getSelectedItem()).getId());
                 */
                 jsonObject.put(Constant.VERSION, edtCarSeries.getText().toString());
-                jsonObject.put(Constant.VERSION_ID,16);
+                jsonObject.put(Constant.VERSION_ID,"");
             } else {
                 jsonObject.put(Constant.VERSION, "");
                 jsonObject.put(Constant.VERSION_ID, 0);
@@ -605,8 +614,8 @@ public class AddWorkActivity extends AppCompatActivity implements View.OnClickLi
             jsonObject.put(Constant.YEAR, edtYear.getText().toString().trim());
             jsonObject.put(Constant.CAR_TYPE, edtCarType.getText().toString().trim());
             jsonObject.put(Constant.COLOUR, edtColor.getText().toString().trim());
-            jsonObject.put(Constant.MILEAGE, et_mileage.getText().toString().trim());
-            jsonObject.put(Constant.PRICE, et_price.getText().toString().trim());
+            jsonObject.put(Constant.MILEAGE, edtMileage.getText().toString().trim());
+            jsonObject.put(Constant.PRICE, edtPrice.getText().toString().trim());
             jsonObject.put(Constant.CAR_CONDITION, et_car_condition.getText().toString().trim());
             jsonObject.put(Constant.PROBLEM, et_problem.getText().toString().trim());
             jsonObject.put(Constant.CAR_MODIFIED, radioNo.isChecked() ? "0" : "1");
@@ -632,6 +641,7 @@ public class AddWorkActivity extends AppCompatActivity implements View.OnClickLi
                 }
             }
             jsonObject.put(Constant.AFTER_IMAGE, jsonArray1);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -1042,8 +1052,9 @@ public class AddWorkActivity extends AppCompatActivity implements View.OnClickLi
         names.addAll(tempListNewsFeeds);
         //   arrayAdapterCarName = new ArrayAdapter<CarName>(context, R.layout.spinner_custom_text, names);
         // spinner_name.setAdapter(arrayAdapterCarName);
-        arrayAdapterCarName = new CarNameListAdapter(this, names);
-        listView.setAdapter(arrayAdapterCarName);
+        //temp comment
+     /*   arrayAdapterCarName = new CarNameListAdapter(this, names);
+        listView.setAdapter(arrayAdapterCarName);*/
         if (adPost != null) {
             CarName carName = new CarName(adPost.getCar_name_id(), adPost.getCar_name());
             //  spinner_name.setSelection(arrayAdapterCarName.getPosition(carName));
@@ -1460,34 +1471,5 @@ public class AddWorkActivity extends AppCompatActivity implements View.OnClickLi
         dialog.show();
 
     }
- /*<com.spectre.customView.CustomTextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp"
-    android:text="@string/problem"
-    android:textColor="@color/black"
-    android:textSize="14sp"
-    app:edittextfont="Poppins-Regular.ttf"
-    app:edittextfontHint="Poppins-Regular.ttf" />
 
-
-                <com.spectre.customView.CustomEditText
-    android:id="@+id/et_address"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
-    android:background="@drawable/semi_transparent_box"
-    android:hint="@string/enter_problem"
-    android:inputType="textCapSentences|textMultiLine"
-    android:lines="3"
-    android:maxLines="3"
-    android:gravity="top"
-    android:padding="8dp"
-    android:textColor="@color/black"
-    android:textColorHint="@color/light_gray"
-    android:textSize="12sp"
-    app:edittextfont="Poppins-Regular.ttf"
-    app:edittextfontHint="Poppins-Regular.ttf" />*/
 }

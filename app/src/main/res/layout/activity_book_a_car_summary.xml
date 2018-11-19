@@ -117,9 +117,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_below="@+id/view1"
-                        android:orientation="vertical">
-
+                        android:layout_below="@+id/view1">
+<!--android:ortxtGenderientation="vertical"-->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

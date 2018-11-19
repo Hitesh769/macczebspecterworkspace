@@ -85,13 +85,13 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.ViewHold
         if (!nameModel.trim().isEmpty()) {
             holder.txtCarName.setText(nameModel);
         } else {
-            holder.txtCarName.setText(appContext.getString(R.string.na));
+            holder.txtCarName.setText("");
         }
 
         if (!model.trim().isEmpty()) {
             holder.txtModel.setText(model);
         } else {
-            holder.txtModel.setText(appContext.getString(R.string.na));
+            holder.txtModel.setText("");
         }
 
         if (!adPost.getCar_type().trim().isEmpty())

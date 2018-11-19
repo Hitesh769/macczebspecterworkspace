@@ -38,6 +38,7 @@ import com.spectre.helper.AqueryCall;
 import com.spectre.interfaces.RequestCallback;
 import com.spectre.other.Constant;
 import com.spectre.other.Urls;
+import com.spectre.utility.ChatService;
 import com.spectre.utility.SharedPrefUtils;
 import com.spectre.utility.Utility;
 
@@ -75,7 +76,6 @@ public class LoginActivity extends MasterAppCompactActivity implements View.OnCl
         Intent intent = new Intent(context, LoginActivity.class);
         return intent;
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -244,7 +244,8 @@ public class LoginActivity extends MasterAppCompactActivity implements View.OnCl
                                 } else {
                                     showToast(Message);
                                 }
-
+                                Intent intent=new Intent(getBaseContext(),ChatService.class);
+                                startService(intent);
                             } else {
                                 //  request.onException(json, context.getApplicationContext().getString(R.string.something_wrong));
                                 showToast(Message);
@@ -370,7 +371,10 @@ public class LoginActivity extends MasterAppCompactActivity implements View.OnCl
             public void onSuccess(JSONObject js, String msg) {
                 saveData(js, msg);
                 SharedPrefUtils.setPreference(context, Constant.ISLOGIN, true);
+                Intent intent=new Intent(getBaseContext(),ChatService.class);
+                startService(intent);
             }
+
             @Override
             public void onFailed(JSONObject js, String msg) {
                 MyDialogProgress.close(context);
@@ -492,6 +496,16 @@ public class LoginActivity extends MasterAppCompactActivity implements View.OnCl
             SharedPrefUtils.setPreference(context, Constant.USER_IMAGE, jsonObject.getString(Constant.USER_IMAGE));
             SharedPrefUtils.setPreference(context, Constant.USER_MOBILE, jsonObject.getString(Constant.USER_MOBILE));
             SharedPrefUtils.setPreference(context, Constant.USER_TOKEN, jsonObject.getString(Constant.USER_TOKEN));
+
+            if (jsonObject.has(Constant.COMPANYNAME))
+                SharedPrefUtils.setPreference(context, Constant.COMPANYNAME, jsonObject.getString(Constant.COMPANYNAME));
+            if (jsonObject.has(Constant.COMPANYLOGO))
+                SharedPrefUtils.setPreference(context, Constant.COMPANYLOGO, jsonObject.getString(Constant.COMPANYLOGO));
+            if (jsonObject.has(Constant.CERTIFICATE))
+                SharedPrefUtils.setPreference(context, Constant.CERTIFICATE, jsonObject.getString(Constant.CERTIFICATE));
+            if (jsonObject.has(Constant.SELLERTYPE))
+                SharedPrefUtils.setPreference(context, Constant.SELLERTYPE, jsonObject.getString(Constant.SELLERTYPE));
+
 
             if (jsonObject.has(Constant.USER_EMAIL))
                 SharedPrefUtils.setPreference(context, Constant.USER_EMAIL, jsonObject.getString(Constant.USER_EMAIL));
@@ -649,6 +663,7 @@ public class LoginActivity extends MasterAppCompactActivity implements View.OnCl
                 // gcmId = gcm.register("182071453535");
                 // gcmId = gcm.register("643819484965");
                 gcmId = FirebaseInstanceId.getInstance().getToken();
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

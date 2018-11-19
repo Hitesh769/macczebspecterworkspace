@@ -1,5 +1,6 @@
 package com.spectre.activity_new;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
@@ -10,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Display;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -20,6 +22,7 @@ import com.spectre.customView.AlertBox;
 import com.spectre.customView.CustomTextView;
 import com.spectre.helper.Common;
 import com.spectre.other.Constant;
+import com.spectre.utility.SharedPrefUtils;
 import com.spectre.utility.Utility;
 
 import butterknife.BindView;
@@ -72,6 +75,7 @@ public class BookCarInfoActivity extends AppCompatActivity {
     private int position = -1, type = -1;
     private String perDay = "";
     private Display display;
+    String name="",locationstr="",email="",phone="",gender="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,10 +106,19 @@ public class BookCarInfoActivity extends AppCompatActivity {
         } else if (inputPhone.getText().toString().isEmpty()) {
             new AlertBox(context).openMessageWithFinish(getResources().getString(R.string.phoneempty), "Okay", "", false);
         } else {
+            finish();
+            name=inputFirstName.getText().toString();
+            email=inputEmail.getText().toString();
+            phone=inputPhone.getText().toString();
             Intent intent = new Intent(this, BookCarSummaryActivity.class);
             intent.putExtra(Constant.DATA, adPost);
             intent.putExtra(Constant.POSITION, position);
             intent.putExtra(Constant.TYPE, type);
+            intent.putExtra(Constant.NAME, name);
+            intent.putExtra(Constant.LOCATION,locationstr);
+            intent.putExtra(Constant.EMAIL, email);
+            intent.putExtra(Constant.PHONE, phone);
+            intent.putExtra(Constant.GENDER, gender);
             intent.putExtra(Constant.DRIVER_EMAIL, inputEmail.getText().toString());
             intent.putExtra(Constant.DRIVER_NAME, inputFirstName.getText().toString());
             intent.putExtra(Constant.DRIVER_PHONE, inputPhone.getText().toString());
@@ -116,7 +129,9 @@ public class BookCarInfoActivity extends AppCompatActivity {
     private void setData() {
         txtFrom.setText(Common.strDayPickUp + ", " + Common.strYearPickUp + " " + Common.strMonthPickUp + " " + Common.strDatePickUp);
         txtTo.setText(Common.strDayDropoff + ", " + Common.strYearDropoff + " " + Common.strMonthDropoff + " " + Common.strDateDropoff);
-        //location.setText(Common.location);
+        inputFirstName.setText(SharedPrefUtils.getPreference(context, Constant.USER_NAME,""));
+        inputEmail.setText(SharedPrefUtils.getPreference(context, Constant.USER_EMAIL,""));
+        inputPhone.setText(SharedPrefUtils.getPreference(context, Constant.MOBILE_CODE,"")+SharedPrefUtils.getPreference(context, Constant.USER_MOBILE,""));
 
         if (getIntent().getExtras() != null && getIntent().getExtras().get(Constant.DATA) != null) {
 
@@ -124,7 +139,12 @@ public class BookCarInfoActivity extends AppCompatActivity {
             //    actionBar.setTitle(Html.fromHtml("<font color='#ffffff'>" + adPost.getCar_name() + "</font>"));
             position = getIntent().getExtras().getInt(Constant.POSITION);
             type = getIntent().getExtras().getInt(Constant.TYPE);
-
+            name=getIntent().getStringExtra(Constant.NAME);
+            locationstr=getIntent().getStringExtra(Constant.LOCATION);
+            email=getIntent().getStringExtra(Constant.EMAIL);
+            phone=getIntent().getStringExtra(Constant.PHONE);
+            gender=getIntent().getStringExtra(Constant.GENDER);
+            location.setText(locationstr);
             if (type == 1) {
                 perDay = getString(R.string.per_day);
             }
@@ -167,6 +187,17 @@ public class BookCarInfoActivity extends AppCompatActivity {
                 nextActivity();
                 break;
 
+        }
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        final InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        if (inputMethodManager != null && inputMethodManager.isActive()) {
+            if (getCurrentFocus() != null) {
+                inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+            }
         }
     }
 }

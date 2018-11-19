@@ -25,6 +25,7 @@ import com.spectre.dialog.ProgressDialog;
 import com.spectre.model.LoginModel;
 import com.spectre.other.Constant;
 import com.spectre.utility.AppConstants;
+import com.spectre.utility.ChatService;
 import com.spectre.utility.SharedPrefUtils;
 import com.spectre.utility.Utility;
 
@@ -297,6 +298,8 @@ public class LoginAct extends MasterAppCompactActivity {
                                     String message = model.message;
                                     if (status.equalsIgnoreCase(AppConstants.SUCCESS)) {
                                         saveData(model, message);
+                                        Intent intent=new Intent(getBaseContext(),ChatService.class);
+                                        startService(intent);
                                     } else {
                                         // dismiss progress dialog after getting response
                                         dismissProgressDialog();

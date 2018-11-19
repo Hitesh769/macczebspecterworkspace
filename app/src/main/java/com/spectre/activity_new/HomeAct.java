@@ -368,7 +368,12 @@ public class HomeAct extends MasterAppCompactActivity implements LocationListene
         // start Buy fragment at first time
         if (getIntent().getStringExtra("isChange")!=null&&getIntent().getStringExtra("isChange").equals("1")) {
             startNewFragment(new RentFilterFragment(), RentFilterFragment.TAG);
-        }else {
+        }else if(getIntent().getStringExtra(Constant.ISEDITPROFILE)!=null&&getIntent().getStringExtra(Constant.ISEDITPROFILE).equals("YES")){
+            txt_filter.setVisibility(View.GONE);
+            imgCross.setVisibility(View.GONE);
+            startNewFragment(MoreFrg.newInstance(), MoreFrg.TAG);
+        }
+        else {
             startHomeFragment();
         }
     }
@@ -633,12 +638,18 @@ public class HomeAct extends MasterAppCompactActivity implements LocationListene
                 startHomeFragment();
                 break;
             case R.id.llRent:
+                txt_filter.setVisibility(View.GONE);
+                imgCross.setVisibility(View.GONE);
                 startNewFragment(new RentFilterFragment(), RentFilterFragment.TAG);
                 break;
             case R.id.llGarage:
+                txt_filter.setVisibility(View.GONE);
+                imgCross.setVisibility(View.GONE);
                 startNewFragment(new GarageFragment(), GarageFragment.TAG);
                 break;
             case R.id.llMore:
+                txt_filter.setVisibility(View.GONE);
+                imgCross.setVisibility(View.GONE);
                 startNewFragment(MoreFrg.newInstance(), MoreFrg.TAG);
                 break;
         }
@@ -813,6 +824,7 @@ public class HomeAct extends MasterAppCompactActivity implements LocationListene
 //            }
 //        }
 //    }
+
 
     // get user current location
     private void getLocation() {

@@ -188,7 +188,7 @@ public class ManageWorkActivity extends AppCompatActivity {
                     if (Arraylist.size() == 0) {
                         txtConnection.setVisibility(View.VISIBLE);
                         txtConnection.setText(failed);
-                        txtConnection.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                      //  txtConnection.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                     }
                     closeProgressDialog(i);
                 }
@@ -208,8 +208,8 @@ public class ManageWorkActivity extends AppCompatActivity {
                         txtConnection.setText(nullp);
                         if (nullp.equalsIgnoreCase(getString(R.string.connection)))
                             txtConnection.setCompoundDrawablesWithIntrinsicBounds(0, R.mipmap.nointernet, 0, 0);
-                        else
-                            txtConnection.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                       /* else
+                            txtConnection.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);*/
                     }
                     closeProgressDialog(i);
                 }
@@ -290,7 +290,7 @@ public class ManageWorkActivity extends AppCompatActivity {
                                 if (Arraylist.size() == 0) {
                                     txtConnection.setVisibility(View.VISIBLE);
                                     txtConnection.setText(getString(R.string.data_not_avail));
-                                    txtConnection.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                                    //txtConnection.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                                 }
                             }
                             mAdapter.notifyDataSetChanged();

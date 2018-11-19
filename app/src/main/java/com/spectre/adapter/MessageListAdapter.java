@@ -15,7 +15,11 @@ import com.spectre.model.User;
 import com.spectre.other.Constant;
 import com.spectre.utility.SharedPrefUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 public class MessageListAdapter extends RecyclerView.Adapter {
     private static final int VIEW_TYPE_MESSAGE_SENT = 1;
@@ -81,7 +85,8 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     }
 
     private class SentMessageHolder extends RecyclerView.ViewHolder {
-        TextView messageText, timeText;
+        TextView messageText, timeText, nameText;
+        ImageView profileImage;
 
         SentMessageHolder(View itemView) {
             super(itemView);
@@ -91,9 +96,19 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         }
 
         void bind(ChatModel.Datum message) {
+            String updatedate=parseDateToddMMyyyy(message.getCreated());
+            String istodayDate=parseDate(message.getCreated());
+            String currentDate=currentDate();
             messageText.setText(message.getToChat());
             // Format the stored timestamp into a readable String using method.
-            timeText.setText(message.getCreated());
+            if (currentDate.equalsIgnoreCase(istodayDate)){
+                //our time
+                updatedate=parseDateToTime(message.getCreated());
+                String ourDate=getDate(message.getCreated());
+                timeText.setText(ourDate);
+            }else{
+                timeText.setText(updatedate);
+            }
         }
     }
 
@@ -111,14 +126,102 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         }
 
         void bind(ChatModel.Datum message) {
+            String updatedate=parseDateToddMMyyyy(message.getCreated());
+            String currentDate=currentDate();
+            String istodayDate=parseDate(message.getCreated());
             messageText.setText(message.getToChat());
             // Format the stored timestamp into a readable String using method.
-            timeText.setText(message.getCreated());
+            if (currentDate.equalsIgnoreCase(istodayDate)){
+                //our time
+                updatedate=parseDateToTime(message.getCreated());
+                String ourDate=getDate(message.getCreated());
+                timeText.setText(ourDate);
+            }else{
+                timeText.setText(updatedate);
+            }
+
 
            //nameText.setText(message.getSender().getNickname());
 
             // Insert the profile image from the URL into the ImageView.
            // Utils.displayRoundImageFromUrl(mContext, message.getSender().getProfileUrl(), profileImage);
         }
+    }
+    public String parseDateToddMMyyyy(String time) {
+        String inputPattern = "yyyy-MM-dd HH:mm:ss";
+        String outputPattern = "dd-MM-yy h:mm a";
+        SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
+        SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern);
+
+        Date date = null;
+        String str = null;
+
+        try {
+            date = inputFormat.parse(time);
+            str = outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return str;
+    }
+    public String parseDate(String time) {
+        String inputPattern = "yyyy-MM-dd HH:mm:ss";
+        String outputPattern = "yyyy-MM-dd";
+        SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
+        SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern);
+
+        Date date = null;
+        String str = null;
+
+        try {
+            date = inputFormat.parse(time);
+            str = outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return str;
+    }
+    public String parseDateToTime(String time) {
+        String inputPattern = "yyyy-MM-dd HH:mm:ss";
+        String outputPattern = "h:mm a";
+        SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
+        SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern);
+
+        Date date = null;
+        String str = null;
+
+        try {
+            date = inputFormat.parse(time);
+            str = outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return str;
+    }
+    public String currentDate(){
+        Date today = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String dateToStr = format.format(today);
+        return  dateToStr;
+    }
+    private String getDate(String ourDate)
+    {
+        try
+        {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+            Date value = formatter.parse(ourDate);
+
+            SimpleDateFormat dateFormatter = new SimpleDateFormat("h:mm a"); //this format changeable
+            dateFormatter.setTimeZone(TimeZone.getDefault());
+            ourDate = dateFormatter.format(value);
+
+            //Log.d("ourDate", ourDate);
+        }
+        catch (Exception e)
+        {
+            ourDate = "00-00-0000 00:00";
+        }
+        return ourDate;
     }
 }

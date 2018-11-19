@@ -12,6 +12,9 @@ import android.widget.TextView;
 
 import com.androidquery.AQuery;
 import com.spectre.R;
+import com.spectre.activity.EditProfileActivity;
+import com.spectre.activity.GarageDetailActivity;
+import com.spectre.activity.HomeActivity;
 import com.spectre.activity.ManageAdActivity;
 import com.spectre.activity.ManageRentedActivity;
 import com.spectre.activity.PostAdActivity;
@@ -90,11 +93,18 @@ public class WorkListAdapter extends RecyclerView.Adapter<WorkListAdapter.ViewHo
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent intent = new Intent(appContext, WorkDetailActivity.class);
-                intent.putExtra(Constant.DATA, adPost);
-                intent.putExtra(Constant.POSITION, position);
-                appContext.startActivity(intent);
+                if (status == 1) {
+                    Intent intent = new Intent(appContext, WorkDetailActivity.class);
+                    intent.putExtra(Constant.DATA, adPost);
+                    intent.putExtra(Constant.POSITION, position);
+                   // intent.putExtra("myprofile","yes");
+                    appContext.startActivity(intent);
+                }else {
+                    Intent intent = new Intent(appContext, WorkDetailActivity.class);
+                    intent.putExtra(Constant.DATA, adPost);
+                    intent.putExtra(Constant.POSITION, position);
+                    appContext.startActivity(intent);
+                }
 
             }
         });
@@ -117,11 +127,12 @@ public class WorkListAdapter extends RecyclerView.Adapter<WorkListAdapter.ViewHo
         } else {
             holder.txtCarName.setText(appContext.getString(R.string.na));
         }
-        if (!adPost.getPrice().isEmpty()) {
-            holder.txtCarPrice.setText(appContext.getString(R.string.dollar) + " " + adPost.getPrice().trim());
-        } else {
-            holder.txtCarPrice.setText(appContext.getString(R.string.na));
-        }
+        if (status == 1){
+            if (!adPost.getPrice().isEmpty()) {
+                holder.txtCarPrice.setText(appContext.getString(R.string.dollar) + " " + adPost.getPrice().trim());
+            } else {
+                holder.txtCarPrice.setText(appContext.getString(R.string.na));
+            }
 
         if (!adPost.getYear().isEmpty()) {
             yearMileage = adPost.getYear().trim();
@@ -150,7 +161,7 @@ public class WorkListAdapter extends RecyclerView.Adapter<WorkListAdapter.ViewHo
             holder.txtYear.setText(adPost.getYear());
         else
             holder.txtYear.setText("");
-
+    }
         if (arraylist.get(position).getImage() != null && arraylist.get(position).getImage().size() > 0) {
             new AQuery(appContext).id(holder.ivProduct).image(arraylist.get(position).getImage().get(0), true, true, 300, R.drawable.ic_launcher_web);
         }

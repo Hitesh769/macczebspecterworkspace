@@ -191,7 +191,6 @@ public class BookCarSummaryActivity extends AppCompatActivity {
 
     private void setData() {
         type = getIntent().getExtras().getInt(Constant.TYPE);
-
         name=getIntent().getStringExtra(Constant.NAME);
         location=getIntent().getStringExtra(Constant.LOCATION);
         email=getIntent().getStringExtra(Constant.EMAIL);
@@ -211,14 +210,13 @@ public class BookCarSummaryActivity extends AppCompatActivity {
         txtEmail.setText(email);
         txtPhone.setText(phone);
         txtBuyerLocation.setText(location);
+        txtLocation.setText(location);
         if (gender.equals("1")){
             txtGender.setText("male");
         }
         else {
             txtGender.setText("female");
         }
-
-
         if (getIntent().getExtras() != null && getIntent().getExtras().get(Constant.DATA) != null) {
 
             adPost = (AdPost) getIntent().getExtras().get(Constant.DATA);
@@ -270,7 +268,7 @@ public class BookCarSummaryActivity extends AppCompatActivity {
             if (!adPost.getVersion().isEmpty()) {
                 txtCarSeries.setText(adPost.getVersion().trim());
             } else {
-                txtLocation.setText(context.getString(R.string.na));
+                txtCarSeries.setText(context.getString(R.string.na));
             }
             if (!adPost.getCar_type().isEmpty()) {
                 txtCarType.setText(adPost.getCar_type().trim());

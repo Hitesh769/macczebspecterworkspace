@@ -23,8 +23,9 @@
             android:padding="@dimen/_2sdp"
             android:singleLine="true"
             android:text="Honda City"
+            android:textStyle="bold"
             android:textColor="@color/black"
-            android:textSize="@dimen/_10sdp" />
+            android:textSize="@dimen/_12sdp" />
 
         <View
             style="@style/line_register"
