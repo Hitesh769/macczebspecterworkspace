@@ -81,7 +81,7 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
         //  setContentView(R.layout.activity_garage_detail);
         context = this;
         Utility.setContentView(context, R.layout.activity_garage_details_new);
-        actionBar = Utility.setUpToolbar_(context, "<font color='#ffffff'>Garage Detail</font>", true);
+      //  actionBar = Utility.setUpToolbarGarage(context, "<font color='#ffffff'>Garage Detail</font>", true,adPost.getCompany_logo());
         // Utility.setUpToolbar_(context, "<font color='#ffffff'>"+getString(R.string.manage_ad)+"</font>",true);
         initView();
     }
@@ -129,8 +129,8 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
                // adPost = (WorkList) getIntent().getExtras().get(Constant.DATA);
             }*/
             adPost = (Garage) getIntent().getExtras().get(Constant.DATA);
+            actionBar = Utility.setUpToolbarGarage(context, adPost.getCompany_name(), true,adPost.getCompany_logo());
 
-            actionBar.setTitle(Html.fromHtml("<font color='#ffffff'>" + adPost.getFull_name() + "</font>"));
             position = getIntent().getExtras().getInt(Constant.POSITION);
             type = getIntent().getExtras().getInt(Constant.TYPE);
             display = getWindowManager().getDefaultDisplay();
@@ -187,8 +187,8 @@ public class GarageDetailActivity extends AppCompatActivity implements View.OnCl
                 txt_adress.setText(context.getString(R.string.na));
             }
 
-            if (adPost.getUser_image() != null && !adPost.getUser_image().isEmpty()) {
-                new AQuery(context).id(iv_profile).image(adPost.getUser_image(), true, true, 0, R.mipmap.gestuser);
+            if (adPost.getCompany_logo() != null && !adPost.getCompany_logo().isEmpty()) {
+                new AQuery(context).id(iv_profile).image(adPost.getCompany_logo(), true, true, 0, R.mipmap.gestuser);
             } else
                 iv_profile.setImageResource(R.mipmap.gestuser);
 

@@ -32,6 +32,7 @@ public class FilterResponse implements Parcelable {
     private String lat = "lat";
     private String lon = "lon";
 
+
     /*{
         "car_name_id": "0",
             "model_id": "0",

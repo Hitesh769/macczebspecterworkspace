@@ -131,8 +131,7 @@ public class PostAdActivity extends AppCompatActivity implements View.OnClickLis
     EditText etCarCondition;
     @BindView(R.id.edt_buy_location)
     EditText edtBuyLocation;
-    @BindView(R.id.btn_save_changes)
-    CustomRayMaterialTextView btnSaveChanges;
+
     @BindView(R.id.nested_view)
     NestedScrollView nestedView;
     private Context context;
@@ -747,6 +746,7 @@ public class PostAdActivity extends AppCompatActivity implements View.OnClickLis
 
         JSONObject jsonObject = new JSONObject();
         MyDialogProgress.open(context);
+        btn_save_changes.setEnabled(false);
         /*
         // Add Post
         "car_name":tfCarName.text!,
@@ -829,6 +829,7 @@ public class PostAdActivity extends AppCompatActivity implements View.OnClickLis
             }
             jsonObject.put(Constant.IMAGE, jsonArray);
         } catch (JSONException e) {
+            btn_save_changes.setEnabled(true);
             e.printStackTrace();
         }
 
@@ -841,6 +842,7 @@ public class PostAdActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onFailed(JSONObject js, String msg) {
                 MyDialogProgress.close(context);
+                btn_save_changes.setEnabled(true);
                 //alertBox.openMessage(msg, "Ok", "", false);
                 Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
             }
@@ -848,6 +850,7 @@ public class PostAdActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onAuthFailed(JSONObject js, String msg) {
                 MyDialogProgress.close(context);
+                btn_save_changes.setEnabled(true);
                /* Intent intent = new Intent(context, AuthDialogActivity.class);
                 intent.putExtra("type", 1);
                 startActivity(intent);*/
@@ -858,6 +861,7 @@ public class PostAdActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onNull(JSONObject js, String msg) {
                 MyDialogProgress.close(context);
+                btn_save_changes.setEnabled(true);
                 Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                 //alertBox.openMessage(msg, "Ok", "", false);
             }
@@ -866,6 +870,7 @@ public class PostAdActivity extends AppCompatActivity implements View.OnClickLis
             public void onException(JSONObject js, String msg) {
                 MyDialogProgress.close(context);
                 // alertBox.openMessage(msg, "Ok", "", false);
+                btn_save_changes.setEnabled(true);
                 Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
             }
 
@@ -887,6 +892,7 @@ public class PostAdActivity extends AppCompatActivity implements View.OnClickLis
         }
         alertBox.openMessageWithFinish(msg, "Okay", "", false);
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+        btn_save_changes.setEnabled(true);
         MyDialogProgress.close(context);
     }
 

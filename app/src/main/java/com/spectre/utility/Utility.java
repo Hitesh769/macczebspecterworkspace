@@ -56,6 +56,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.androidquery.AQuery;
 import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
@@ -99,6 +100,8 @@ import java.util.TimeZone;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class Utility {
@@ -1076,6 +1079,41 @@ public class Utility {
         });
         return actionBar;
     }
+    public static ActionBar setUpToolbarGarage(Context appContext, String title, boolean home,String logo) {
+        final AppCompatActivity activity = (AppCompatActivity) appContext;
+        Toolbar toolbar = (Toolbar) activity.findViewById(R.id.toolbar_actionbar);
+        CircleImageView circleImageView=toolbar.findViewById(R.id.iv_logo);
+        CustomTextView toolbar_title=toolbar.findViewById(R.id.toolbar_title);
+        activity.setSupportActionBar(toolbar);
+        ActionBar actionBar = activity.getSupportActionBar();
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(home);
+        actionBar.setHomeButtonEnabled(false);
+        toolbar.setTitleTextColor(0xFFFFFFFF);
+        actionBar.setTitle("");
+        if (logo != null && !logo.isEmpty()) {
+            new AQuery(appContext).id(circleImageView).image(logo, true, true, 0, R.mipmap.gestuser);
+        } else
+            circleImageView.setImageResource(R.mipmap.gestuser);
+        // ((CustomTextView) activity.findViewById(R.id.headet_text)).setText(title);
+       // actionBar.setTitle(Html.fromHtml(title));
+        if (title!=null) {
+            //actionBar.setTitle(Html.fromHtml("<font color='#ffffff'>" + adPost.getCompany_name() + "</font>"));
+            toolbar_title.setText(Html.fromHtml("<font color='#ffffff'>" + title + "</font>"));
+        }else{
+            toolbar_title.setText("");
+            //actionBar.setTitle(Html.fromHtml("<font color='#ffffff'>" + " " + "</font>"));
+        }
+        actionBar.setHomeAsUpIndicator(R.mipmap.back);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activity.finish();
+            }
+        });
+        return actionBar;
+    }
 
 
     /*public static void setUpToolbar(Context appContext, String title, Spanned title2) {
@@ -1872,9 +1910,9 @@ public static CarName getOtherName(Context context){
                             .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
                                 @Override
                                 public void onSliderClick(BaseSliderView slider) {
-                                    Intent intent = new Intent(appContext, ZoomActivity.class);
+                                   /* Intent intent = new Intent(appContext, ZoomActivity.class);
                                     intent.putExtra(Constant.IMAGE, name);
-                                    appContext.startActivity(intent);
+                                    appContext.startActivity(intent);*/
                                 }
                             })
                             // .empty(R.drawable.ic_launcher_web)
@@ -1895,9 +1933,9 @@ public static CarName getOtherName(Context context){
                             .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
                                 @Override
                                 public void onSliderClick(BaseSliderView slider) {
-                                    Intent intent = new Intent(appContext, ZoomActivity.class);
+                                   /* Intent intent = new Intent(appContext, ZoomActivity.class);
                                     intent.putExtra(Constant.IMAGE, name);
-                                    appContext.startActivity(intent);
+                                    appContext.startActivity(intent);*/
                                 }
                             })
                             // .empty(R.drawable.ic_launcher_web)
@@ -1942,9 +1980,9 @@ public static CarName getOtherName(Context context){
                     .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
                         @Override
                         public void onSliderClick(BaseSliderView slider) {
-                            Intent intent = new Intent(appContext, ZoomActivity.class);
+                         /*   Intent intent = new Intent(appContext, ZoomActivity.class);
                             intent.putExtra(Constant.IMAGE, name);
-                            appContext.startActivity(intent);
+                            appContext.startActivity(intent);*/
                         }
                     })
                     .setScaleType(BaseSliderView.ScaleType.Fit);

@@ -57,8 +57,8 @@ public class GarageHomeListAdapter extends RecyclerView.Adapter<GarageHomeListAd
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final Garage adPost = arraylist.get(position);
 
-        if (adPost.getFull_name() != null && !adPost.getFull_name().isEmpty()) {
-            holder.txt_name.setText(adPost.getFull_name());
+        if (adPost.getCompany_name() != null && !adPost.getCompany_name().isEmpty()) {
+            holder.txt_name.setText(adPost.getCompany_name());
         } else {
             holder.txt_name.setText("");
         }
@@ -98,8 +98,8 @@ public class GarageHomeListAdapter extends RecyclerView.Adapter<GarageHomeListAd
         }
 
 
-        if (adPost.getGarage_image() != null && !adPost.getGarage_image().isEmpty()) {
-            new AQuery(appContext).id(holder.iv_product).image(adPost.getGarage_image(), true, true, 300, R.drawable.ic_launcher_web);
+        if (adPost.getCompany_logo() != null && !adPost.getCompany_logo().isEmpty()) {
+            new AQuery(appContext).id(holder.iv_product).image(adPost.getCompany_logo(), true, true, 300, R.drawable.ic_launcher_web);
         } else {
             if (status == 1) {
                 holder.iv_product.setImageResource(R.drawable.ic_launcher_web);

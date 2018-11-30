@@ -357,6 +357,7 @@ public class GarageFragment extends Fragment {
                 Type type = new TypeToken<List<Garage>>() {
                 }.getType();
                 List<Garage> tempListNewsFeeds = new Gson().fromJson(jsonArray.toString(), type);
+                arraylist.clear();
                 if (i == 0) {
                     arraylist.addAll(arraylist.size(), tempListNewsFeeds);
                 } else {

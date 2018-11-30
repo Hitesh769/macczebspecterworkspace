@@ -30,6 +30,26 @@ public class Garage implements Parcelable {
     private String revdate;
     private String garage_image;
     private String mobile_code;
+    private String company_name;
+
+    public String getCompany_name() {
+        return company_name;
+    }
+
+    public void setCompany_name(String company_name) {
+        this.company_name = company_name;
+    }
+
+    public String getCompany_logo() {
+        return company_logo;
+    }
+
+    public void setCompany_logo(String company_logo) {
+        this.company_logo = company_logo;
+    }
+
+    private String company_logo;
+
 
     public Garage() {
     }
@@ -56,6 +76,8 @@ public class Garage implements Parcelable {
         revdate = in.readString();
         garage_image = in.readString();
         mobile_code = in.readString();
+        company_logo = in.readString();
+        company_name = in.readString();
     }
 
     @Override
@@ -80,6 +102,8 @@ public class Garage implements Parcelable {
         dest.writeString(revdate);
         dest.writeString(garage_image);
         dest.writeString(mobile_code);
+        dest.writeString(company_logo);
+        dest.writeString(company_name);
     }
 
     @Override

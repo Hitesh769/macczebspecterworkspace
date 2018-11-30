@@ -242,9 +242,9 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.ViewHold
             @Override
             public void onClick(View v) {
                 if (arraylist.get(position).getImage() != null && arraylist.get(position).getImage().size() > 0) {
-                    Intent intent = new Intent(appContext, ZoomActivity.class);
+                   /* Intent intent = new Intent(appContext, ZoomActivity.class);
                     intent.putExtra(Constant.IMAGE, arraylist.get(position).getImage().get(0));
-                    appContext.startActivity(intent);
+                    appContext.startActivity(intent);*/
                 } else {
 
                 }
